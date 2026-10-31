@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[Preview: Desert Sunset] Reb Yen | Singer-Songwriter | Americana, Folk & Indie Music | Boulder, CO</title>
+  <meta name="description" content="Reb Yen is a singer-songwriter and multi-instrumentalist based in Boulder, Colorado and Orlando, Florida. Discover her original Americana, folk, indie, and country songs, live performances, and songwriting.">
+  <meta name="keywords" content="Reb Yen, Rebekah Yen, singer songwriter Boulder Colorado, Americana songwriter, folk music, indie music Colorado, original songs, live music Boulder, Orlando musician, multi-instrumentalist">
+  <meta property="og:title" content="Reb Yen | Singer-Songwriter">
+  <meta property="og:description" content="Original songs and live performances by Reb Yen. Americana, folk, indie, and more from Boulder, CO & Orlando, FL.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/storm.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rye&family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --bg-alt: #1a1a1a;
+      --text: #f5f5f0;
+      --text-muted: #b8b8b0;
+      --accent: #c9a87c;
+      --accent-dark: #a88b5e;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+    a { color: var(--accent); text-decoration: none; transition: color 0.3s; }
+    a:hover { color: var(--accent-dark); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .navbar { position: fixed; top: 0; width: 100%; background: rgba(15,15,15,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid rgba(201,168,124,0.2); padding: 0.5rem 0; }
+    .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--accent); }
+    .navbar nav { display: flex; gap: 2rem; }
+    .navbar nav a { color: var(--text); font-weight: 500; }
+    .menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+    .hero { height: 100vh; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .hero-content h1 { font-size: 5rem; margin-bottom: 0.5rem; letter-spacing: 2px; }
+    .tagline { font-size: 1.4rem; color: var(--accent); margin-bottom: 0.5rem; font-weight: 300; }
+    .location { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 0.9rem 2rem; border: 2px solid var(--accent); color: var(--text); border-radius: 4px; font-weight: 500; transition: all 0.3s; background: transparent; cursor: pointer; }
+    .btn:hover { background: var(--accent); color: var(--bg); }
+    .btn-primary { background: var(--accent); color: var(--bg); }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .full-width { width: 100%; }
+    .section { padding: 6rem 0; }
+    .section.alt { background: var(--bg-alt); }
+    .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 1rem; color: var(--accent); }
+    .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem; }
+    .subsection-title { text-align: center; color: var(--accent); margin: 3rem 0 1.5rem; font-size: 1.8rem; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: center; }
+    .about-img img { width: 100%; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+    .about-text h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--accent); }
+    .about-text p { margin-bottom: 1rem; color: var(--text-muted); }
+    .highlights { display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .highlight { background: rgba(201,168,124,0.1); padding: 1rem; border-radius: 6px; flex: 1; min-width: 150px; text-align: center; }
+    .songs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .song-card { background: var(--bg); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(201,168,124,0.2); transition: transform 0.3s; }
+    .song-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+    .song-card h4 { color: var(--accent); margin-bottom: 0.5rem; }
+    .cta-row { text-align: center; margin: 3rem 0; }
+    .cta-row .btn { margin: 0.5rem; }
+    .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .video-card { background: var(--bg); border-radius: 8px; overflow: hidden; }
+    .video-card img { width: 100%; height: 200px; object-fit: cover; }
+    .video-card iframe { width: 100%; height: 220px; border: none; border-radius: 0; }
+    .embed-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; margin-top: 1rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+    .gallery-item { overflow: hidden; border-radius: 8px; }
+    .gallery-item img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.4s; }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .venues { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+    .venue { text-align: center; padding: 1.5rem; background: rgba(201,168,124,0.05); border-radius: 8px; }
+    .venue h4 { color: var(--accent); margin-bottom: 0.5rem; }
+    .live-note { text-align: center; margin-top: 3rem; font-size: 1.1rem; }
+    .contact-form { max-width: 600px; margin: 0 auto; }
+    .form-group { margin-bottom: 1.5rem; }
+    label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); }
+    input, textarea, select { width: 100%; padding: 0.9rem; background: var(--bg); border: 1px solid rgba(201,168,124,0.3); color: var(--text); border-radius: 4px; font-family: inherit; }
+    textarea { min-height: 120px; resize: vertical; }
+    .contact-links { text-align: center; margin-top: 2rem; color: var(--text-muted); }
+    footer { background: #0a0a0a; padding: 3rem 0 1.5rem; text-align: center; border-top: 1px solid rgba(201,168,124,0.2); }
+    .social-links { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; }
+    .social-links a { color: var(--text-muted); font-size: 1.1rem; }
+    .copyright { color: var(--text-muted); font-size: 0.9rem; }
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 3rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .navbar nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(15,15,15,0.98); padding: 1rem; }
+      .navbar nav.open { display: flex; }
+      .menu-toggle { display: block; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MusicGroup",
+    "name": "Reb Yen",
+    "alternateName": "Rebekah Yen",
+    "description": "Singer-songwriter and multi-instrumentalist specializing in Americana, folk, indie, country, and rock. Based in Boulder, Colorado and Orlando, Florida.",
+    "genre": ["Americana", "Folk", "Indie", "Country", "Pop", "Rock"],
+    "sameAs": ["https://www.reverbnation.com/rebyen", "https://rebyen.bandcamp.com", "https://www.youtube.com/@RebYenMusic"]
+  }
+  </script>
+
+    <style id="wow-features">
+    /* Vinyl record */
+    .hero-content { display:flex; flex-direction:column; align-items:center; }
+    .record-wrap { position:relative; width:190px; height:190px; margin:0 auto 1.2rem; cursor:pointer; border:0; background:none; padding:0; }
+    .record-wrap:focus-visible { outline:3px solid #e8c99a; outline-offset:6px; border-radius:50%; }
+    .record { width:100%; height:100%; border-radius:50%; animation:spin 9s linear infinite; filter:drop-shadow(0 8px 18px rgba(0,0,0,.55)); }
+    .record-wrap.playing .record { animation-duration:1.8s; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .tonearm { position:absolute; top:-8px; right:-34px; width:22px; height:150px; transform-origin:11px 11px; transform:rotate(-28deg); transition:transform .8s cubic-bezier(.5,1.6,.6,1); pointer-events:none; }
+    .record-wrap.playing .tonearm { transform:rotate(8deg); }
+    .record-hint { font-family:'Caveat',cursive; font-size:1.35rem; color:#e8c99a; margin-top:-.6rem; margin-bottom:.8rem; }
+    @media (max-width:768px){ .record-wrap { width:130px; height:130px; } .tonearm { height:105px; right:-26px; } }
+
+    /* Sticky player */
+    body { padding-bottom:78px; }
+    body.player-open { padding-bottom:150px; }
+    .mini-player { position:fixed; left:50%; bottom:14px; transform:translateX(-50%); z-index:900; width:min(560px, calc(100% - 24px)); background:#fffaf0; border:2px solid #8b2f23; border-radius:28px; box-shadow:0 10px 28px rgba(60,30,15,.3); font-family:'Karla',serif; color:#3b2a1e; transition:border-radius .3s; }
+    .mini-player.open { border-radius:14px; }
+    .mp-bar { display:flex; align-items:center; gap:.6rem; padding:.55rem .9rem; }
+    .mp-toggle { flex:1; display:flex; align-items:center; gap:.6rem; background:none; border:0; font:inherit; color:inherit; cursor:pointer; text-align:left; min-width:0; }
+    .mp-disc { width:26px; height:26px; flex:none; border-radius:50%; background:radial-gradient(circle,#8b2f23 0 28%,#111 30% 100%); animation:spin 4s linear infinite; }
+    .mp-label { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:.95rem; }
+    .mp-label strong { color:#8b2f23; }
+    .mp-btn { background:none; border:1px solid #7a5232; color:#7a5232; border-radius:50%; width:30px; height:30px; flex:none; cursor:pointer; font-size:1rem; line-height:1; }
+    .mp-btn:hover { background:#8b2f23; color:#fff; border-color:#8b2f23; }
+    .mp-body { padding:0 .9rem .8rem; display:none; }
+    .mini-player.open .mp-body { display:block; }
+    .mp-body select { width:100%; margin-bottom:.5rem; padding:.35rem .5rem; font-family:'Karla',serif; border:1px solid #c9b18f; border-radius:6px; background:#fff; color:#3b2a1e; }
+    .mp-body iframe { border:0; width:100%; height:42px; display:block; }
+
+    /* Polaroid gallery */
+    .gallery-grid.polaroids { display:flex; flex-wrap:wrap; justify-content:center; gap:1.6rem 1.2rem; padding:1rem 0; }
+    .polaroid { background:#fff; padding:12px 12px 0; width:230px; box-shadow:0 6px 16px rgba(60,30,15,.25); border:0; cursor:zoom-in; transform:rotate(var(--tilt)) translateY(var(--drop)); transition:transform .35s, box-shadow .35s; font:inherit; }
+    .polaroid img { width:100%; height:200px; object-fit:cover; display:block; transition:none; }
+    .polaroid:hover, .polaroid:focus-visible { transform:rotate(0) scale(1.06); box-shadow:0 14px 28px rgba(60,30,15,.35); z-index:2; position:relative; outline:none; }
+    .polaroid figcaption, .lightbox figcaption { font-family:'Caveat',cursive; font-size:1.4rem; color:#3b2a1e; text-align:center; padding:.45rem .2rem .7rem; line-height:1.1; }
+    .gallery-item:hover img { transform:none; }
+    @media (max-width:560px){ .polaroid { width:44%; padding:7px 7px 0; } .polaroid img { height:130px; } .polaroid figcaption { font-size:1.05rem; } }
+    .lightbox { position:fixed; inset:0; z-index:1000; background:rgba(30,18,10,.82); display:flex; align-items:center; justify-content:center; cursor:zoom-out; animation:fade .25s; }
+    .lightbox figure { background:#fff; padding:16px 16px 0; max-width:min(90vw,820px); box-shadow:0 20px 50px rgba(0,0,0,.5); animation:straighten .45s cubic-bezier(.3,1.3,.5,1); }
+    .lightbox img { max-width:100%; max-height:72vh; display:block; margin:0 auto; }
+    .lightbox figcaption { font-size:1.8rem; }
+    @keyframes straighten { from { transform:rotate(var(--tilt,-4deg)) scale(.5); opacity:.3; } to { transform:none; opacity:1; } }
+    @keyframes fade { from { opacity:0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .record, .mp-disc { animation:none !important; }
+      .tonearm, .polaroid { transition:none; }
+      .lightbox, .lightbox figure { animation:none; }
+    }
+  </style>
+  <style id="motion-features">
+    .hero { position:relative; overflow:hidden; }
+    .hero-bg { position:absolute; inset:-12% 0; background-size:cover; background-position:center; will-change:transform; z-index:0; }
+    .hero-content { position:relative; z-index:1; }
+    .lyric { text-align:center; padding:3rem 1.5rem; max-width:820px; margin:0 auto; }
+    .lyric blockquote { font-family:'Caveat', cursive; font-size:2.4rem; line-height:1.25; color:var(--accent-dark); margin:0; transform:rotate(-1.2deg); }
+    .lyric figcaption { font-family:'Karla', serif; font-style:italic; color:var(--text-muted); margin-top:.8rem; font-size:.95rem; }
+    .lyric figcaption a { color:var(--brown); }
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .9s ease, transform .9s ease; }
+    .reveal.in { opacity:1; transform:none; }
+    .tour-map { position:relative; max-width:900px; margin:1rem auto 0; }
+    .tour-map svg { width:100%; height:auto; display:block; }
+    .us-shape { fill:#fffaf0; stroke:var(--brown); stroke-width:3; stroke-linejoin:round; stroke-dasharray:1 0; filter:url(#rough); }
+    .pin { cursor:pointer; outline:none; }
+    .pin circle.dot { fill:var(--accent); stroke:#fffaf0; stroke-width:3; transition:r .2s; }
+    .pin:hover circle.dot, .pin:focus circle.dot, .pin.active circle.dot { r:14; }
+    .pin text { font-family:'Caveat', cursive; font-size:30px; fill:var(--text); }
+    .pin-card { position:absolute; transform:translate(-50%, calc(-100% - 18px)); background:#fffaf0; border:1px solid #c9b48f; border-left:4px solid var(--accent); padding:.6rem .9rem; box-shadow:0 6px 18px rgba(60,40,20,.2); font-size:.9rem; min-width:180px; pointer-events:none; z-index:2; }
+    .pin-card strong { font-family:'Karla', serif; color:var(--accent); display:block; margin-bottom:.2rem; }
+    .pin-card ul { margin:0; padding-left:1.1rem; }
+    .map-note { text-align:center; color:var(--text-muted); font-style:italic; font-size:.9rem; margin-top:.6rem; }
+    @media (max-width:768px){ .lyric blockquote { font-size:1.8rem; } .pin text { font-size:38px; } .pin-card { font-size:.8rem; min-width:150px; } }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity:1; transform:none; transition:none; }
+      .hero-bg { transform:none !important; }
+    }
+  </style>
+  <style id="desert-sunset">
+    :root { --bg:#f2e2c4; --bg-alt:#e8d3ad; --text:#2e1a2d; --text-muted:#5a3d55; --accent:#a8461a; --accent-dark:#5a2d54; --brown:#5a2d54; --plum:#3b1f3a; --plum2:#5a2d54; --orange:#e0703a; --turq:#3fa7a0; }
+    body { font-family:'Karla', system-ui, sans-serif; font-size:1.05rem; background:var(--bg); color:var(--text);
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .2 0 0 0 0 .2 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    .section.alt { background-color:var(--bg-alt); }
+    h1,h2,h3,h4 { font-family:'Rye', Georgia, serif; font-weight:400; letter-spacing:.5px; }
+    .logo { font-family:'Rye', serif; color:var(--orange); letter-spacing:1px; }
+    .navbar { background:rgba(59,31,58,.97); border-bottom:3px solid var(--orange); }
+    .navbar nav a { color:#f2e2c4; }
+    .navbar nav a:hover { color:var(--orange); }
+    .menu-toggle { color:#f2e2c4; }
+    .hero { color:#f7ead2; }
+    .hero-content h1 { font-family:'Rye', serif; color:#f7ead2; text-shadow:0 3px 14px rgba(30,10,30,.6); }
+    .tagline { color:#ffc79e; font-weight:700; letter-spacing:1px; }
+    .location { color:#f2e2c4; }
+    .hero .btn { color:#f7ead2; border-color:var(--orange); }
+    .hero .btn-primary { background:var(--orange); border-color:var(--orange); color:var(--plum); }
+    .btn { border-radius:3px; color:var(--plum); font-family:'Karla', sans-serif; font-weight:700; letter-spacing:1px; text-transform:uppercase; border-color:var(--plum2); }
+    .btn:hover { color:#f7ead2; background:var(--plum2); }
+    .btn-primary { background:var(--orange); color:var(--plum); border-color:var(--orange); }
+    .section-title { color:var(--plum); }
+    .section-title::after { content:""; display:block; width:120px; height:22px; margin:.6rem auto 0;
+      background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 22'%3E%3Cpath d='M0 20h120' stroke='%235a2d54' stroke-width='2'/%3E%3Cpath d='M40 20 52 8l6 6 6-8 16 14' fill='none' stroke='%235a2d54' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='60' cy='12' r='5' fill='%23e0703a'/%3E%3Cpath d='M20 10l1.5 3 3 .5-2.2 2 .6 3-2.9-1.5-2.9 1.5.6-3-2.2-2 3-.5z' fill='%233fa7a0'/%3E%3Cpath d='M100 10l1.5 3 3 .5-2.2 2 .6 3-2.9-1.5-2.9 1.5.6-3-2.2-2 3-.5z' fill='%233fa7a0'/%3E%3C/svg%3E") center/contain no-repeat; }
+    .subsection-title, .about-text h3, .venue h4 { color:var(--plum2); }
+    .about-img img { border:8px solid #fbf3e3; box-shadow:0 8px 24px rgba(59,31,58,.3); transform:rotate(-1.5deg); }
+    .highlight { background:#fbf3e3; border:1px solid #d6bd92; border-top:3px solid var(--turq); }
+    .song-card { background:#f7ead2; border:1px solid var(--plum2); outline:1px solid var(--plum2); outline-offset:-7px; border-radius:2px; padding:1.6rem 1.4rem; box-shadow:0 4px 12px rgba(59,31,58,.15); position:relative; transition:transform .3s, box-shadow .3s; }
+    .song-card::before { content:"★ ★ ★"; position:absolute; top:-10px; right:14px; background:var(--turq); color:#14302e; font-size:.7rem; font-weight:700; letter-spacing:1.5px; padding:2px 8px; border-radius:2px; }
+    .song-card:hover { transform:rotate(-1.2deg) translateY(-3px); box-shadow:0 10px 22px rgba(59,31,58,.25); }
+    .song-card h4 { color:var(--plum); font-family:'Rye', serif; font-size:1.35rem; text-transform:uppercase; }
+    .video-card { background:#fbf3e3; border:1px solid #d6bd92; }
+    .venue { background:#fbf3e3; border:1px solid var(--plum2); border-left:4px solid var(--orange); }
+    input,textarea,select { background:#fbf3e3; color:var(--text); border:1px solid #b99c74; }
+    footer { background:var(--plum); color:#f2e2c4; border-top:4px solid var(--orange); }
+    footer .social-links a, footer .copyright { color:#e8d3ad; }
+    footer .social-links a:hover { color:var(--orange); }
+    @media (max-width:768px){ .navbar nav { background:rgba(59,31,58,.98); } }
+    /* features restyled */
+    .record-wrap:focus-visible { outline-color:var(--orange); }
+    .record-hint { color:#ffc79e; }
+    .mini-player { background:var(--plum); border:2px solid var(--orange); color:#f2e2c4; font-family:'Karla',sans-serif; box-shadow:0 10px 28px rgba(30,10,30,.45); }
+    .mp-label strong { color:#ffb183; }
+    .mp-disc { background:radial-gradient(circle,#e0703a 0 28%,#111 30% 100%); }
+    .mp-btn { border-color:#e8d3ad; color:#e8d3ad; }
+    .mp-btn:hover { background:var(--orange); color:var(--plum); border-color:var(--orange); }
+    .mp-body select { font-family:'Karla',sans-serif; background:#f7ead2; color:var(--plum); }
+    .polaroid { background:#fbf6ec; box-shadow:0 6px 16px rgba(59,31,58,.3); }
+    .polaroid figcaption, .lightbox figcaption { color:var(--plum); }
+    .lightbox { background:rgba(40,18,38,.86); }
+    .lyric blockquote { color:var(--plum2); }
+    .lyric blockquote::before { content:"✦ "; color:var(--turq); }
+    .lyric figcaption { font-family:'Karla',sans-serif; }
+    .lyric figcaption a { color:var(--accent); }
+    .us-shape { fill:#f7ead2; stroke:var(--plum2); }
+    .pin circle.dot { fill:var(--orange); stroke:var(--plum); }
+    .pin-card { background:#fbf3e3; border-color:#b99c74; border-left-color:var(--orange); }
+    .pin-card strong { font-family:'Rye', serif; font-weight:400; color:var(--plum); }
+    @media (prefers-reduced-motion: reduce) { .song-card { transition:none; } .song-card:hover { transform:none; } }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const images = {
+      storm: 'images/storm.jpg',
+      countingstars: 'images/countingstars.jpg',
+      solitude: 'images/solitude.jpg',
+      takeMeCrazy: 'images/take_me_crazy.jpg',
+      crawledEdge: 'images/crawled_edge.jpg',
+      areYouListening: 'images/are_you_listening.jpg',
+      hurt: 'images/hurt.jpg',
+      profile: 'images/reb_yen_photo.jpg',
+      newbeginning: 'images/newbeginning.jpg'
+    };
+
+    function Navbar() {
+      const [open, setOpen] = useState(false);
+      return (
+        <header className="navbar">
+          <div className="container">
+            <div className="logo">Reb Yen</div>
+            <button className="menu-toggle" onClick={() => setOpen(!open)}>☰</button>
+            <nav className={open ? 'open' : ''}>
+              <a href="#home" onClick={() => setOpen(false)}>Home</a>
+              <a href="#about" onClick={() => setOpen(false)}>About</a>
+              <a href="#music" onClick={() => setOpen(false)}>Music</a>
+              <a href="#gallery" onClick={() => setOpen(false)}>Gallery</a>
+              <a href="#live" onClick={() => setOpen(false)}>Live</a>
+              <a href="#contact" onClick={() => setOpen(false)}>Contact</a>
+            </nav>
+          </div>
+        </header>
+      );
+    }
+
+    function Record({ playing, onClick }) {
+      const grooves = [];
+      for (let r = 46; r > 20; r -= 2.2) grooves.push(<circle key={r} cx="50" cy="50" r={r} fill="none" stroke={r % 4 < 2 ? '#2a2a2a' : '#1a1a1a'} strokeWidth="0.6" />);
+      return (
+        <button className={'record-wrap' + (playing ? ' playing' : '')} onClick={onClick} aria-label={playing ? 'Hide the Bandcamp player' : 'Play Reb Yen on Bandcamp'}>
+          <svg className="record" viewBox="0 0 100 100" aria-hidden="true">
+            <defs><path id="labelArc" d="M50,50 m-12,0 a12,12 0 1,1 24,0 a12,12 0 1,1 -24,0" /></defs>
+            <circle cx="50" cy="50" r="49" fill="#0d0d0d" />
+            {grooves}
+            <path d="M18 30 A38 38 0 0 1 40 13" stroke="rgba(255,255,255,.18)" strokeWidth="3" fill="none" strokeLinecap="round" />
+            <circle cx="50" cy="50" r="18" fill="#e0703a" />
+            <circle cx="50" cy="50" r="16.5" fill="none" stroke="#f2e2c4" strokeWidth="0.4" />
+            <text fontFamily="Rye, serif" fontSize="6" fontWeight="700" fill="#f5efe3" letterSpacing="0.6"><textPath href="#labelArc" startOffset="2%">REB YEN • ORIGINALS • REB YEN •</textPath></text>
+            <text x="50" y="52" textAnchor="middle" fontFamily="Caveat, cursive" fontSize="6.5" fill="#f5efe3">Reb Yen</text>
+            <circle cx="50" cy="50" r="1.4" fill="#f5efe3" />
+          </svg>
+          <svg className="tonearm" viewBox="0 0 22 150" aria-hidden="true">
+            <circle cx="11" cy="11" r="9" fill="#5a2d54" stroke="#f2e2c4" strokeWidth="1.5" />
+            <rect x="9.5" y="11" width="3" height="125" fill="#c9b18f" />
+            <rect x="5" y="132" width="12" height="16" rx="2" fill="#3b2a1e" />
+          </svg>
+        </button>
+      );
+    }
+
+    function Hero({ playing, onRecord }) {
+      const bgRef = React.useRef(null);
+      useEffect(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        let ticking = false;
+        const onScroll = () => {
+          if (ticking) return; ticking = true;
+          requestAnimationFrame(() => {
+            const y = window.scrollY;
+            if (bgRef.current && y < window.innerHeight * 1.2) bgRef.current.style.transform = `translate3d(0, ${y * 0.3}px, 0)`;
+            ticking = false;
+          });
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
+      return (
+        <section className="hero" id="home">
+          <div className="hero-bg" ref={bgRef} aria-hidden="true" style={{ backgroundImage: `linear-gradient(160deg, rgba(59,31,58,0.82) 0%, rgba(90,45,84,0.62) 50%, rgba(224,112,58,0.55) 100%), url(${images.storm})` }}></div>
+          <div className="hero-content">
+            <Record playing={playing} onClick={onRecord} />
+            <p className="record-hint">{playing ? 'now spinning…' : 'drop the needle ↑'}</p>
+            <h1>Reb Yen</h1>
+            <p className="tagline">Singer • Songwriter • Multi-Instrumentalist</p>
+            <p className="location">Boulder, Colorado & Orlando, Florida</p>
+            <div className="hero-buttons">
+              <a href="#music" className="btn btn-primary">Listen to Originals</a>
+              <a href="#contact" className="btn">Book a Show</a>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function About() {
+      return (
+        <section id="about" className="section">
+          <div className="container">
+            <h2 className="section-title">About the Artist</h2>
+            <p className="section-subtitle">Songwriter first. Performer always.</p>
+            <div className="about-grid">
+              <div className="about-img">
+                <img src={images.profile} alt="Reb Yen, singer-songwriter with guitar" />
+              </div>
+              <div className="about-text">
+                <h3>Original Songs, Authentic Voice</h3>
+                <p>Reb Yen is a singer, songwriter, and multi-instrumentalist whose original songs have earned Featured Artist placement on ReverbNation. Every track is written, arranged, and performed by Reb herself — with a little help from friends on select recordings.</p>
+                <p>Playing guitar, banjo, keyboard, and harmonica, she moves fluidly between Americana, folk, country, indie, pop, and rock. Fans and critics describe her as a strong vocalist and a real pro who can perform solo, as a duo, or with a full band.</p>
+                <p>Her path in entertainment spans decades: from the Aman World Music & Dance Ensemble (touring internationally and performing at Lincoln Center) to Walt Disney World, Universal Studios, Hard Rock Café, and the songwriting rooms of Nashville’s Commodore Grille. After a period caring for her late husband, she returned to songwriting with renewed purpose.</p>
+                <div className="highlights">
+                  <div className="highlight"><strong>All Originals</strong><br />Written & arranged by Reb</div>
+                  <div className="highlight"><strong>Multi-Genre</strong><br />Americana to Rock</div>
+                  <div className="highlight"><strong>Live Ready</strong><br />Solo • Duo • Band</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Music() {
+      const songs = [
+        { title: 'Take Me Crazy', duration: '3:48', note: 'Featured original' },
+        { title: 'Should I?', duration: '3:07', note: 'Original' },
+        { title: 'Gotta Let It Go', duration: '3:34', note: 'Original' },
+        { title: 'The Solitude', duration: '1:34', note: 'Original (Live available)' },
+        { title: 'A New Beginning', duration: '3:02', note: 'Original' },
+        { title: 'Are You Listening Now?', duration: '3:09', note: 'Original' },
+        { title: 'Birds Of Prey', duration: '2:37', note: 'Original (Live)' },
+        { title: 'Take A Stand', duration: '3:05', note: 'Original (Live)' }
+      ];
+
+      const videos = [
+        { id: '9mVyHu0EO84', title: 'The Storm (Original)', desc: 'Live at Bricks On Main' },
+        { id: 'IcbPtlFYaXE', title: 'Take Me Crazy (Original)', desc: 'Live in Nashville at the Commodore Grille' },
+        { id: 'bXxxfzs3QAw', title: 'Counting Stars (Cover)', desc: 'Solo acoustic in Boulder' },
+        { id: '4btANinbyOo', title: 'The Solitude (Original)', desc: 'Live at Roots Music Project, Boulder' }
+      ];
+
+      return (
+        <section id="music" className="section alt">
+          <div className="container">
+            <h2 className="section-title">Songwriting & Music</h2>
+            <p className="section-subtitle">Original songs that tell stories. Listen, stream, and support independent music.</p>
+            <div className="songs-grid">
+              {songs.map((song, i) => (
+                <div className="song-card" key={i}>
+                  <h4>{song.title}</h4>
+                  <p>{song.note} • {song.duration}</p>
+                </div>
+              ))}
+            </div>
+            <div className="cta-row">
+              <a href="https://rebyen.bandcamp.com" className="btn btn-primary" target="_blank" rel="noopener noreferrer">Listen on Bandcamp</a>
+              <a href="https://www.reverbnation.com/rebyen" className="btn" target="_blank" rel="noopener noreferrer">Full Catalog on ReverbNation</a>
+            </div>
+            <h3 className="subsection-title">Watch Live Performances</h3>
+            <div className="embed-grid">
+              {videos.map((v, i) => (
+                <div className="video-card" key={i}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${v.id}`}
+                    title={v.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                  <div className="info">
+                    <h4>{v.title}</h4>
+                    <p>{v.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="cta-row">
+              <a href="https://www.youtube.com/@RebYenMusic" className="btn" target="_blank" rel="noopener noreferrer">More Live Videos on YouTube</a>
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    function Gallery() {
+      const galleryImages = [
+        { src: images.storm, alt: 'Reb Yen performing The Storm live with band under purple lights', caption: 'The Storm, live' },
+        { src: images.takeMeCrazy, alt: 'Reb Yen live in Nashville at the Commodore Grille performing Take Me Crazy', caption: 'Nashville, Commodore Grille' },
+        { src: images.crawledEdge, alt: 'Reb Yen and Lenny Charles at Roots Music Project', caption: 'w/ Lenny Charles, Roots Music Project' },
+        { src: images.countingstars, alt: 'Reb Yen covering Counting Stars solo acoustic in Boulder', caption: 'Solo acoustic, Boulder' },
+        { src: images.areYouListening, alt: 'Reb Yen trio live at The Alley', caption: 'Trio at The Alley' },
+        { src: images.hurt, alt: 'Reb Yen performing a cover live', caption: 'Live cover' },
+        { src: images.solitude, alt: 'Reb Yen performing The Solitude', caption: 'The Solitude' },
+        { src: images.profile, alt: 'Portrait of Reb Yen with guitar', caption: 'Reb & her guitar' }
+      ];
+      const tilts = [-4, 3, -2, 5, -5, 2, 4, -3];
+      const drops = [0, 14, -6, 8, 18, -4, 10, 2];
+      const [active, setActive] = useState(null);
+      useEffect(() => {
+        if (active === null) return;
+        const onKey = (e) => { if (e.key === 'Escape') setActive(null); };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+      }, [active]);
+      const cur = active !== null ? galleryImages[active] : null;
+
+      return (
+        <section id="gallery" className="section">
+          <div className="container">
+            <h2 className="section-title">Gallery</h2>
+            <p className="section-subtitle">Moments from live shows and performances</p>
+            <div className="gallery-grid polaroids">
+              {galleryImages.map((img, i) => (
+                <figure className="polaroid" key={i} tabIndex="0" role="button" aria-label={'Enlarge: ' + img.caption}
+                  style={{ '--tilt': tilts[i % tilts.length] + 'deg', '--drop': drops[i % drops.length] + 'px' }}
+                  onClick={() => setActive(i)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(i); } }}>
+                  <img src={img.src} alt={img.alt} loading="lazy" />
+                  <figcaption>{img.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+            {cur && (
+              <div className="lightbox" role="dialog" aria-modal="true" aria-label={cur.caption} onClick={() => setActive(null)}>
+                <figure style={{ '--tilt': tilts[active % tilts.length] + 'deg' }}>
+                  <img src={cur.src} alt={cur.alt} />
+                  <figcaption>{cur.caption}</figcaption>
+                </figure>
+              </div>
+            )}
+          </div>
+        </section>
+      );
+    }
+
+    function Live() {
+      return (
+        <section id="live" className="section alt">
+          <div className="container">
+            <h2 className="section-title">Live & Available</h2>
+            <p className="section-subtitle">Solo acoustic, duo, or full band. Originals and carefully chosen covers.</p>
+            <div className="venues">
+              <div className="venue">
+                <h4>Boulder, Colorado</h4>
+                <p>Roots Music Project<br />St. Julien Hotel<br />Bricks On Main<br />The Alley<br />Attic Bistro</p>
+              </div>
+              <div className="venue">
+                <h4>Orlando & Central Florida</h4>
+                <p>Walt Disney World<br />Universal Studios<br />Hard Rock Café<br />Local venues & private events</p>
+              </div>
+              <div className="venue">
+                <h4>Past Highlights</h4>
+                <p>Lincoln Center (Aman Ensemble)<br />Nashville Commodore Grille<br />European tours<br />Magic & performance art (as Rebekah Yen)</p>
+              </div>
+            </div>
+            <p className="live-note">
+              Available for venues, private events, festivals, and songwriting collaborations.<br />
+              <strong>Formats:</strong> Solo acoustic • Duo • Full band
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    function Contact() {
+      return (
+        <section id="contact" className="section">
+          <div className="container">
+            <h2 className="section-title">Contact & Booking</h2>
+            <p className="section-subtitle">Interested in booking Reb Yen or collaborating on a song? Reach out.</p>
+            <form className="contact-form" onSubmit={(e) => { e.preventDefault(); alert('Thank you! In a real site this would send your message.'); }}>
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="subject">Subject</label>
+                <select id="subject" name="subject">
+                  <option>Booking Inquiry</option>
+                  <option>Songwriting Collaboration</option>
+                  <option>General Message</option>
+                  <option>Press / Media</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+              </div>
+              <button type="submit" className="btn btn-primary full-width">Send Message</button>
+            </form>
+            <p className="contact-links">
+              Or connect via existing platforms:<br />
+              <a href="https://www.youtube.com/@RebYenMusic" target="_blank" rel="noopener noreferrer">YouTube</a> • 
+              <a href="https://rebyen.bandcamp.com" target="_blank" rel="noopener noreferrer">Bandcamp</a> • 
+              <a href="https://www.reverbnation.com/rebyen" target="_blank" rel="noopener noreferrer">ReverbNation</a>
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    function Footer() {
+      return (
+        <footer>
+          <div className="container">
+            <div className="logo">Reb Yen</div>
+            <p>Singer-Songwriter | Boulder, CO & Orlando, FL</p>
+            <div className="social-links">
+              <a href="https://www.youtube.com/@RebYenMusic" target="_blank" rel="noopener noreferrer">YouTube</a>
+              <a href="https://rebyen.bandcamp.com" target="_blank" rel="noopener noreferrer">Bandcamp</a>
+              <a href="https://www.reverbnation.com/rebyen" target="_blank" rel="noopener noreferrer">ReverbNation</a>
+            </div>
+            <p className="copyright">© 2026 Reb Yen. All music, lyrics, and sound recordings registered with the U.S. Copyright Office. All rights reserved.<br />Website design created to highlight her original songwriting and music.</p>
+          </div>
+        </footer>
+      );
+    }
+
+    const TRACKS = [
+      { id: '1638570894', title: 'A New Beginning' },
+      { id: '1827482453', title: 'Take Me Crazy' },
+      { id: '235047036', title: 'Should I' },
+      { id: '244119541', title: 'Out of Body' },
+      { id: '4028698566', title: 'Gotta Let It Go' },
+      { id: '3496903015', title: 'Are You Listening Now' }
+    ];
+
+    function MiniPlayer({ open, setOpen }) {
+      const [track, setTrack] = useState(0);
+      const [visible, setVisible] = useState(true);
+      useEffect(() => { document.body.classList.toggle('player-open', open && visible); }, [open, visible]);
+      useEffect(() => { if (open) setVisible(true); }, [open]);
+      if (!visible) return null;
+      const t = TRACKS[track];
+      return (
+        <div className={'mini-player' + (open ? ' open' : '')} role="region" aria-label="Bandcamp mini player">
+          <div className="mp-bar">
+            <button className="mp-toggle" onClick={() => setOpen(!open)} aria-expanded={open}>
+              <span className="mp-disc" aria-hidden="true"></span>
+              <span className="mp-label">Now playing: <strong>Reb Yen</strong> on Bandcamp{open ? ' — ' + t.title : ''}</span>
+            </button>
+            <button className="mp-btn" onClick={() => setOpen(!open)} aria-label={open ? 'Minimize player' : 'Expand player'}>{open ? '–' : '+'}</button>
+            <button className="mp-btn" onClick={() => { setOpen(false); setVisible(false); document.body.classList.remove('player-open'); }} aria-label="Close player">×</button>
+          </div>
+          {open && (
+            <div className="mp-body">
+              <select value={track} onChange={(e) => setTrack(Number(e.target.value))} aria-label="Choose a track">
+                {TRACKS.map((tr, i) => <option key={tr.id} value={i}>{tr.title}</option>)}
+              </select>
+              <iframe key={t.id} title={t.title + ' by Reb Yen'} seamless
+                src={`https://bandcamp.com/EmbeddedPlayer/track=${t.id}/size=small/bgcol=ffffff/linkcol=8b2f23/transparent=true/`}></iframe>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    function useReveal() {
+      useEffect(() => {
+        const els = document.querySelectorAll('.section-title, .reveal');
+        els.forEach(el => el.classList.add('reveal'));
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+          els.forEach(el => el.classList.add('in')); return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { threshold: 0.15 });
+        els.forEach(el => io.observe(el));
+        return () => io.disconnect();
+      }, []);
+    }
+
+    // Lyrics quoted verbatim from Reb's own Bandcamp track pages.
+    function Lyric({ lines, song, url }) {
+      return (
+        <figure className="lyric reveal">
+          <blockquote>{lines.map((l, i) => <div key={i}>{l}</div>)}</blockquote>
+          <figcaption>— from “<a href={url} target="_blank" rel="noopener noreferrer">{song}</a>” by Reb Yen</figcaption>
+        </figure>
+      );
+    }
+
+    // Pins: only places named elsewhere on this site (Live section and bio).
+    const PLACES = [
+      { id: 'boulder', label: 'Boulder', x: 352, y: 232, title: 'Boulder, Colorado', venues: ['Roots Music Project', 'St. Julien Hotel', 'Bricks On Main', 'The Alley', 'Attic Bistro'] },
+      { id: 'nashville', label: 'Nashville', x: 650, y: 318, title: 'Nashville, Tennessee', venues: ['Commodore Grille'] },
+      { id: 'orlando', label: 'Orlando', x: 792, y: 482, title: 'Orlando & Central Florida', venues: ['Walt Disney World', 'Universal Studios', 'Hard Rock Café'] },
+      { id: 'nyc', label: 'New York', x: 868, y: 178, title: 'New York City', venues: ['Lincoln Center (Aman Ensemble)'] }
+    ];
+
+    function TourMap() {
+      const [active, setActive] = useState(null);
+      const p = PLACES.find(x => x.id === active);
+      return (
+        <section id="map" className="section">
+          <div className="container">
+            <h2 className="section-title">Where Reb Has Played</h2>
+            <div className="tour-map" onMouseLeave={() => setActive(null)}>
+              <svg viewBox="0 0 1000 600" role="img" aria-label="Hand-drawn map of the United States with pins for Boulder, Nashville, Orlando and New York">
+                <defs>
+                  <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" result="n" /><feDisplacementMap in="SourceGraphic" in2="n" scale="6" /></filter>
+                </defs>
+                <path className="us-shape" d="M70,70 L240,88 L420,100 L560,104 L600,96 L640,120 L700,128 L760,118 L800,108 L850,80 L905,60 L930,90 L915,130 L890,150 L905,165 L875,195 L860,215 L835,250 L815,290 L790,330 L765,370 L760,410 L790,460 L815,520 L805,560 L780,545 L755,490 L720,445 L660,440 L600,445 L560,470 L520,470 L500,520 L470,540 L440,500 L410,455 L360,445 L330,430 L280,440 L240,420 L200,400 L160,385 L120,350 L95,300 L70,250 L55,190 L60,120 Z" />
+                <path d="M120,560 q30,-10 60,0 t60,0 t60,0" fill="none" stroke="#c9b48f" strokeWidth="2" />
+                {PLACES.map(pl => (
+                  <g key={pl.id} className={'pin' + (active === pl.id ? ' active' : '')} tabIndex="0" role="button" aria-label={pl.title + ': ' + pl.venues.join(', ')}
+                     onMouseEnter={() => setActive(pl.id)} onFocus={() => setActive(pl.id)} onBlur={() => setActive(null)}
+                     onClick={() => setActive(active === pl.id ? null : pl.id)}>
+                    <circle cx={pl.x} cy={pl.y} r="24" fill="transparent" />
+                    <circle className="dot" cx={pl.x} cy={pl.y} r="10" />
+                    <text x={pl.x + (pl.id === 'nyc' || pl.id === 'orlando' ? -18 : 18)} y={pl.y - 14} textAnchor={pl.id === 'nyc' || pl.id === 'orlando' ? 'end' : 'start'}>{pl.label}</text>
+                  </g>
+                ))}
+              </svg>
+              {p && (
+                <div className="pin-card" style={{ left: (p.x / 10) + '%', top: (p.y / 6) + '%' }}>
+                  <strong>{p.title}</strong>
+                  <ul>{p.venues.map(v => <li key={v}>{v}</li>)}</ul>
+                </div>
+              )}
+            </div>
+            <p className="map-note">Hover or tap a pin to see the venues. Plus European tours.</p>
+          </div>
+        </section>
+      );
+    }
+
+    function App() {
+      const [playerOpen, setPlayerOpen] = useState(window.__PLAYER_OPEN__ === true);
+      useReveal();
+      return (
+        <>
+          <Navbar />
+          <Hero playing={playerOpen} onRecord={() => setPlayerOpen(!playerOpen)} />
+          <About />
+          <Lyric song="A New Beginning" url="https://rebyen.bandcamp.com/track/a-new-beginning"
+            lines={['Don’t call it the end;', 'it’s a new beginning']} />
+          <Music />
+          <Lyric song="Should I?" url="https://rebyen.bandcamp.com/track/should-i"
+            lines={['Should I follow, Should I stay,', 'Should I run the other way']} />
+          <Gallery />
+          <Live />
+          <TourMap />
+          <Contact />
+          <Footer />
+          <MiniPlayer open={playerOpen} setOpen={setPlayerOpen} />
+        </>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
