@@ -242,6 +242,52 @@
     .pin-card { background:#fbf3e3; border-color:#b99c74; border-left-color:var(--orange); }
     .pin-card strong { font-family:'Rye', serif; font-weight:400; color:var(--plum); }
     @media (prefers-reduced-motion: reduce) { .song-card { transition:none; } .song-card:hover { transform:none; } }
+  
+    /* ===== wow2: night sky, flip cards, postcard ===== */
+    .sky { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+    .hero-content { position:relative; z-index:1; }
+    .songs-grid .song-card.flip { padding:0; background:transparent; border:0; outline:0; box-shadow:none; perspective:1000px; min-height:230px; cursor:pointer; }
+    .songs-grid .song-card.flip:hover { transform:none; box-shadow:none; }
+    .flip-inner { position:relative; width:100%; height:100%; min-height:230px; transition:transform .7s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d; }
+    .song-card.flipped .flip-inner { transform:rotateY(180deg); }
+    .flip-face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:#f7ead2; border:1px solid var(--plum2); outline:1px solid var(--plum2); outline-offset:-7px; border-radius:2px; padding:1.4rem; box-shadow:0 4px 12px rgba(59,31,58,.15); display:flex; flex-direction:column; justify-content:center; }
+    .flip-front:hover { box-shadow:0 10px 22px rgba(59,31,58,.25); }
+    .flip-back { transform:rotateY(180deg); background:var(--plum); color:var(--sand); align-items:center; text-align:center; gap:.7rem; }
+    .songs-grid .flip-back blockquote, .songs-grid .flip-back blockquote div { color:#f2e2c4 !important; }
+    .flip-back blockquote { font-family:'Caveat', cursive; font-size:1.35rem; line-height:1.2; margin:0; color:var(--sand); }
+    .flip-back .btn { color:var(--sand); border-color:var(--orange); background:var(--orange); font-size:.75rem; padding:.5rem .9rem; }
+    .flip-hint { font-size:.75rem; color:#a8461a; margin-top:.6rem; letter-spacing:1px; text-transform:uppercase; }
+    .flip-back .flip-hint { color:#f2c9a8; }
+    .song-card.flip:focus-visible { outline:3px solid var(--turq); outline-offset:3px; }
+    @media (prefers-reduced-motion: reduce) {
+      .flip-inner { transition:none; transform:none !important; }
+      .flip-face { transition:opacity .4s; }
+      .flip-back { transform:none; opacity:0; }
+      .song-card.flipped .flip-back { opacity:1; } .song-card.flipped .flip-front { opacity:0; }
+    }
+    .postcard { max-width:860px; margin:0 auto; background:#f2e2c4; background-image:radial-gradient(rgba(90,45,84,.05) 1px, transparent 1px); background-size:4px 4px; border-radius:6px; box-shadow:0 12px 30px rgba(59,31,58,.3), inset 0 0 40px rgba(168,70,26,.12); padding:2rem; position:relative; display:grid; grid-template-columns:1fr 1fr; gap:0; transform-origin:center; }
+    .pc-msg { padding-right:1.8rem; border-right:2px solid rgba(90,45,84,.35); }
+    .pc-addr { padding-left:1.8rem; padding-top:7.5rem; }
+    .pc-head { font-family:'Rye', serif; color:var(--plum); font-size:1.1rem; letter-spacing:2px; margin-bottom:1rem; }
+    .postcard label { font-family:'Caveat', cursive; font-size:1.25rem; color:var(--plum2); text-transform:none; letter-spacing:0; }
+    .postcard input, .postcard select { background:transparent; border:0; border-bottom:1.5px solid rgba(90,45,84,.5); border-radius:0; color:#3b1f3a; padding:.35rem .1rem; }
+    .postcard textarea { background:repeating-linear-gradient(transparent 0 31px, rgba(90,45,84,.3) 31px 32px); border:0; border-radius:0; line-height:32px; min-height:192px; color:#3b1f3a; padding:0 .2rem; font-family:'Caveat', cursive; font-size:1.3rem; }
+    .postcard input:focus, .postcard select:focus, .postcard textarea:focus { outline:2px solid var(--turq); outline-offset:2px; }
+    .pc-stamp { position:absolute; top:1.6rem; right:1.6rem; width:92px; height:112px; background:#fffaf0; padding:6px; border:2px dashed #c9b18f; box-shadow:0 2px 6px rgba(0,0,0,.15); transform:rotate(3deg); }
+    .pc-stamp svg { width:100%; height:100%; display:block; }
+    .pc-postmark { position:absolute; top:2.6rem; right:8.2rem; width:104px; height:104px; border:2.5px solid rgba(168,70,26,.6); border-radius:50%; display:flex; align-items:center; justify-content:center; text-align:center; font-family:'Karla', sans-serif; font-weight:700; font-size:.62rem; letter-spacing:1px; color:rgba(168,70,26,.75); transform:rotate(-14deg); line-height:1.4; }
+    .pc-postmark::after { content:""; position:absolute; left:92px; top:30px; width:70px; height:40px; background:repeating-linear-gradient(0deg, rgba(168,70,26,.55) 0 2px, transparent 2px 9px); }
+    .postcard.thump .pc-stamp { animation:thump .55s cubic-bezier(.3,1.6,.5,1); }
+    .postcard.thump { animation:shake .55s; }
+    @keyframes thump { 0% { transform:rotate(3deg) scale(1.9) translateY(-30px); box-shadow:0 30px 30px rgba(0,0,0,.25); opacity:.4; } 55% { transform:rotate(-4deg) scale(.88); box-shadow:0 0 0 rgba(0,0,0,0); opacity:1; } 100% { transform:rotate(3deg) scale(1); box-shadow:0 2px 6px rgba(0,0,0,.15); } }
+    @keyframes shake { 50% { transform:translateY(3px) rotate(-.3deg); } }
+    @media (max-width:720px) {
+      .postcard { grid-template-columns:1fr; padding:1.3rem; }
+      .pc-msg { padding-right:0; border-right:0; border-bottom:2px solid rgba(90,45,84,.35); padding-bottom:1rem; padding-top:6.5rem; }
+      .pc-addr { padding-left:0; padding-top:1rem; }
+      .pc-stamp { width:72px; height:88px; top:1rem; right:1rem; } .pc-postmark { top:1.3rem; right:auto; left:1rem; width:84px; height:84px; } .pc-postmark::after { display:none; }
+    }
+    @media (prefers-reduced-motion: reduce) { .postcard.thump, .postcard.thump .pc-stamp { animation:none; } }
   </style>
 </head>
 <body>
@@ -311,6 +357,51 @@
       );
     }
 
+    function NightSky() {
+      const ref = React.useRef(null);
+      useEffect(() => {
+        const cv = ref.current, ctx = cv.getContext('2d');
+        const h = new Date().getHours();
+        const night = (h >= 19 || h < 5) ? 1 : (h >= 17 || h < 7) ? 0.6 : 0.25;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let W, H, stars = [], shoot = null, raf = 0, visible = true, last = 0;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const size = () => {
+          W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          const n = Math.round(W * H / 5000);
+          stars = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H * 0.75, r: Math.random() * 1.3 + 0.3, p: Math.random() * 6.28, s: Math.random() * 1.5 + 0.5 }));
+        };
+        const draw = (t) => {
+          ctx.clearRect(0, 0, W, H);
+          for (const st of stars) {
+            const tw = reduce ? 0.8 : 0.55 + 0.45 * Math.sin(st.p + t * 0.001 * st.s);
+            ctx.globalAlpha = night * tw * (1 - st.y / (H * 0.9));
+            ctx.fillStyle = '#fff6e0'; ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, 6.28); ctx.fill();
+          }
+          if (!reduce) {
+            if (!shoot && t - last > 6000 && Math.random() < 0.01) { shoot = { x: Math.random() * W * 0.7, y: Math.random() * H * 0.3, l: 0 }; last = t; }
+            if (shoot) {
+              shoot.l += 0.02; const len = 120, dx = shoot.x + shoot.l * 600, dy = shoot.y + shoot.l * 260;
+              const g = ctx.createLinearGradient(dx, dy, dx - len, dy - len * 0.43);
+              g.addColorStop(0, 'rgba(255,246,224,' + (night * (1 - shoot.l)) + ')'); g.addColorStop(1, 'rgba(255,246,224,0)');
+              ctx.globalAlpha = 1; ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(dx, dy); ctx.lineTo(dx - len, dy - len * 0.43); ctx.stroke();
+              if (shoot.l >= 1) shoot = null;
+            }
+          }
+          ctx.globalAlpha = 1;
+        };
+        const loop = (t) => { draw(t); if (visible) raf = requestAnimationFrame(loop); };
+        size();
+        if (reduce) { draw(0); } else raf = requestAnimationFrame(loop);
+        const io = new IntersectionObserver(([e]) => { const was = visible; visible = e.isIntersecting; if (visible && !was && !reduce) raf = requestAnimationFrame(loop); if (!visible) cancelAnimationFrame(raf); });
+        io.observe(cv);
+        const onR = () => { size(); if (reduce) draw(0); };
+        window.addEventListener('resize', onR);
+        return () => { cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener('resize', onR); };
+      }, []);
+      return <canvas className="sky" ref={ref} aria-hidden="true"></canvas>;
+    }
+
     function Hero({ playing, onRecord }) {
       const bgRef = React.useRef(null);
       useEffect(() => {
@@ -331,6 +422,7 @@
       return (
         <section className="hero" id="home">
           <div className="hero-bg" ref={bgRef} aria-hidden="true" style={{ backgroundImage: `linear-gradient(160deg, rgba(59,31,58,0.82) 0%, rgba(90,45,84,0.62) 50%, rgba(224,112,58,0.55) 100%), url(${images.storm})` }}></div>
+          <NightSky />
           <div className="hero-content">
             <Record playing={playing} onClick={onRecord} />
             <p className="record-hint">{playing ? 'now spinning…' : 'drop the needle ↑'}</p>
@@ -373,6 +465,34 @@
       );
     }
 
+    function FlipCard({ song, info }) {
+      const [f, setF] = useState(false);
+      const toggle = () => setF(!f);
+      const url = info ? 'https://rebyen.bandcamp.com/track/' + info.slug : 'https://rebyen.bandcamp.com';
+      const play = (e) => {
+        e.stopPropagation();
+        if (info && info.id) { e.preventDefault(); window.dispatchEvent(new CustomEvent('play-track', { detail: { id: info.id, title: song.title.replace('?', '') } })); }
+      };
+      return (
+        <div className={'song-card flip' + (f ? ' flipped' : '')} role="button" tabIndex="0" aria-pressed={f}
+          aria-label={song.title + (f ? ' — showing lyrics' : ' — flip for lyrics')} onClick={toggle}
+          onKeyDown={(e) => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(); } }}>
+          <div className="flip-inner">
+            <div className="flip-face flip-front" aria-hidden={f}>
+              <h4>{song.title}</h4>
+              <p>{song.note} • {song.duration}</p>
+              <span className="flip-hint">{info && info.lines ? 'Flip for lyrics ↻' : 'Flip to play ↻'}</span>
+            </div>
+            <div className="flip-face flip-back" aria-hidden={!f}>
+              {info && info.lines && <blockquote>{info.lines.map((l, k) => <div key={k}>{l}</div>)}</blockquote>}
+              <a className="btn" href={url} target="_blank" rel="noopener noreferrer" tabIndex={f ? 0 : -1} onClick={play}>Play on Bandcamp</a>
+              <span className="flip-hint">Lyrics from Bandcamp</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     function Music() {
       const songs = [
         { title: 'Take Me Crazy', duration: '3:48', note: 'Featured original' },
@@ -384,6 +504,7 @@
         { title: 'Birds Of Prey', duration: '2:37', note: 'Original (Live)' },
         { title: 'Take A Stand', duration: '3:05', note: 'Original (Live)' }
       ];
+      const LYR = {"Take Me Crazy": {"slug": "take-me-crazy", "id": "1827482453", "lines": ["So, Take me, Take me, If you can", "Take me, Take me, As I am"]}, "Should I?": {"slug": "should-i", "id": "235047036", "lines": ["Fact or fiction,  Words were heard,", "Words were felt, Just never said.", "Should I follow,  Should I stay,", "Should I run the other way"]}, "Gotta Let It Go": {"slug": "gotta-let-it-go-2", "id": "4028698566", "lines": ["Hey there sista what ya doing", "Why you never have no time for me", "Hey there sister, what ya thinking", "The man is taken his heart ain't free"]}, "The Solitude": {"slug": "the-solitude-live", "id": "1271869476", "lines": ["The solitude, the lonely skies", "The hidden secrets, in your eyes", "It can’t confine, the endless time", "The road ahead, plays on your mind"]}, "A New Beginning": {"slug": "a-new-beginning", "id": "1638570894", "lines": ["All these years in the blink of an eye", "All these years don’t say goodbye", "Don’t call it the end; it’s a new beginning"]}, "Are You Listening Now?": {"slug": "are-you-listening-now", "id": "3496903015", "lines": ["Are you listening now, are you humming along,", "do you feel the sound", "Gotta be your own fan, when nobody else… can"]}, "Birds Of Prey": {"slug": "birds-of-prey-live", "id": "1698636065", "lines": ["Birds of prey, what do you need today", "My likes, my praise, to make it though the day.", "Take what you need, and fly away"]}, "Take A Stand": {"slug": "take-a-stand-live", "id": "1560882348", "lines": ["Who’s gonna be the one. Who’s gonna get it done.", "Who’s gonna make a plan.  Who’s gonna take a stand."]}};
 
       const videos = [
         { id: '9mVyHu0EO84', title: 'The Storm (Original)', desc: 'Live at Bricks On Main' },
@@ -399,10 +520,7 @@
             <p className="section-subtitle">Original songs that tell stories. Listen, stream, and support independent music.</p>
             <div className="songs-grid">
               {songs.map((song, i) => (
-                <div className="song-card" key={i}>
-                  <h4>{song.title}</h4>
-                  <p>{song.note} • {song.duration}</p>
-                </div>
+                <FlipCard key={i} song={song} info={LYR[song.title]} />
               ))}
             </div>
             <div className="cta-row">
@@ -514,12 +632,32 @@
     }
 
     function Contact() {
+      const formRef = React.useRef(null);
+      const stampThen = (done) => {
+        const f = formRef.current;
+        if (!f || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { done(); return; }
+        f.classList.remove('thump'); void f.offsetWidth; f.classList.add('thump');
+        setTimeout(() => { f.classList.remove('thump'); done(); }, 600);
+      };
       return (
         <section id="contact" className="section">
           <div className="container">
             <h2 className="section-title">Contact & Booking</h2>
             <p className="section-subtitle">Interested in booking Reb Yen or collaborating on a song? Reach out.</p>
-            <form className="contact-form" onSubmit={(e) => { e.preventDefault(); alert('Thank you! In a real site this would send your message.'); }}>
+            <form className="contact-form postcard" ref={formRef} onSubmit={(e) => { e.preventDefault(); stampThen(() => { alert('Thank you! In a real site this would send your message.'); }); }}>
+              <div className="pc-stamp" aria-hidden="true">
+                <svg viewBox="0 0 80 100"><rect width="80" height="100" fill="#3b1f3a"/><rect y="45" width="80" height="55" fill="#e0703a"/><circle cx="40" cy="58" r="17" fill="#f2e2c4"/><path d="M0 100 L0 72 L22 50 L36 64 L52 44 L80 74 L80 100 Z" fill="#5a2d54"/><circle cx="18" cy="16" r="1.6" fill="#3fa7a0"/><circle cx="60" cy="12" r="1.2" fill="#3fa7a0"/><circle cx="46" cy="26" r="1" fill="#f2e2c4"/><text x="40" y="94" textAnchor="middle" fontFamily="Rye, serif" fontSize="8" fill="#f2e2c4">REB YEN</text></svg>
+              </div>
+              <div className="pc-postmark" aria-hidden="true">BOULDER<br/>COLORADO<br/>★ 2026 ★</div>
+              <div className="pc-msg">
+              <div className="pc-head">Greetings from…</div>
+              <div className="form-group">
+                <label htmlFor="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+              </div>
+              </div>
+              <div className="pc-addr">
+              <div className="pc-head">To: Reb Yen</div>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input type="text" id="name" name="name" required />
@@ -537,11 +675,8 @@
                   <option>Press / Media</option>
                 </select>
               </div>
-              <div className="form-group">
-                <label htmlFor="message">Message</label>
-                <textarea id="message" name="message" required></textarea>
-              </div>
               <button type="submit" className="btn btn-primary full-width">Send Message</button>
+              </div>
             </form>
             <p className="contact-links">
               Or connect via existing platforms:<br />
@@ -577,7 +712,10 @@
       { id: '235047036', title: 'Should I' },
       { id: '244119541', title: 'Out of Body' },
       { id: '4028698566', title: 'Gotta Let It Go' },
-      { id: '3496903015', title: 'Are You Listening Now' }
+      { id: '3496903015', title: 'Are You Listening Now' },
+      { id: '1560882348', title: 'Take A Stand (live)' },
+      { id: '1271869476', title: 'The Solitude (live)' },
+      { id: '1698636065', title: 'Birds Of Prey (live)' }
     ];
 
     function MiniPlayer({ open, setOpen }) {
@@ -585,6 +723,10 @@
       const [visible, setVisible] = useState(true);
       useEffect(() => { document.body.classList.toggle('player-open', open && visible); }, [open, visible]);
       useEffect(() => { if (open) setVisible(true); }, [open]);
+      useEffect(() => {
+        const h = (e) => { const i = TRACKS.findIndex(t => t.id === e.detail.id); if (i >= 0) { setTrack(i); setVisible(true); setOpen(true); } };
+        window.addEventListener('play-track', h); return () => window.removeEventListener('play-track', h);
+      }, [setOpen]);
       if (!visible) return null;
       const t = TRACKS[track];
       return (
