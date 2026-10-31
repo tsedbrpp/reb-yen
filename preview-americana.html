@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reb Yen | Singer-Songwriter | Americana, Folk & Indie Music | Boulder, CO</title>
+  <meta name="description" content="Reb Yen is a singer-songwriter and multi-instrumentalist based in Boulder, Colorado and Orlando, Florida. Discover her original Americana, folk, indie, and country songs, live performances, and songwriting.">
+  <meta name="keywords" content="Reb Yen, Rebekah Yen, singer songwriter Boulder Colorado, Americana songwriter, folk music, indie music Colorado, original songs, live music Boulder, Orlando musician, multi-instrumentalist">
+  <meta property="og:title" content="Reb Yen | Singer-Songwriter">
+  <meta property="og:description" content="Original songs and live performances by Reb Yen. Americana, folk, indie, and more from Boulder, CO & Orlando, FL.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/storm.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --bg-alt: #1a1a1a;
+      --text: #f5f5f0;
+      --text-muted: #b8b8b0;
+      --accent: #c9a87c;
+      --accent-dark: #a88b5e;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; }
+    a { color: var(--accent); text-decoration: none; transition: color 0.3s; }
+    a:hover { color: var(--accent-dark); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .navbar { position: fixed; top: 0; width: 100%; background: rgba(15,15,15,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid rgba(201,168,124,0.2); padding: 0.5rem 0; }
+    .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--accent); }
+    .navbar nav { display: flex; gap: 2rem; }
+    .navbar nav a { color: var(--text); font-weight: 500; }
+    .menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+    .hero { height: 100vh; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; }
+    .hero-content h1 { font-size: 5rem; margin-bottom: 0.5rem; letter-spacing: 2px; }
+    .tagline { font-size: 1.4rem; color: var(--accent); margin-bottom: 0.5rem; font-weight: 300; }
+    .location { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 0.9rem 2rem; border: 2px solid var(--accent); color: var(--text); border-radius: 4px; font-weight: 500; transition: all 0.3s; background: transparent; cursor: pointer; }
+    .btn:hover { background: var(--accent); color: var(--bg); }
+    .btn-primary { background: var(--accent); color: var(--bg); }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .full-width { width: 100%; }
+    .section { padding: 6rem 0; }
+    .section.alt { background: var(--bg-alt); }
+    .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 1rem; color: var(--accent); }
+    .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem; }
+    .subsection-title { text-align: center; color: var(--accent); margin: 3rem 0 1.5rem; font-size: 1.8rem; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: center; }
+    .about-img img { width: 100%; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+    .about-text h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--accent); }
+    .about-text p { margin-bottom: 1rem; color: var(--text-muted); }
+    .highlights { display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .highlight { background: rgba(201,168,124,0.1); padding: 1rem; border-radius: 6px; flex: 1; min-width: 150px; text-align: center; }
+    .songs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .song-card { background: var(--bg); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(201,168,124,0.2); transition: transform 0.3s; }
+    .song-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+    .song-card h4 { color: var(--accent); margin-bottom: 0.5rem; }
+    .cta-row { text-align: center; margin: 3rem 0; }
+    .cta-row .btn { margin: 0.5rem; }
+    .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .video-card { background: var(--bg); border-radius: 8px; overflow: hidden; }
+    .video-card img { width: 100%; height: 200px; object-fit: cover; }
+    .video-card iframe { width: 100%; height: 220px; border: none; border-radius: 0; }
+    .embed-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; margin-top: 1rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+    .gallery-item { overflow: hidden; border-radius: 8px; }
+    .gallery-item img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.4s; }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .venues { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+    .venue { text-align: center; padding: 1.5rem; background: rgba(201,168,124,0.05); border-radius: 8px; }
+    .venue h4 { color: var(--accent); margin-bottom: 0.5rem; }
+    .live-note { text-align: center; margin-top: 3rem; font-size: 1.1rem; }
+    .contact-form { max-width: 600px; margin: 0 auto; }
+    .form-group { margin-bottom: 1.5rem; }
+    label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); }
+    input, textarea, select { width: 100%; padding: 0.9rem; background: var(--bg); border: 1px solid rgba(201,168,124,0.3); color: var(--text); border-radius: 4px; font-family: inherit; }
+    textarea { min-height: 120px; resize: vertical; }
+    .contact-links { text-align: center; margin-top: 2rem; color: var(--text-muted); }
+    footer { background: #0a0a0a; padding: 3rem 0 1.5rem; text-align: center; border-top: 1px solid rgba(201,168,124,0.2); }
+    .social-links { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; }
+    .social-links a { color: var(--text-muted); font-size: 1.1rem; }
+    .copyright { color: var(--text-muted); font-size: 0.9rem; }
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 3rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .navbar nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(15,15,15,0.98); padding: 1rem; }
+      .navbar nav.open { display: flex; }
+      .menu-toggle { display: block; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MusicGroup",
+    "name": "Reb Yen",
+    "alternateName": "Rebekah Yen",
+    "description": "Singer-songwriter and multi-instrumentalist specializing in Americana, folk, indie, country, and rock. Based in Boulder, Colorado and Orlando, Florida.",
+    "genre": ["Americana", "Folk", "Indie", "Country", "Pop", "Rock"],
+    "sameAs": ["https://www.reverbnation.com/rebyen", "https://rebyen.bandcamp.com", "https://www.youtube.com/@RebYenMusic"]
+  }
+  </script>
+
+  <style id="warm-americana">
+    :root { --bg:#f5efe3; --bg-alt:#ebe1cf; --text:#2e2219; --text-muted:#5e4b3c; --accent:#8b2f23; --accent-dark:#6e231a; --brown:#7a5232; }
+    body { font-family:'Lora', Georgia, serif; background:var(--bg); color:var(--text);
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    h1,h2,h3,h4 { font-family:'Bitter', Georgia, serif; }
+    .logo { font-family:'Zilla Slab', serif; color:var(--accent); letter-spacing:1px; }
+    .navbar { background:rgba(245,239,227,.96); border-bottom:2px solid var(--brown); }
+    .navbar nav a { color:var(--text); }
+    .navbar nav a:hover { color:var(--accent); }
+    .menu-toggle { color:var(--text); }
+    .hero { color:#f5efe3; }
+    .hero-content h1 { font-family:'Zilla Slab', serif; color:#f5efe3; text-shadow:0 2px 12px rgba(0,0,0,.5); }
+    .tagline { color:#e8c99a; font-style:italic; font-weight:400; }
+    .location { color:#e6dccb; }
+    .hero .btn { color:#f5efe3; border-color:#e8c99a; }
+    .hero .btn-primary { background:var(--accent); border-color:var(--accent); }
+    .btn { border-radius:2px; color:var(--text); font-family:'Bitter', serif; letter-spacing:.5px; }
+    .btn:hover { color:#f5efe3; }
+    .btn-primary { background:var(--accent); color:#f5efe3; border-color:var(--accent); }
+    .section-title { color:var(--accent); }
+    .section-title::after { content:""; display:block; width:80px; height:3px; margin:.8rem auto 0; background:var(--brown); }
+    .subsection-title, .about-text h3, .venue h4 { color:var(--brown); }
+    .about-img img { border:8px solid #fffaf0; box-shadow:0 8px 24px rgba(60,40,20,.25); transform:rotate(-1.5deg); }
+    .highlight { background:#fffaf0; border:1px solid #d8c7a8; }
+    .song-card { background:#fffaf0; border:1px solid #d8c7a8; border-left:5px solid var(--accent); border-radius:3px; box-shadow:0 3px 10px rgba(60,40,20,.08); }
+    .song-card h4 { color:var(--accent); }
+    .video-card { background:#fffaf0; border:1px solid #d8c7a8; }
+    .venue { background:#fffaf0; border:1px dashed var(--brown); }
+    input,textarea,select { background:#fffaf0; color:var(--text); border:1px solid #c9b48f; }
+    footer { background:#2e2219; color:#e6dccb; border-top:4px solid var(--accent); }
+    footer .social-links a, footer .copyright { color:#d9c9ae; }
+    @media (max-width:768px){ .navbar nav { background:rgba(245,239,227,.98); } }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const images = {
+      storm: 'images/storm.jpg',
+      countingstars: 'images/countingstars.jpg',
+      solitude: 'images/solitude.jpg',
+      takeMeCrazy: 'images/take_me_crazy.jpg',
+      crawledEdge: 'images/crawled_edge.jpg',
+      areYouListening: 'images/are_you_listening.jpg',
+      hurt: 'images/hurt.jpg',
+      profile: 'images/reb_yen_photo.jpg',
+      newbeginning: 'images/newbeginning.jpg'
+    };
+
+    function Navbar() {
+      const [open, setOpen] = useState(false);
+      return (
+        <header className="navbar">
+          <div className="container">
+            <div className="logo">Reb Yen</div>
+            <button className="menu-toggle" onClick={() => setOpen(!open)}>☰</button>
+            <nav className={open ? 'open' : ''}>
+              <a href="#home" onClick={() => setOpen(false)}>Home</a>
+              <a href="#about" onClick={() => setOpen(false)}>About</a>
+              <a href="#music" onClick={() => setOpen(false)}>Music</a>
+              <a href="#gallery" onClick={() => setOpen(false)}>Gallery</a>
+              <a href="#live" onClick={() => setOpen(false)}>Live</a>
+              <a href="#contact" onClick={() => setOpen(false)}>Contact</a>
+            </nav>
+          </div>
+        </header>
+      );
+    }
+
+    function Hero() {
+      return (
+        <section className="hero" id="home" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.7)), url(${images.storm})` }}>
+          <div className="hero-content">
+            <h1>Reb Yen</h1>
+            <p className="tagline">Singer • Songwriter • Multi-Instrumentalist</p>
+            <p className="location">Boulder, Colorado & Orlando, Florida</p>
+            <div className="hero-buttons">
+              <a href="#music" className="btn btn-primary">Listen to Originals</a>
+              <a href="#contact" className="btn">Book a Show</a>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function About() {
+      return (
+        <section id="about" className="section">
+          <div className="container">
+            <h2 className="section-title">About the Artist</h2>
+            <p className="section-subtitle">Songwriter first. Performer always.</p>
+            <div className="about-grid">
+              <div className="about-img">
+                <img src={images.profile} alt="Reb Yen, singer-songwriter with guitar" />
+              </div>
+              <div className="about-text">
+                <h3>Original Songs, Authentic Voice</h3>
+                <p>Reb Yen is a singer, songwriter, and multi-instrumentalist whose original songs have earned Featured Artist placement on ReverbNation. Every track is written, arranged, and performed by Reb herself — with a little help from friends on select recordings.</p>
+                <p>Playing guitar, banjo, keyboard, and harmonica, she moves fluidly between Americana, folk, country, indie, pop, and rock. Fans and critics describe her as a strong vocalist and a real pro who can perform solo, as a duo, or with a full band.</p>
+                <p>Her path in entertainment spans decades: from the Aman World Music & Dance Ensemble (touring internationally and performing at Lincoln Center) to Walt Disney World, Universal Studios, Hard Rock Café, and the songwriting rooms of Nashville’s Commodore Grille. After a period caring for her late husband, she returned to songwriting with renewed purpose.</p>
+                <div className="highlights">
+                  <div className="highlight"><strong>All Originals</strong><br />Written & arranged by Reb</div>
+                  <div className="highlight"><strong>Multi-Genre</strong><br />Americana to Rock</div>
+                  <div className="highlight"><strong>Live Ready</strong><br />Solo • Duo • Band</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Music() {
+      const songs = [
+        { title: 'Take Me Crazy', duration: '3:48', note: 'Featured original' },
+        { title: 'Should I?', duration: '3:07', note: 'Original' },
+        { title: 'Gotta Let It Go', duration: '3:34', note: 'Original' },
+        { title: 'The Solitude', duration: '1:34', note: 'Original (Live available)' },
+        { title: 'A New Beginning', duration: '3:02', note: 'Original' },
+        { title: 'Are You Listening Now?', duration: '3:09', note: 'Original' },
+        { title: 'Birds Of Prey', duration: '2:37', note: 'Original (Live)' },
+        { title: 'Take A Stand', duration: '3:05', note: 'Original (Live)' }
+      ];
+
+      const videos = [
+        { id: '9mVyHu0EO84', title: 'The Storm (Original)', desc: 'Live at Bricks On Main' },
+        { id: 'IcbPtlFYaXE', title: 'Take Me Crazy (Original)', desc: 'Live in Nashville at the Commodore Grille' },
+        { id: 'bXxxfzs3QAw', title: 'Counting Stars (Cover)', desc: 'Solo acoustic in Boulder' },
+        { id: '4btANinbyOo', title: 'The Solitude (Original)', desc: 'Live at Roots Music Project, Boulder' }
+      ];
+
+      return (
+        <section id="music" className="section alt">
+          <div className="container">
+            <h2 className="section-title">Songwriting & Music</h2>
+            <p className="section-subtitle">Original songs that tell stories. Listen, stream, and support independent music.</p>
+            <div className="songs-grid">
+              {songs.map((song, i) => (
+                <div className="song-card" key={i}>
+                  <h4>{song.title}</h4>
+                  <p>{song.note} • {song.duration}</p>
+                </div>
+              ))}
+            </div>
+            <div className="cta-row">
+              <a href="https://rebyen.bandcamp.com" className="btn btn-primary" target="_blank" rel="noopener noreferrer">Listen on Bandcamp</a>
+              <a href="https://www.reverbnation.com/rebyen" className="btn" target="_blank" rel="noopener noreferrer">Full Catalog on ReverbNation</a>
+            </div>
+            <h3 className="subsection-title">Listen on Bandcamp</h3>
+            <div className="bandcamp-player" style={{ maxWidth: '700px', margin: '0 auto 2.5rem' }}>
+              <iframe
+                style={{ border: 0, width: '100%', height: '120px' }}
+                src="https://bandcamp.com/EmbeddedPlayer/track=1638570894/size=large/bgcol=333333/linkcol=e99708/tracklist=false/artwork=small/transparent=true/"
+                title="A New Beginning by Reb Yen"
+                seamless
+              ><a href="https://rebyen.bandcamp.com/track/a-new-beginning">A New Beginning by Reb Yen</a></iframe>
+            </div>
+            <h3 className="subsection-title">Watch Live Performances</h3>
+            <div className="embed-grid">
+              {videos.map((v, i) => (
+                <div className="video-card" key={i}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${v.id}`}
+                    title={v.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                  <div className="info">
+                    <h4>{v.title}</h4>
+                    <p>{v.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="cta-row">
+              <a href="https://www.youtube.com/@RebYenMusic" className="btn" target="_blank" rel="noopener noreferrer">More Live Videos on YouTube</a>
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    function Gallery() {
+      const galleryImages = [
+        { src: images.storm, alt: 'Reb Yen performing The Storm live with band under purple lights' },
+        { src: images.takeMeCrazy, alt: 'Reb Yen live in Nashville at the Commodore Grille performing Take Me Crazy' },
+        { src: images.crawledEdge, alt: 'Reb Yen and Lenny Charles at Roots Music Project' },
+        { src: images.countingstars, alt: 'Reb Yen covering Counting Stars solo acoustic in Boulder' },
+        { src: images.areYouListening, alt: 'Reb Yen trio live at The Alley' },
+        { src: images.hurt, alt: 'Reb Yen performing a cover live' },
+        { src: images.solitude, alt: 'Reb Yen performing The Solitude' },
+        { src: images.profile, alt: 'Portrait of Reb Yen with guitar' }
+      ];
+
+      return (
+        <section id="gallery" className="section">
+          <div className="container">
+            <h2 className="section-title">Gallery</h2>
+            <p className="section-subtitle">Moments from live shows and performances</p>
+            <div className="gallery-grid">
+              {galleryImages.map((img, i) => (
+                <div className="gallery-item" key={i}>
+                  <img src={img.src} alt={img.alt} loading="lazy" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Live() {
+      return (
+        <section id="live" className="section alt">
+          <div className="container">
+            <h2 className="section-title">Live & Available</h2>
+            <p className="section-subtitle">Solo acoustic, duo, or full band. Originals and carefully chosen covers.</p>
+            <div className="venues">
+              <div className="venue">
+                <h4>Boulder, Colorado</h4>
+                <p>Roots Music Project<br />St. Julien Hotel<br />Bricks On Main<br />The Alley<br />Attic Bistro</p>
+              </div>
+              <div className="venue">
+                <h4>Orlando & Central Florida</h4>
+                <p>Walt Disney World<br />Universal Studios<br />Hard Rock Café<br />Local venues & private events</p>
+              </div>
+              <div className="venue">
+                <h4>Past Highlights</h4>
+                <p>Lincoln Center (Aman Ensemble)<br />Nashville Commodore Grille<br />European tours<br />Magic & performance art (as Rebekah Yen)</p>
+              </div>
+            </div>
+            <p className="live-note">
+              Available for venues, private events, festivals, and songwriting collaborations.<br />
+              <strong>Formats:</strong> Solo acoustic • Duo • Full band
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    function Contact() {
+      return (
+        <section id="contact" className="section">
+          <div className="container">
+            <h2 className="section-title">Contact & Booking</h2>
+            <p className="section-subtitle">Interested in booking Reb Yen or collaborating on a song? Reach out.</p>
+            <form className="contact-form" onSubmit={(e) => { e.preventDefault(); alert('Thank you! In a real site this would send your message.'); }}>
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="subject">Subject</label>
+                <select id="subject" name="subject">
+                  <option>Booking Inquiry</option>
+                  <option>Songwriting Collaboration</option>
+                  <option>General Message</option>
+                  <option>Press / Media</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+              </div>
+              <button type="submit" className="btn btn-primary full-width">Send Message</button>
+            </form>
+            <p className="contact-links">
+              Or connect via existing platforms:<br />
+              <a href="https://www.youtube.com/@RebYenMusic" target="_blank" rel="noopener noreferrer">YouTube</a> • 
+              <a href="https://rebyen.bandcamp.com" target="_blank" rel="noopener noreferrer">Bandcamp</a> • 
+              <a href="https://www.reverbnation.com/rebyen" target="_blank" rel="noopener noreferrer">ReverbNation</a>
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    function Footer() {
+      return (
+        <footer>
+          <div className="container">
+            <div className="logo">Reb Yen</div>
+            <p>Singer-Songwriter | Boulder, CO & Orlando, FL</p>
+            <div className="social-links">
+              <a href="https://www.youtube.com/@RebYenMusic" target="_blank" rel="noopener noreferrer">YouTube</a>
+              <a href="https://rebyen.bandcamp.com" target="_blank" rel="noopener noreferrer">Bandcamp</a>
+              <a href="https://www.reverbnation.com/rebyen" target="_blank" rel="noopener noreferrer">ReverbNation</a>
+            </div>
+            <p className="copyright">© 2026 Reb Yen. All music, lyrics, and sound recordings registered with the U.S. Copyright Office. All rights reserved.<br />Website design created to highlight her original songwriting and music.</p>
+          </div>
+        </footer>
+      );
+    }
+
+    function App() {
+      return (
+        <>
+          <Navbar />
+          <Hero />
+          <About />
+          <Music />
+          <Gallery />
+          <Live />
+          <Contact />
+          <Footer />
+        </>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
