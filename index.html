@@ -227,6 +227,15 @@
               <a href="https://rebyen.bandcamp.com" className="btn btn-primary" target="_blank" rel="noopener noreferrer">Listen on Bandcamp</a>
               <a href="https://www.reverbnation.com/rebyen" className="btn" target="_blank" rel="noopener noreferrer">Full Catalog on ReverbNation</a>
             </div>
+            <h3 className="subsection-title">Listen on Bandcamp</h3>
+            <div className="bandcamp-player" style={{ maxWidth: '700px', margin: '0 auto 2.5rem' }}>
+              <iframe
+                style={{ border: 0, width: '100%', height: '120px' }}
+                src="https://bandcamp.com/EmbeddedPlayer/track=1638570894/size=large/bgcol=333333/linkcol=e99708/tracklist=false/artwork=small/transparent=true/"
+                title="A New Beginning by Reb Yen"
+                seamless
+              ><a href="https://rebyen.bandcamp.com/track/a-new-beginning">A New Beginning by Reb Yen</a></iframe>
+            </div>
             <h3 className="subsection-title">Watch Live Performances</h3>
             <div className="embed-grid">
               {videos.map((v, i) => (
