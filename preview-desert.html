@@ -289,6 +289,23 @@
     }
     @media (prefers-reduced-motion: reduce) { .postcard.thump, .postcard.thump .pc-stamp { animation:none; } }
   </style>
+
+  <style id="hero-left">
+    .hero { justify-content:flex-start; text-align:left; }
+    .hero-content { align-items:flex-start; width:min(46%, 560px); margin-left:max(5vw, calc((100vw - 1200px)/2 + 20px)); }
+    .hero-content .record-wrap { margin:0 0 1.2rem 0; }
+    .hero-buttons { justify-content:flex-start; }
+    .hero-content h1 { font-size:clamp(2.8rem, 6vw, 5rem); line-height:1.1; }
+    .hero .btn:focus-visible, .hero a:focus-visible { outline:3px solid #ffc79e; outline-offset:3px; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media (max-width:768px){
+      .hero { align-items:flex-end; padding-bottom:5rem; }
+      .hero-content { width:auto; margin:0 1.25rem; }
+      .hero-content .record-wrap { width:84px; height:84px; }
+      .hero-content .tonearm { display:none; }
+      .hero-bg { background-image:linear-gradient(180deg, rgba(42,21,41,.25) 0%, rgba(42,21,41,.75) 45%, #2a1529 75%), url(images/hero-guitar.jpg) !important; background-size:100% 100%, cover !important; background-position:center, 60% 15% !important; }
+    }
+  </style>
 </head>
 <body>
   <div id="root"></div>
@@ -421,13 +438,14 @@
         return () => window.removeEventListener('scroll', onScroll);
       }, []);
       return (
-        <section className="hero" id="home">
+        <section className="hero" id="home" aria-labelledby="hero-title">
           <div className="hero-bg" ref={bgRef} aria-hidden="true" style={{ backgroundImage: `linear-gradient(90deg, #2a1529 0%, #2a1529 50%, rgba(42,21,41,0.6) 60%, rgba(42,21,41,0) 75%), linear-gradient(160deg, rgba(59,31,58,0.7) 0%, rgba(90,45,84,0.45) 50%, rgba(224,112,58,0.45) 100%), url(${images.heroGuitar})`, backgroundSize: '100% 100%, 100% 100%, auto 112%', backgroundPosition: 'center, center, 100% 20%', backgroundRepeat: 'no-repeat', backgroundColor: '#2a1529' }}></div>
           <NightSky />
+          <p className="sr-only">Photo: Reb Yen playing an acoustic guitar at a microphone in front of a brick wall.</p>
           <div className="hero-content">
             <Record playing={playing} onClick={onRecord} />
-            <p className="record-hint">{playing ? 'now spinning…' : 'drop the needle ↑'}</p>
-            <h1>Reb Yen</h1>
+            <p className="record-hint" aria-live="polite">{playing ? 'now spinning…' : 'drop the needle ↑'}</p>
+            <h1 id="hero-title">Reb Yen</h1>
             <p className="tagline">Singer • Songwriter • Multi-Instrumentalist</p>
             <p className="location">Boulder, Colorado & Orlando, Florida</p>
             <div className="hero-buttons">
