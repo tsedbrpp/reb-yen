@@ -1,21 +1,21 @@
 {
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "www.rebyen.com" }],
-      "destination": "https://rebyen.com/:path*",
+      "destination": "https://rebyen.com/$1",
       "permanent": true
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "rebyenmusic.com" }],
-      "destination": "https://rebyen.com/:path*",
+      "destination": "https://rebyen.com/$1",
       "permanent": true
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "www.rebyenmusic.com" }],
-      "destination": "https://rebyen.com/:path*",
+      "destination": "https://rebyen.com/$1",
       "permanent": true
     }
   ]
