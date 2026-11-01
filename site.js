@@ -109,7 +109,7 @@ const TRACK_META = {
     title: 'Take Me Crazy',
     vinyl: 'TAKE ME\nCRAZY',
     eyebrow: 'Featured original · ReverbNation Spotlight',
-    desc: 'Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb, with a live performance filmed in Nashville.',
+    desc: 'Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb — live performance filmed in Nashville.',
     img: 'images/take_me_crazy.jpg',
     alt: 'Reb Yen performing Take Me Crazy in Nashville',
     caption: 'On stage at the Commodore Grille, Nashville',
