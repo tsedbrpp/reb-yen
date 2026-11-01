@@ -496,7 +496,8 @@ function renderSongPicker() {
         : '▶';
     }
   });
-  if (songPickerFoot) songPickerFoot.hidden = !selectedTrack;
+  const pickerStopBtn = document.getElementById('song-picker-stop');
+  if (pickerStopBtn) pickerStopBtn.hidden = !selectedTrack;
 }
 
 function openSongPicker() {

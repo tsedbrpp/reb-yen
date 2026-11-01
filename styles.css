@@ -762,6 +762,22 @@ p + p {
   color: #f7ead2;
 }
 
+.record-more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  font-size: 14px;
+  font-weight: 700;
+  color: #efa977;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.record-more-link:hover {
+  color: #ffd0ae;
+}
+
 .hero-bottom {
   border-top: 1px solid #705366;
   padding: 16px 0;
@@ -1000,6 +1016,11 @@ p + p {
 
 .player-slot {
   min-height: 92px;
+}
+
+.player-more-below {
+  margin: 10px 0 0 !important;
+  font-size: 15px;
 }
 
 .player {
@@ -2401,14 +2422,26 @@ dialog.is-fallback-open {
 .song-picker-foot {
   padding: 12px 20px 18px;
   border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-.song-picker-foot[hidden] {
+.song-picker-foot .button[hidden] {
   display: none;
 }
 
 .song-picker-foot .button {
   width: 100%;
+}
+
+.picker-more-link {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--rust);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 @media (max-width: 700px) {
@@ -2867,6 +2900,9 @@ dialog.is-fallback-open {
     text-align: center;
     justify-content: center;
   }
+  .record-more-link {
+    align-self: center;
+  }
   .record-actions {
     justify-content: center;
   }
@@ -2998,6 +3034,9 @@ dialog.is-fallback-open {
   .record-cta {
     text-align: center;
     justify-content: center;
+  }
+  .record-more-link {
+    align-self: center;
   }
   .hero-bottom .container {
     justify-content: center;
