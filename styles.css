@@ -1094,13 +1094,9 @@ p + p {
 
 .player-body iframe {
   display: block;
-  width: 300px;
-  max-width: 100%;
-  height: 300px;
-  margin: 0 auto;
+  width: 100%;
+  height: 120px;
   border: 0;
-  border-radius: var(--radius-sm);
-  background: #1e141e;
 }
 
 /* "Tap the big play button" cue shown until the visitor taps into the Bandcamp player */
@@ -1109,20 +1105,62 @@ p + p {
   overflow: hidden;
 }
 
+.player.is-cued .frame-wrap {
+  box-shadow: 0 0 0 3px rgba(223, 115, 63, 0.6);
+  animation: cue-glow 1.6s ease-in-out infinite;
+}
+
+@keyframes cue-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px rgba(223, 115, 63, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(223, 115, 63, 0.28), 0 0 24px rgba(223, 115, 63, 0.4);
+  }
+}
+
 .player-cue {
   display: none;
-  justify-content: center;
-  margin: 0 0 8px !important;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--muted);
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 9px !important;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--rust);
 }
 
 .player.is-cued .player-cue {
   display: flex;
 }
 
+.cue-arrow {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--orange);
+  color: var(--plum-dark);
+  font-size: 14px;
+  animation: cue-bounce 0.9s ease-in-out infinite;
+}
 
+@keyframes cue-bounce {
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+.spin-record.selected.is-cued .disc,
+.feature-sleeve-wrap.is-cued .sleeve-vinyl {
+  animation-play-state: paused;
+}
 
 .player-help {
   margin: 8px 0 0 !important;
@@ -1219,7 +1257,7 @@ p + p {
 }
 
 body.has-player {
-  padding-bottom: 460px;
+  padding-bottom: 290px;
 }
 
 .catalog-head {
@@ -2248,19 +2286,6 @@ dialog.is-fallback-open {
   overflow-y: auto;
   flex: 1;
   overscroll-behavior: contain;
-}
-
-.picker-group {
-  padding: 12px 10px 6px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
-  color: var(--rust);
-}
-
-.picker-group:first-child {
-  padding-top: 6px;
 }
 
 .picker-song {
