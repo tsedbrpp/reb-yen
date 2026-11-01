@@ -236,6 +236,33 @@ const catalogRows = Array.from(document.querySelectorAll('.song-row[data-song]')
 let selectedTrack = null;
 let sleeveSwapTimer = 0;
 
+// Bandcamp's embed cannot autoplay or be controlled from the page, so a freshly
+// loaded track is "cued" (needle down, record waiting) until the visitor taps
+// into the Bandcamp player. That tap moves focus into the iframe, which we can
+// observe via window blur + document.activeElement.
+let isCued = false;
+
+function bandcampEmbedUrl(trackId) {
+  return `https://bandcamp.com/EmbeddedPlayer/track=${encodeURIComponent(trackId)}/size=large/bgcol=fffaf1/linkcol=a8411a/tracklist=false/artwork=small/transparent=true/`;
+}
+
+function setCued(cued) {
+  isCued = Boolean(cued && selectedTrack);
+  player?.classList.toggle('is-cued', isCued);
+  heroRecord?.classList.toggle('is-cued', isCued);
+  featureSleeve?.classList.toggle('is-cued', isCued);
+}
+
+window.addEventListener('blur', () => {
+  setTimeout(() => {
+    if (isCued && frame && document.activeElement === frame) {
+      setCued(false);
+      setRecordStatus(selectedTrack);
+      if (playerStatus) playerStatus.textContent = `Now playing ${playerTitle?.textContent || 'the song'}.`;
+    }
+  }, 0);
+});
+
 function updateJukeboxSleeve(trackId, isPlaying) {
   const effectiveId = trackId && TRACK_META[trackId] ? trackId : '1827482453';
   const meta = TRACK_META[effectiveId];
@@ -344,9 +371,11 @@ function setRecordStatus(trackId) {
     if (recordBtnText) recordBtnText.textContent = isLoaded ? 'Stop record' : `Play ${name}`;
   }
 
-  const statusMsg = isLoaded
-    ? `♫ ${name} is on the turntable. Press ▶ in the Bandcamp player at the bottom of the screen to hear it.`
-    : 'Pick a song, then tap the record or Play.';
+  const statusMsg = !isLoaded
+    ? 'Pick a song, then tap the record or Play.'
+    : isCued
+      ? `Almost there — tap the big ▶ in the music player to start “${name}”`
+      : `♫ Now playing “${name}”`;
   if (recordCtaText) recordCtaText.textContent = statusMsg;
   else if (recordCta) recordCta.textContent = statusMsg;
 }
@@ -363,8 +392,9 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   const href = meta?.href || targetLink.getAttribute('href') || 'https://rebyen.bandcamp.com/';
 
   if (trackId !== selectedTrack) {
-    frame.src = `https://bandcamp.com/EmbeddedPlayer/track=${encodeURIComponent(trackId)}/size=small/bgcol=fffaf1/linkcol=a8411a/transparent=true/`;
+    frame.src = bandcampEmbedUrl(trackId);
     selectedTrack = trackId;
+    setCued(true);
   }
 
   frame.title = `${title} by Reb Yen — Bandcamp audio player`;
@@ -437,6 +467,7 @@ document.getElementById('player-return')?.addEventListener('click', () => {
 function stopPlayer({ returnFocus = true } = {}) {
   if (frame) frame.src = 'about:blank';
   selectedTrack = null;
+  setCued(false);
   if (stopBtn) stopBtn.hidden = true;
   player?.classList.remove('is-docked');
   document.body.classList.remove('has-player');
