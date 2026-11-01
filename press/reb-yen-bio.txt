@@ -8,7 +8,7 @@ Reb began her professional career as a singer and dancer with the Aman World Mus
 
 BOOKING & LINKS
 
-Booking inquiries: https://tsedbrpp.github.io/reb-yen/#contact
-Website: https://tsedbrpp.github.io/reb-yen/
+Booking inquiries: https://reb-yen.vercel.app/#contact
+Website: https://reb-yen.vercel.app/
 Original recordings: https://rebyen.bandcamp.com/
 Live performance videos: https://www.youtube.com/@RebYenMusic
