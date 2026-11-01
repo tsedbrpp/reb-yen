@@ -26,3 +26,14 @@
 @media(max-width:700px){.spin-record{width:88px;height:88px}.spin-record .arm{height:56px}}
 
 .contact-form{display:grid;gap:6px}.contact-form label{font-weight:700;font-size:15px;margin-top:8px}.contact-form input,.contact-form select,.contact-form textarea{font:inherit;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--plum);min-height:44px}.contact-form button{margin-top:14px;justify-self:start}.contact-form .hp{position:absolute;left:-9999px}
+.hero-record{flex-direction:column;align-items:center;text-align:center;gap:16px;margin:36px 0 0;max-width:420px;padding:22px 18px;background:rgba(255,250,241,.06);border:1px solid #6b4a63;border-radius:14px}
+.spin-record{width:180px;height:180px}
+.spin-record .disc{box-shadow:0 0 0 4px #efa97755,0 0 34px #df733f88,0 10px 30px #000a}
+.spin-record .label{width:62px;height:62px;font-size:9px}
+.spin-record .arm{height:110px;right:-18px;width:5px}
+.spin-record:not(.playing) .disc{animation:spin 3.5s linear infinite,glow 2.4s ease-in-out infinite;animation-play-state:paused,running}
+@keyframes glow{50%{box-shadow:0 0 0 6px #efa97788,0 0 48px #df733fcc,0 10px 30px #000a}}
+.hero-record-ctl{display:flex;flex-direction:column;align-items:center}
+.hero-record-ctl select{min-width:240px}
+.record-cta{font-size:17px;font-weight:700;color:#f7ead2}
+@media(max-width:700px){.hero-record{max-width:none}.spin-record{width:150px;height:150px}.spin-record .arm{height:92px}}
