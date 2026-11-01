@@ -95,10 +95,10 @@ p {
 
 h1,
 h2 {
-  font-family: 'Syne', 'Karla', system-ui, sans-serif;
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  line-height: 1.1;
+  font-family: 'Plus Jakarta Sans', 'Karla', system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 h2 {
@@ -311,9 +311,8 @@ p + p {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  font: 800 22px/1 'Syne', 'Karla', sans-serif;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font: 700 22px/1 'Plus Jakarta Sans', 'Karla', sans-serif;
+  letter-spacing: 0.02em;
   color: var(--paper);
   text-decoration: none;
   white-space: nowrap;
@@ -458,34 +457,27 @@ p + p {
 }
 
 .hero h1 {
-  font-size: clamp(58px, 8.2vw, 92px);
-  letter-spacing: -0.035em;
-  line-height: 0.98;
-  margin-bottom: 16px;
-  background: linear-gradient(180deg, #fffaf1 30%, #f3c49f 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: clamp(50px, 7vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin-bottom: 14px;
+  color: var(--paper);
 }
 
 .hero .tagline {
-  font-size: clamp(21px, 2.4vw, 25px);
+  font-size: clamp(20px, 2.3vw, 24px);
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.4;
   color: #fdf6ea;
   max-width: 540px;
 }
 
 .hero .location {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #e2cde0;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  margin: 14px 0 22px;
+  color: #e4d1e2;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 12px 0 22px;
 }
 
 .hero .actions {
