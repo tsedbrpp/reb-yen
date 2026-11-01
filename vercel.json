@@ -8,14 +8,8 @@
     },
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "rebyenmusic.com" }],
-      "destination": "https://rebyen.com/$1",
-      "permanent": true
-    },
-    {
-      "source": "/(.*)",
       "has": [{ "type": "host", "value": "www.rebyenmusic.com" }],
-      "destination": "https://rebyen.com/$1",
+      "destination": "https://rebyenmusic.com/$1",
       "permanent": true
     }
   ]
