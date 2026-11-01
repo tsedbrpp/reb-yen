@@ -1,0 +1,22 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.rebyen.com" }],
+      "destination": "https://rebyen.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "rebyenmusic.com" }],
+      "destination": "https://rebyen.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.rebyenmusic.com" }],
+      "destination": "https://rebyen.com/:path*",
+      "permanent": true
+    }
+  ]
+}

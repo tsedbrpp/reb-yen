@@ -952,6 +952,11 @@ formatCards.forEach(card => {
   });
 });
 
+const contactNextField = document.querySelector('.contact-form input[name="_next"]');
+if (contactNextField && /^https?:$/.test(window.location.protocol)) {
+  contactNextField.value = new URL('thanks.html', window.location.href).href;
+}
+
 topicSelect?.addEventListener('change', syncContactFormFields);
 syncContactFormFields();
 
