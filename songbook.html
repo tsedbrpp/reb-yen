@@ -1,0 +1,1218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reb Yen — Original Songbook, Lyrics &amp; Liner Notes</title>
+  <meta name="description" content="Official lyric book and liner notes for 9 original songs by singer-songwriter Reb Yen.">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+  <style>
+    :root {
+      --plum-dark: #241323;
+      --plum: #352033;
+      --cream: #f7eedf;
+      --paper: #fffaf1;
+      --sand: #ead9bd;
+      --orange: #df733f;
+      --rust: #a8411a;
+      --muted: #5f485b;
+      --line: #d8c6ad;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #2b1929;
+      color: var(--plum);
+      font-family: 'Karla', system-ui, -apple-system, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(31, 17, 30, 0.92);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 250, 241, 0.14);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--cream);
+    }
+
+    .toolbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--paper);
+      text-decoration: none;
+    }
+
+    .toolbar-brand span {
+      font-weight: 600;
+      font-size: 13px;
+      color: #ffbe92;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(223, 115, 63, 0.18);
+      border: 1px solid rgba(239, 169, 119, 0.35);
+    }
+
+    .toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 0;
+      font: 800 14px/1 'Karla', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      background: linear-gradient(135deg, #f08b58, var(--orange));
+      color: #231121;
+      box-shadow: 0 4px 14px rgba(223, 115, 63, 0.35);
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #ffa06f, #ee824c);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 250, 241, 0.1);
+      color: var(--cream);
+      border: 1px solid rgba(255, 250, 241, 0.24);
+      box-shadow: none;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 250, 241, 0.18);
+    }
+
+    .booklet {
+      max-width: 840px;
+      margin: 28px auto 64px;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .page {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 20px 50px rgba(12, 5, 14, 0.45);
+      padding: 48px 54px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Cover Page */
+    .page-cover {
+      background: linear-gradient(160deg, #2d182c 0%, #1f101f 100%);
+      color: var(--cream);
+      border-color: rgba(239, 169, 119, 0.35);
+      padding: 52px 54px;
+    }
+
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .cover-kicker {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffbe92;
+      margin: 0 0 10px;
+    }
+
+    .page-cover h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 54px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.02;
+      margin: 0 0 12px;
+      color: var(--paper);
+    }
+
+    .cover-sub {
+      font-size: 20px;
+      font-weight: 600;
+      color: #f3e4d2;
+      margin: 0 0 18px;
+      line-height: 1.35;
+    }
+
+    .cover-meta {
+      font-size: 14px;
+      color: #d9c3d4;
+      margin: 0 0 26px;
+    }
+
+    .cover-photo-frame {
+      background: rgba(255, 250, 241, 0.06);
+      border: 1px solid rgba(239, 169, 119, 0.35);
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .cover-photo-frame img {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      object-position: 54% 34%;
+      display: block;
+      border-radius: 4px;
+      filter: brightness(1.18) contrast(1.03);
+    }
+
+    .toc {
+      margin-top: 34px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 250, 241, 0.16);
+    }
+
+    .toc-title {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: #ffbe92;
+      margin: 0 0 12px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px 18px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .toc-grid a {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 4px 0;
+    }
+
+    .toc-grid a:hover {
+      color: #ffbe92;
+    }
+
+    .toc-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--orange);
+    }
+
+    /* Song Pages */
+    .song-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: start;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--sand);
+      margin-bottom: 24px;
+    }
+
+    .song-track-num {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 4px;
+    }
+
+    .song-header h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0 0 8px;
+      color: var(--plum-dark);
+    }
+
+    .song-credits {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .song-chords-pill {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--sand);
+      color: var(--plum-dark);
+      font-size: 12.5px;
+      font-weight: 800;
+    }
+
+    .song-art {
+      width: 112px;
+      height: 112px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      box-shadow: 0 6px 16px rgba(36, 19, 35, 0.12);
+    }
+
+    .song-story {
+      background: #f6ede0;
+      border-left: 4px solid var(--orange);
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+      margin: 0 0 22px;
+      font-size: 14.5px;
+      color: var(--plum);
+    }
+
+    .lyrics-columns {
+      column-count: 2;
+      column-gap: 36px;
+      font-size: 15px;
+      line-height: 1.58;
+      color: var(--plum-dark);
+    }
+
+    .lyrics-columns.single-col {
+      column-count: 1;
+      max-width: 520px;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .stanza {
+      break-inside: avoid;
+      margin: 0 0 16px;
+    }
+
+    .stanza-label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 3px;
+    }
+
+    .stanza p {
+      margin: 0;
+      white-space: pre-line;
+    }
+
+    .stanza.chorus {
+      padding-left: 12px;
+      border-left: 2px solid var(--orange);
+      font-weight: 600;
+    }
+
+    .page-footer {
+      margin-top: 26px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .page-footer a {
+      color: var(--rust);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .page-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Back Cover / Colophon */
+    .colophon-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .colophon-box {
+      background: #f6ede0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .colophon-box h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 17px;
+      margin: 0 0 10px;
+    }
+
+    .colophon-box ul {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .colophon-box li + li {
+      margin-top: 6px;
+    }
+
+    .signature-box {
+      margin-top: 28px;
+      padding: 22px;
+      border: 1px dashed #bfa68a;
+      border-radius: 8px;
+      background: #fffdf8;
+      text-align: center;
+    }
+
+    .signature-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .signature-line {
+      border-bottom: 1px solid var(--plum);
+      max-width: 280px;
+      margin: 0 auto 6px;
+    }
+
+    @media (max-width: 700px) {
+      .page, .page-cover {
+        padding: 28px 22px;
+      }
+      .cover-grid, .colophon-grid {
+        grid-template-columns: 1fr;
+      }
+      .toc-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .lyrics-columns {
+        column-count: 1;
+      }
+      .page-cover h1 {
+        font-size: 40px;
+      }
+    }
+
+    @media print {
+      @page {
+        size: letter portrait;
+        margin: 0.45in;
+      }
+      body {
+        background: #fff;
+      }
+      .toolbar {
+        display: none !important;
+      }
+      .booklet {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        gap: 0;
+      }
+      .page {
+        box-shadow: none;
+        border: 0;
+        border-radius: 0;
+        padding: 0.2in 0.25in;
+        page-break-after: always;
+        break-after: page;
+      }
+      .page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+      .page-cover {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        border-radius: 6px;
+        padding: 0.45in;
+      }
+      .song-story, .song-chords-pill, .colophon-box {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="toolbar">
+    <a class="toolbar-brand" href="index.html">
+      Reb Yen Songbook
+      <span>9 Original Songs · Print-Ready Edition</span>
+    </a>
+    <div class="toolbar-actions">
+      <a class="btn btn-ghost" href="index.html">← Back to rebyen.com</a>
+      <button type="button" class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    </div>
+  </header>
+
+  <main class="booklet">
+    <!-- COVER PAGE -->
+    <section class="page page-cover" id="cover">
+      <div class="cover-grid">
+        <div>
+          <p class="cover-kicker">Official Lyric &amp; Liner Note Songbook</p>
+          <h1>Reb Yen</h1>
+          <p class="cover-sub">Original songs. Real stories.<br>A voice all her own.</p>
+          <p class="cover-meta">
+            Written, arranged &amp; performed by Reb Yen<br>
+            Boulder, Colorado · Orlando, Florida<br>
+            Americana · Folk · Country · Pop · Rock · Indie
+          </p>
+        </div>
+        <div class="cover-photo-frame">
+          <img src="images/hero-guitar.jpg" alt="Reb Yen singing and playing acoustic guitar">
+        </div>
+      </div>
+
+      <nav class="toc" aria-label="Songbook contents">
+        <p class="toc-title">Songs Included in This Edition</p>
+        <ol class="toc-grid">
+          <li><a href="#song-1"><span class="toc-num">01</span> Take Me Crazy</a></li>
+          <li><a href="#song-2"><span class="toc-num">02</span> Should I?</a></li>
+          <li><a href="#song-3"><span class="toc-num">03</span> Gotta Let It Go</a></li>
+          <li><a href="#song-4"><span class="toc-num">04</span> The Solitude</a></li>
+          <li><a href="#song-5"><span class="toc-num">05</span> A New Beginning</a></li>
+          <li><a href="#song-6"><span class="toc-num">06</span> Are You Listening Now?</a></li>
+          <li><a href="#song-7"><span class="toc-num">07</span> Birds Of Prey</a></li>
+          <li><a href="#song-8"><span class="toc-num">08</span> Take A Stand</a></li>
+          <li><a href="#song-9"><span class="toc-num">09</span> Out Of Body</a></li>
+        </ol>
+      </nav>
+    </section>
+
+    <!-- 01: TAKE ME CRAZY -->
+    <article class="page" id="song-1">
+      <header class="song-header">
+        <div>
+          <span class="song-track-num">Track 01 · ReverbNation Featured</span>
+          <h2>Take Me Crazy</h2>
+          <p class="song-credits">Take Me (Crazy) © 2022 Reb Yen · Written, arranged &amp; performed by Reb Yen</p>
+          <p class="song-credits">Instrumentation: Guitar, all vocals, banjo, keyboard (cello), cajon</p>
+        </div>
+        <img class="song-art" src="images/take_me_crazy.jpg" alt="Reb Yen performing Take Me Crazy in Nashville">
+      </header>
+
+      <div class="song-story">
+        <strong>Behind the Song:</strong> Reb calls <em>Take Me Crazy</em> “a realistic love song”—candid, playful, and about accepting one another as we are, without false promises or airbrushed ideals. Performed live at Nashville’s historic Commodore Grille.
+      </div>
+
+      <div class="lyrics-columns">
+        <div class="stanza chorus">
+          <span class="stanza-label">Chorus</span>
+          <p>Take me, Take me, Take me as I am… (×2)</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 1</span>
+          <p>Cause it’s never all or nothing, just something in between,
+Where the answer’s never good enough, cause the future can’t be seen.
+That tug-of-war, I want no more, what they call love
+It’s not a glove, false promises and dreams, we’ll never keep</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Chorus</span>
+          <p>So, Take me, Take me, If you can
+Take me, Take me, As I am</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 2</span>
+          <p>It’s broken, I can’t fix you, or mend your wounds
+And all of the others you rejected, just a little too soon
+So they weren’t in your corner
+Gonna head for the door now
+Where’re we going?!?</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Chorus / Bridge</span>
+          <p>Crazy, Crazy, Crazy as we can!
+Going Crazy, Crazy, crazy as we can.
+Just throw it out, when you’re in doubt… that thing called love…
+It’s not a glove, false promises and dreams we’ll never see</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Chorus</span>
+          <p>So, Take me, Take me, Take me if you can
+Take me, Take me, Crazy as I am</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 3</span>
+          <p>Your tortured soul won’t let you go, where you’ve never been
+And that angel in white, just a devil in disguise.
+Like the Marilyn Monroe where did she go?
+Well I can’t be your beauty queen, that airbrush just don’t work for me
+And I don’t need no Superman, no knight-n-shinin’ no-where plan
+But I was always in your corner, but you’re heading for the door now
+Where’re we going?!</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Chorus</span>
+          <p>Crazy, Crazy, Crazy as I am,
+Crazy, Crazy, crazy as we can!</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 4</span>
+          <p>Oh it could’ve been you, or could’ve been me that said the wrong thing
+Oh, say the right thing, do the right thing, just be my man
+But, don’t say the right thing, say the wrong thing, read my mind!!</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Outro Chorus</span>
+          <p>And Take me, Take me, Take me as I am
+Take me, Take me, Crazy as I am,
+And I’ll Take you, Take you, Take you as you are.
+Take me, Take me, Crazy as I am
+Take me, Take me, Take me as I am</p>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>Reb Yen Songbook · Page 1</span>
+        <a href="https://rebyen.bandcamp.com/track/take-me-crazy" target="_blank" rel="noopener noreferrer">Listen on Bandcamp: rebyen.bandcamp.com/track/take-me-crazy ↗</a>
+      </footer>
+    </article>
+
+    <!-- 02: SHOULD I? -->
+    <article class="page" id="song-2">
+      <header class="song-header">
+        <div>
+          <span class="song-track-num">Track 02 · ReverbNation Featured · With Guitar Chords</span>
+          <h2>Should I?</h2>
+          <p class="song-credits">Should I? © 2021 Reb Yen · All tracks performed by Reb Yen</p>
+          <p class="song-credits">Instrumentation: Vocals, rhythm guitar, lead guitar, cajon</p>
+          <span class="song-chords-pill">Guitar Chords — Verses &amp; Outro: G, C · Chorus: Gm, Dm</span>
+        </div>
+        <img class="song-art" src="images/hero-guitar.jpg" alt="Reb Yen playing acoustic guitar" style="object-position: 52% 30%">
+      </header>
+
+      <div class="song-story">
+        <strong>Behind the Song:</strong> A studio recording built on a hypnotic two-chord groove (<code>G – C</code>) shifting into minor (<code>Gm – Dm</code>) on the chorus, capturing the push-and-pull of unspoken attraction.
+      </div>
+
+      <div class="lyrics-columns">
+        <div class="stanza">
+          <span class="stanza-label">Verse 1 (Chords: G, C)</span>
+          <p>Fact or fiction, words were heard,
+Words were felt, just never said.
+Loved the way you turned your head
+You smiled at me, then off you sped
+
+Should I follow, should I stay,
+Should I run the other way
+<em>(short instrumental)</em></p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 2 (Chords: G, C)</span>
+          <p>Wind me up, spin me round,
+I’m off the ground, then falling down
+Loved the way you made me laugh
+You made me cry, same time I asked
+
+Should I follow, should I stay,
+Should I run the other way
+<em>(short instrumental)</em></p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Chorus (Chords: Gm, Dm)</span>
+          <p>Can’t keep up the pace when
+Don’t know what ya feelin’,
+Just wanna believe in what I think I’m seeing
+<em>(short instrumental)</em>
+Just wanna believe in what I think I’m seeing</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 3 (Chords: G, C)</span>
+          <p>History or mystery, a story we may never know
+Words were heard, words were felt, just never said
+<em>(short instrumental)</em>
+Wind me up, spin me round, I’m off the ground
+Falling down, make me laugh, make me cry
+Just won’t give in to that smile, to that smile</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Chorus (Chords: Gm, Dm, Gm, Dm)</span>
+          <p>Can’t keep up the pace when
+Don’t know what ya feelin’,
+Just wanna believe in what I think I’m seeing
+<em>(short instrumental)</em>
+Just wanna believe in what I think I’m seeing</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 4 (Chords: G, C)</span>
+          <p>Fact or fiction, words were heard,
+Words were said, just never felt.
+Wind me up, spin me round,
+I’m off the ground, then falling down
+Loved the way you turned your head
+You smiled at me, then off you sped
+
+Should I follow, should I stay,
+Should I run the other way</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Outro (Chords: G, C)</span>
+          <p>Should I follow, should I stay,
+Should I run the other way
+Should I follow, should I stay,
+Should I run the other way</p>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>Reb Yen Songbook · Page 2</span>
+        <a href="https://rebyen.bandcamp.com/track/should-i" target="_blank" rel="noopener noreferrer">Listen on Bandcamp: rebyen.bandcamp.com/track/should-i ↗</a>
+      </footer>
+    </article>
+
+    <!-- 03: GOTTA LET IT GO -->
+    <article class="page" id="song-3">
+      <header class="song-header">
+        <div>
+          <span class="song-track-num">Track 03 · ReverbNation Featured</span>
+          <h2>Gotta Let It Go</h2>
+          <p class="song-credits">Gotta Let It Go © 2021 Reb Yen · Written &amp; arranged by Reb Yen</p>
+          <p class="song-credits">Performed by Reb Yen (vocals, guitar, cajon) &amp; Jim O’Rourke (lead guitar)</p>
+        </div>
+        <img class="song-art" src="images/gotta_let_it_go.jpg" alt="Reb Yen performing Gotta Let It Go">
+      </header>
+
+      <div class="song-story">
+        <strong>Behind the Song:</strong> “Sometimes you just gotta let it go.” A candid conversation to both a sister and a brother caught in a love triangle, recognizing when it is time to heal, recover, and walk away.
+      </div>
+
+      <div class="lyrics-columns">
+        <div class="stanza">
+          <span class="stanza-label">Verse 1</span>
+          <p>Hey there sista, what ya doing
+Why you never have no time for me
+Hey there sister, what ya thinking
+The man is taken, his heart ain’t free
+Can’t crack that code, that mystery
+What he’s hiding from you, just don’t wanna see
+Just wanna have a little history, in the
+Story that you want it to be</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 2</span>
+          <p>Hey there brother, what you doing
+Ya walking that fence and ya wanna be free
+Hey there brother, what you saying, you
+Talking that line, ya gettin’ in deep
+You can’t crack that code, that mystery
+What ya hiding from her, wish ya wouldn’t tell me
+Just wanna have a little history in a story that ya want it to be
+Just wanna have a little history in a story that ya want it to be</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Chorus</span>
+          <p>Gotta let it go when it’s falling apart
+Gotta let it go, never worked from the start
+Got to let it go… just breakin’ my heart, my heart (×2)</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 3</span>
+          <p>Hey there sister, hey there brother, time to heal, time to recover
+Hey there sister, hey there brother, let’s all learn how to love one another
+Can’t crack the code, that mystery of why you love one and not the other
+
+Just wanna have a little history in a story that ya want it to be,
+Ya just wanna have a little history in a story that ya want it to be</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Outro Chorus</span>
+          <p>Gotta let it go when it’s falling apart
+Gotta let it go, never worked from the start
+Got to let it go… just breakin’ my heart (×3)</p>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>Reb Yen Songbook · Page 3</span>
+        <a href="https://rebyen.bandcamp.com/track/gotta-let-it-go-2" target="_blank" rel="noopener noreferrer">Listen on Bandcamp: rebyen.bandcamp.com/track/gotta-let-it-go-2 ↗</a>
+      </footer>
+    </article>
+
+    <!-- 04: THE SOLITUDE -->
+    <article class="page" id="song-4">
+      <header class="song-header">
+        <div>
+          <span class="song-track-num">Track 04 · Live Recording</span>
+          <h2>The Solitude</h2>
+          <p class="song-credits">The Solitude © Reb Yen · All tracks performed by Reb Yen</p>
+          <p class="song-credits">Instrumentation: Electric guitar &amp; vocals</p>
+        </div>
+        <img class="song-art" src="images/solitude.jpg" alt="Reb Yen performing The Solitude live at Roots Music Project">
+      </header>
+
+      <div class="song-story">
+        <strong>Behind the Song:</strong> Performed live on electric guitar at Boulder’s Roots Music Project, <em>The Solitude</em> turns isolation into self-possession: <em>“Where it dazzles in your sky that’s where you go / When the music’s in your soul that’s when you know.”</em>
+      </div>
+
+      <div class="lyrics-columns">
+        <div class="stanza">
+          <span class="stanza-label">Verse 1</span>
+          <p>The solitude, the lonely skies
+The hidden secrets, in your eyes
+It can’t confine, the endless time
+The road ahead, plays on your mind</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 2</span>
+          <p>The shadows taunt you, what matters haunts you
+Alone again, is your best friend
+It’s undecided, the road’s divided
+Just need to try, believe again</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Chorus</span>
+          <p>Where it dazzles in your sky that’s where you go
+When the music’s in your soul that’s when you know
+The solitude, The solitude
+The solitude is all your own</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 3</span>
+          <p>The hidden secrets, will come to light
+That endless time, it won’t confine you
+
+No shadow taunts you, no matter haunts you
+Alone again, is your best friend
+And when decided, no roads divided
+That time ahead, will be behind you</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Outro Chorus</span>
+          <p>Where it dazzles in your sky that’s where you go
+When the music’s in your soul that’s when you know
+The solitude, The solitude
+The solitude just won’t let go
+The solitude, The solitude
+The solitude is all your own</p>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>Reb Yen Songbook · Page 4</span>
+        <a href="https://rebyen.bandcamp.com/track/the-solitude-live" target="_blank" rel="noopener noreferrer">Listen on Bandcamp: rebyen.bandcamp.com/track/the-solitude-live ↗</a>
+      </footer>
+    </article>
+
+    <!-- 05: A NEW BEGINNING -->
+    <article class="page" id="song-5">
+      <header class="song-header">
+        <div>
+          <span class="song-track-num">Track 05 · Studio Recording</span>
+          <h2>A New Beginning</h2>
+          <p class="song-credits">A New Beginning © Reb Yen · All tracks performed by Reb Yen</p>
+          <p class="song-credits">Instrumentation: Vocals, guitars, keyboard (performed live with harmonica &amp; acoustic guitar)</p>
+        </div>
+        <img class="song-art" src="images/newbeginning.jpg" alt="Reb Yen performing A New Beginning at The Copper Rocket">
+      </header>
+
+      <div class="song-story">
+        <strong>Behind the Song:</strong> A reflective ballad on loss, remembrance, and resilience—climbing back up the mountain to relight the fire when a chapter closes.
+      </div>
+
+      <div class="lyrics-columns single-col">
+        <div class="stanza chorus">
+          <span class="stanza-label">Refrain</span>
+          <p>All these years in the blink of an eye
+All these years don’t say goodbye
+Don’t call it the end; it’s a new beginning,
+Don’t call it the end; it’s a new beginning</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 1</span>
+          <p>Once climbed that mountain up to the top
+Where we lit that fire, thought it’d never go out
+Once danced with you in another time
+A world of wonder, thought it’d always be mine</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Refrain</span>
+          <p>All these years in the blink of an eye
+All these years don’t say goodbye
+Don’t call it the end; it’s a new beginning,
+Don’t call it the end; it’s a new beginning</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 2</span>
+          <p>Like fairytales we want to believe
+Happily in them forever; and you’ll never leave
+But the myths fall like the leaves from the trees
+As the pages turn, and your soul is set free.</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Outro</span>
+          <p>And I’ll climb that mountain back to the top
+Where I’ll light that fire, it’ll never go out
+Don’t call it the end; it’s a new beginning
+Don’t call it the end; it’s a new beginning
+Don’t call it the end; it’s a new beginning</p>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>Reb Yen Songbook · Page 5</span>
+        <a href="https://rebyen.bandcamp.com/track/a-new-beginning" target="_blank" rel="noopener noreferrer">Listen on Bandcamp: rebyen.bandcamp.com/track/a-new-beginning ↗</a>
+      </footer>
+    </article>
+
+    <!-- 06: ARE YOU LISTENING NOW? -->
+    <article class="page" id="song-6">
+      <header class="song-header">
+        <div>
+          <span class="song-track-num">Track 06 · Studio Recording</span>
+          <h2>Are You Listening Now?</h2>
+          <p class="song-credits">Are You Listening Now? © Reb Yen · All tracks performed by Reb Yen</p>
+          <p class="song-credits">Instrumentation: Vocals, acoustic guitar, lead electric guitar, cajon</p>
+        </div>
+        <img class="song-art" src="images/are_you_listening.jpg" alt="Reb Yen performing with her trio at The Alley">
+      </header>
+
+      <div class="song-story">
+        <strong>Behind the Song:</strong> An anthem of artistic independence for every songwriter and performer who has ever played to a noisy room: <em>“Gotta do it for yourself, not just for somebody else / Gotta be your own fan, when nobody else can.”</em>
+      </div>
+
+      <div class="lyrics-columns single-col">
+        <div class="stanza chorus">
+          <span class="stanza-label">Chorus</span>
+          <p>Are you listening now, are you humming along,
+Do you feel the sound,
+Are you listening now, wanna hear it loud,
+Don’t turn it down.
+Are you listening now, wanna stay for a while,
+Wanna know what makes me smile</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Bridge</span>
+          <p>Do they really know you,
+Do they really like you,
+Do they wanna hear your words,
+Does it matter to you.</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Refrain</span>
+          <p>Gotta do it for yourself, not just for somebody else,
+Gotta be your own fan, when nobody else… can
+Gotta do it for yourself, not just for somebody else,
+Gotta be your own fan, when nobody else… can.</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Outro</span>
+          <p>Baby can you show me, do you want to know me?</p>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>Reb Yen Songbook · Page 6</span>
+        <a href="https://rebyen.bandcamp.com/track/are-you-listening-now" target="_blank" rel="noopener noreferrer">Listen on Bandcamp: rebyen.bandcamp.com/track/are-you-listening-now ↗</a>
+      </footer>
+    </article>
+
+    <!-- 07: BIRDS OF PREY -->
+    <article class="page" id="song-7">
+      <header class="song-header">
+        <div>
+          <span class="song-track-num">Track 07 · Live Recording</span>
+          <h2>Birds Of Prey</h2>
+          <p class="song-credits">Birds Of Prey © 2020 Reb Yen · Written &amp; performed by Reb Yen</p>
+          <p class="song-credits">Instrumentation: Vocals &amp; guitar (recorded live on stage)</p>
+        </div>
+        <img class="song-art" src="images/storm.jpg" alt="Reb Yen performing live on stage">
+      </header>
+
+      <div class="song-story">
+        <strong>Behind the Song:</strong> A sharp, clear-eyed reckoning with people who take validation and emotional comfort without giving anything back—and choosing to fly away on your own terms.
+      </div>
+
+      <div class="lyrics-columns single-col">
+        <div class="stanza">
+          <span class="stanza-label">Verse 1</span>
+          <p>Birds of prey, what do you need today
+My likes, my praise, to make it through the day.
+Take what you need, and fly away
+
+Another piece of my heart and throw the rest away.
+Birds of prey</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 2</span>
+          <p>You seek my comfort, that undeserving praise.
+Take what you want, don’t feel betrayed
+When you’re the only one, in your parade.
+
+Without your comfort, I’ll find another way.
+I’ll fly away, just fly</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Verse 3 / Outro</span>
+          <p>Don’t need those eyes, just look another way.
+Don’t need those thoughts, just think another way.
+Without that warmth, just feel another way.
+Without your love, I’ll find another way
+I’ll fly away, fly away… just fly away</p>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>Reb Yen Songbook · Page 7</span>
+        <a href="https://rebyen.bandcamp.com/track/birds-of-prey-live" target="_blank" rel="noopener noreferrer">Listen on Bandcamp: rebyen.bandcamp.com/track/birds-of-prey-live ↗</a>
+      </footer>
+    </article>
+
+    <!-- 08: TAKE A STAND -->
+    <article class="page" id="song-8">
+      <header class="song-header">
+        <div>
+          <span class="song-track-num">Track 08 · Live Recording</span>
+          <h2>Take A Stand</h2>
+          <p class="song-credits">Take A Stand © Reb Yen · All tracks performed by Reb Yen</p>
+          <p class="song-credits">Instrumentation: Vocals &amp; guitar</p>
+        </div>
+        <img class="song-art" src="images/are_you_listening.jpg" alt="Reb Yen live performance">
+      </header>
+
+      <div class="song-story">
+        <strong>Behind the Song:</strong> Moving between world observation and personal accountability—from someone passed by on the city sidewalk to hollow voices on television—calling on the listener to get on their feet and take a stand.
+      </div>
+
+      <div class="lyrics-columns">
+        <div class="stanza">
+          <span class="stanza-label">Verse 1</span>
+          <p>Who’s gonna be the one. Who’s gonna get it done.
+Who’s gonna make a plan. Who’s gonna take a stand.
+
+He’s on the sidewalks — in the streets just laying there as they walk by.
+He could be gone — does his heart beat. It could be you, don’t let him die.
+Who’s gonna save the man. Who’s gonna take a stand.</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 2</span>
+          <p>Who’s gonna walk with me, who’s gonna talk with me,
+Who’s going to take my hand, who’s going to be my man.
+I’m on the sidewalk, in the streets, wanna find me, wanna meet.
+Don’t just sit while I go by, got some time don’t let it slide.
+Who’s gonna take my hand. Who’s gonna be my man.</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 3</span>
+          <p>Who’s gonna be the one. Who’s gonna get it done.
+Who’s gonna make a plan. Who’s gonna take a stand.
+He’s on your TV… in your ears. He talks as though he really cares.
+But you’re not really in his plan. You never were, he’s not your man.
+Who’s gonna change the man. Who’s gonna take a stand.</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Outro</span>
+          <p>You’re on the sidewalks — in the street, just laying there, get on your feet.
+Don’t just sit while it goes by, got a cause don’t let it die.
+You’ve gotta be the one. You’ve gotta get it done.
+You’ve gotta make a plan. You’ve gotta take a stand.</p>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>Reb Yen Songbook · Page 8</span>
+        <a href="https://rebyen.bandcamp.com/track/take-a-stand-live" target="_blank" rel="noopener noreferrer">Listen on Bandcamp: rebyen.bandcamp.com/track/take-a-stand-live ↗</a>
+      </footer>
+    </article>
+
+    <!-- 09: OUT OF BODY -->
+    <article class="page" id="song-9">
+      <header class="song-header">
+        <div>
+          <span class="song-track-num">Track 09 · Studio Recording</span>
+          <h2>Out Of Body</h2>
+          <p class="song-credits">Out Of Body © Reb Yen · All tracks performed by Reb Yen</p>
+          <p class="song-credits">Instrumentation: Guitar, vocals, keyboard</p>
+        </div>
+        <img class="song-art" src="images/reb_yen_photo.jpg" alt="Reb Yen portrait" style="object-position: 50% 38%">
+      </header>
+
+      <div class="song-story">
+        <strong>Behind the Song:</strong> A nocturnal, dreamlike closer featuring guitar, keyboard, and vocals—drifting through the clouds under moonlight where “the sleep wakes your mind.”
+      </div>
+
+      <div class="lyrics-columns single-col">
+        <div class="stanza">
+          <span class="stanza-label">Verse 1</span>
+          <p>Out of body, out of mind
+Out that window where you’ll find
+The dark fills your time
+The sleep wakes your mind</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Verse 2</span>
+          <p>The nights aren’t so dark
+As the moon shines her face
+You push through the clouds
+And fly through that space</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Refrain</span>
+          <p>In the dark where you’ll find
+The sleep wakes your mind</p>
+        </div>
+
+        <div class="stanza">
+          <span class="stanza-label">Bridge</span>
+          <p>Keep me whole when falling to pieces
+Touch my soul when not a believer.
+Just need you as my friend
+Nothing more to pretend.
+When ya not receiving</p>
+        </div>
+
+        <div class="stanza chorus">
+          <span class="stanza-label">Outro</span>
+          <p>Out of body, out of mind
+Out that window where you go
+And the dark fills your time
+The sleep wakes your mind</p>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>Reb Yen Songbook · Page 9</span>
+        <a href="https://rebyen.bandcamp.com/track/out-of-body" target="_blank" rel="noopener noreferrer">Listen on Bandcamp: rebyen.bandcamp.com/track/out-of-body ↗</a>
+      </footer>
+    </article>
+
+    <!-- BACK COVER / ABOUT THE ARTIST -->
+    <section class="page" id="about-artist">
+      <header class="song-header">
+        <div>
+          <span class="song-track-num">About the Songwriter</span>
+          <h2>Reb Yen</h2>
+          <p class="song-credits">Singer-Songwriter &amp; Multi-Instrumentalist · Boulder, CO &amp; Orlando, FL</p>
+        </div>
+      </header>
+
+      <div class="colophon-grid">
+        <div>
+          <p style="margin-top:0">
+            Reb Yen writes, arranges, and performs songs that move between autobiographical reflection and world observations. Based in Boulder, Colorado, and Orlando, Florida, fans and critics describe Reb as a strong vocalist and accomplished musician, playing guitar, keyboard, and harmonica across Americana, Folk, Country, Pop, Rock, and Indie.
+          </p>
+          <p>
+            Reb has toured internationally, including two tours of Europe, and spent time immersed in Nashville’s songwriting community. Her performance credits include Walt Disney World, Universal Studios, and New York City’s Lincoln Center, where she performed as a featured artist with the Aman World Music &amp; Dance Ensemble (Los Angeles, CA), as well as the Commodore Grille in Nashville.
+          </p>
+          <p>
+            She received formal training in singing and vocal technique and has experience as a vocal coach, including professional involvement with the National Association of Teachers of Singing (NATS).
+          </p>
+
+          <div class="signature-box">
+            <p class="signature-label">Artist Autograph / Dedication</p>
+            <div class="signature-line"></div>
+            <small style="color:var(--muted)">Signed by Reb Yen</small>
+          </div>
+        </div>
+
+        <div class="colophon-box">
+          <h3>Listen &amp; Connect</h3>
+          <ul>
+            <li><strong>Official Website:</strong><br><a href="https://rebyen.com">rebyen.com</a> · <a href="https://rebyenmusic.com">rebyenmusic.com</a></li>
+            <li><strong>Bandcamp Catalogue:</strong><br><a href="https://rebyen.bandcamp.com">rebyen.bandcamp.com</a></li>
+            <li><strong>ReverbNation (#1 Local Charts):</strong><br><a href="https://legacy.reverbnation.com/rebyen">legacy.reverbnation.com/rebyen</a></li>
+            <li><strong>YouTube Live Videos:</strong><br><a href="https://www.youtube.com/@RebYenMusic">youtube.com/@RebYenMusic</a></li>
+            <li><strong>Bookings &amp; Inquiries:</strong><br><a href="https://rebyen.com/#contact">rebyen.com/#contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>© 2026 Reb Yen. All rights reserved.</span>
+        <span>Printed Edition · rebyen.com</span>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
