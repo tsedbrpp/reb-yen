@@ -1,5 +1,7 @@
 'use strict';
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // ============================================================================
 // Mobile Navigation & Active Section Spy
 // ============================================================================
@@ -46,7 +48,7 @@ navigation?.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 
 if (sectionLinks.size > 0 && 'IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(
+  const navObserver = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -57,14 +59,47 @@ if (sectionLinks.size > 0 && 'IntersectionObserver' in window) {
     },
     { rootMargin: '-25% 0px -60% 0px' }
   );
-  sectionLinks.forEach((_, section) => observer.observe(section));
+  sectionLinks.forEach((_, section) => navObserver.observe(section));
 }
 
 // ============================================================================
-// Music Player & Catalog Coordination
+// Header Scroll-Progress Bar & Subtle Hero Parallax
 // ============================================================================
-// Keep one Bandcamp iframe alive when minimized. Only selecting a different song
-// or explicitly stopping playback replaces its source.
+const scrollProgress = document.getElementById('scroll-progress');
+const heroSection = document.getElementById('home');
+let scrollTicking = false;
+
+function updateScrollEffects() {
+  scrollTicking = false;
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+  if (scrollProgress) {
+    const ratio = docHeight > 0 ? Math.min(1, Math.max(0, scrollTop / docHeight)) : 0;
+    scrollProgress.style.setProperty('--scroll-ratio', ratio.toFixed(4));
+  }
+
+  if (heroSection && !prefersReducedMotion && window.innerWidth > 700 && scrollTop < 700) {
+    const offset = Math.min(36, Math.round(scrollTop * 0.07));
+    heroSection.style.setProperty('--hero-parallax', `${offset}px`);
+  }
+}
+
+window.addEventListener(
+  'scroll',
+  () => {
+    if (!scrollTicking) {
+      scrollTicking = true;
+      requestAnimationFrame(updateScrollEffects);
+    }
+  },
+  { passive: true }
+);
+updateScrollEffects();
+
+// ============================================================================
+// Music Player, Turntable, Peeking Vinyl Sleeve & Catalog Equalizer
+// ============================================================================
 const player = document.getElementById('music-player');
 const frame = document.getElementById('bandcamp-player');
 const playerBody = document.getElementById('player-body');
@@ -79,6 +114,7 @@ const heroTrack = document.getElementById('hero-track');
 const recordCta = document.getElementById('record-cta');
 const recordCtaIcon = document.getElementById('record-cta-icon');
 const recordCtaText = document.getElementById('record-cta-text');
+const featureSleeve = document.getElementById('feature-sleeve');
 
 const catalogRows = Array.from(document.querySelectorAll('.song-row[data-song]'));
 let selectedTrack = null;
@@ -107,7 +143,8 @@ function updateCatalogSelection(trackId) {
     if (isCurrent) {
       row.setAttribute('aria-current', 'true');
       if (listenLink) {
-        listenLink.innerHTML = '<span aria-hidden="true">♫</span> Selected';
+        listenLink.innerHTML =
+          '<span class="eq-bars" aria-hidden="true"><i></i><i></i><i></i></span> Selected';
         listenLink.setAttribute('aria-label', `${title} (currently selected in player)`);
       }
     } else {
@@ -118,6 +155,10 @@ function updateCatalogSelection(trackId) {
       }
     }
   });
+
+  if (featureSleeve) {
+    featureSleeve.classList.toggle('is-playing', trackId === '1827482453');
+  }
 }
 
 function setRecordStatus(trackId) {
@@ -248,6 +289,164 @@ setExpanded(false);
 setRecordStatus(null);
 
 // ============================================================================
+// Interactive Pluckable Guitar-String Dividers
+// ============================================================================
+if (!prefersReducedMotion) {
+  document.querySelectorAll('[data-guitar-string]').forEach(stringEl => {
+    const paths = stringEl.querySelectorAll('path');
+    if (paths.length === 0) return;
+
+    let animId = 0;
+    let pulledDisp = 0;
+    let lastX = 500;
+
+    function setCurve(cx, cy) {
+      const d = `M0,16 Q${cx.toFixed(1)},${cy.toFixed(2)} 1000,16`;
+      paths.forEach(p => p.setAttribute('d', d));
+    }
+
+    function pluck(x, initialDisp) {
+      if (animId) cancelAnimationFrame(animId);
+      let disp = initialDisp;
+      let vel = 0;
+      pulledDisp = 0;
+      stringEl.classList.add('is-vibrating');
+
+      function step() {
+        const force = -0.45 * disp;
+        vel = (vel + force) * 0.89;
+        disp += vel;
+        setCurve(x, 16 + disp);
+
+        if (Math.abs(disp) > 0.12 || Math.abs(vel) > 0.12) {
+          animId = requestAnimationFrame(step);
+        } else {
+          setCurve(500, 16);
+          stringEl.classList.remove('is-vibrating');
+          animId = 0;
+        }
+      }
+      animId = requestAnimationFrame(step);
+    }
+
+    stringEl.addEventListener('pointermove', event => {
+      if (event.pointerType === 'touch') return;
+      const rect = stringEl.getBoundingClientRect();
+      if (!rect.width) return;
+      lastX = Math.max(80, Math.min(920, ((event.clientX - rect.left) / rect.width) * 1000));
+      const dy = event.clientY - (rect.top + rect.height / 2);
+
+      if (Math.abs(dy) <= 13) {
+        if (animId) {
+          cancelAnimationFrame(animId);
+          animId = 0;
+        }
+        pulledDisp = dy * 1.35;
+        stringEl.classList.add('is-vibrating');
+        setCurve(lastX, 16 + pulledDisp);
+      } else if (Math.abs(pulledDisp) > 2) {
+        pluck(lastX, pulledDisp);
+      }
+    });
+
+    stringEl.addEventListener('pointerleave', () => {
+      if (Math.abs(pulledDisp) > 1.5) {
+        pluck(lastX, pulledDisp);
+      } else if (!animId) {
+        setCurve(500, 16);
+        stringEl.classList.remove('is-vibrating');
+      }
+    });
+
+    stringEl.addEventListener('pointerdown', event => {
+      const rect = stringEl.getBoundingClientRect();
+      if (!rect.width) return;
+      const x = Math.max(80, Math.min(920, ((event.clientX - rect.left) / rect.width) * 1000));
+      pluck(x, 13);
+    });
+  });
+}
+
+// ============================================================================
+// Choreographed Scroll-Reveal Storytelling
+// ============================================================================
+if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+  document.documentElement.classList.add('js-motion');
+
+  const staggerGroups = [
+    { parent: '.song-list', children: '.song-row', step: 35, mod: 5 },
+    { parent: '.video-grid', children: '.video', step: 80, mod: 2 },
+    { parent: '.format-cards', children: 'article', step: 75, mod: 3 },
+    { parent: '.venue-grid', children: ':scope > div', step: 75, mod: 3 },
+    { parent: '.gallery-grid', children: '.gallery-item', step: 65, mod: 4 },
+    { parent: '.press-photos', children: '.press-photo', step: 80, mod: 2 }
+  ];
+
+  const revealTargets = new Set();
+
+  staggerGroups.forEach(({ parent, children, step, mod }) => {
+    document.querySelectorAll(parent).forEach(group => {
+      group.querySelectorAll(children).forEach((item, index) => {
+        item.style.setProperty('--stagger', `${(index % mod) * step}ms`);
+        revealTargets.add(item);
+      });
+    });
+  });
+
+  document
+    .querySelectorAll(
+      '[data-reveal], .section-head, .feature-sleeve-wrap, .upcoming, .about-image, .about-copy, .contact-grid > div, .press-facts'
+    )
+    .forEach(el => revealTargets.add(el));
+
+  const viewportCutoff = window.innerHeight * 0.94;
+  const revealObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
+  );
+
+  revealTargets.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top > viewportCutoff) {
+      el.classList.add('reveal-ready');
+      revealObserver.observe(el);
+    }
+  });
+}
+
+// ============================================================================
+// Tactile 3D Polaroid Hover Physics
+// ============================================================================
+if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
+  document.querySelectorAll('[data-tilt]').forEach(card => {
+    card.addEventListener('pointermove', event => {
+      const rect = card.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const px = (event.clientX - rect.left) / rect.width - 0.5;
+      const py = (event.clientY - rect.top) / rect.height - 0.5;
+      const rx = (-py * 7).toFixed(2);
+      const ry = (px * 7).toFixed(2);
+      card.style.setProperty('--rx', `${rx}deg`);
+      card.style.setProperty('--ry', `${ry}deg`);
+      card.classList.add('is-tilting');
+    });
+
+    card.addEventListener('pointerleave', () => {
+      card.classList.remove('is-tilting');
+      card.style.removeProperty('--rx');
+      card.style.removeProperty('--ry');
+    });
+  });
+}
+
+// ============================================================================
 // Video Facades (Click-to-Load YouTube)
 // ============================================================================
 document.querySelectorAll('.video-poster[data-video-id]').forEach(button => {
@@ -282,7 +481,7 @@ function syncContactFormFields() {
   if (messageField) {
     messageField.placeholder = isBooking
       ? "For bookings, please include the date, venue/city, approximate set length, and whether you'd like solo, duo or band."
-      : "Write your message to Reb here...";
+      : 'Write your message to Reb here...';
   }
 }
 
@@ -303,42 +502,58 @@ document.querySelectorAll('[data-select-format]').forEach(link => {
 });
 
 // ============================================================================
-// Gallery Lightbox with Previous / Next & Keyboard Navigation
+// Gallery Lightbox with Smooth Crossfade & Keyboard Navigation
 // ============================================================================
 const lightbox = document.getElementById('photo-dialog');
 const galleryButtons = Array.from(document.querySelectorAll('[data-photo]'));
 let currentPhotoIndex = -1;
 let lastPhotoButton = null;
+let switchTimer = 0;
 
-function renderLightboxPhoto(index) {
+function renderLightboxPhoto(index, animate = false) {
   if (!lightbox || galleryButtons.length === 0) return;
   currentPhotoIndex = (index + galleryButtons.length) % galleryButtons.length;
   const button = galleryButtons[currentPhotoIndex];
   const img = document.getElementById('dialog-image');
   const title = document.getElementById('dialog-title');
-  if (img) {
-    img.src = button.dataset.photo;
-    img.alt = button.querySelector('img')?.alt || '';
-  }
-  if (title) {
-    title.textContent = button.querySelector('span')?.textContent || 'Performance photo';
+  if (!img) return;
+
+  const nextSrc = button.dataset.photo;
+  const nextAlt = button.querySelector('img')?.alt || '';
+  const nextTitle = button.querySelector('span')?.textContent || 'Performance photo';
+
+  if (animate && !prefersReducedMotion) {
+    clearTimeout(switchTimer);
+    img.classList.add('is-switching');
+    switchTimer = window.setTimeout(() => {
+      img.onload = () => img.classList.remove('is-switching');
+      img.src = nextSrc;
+      img.alt = nextAlt;
+      if (title) title.textContent = nextTitle;
+      if (img.complete) img.classList.remove('is-switching');
+    }, 130);
+  } else {
+    img.classList.remove('is-switching');
+    img.src = nextSrc;
+    img.alt = nextAlt;
+    if (title) title.textContent = nextTitle;
   }
 }
 
 galleryButtons.forEach((button, index) => {
   button.addEventListener('click', () => {
     lastPhotoButton = button;
-    renderLightboxPhoto(index);
+    renderLightboxPhoto(index, false);
     lightbox?.showModal();
   });
 });
 
 document.getElementById('prev-photo')?.addEventListener('click', () => {
-  renderLightboxPhoto(currentPhotoIndex - 1);
+  renderLightboxPhoto(currentPhotoIndex - 1, true);
 });
 
 document.getElementById('next-photo')?.addEventListener('click', () => {
-  renderLightboxPhoto(currentPhotoIndex + 1);
+  renderLightboxPhoto(currentPhotoIndex + 1, true);
 });
 
 document.getElementById('close-photo')?.addEventListener('click', () => {
@@ -362,10 +577,10 @@ lightbox?.addEventListener('click', event => {
 lightbox?.addEventListener('keydown', event => {
   if (event.key === 'ArrowLeft') {
     event.preventDefault();
-    renderLightboxPhoto(currentPhotoIndex - 1);
+    renderLightboxPhoto(currentPhotoIndex - 1, true);
   } else if (event.key === 'ArrowRight') {
     event.preventDefault();
-    renderLightboxPhoto(currentPhotoIndex + 1);
+    renderLightboxPhoto(currentPhotoIndex + 1, true);
   }
 });
 
@@ -391,7 +606,6 @@ copyBioBtn?.addEventListener('click', async () => {
       copyBioBtn.textContent = originalLabel;
     }, 2200);
   } catch {
-    // Fallback: select text if clipboard API fails
     const range = document.createRange();
     range.selectNodeContents(shortBioText);
     const sel = window.getSelection();

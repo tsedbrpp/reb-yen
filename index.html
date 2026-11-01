@@ -17,8 +17,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Rye&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261101k">
-  <script defer src="site.js?v=20261101k"></script>
+  <link rel="stylesheet" href="styles.css?v=20261101m">
+  <script defer src="site.js?v=20261101m"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -54,10 +54,12 @@
         <a href="#contact" class="nav-book">Contact me</a>
       </nav>
     </div>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   </header>
 
   <main id="main">
     <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero-spotlight" aria-hidden="true"></div>
       <img class="hero-photo" src="images/hero-guitar.jpg" alt="Reb Yen singing and playing acoustic guitar" width="939" height="1668" fetchpriority="high">
       <div class="container">
         <div class="hero-content">
@@ -139,10 +141,15 @@
         </div>
 
         <div class="featured">
-          <figure class="feature-art">
-            <img src="images/take_me_crazy.jpg" alt="Reb Yen performing Take Me Crazy in Nashville" width="480" height="360">
-            <figcaption>On stage at the Commodore Grille, Nashville</figcaption>
-          </figure>
+          <div class="feature-sleeve-wrap" id="feature-sleeve">
+            <div class="sleeve-vinyl" aria-hidden="true">
+              <span class="sleeve-vinyl-label">TAKE ME<br>CRAZY</span>
+            </div>
+            <figure class="feature-art" data-tilt>
+              <img src="images/take_me_crazy.jpg" alt="Reb Yen performing Take Me Crazy in Nashville" width="480" height="360">
+              <figcaption>On stage at the Commodore Grille, Nashville</figcaption>
+            </figure>
+          </div>
           <div class="featured-copy">
             <p class="eyebrow">Featured original</p>
             <h3>Take Me Crazy</h3>
@@ -183,6 +190,13 @@
         <div class="catalog-head">
           <h3>Explore the originals</h3>
           <span class="catalog-note">Choose a song, then press play · Lyrics on Bandcamp</span>
+        </div>
+
+        <div class="guitar-string" data-guitar-string aria-hidden="true">
+          <svg viewBox="0 0 1000 32" preserveAspectRatio="none">
+            <path class="string-glow" d="M0,16 Q500,16 1000,16"></path>
+            <path class="string-wire" d="M0,16 Q500,16 1000,16"></path>
+          </svg>
         </div>
 
         <div class="song-list">
@@ -403,6 +417,12 @@
         </div>
 
         <div class="past-venues open">
+          <div class="guitar-string venues-string" data-guitar-string aria-hidden="true">
+            <svg viewBox="0 0 1000 32" preserveAspectRatio="none">
+              <path class="string-glow" d="M0,16 Q500,16 1000,16"></path>
+              <path class="string-wire" d="M0,16 Q500,16 1000,16"></path>
+            </svg>
+          </div>
           <h3 class="venues-title">Where Reb has played</h3>
           <div class="venue-grid">
             <div>
@@ -424,10 +444,25 @@
 
     <section class="lyric-band" aria-label="Lyric from A New Beginning">
       <div class="container">
-        <blockquote>
-          <p>“Don’t call it the end;<br>it’s a new beginning.”</p>
-          <footer>— Reb Yen, <a href="https://rebyen.bandcamp.com/track/a-new-beginning" data-track="1638570894" data-title="A New Beginning">A New Beginning ↗</a></footer>
+        <div class="guitar-string lyric-string" data-guitar-string aria-hidden="true">
+          <svg viewBox="0 0 1000 32" preserveAspectRatio="none">
+            <path class="string-glow" d="M0,16 Q500,16 1000,16"></path>
+            <path class="string-wire" d="M0,16 Q500,16 1000,16"></path>
+          </svg>
+        </div>
+        <blockquote class="kinetic-quote" data-reveal>
+          <p>
+            <span class="lyric-line">“Don’t call it the end;</span>
+            <span class="lyric-line">it’s a new beginning.”</span>
+          </p>
+          <footer>— Reb Yen, <a href="https://rebyen.bandcamp.com/track/a-new-beginning" class="lyric-song-cta" data-track="1638570894" data-title="A New Beginning">A New Beginning ↗</a></footer>
         </blockquote>
+        <div class="guitar-string lyric-string" data-guitar-string aria-hidden="true">
+          <svg viewBox="0 0 1000 32" preserveAspectRatio="none">
+            <path class="string-glow" d="M0,16 Q500,16 1000,16"></path>
+            <path class="string-wire" d="M0,16 Q500,16 1000,16"></path>
+          </svg>
+        </div>
       </div>
     </section>
 
@@ -456,19 +491,19 @@
           <a href="press-kit.html#photos" class="text-link">Download performance photos ↗</a>
         </div>
         <div class="gallery-grid">
-          <button type="button" class="gallery-item" data-photo="images/storm.jpg" aria-label="Enlarge photo: The Storm · with the band">
+          <button type="button" class="gallery-item" data-tilt data-photo="images/storm.jpg" aria-label="Enlarge photo: The Storm · with the band">
             <img src="images/storm.jpg" alt="Reb Yen performing The Storm with her band" width="480" height="360" loading="lazy">
             <span>The Storm · with the band</span>
           </button>
-          <button type="button" class="gallery-item" data-photo="images/take_me_crazy.jpg" aria-label="Enlarge photo: Commodore Grille · Nashville">
+          <button type="button" class="gallery-item" data-tilt data-photo="images/take_me_crazy.jpg" aria-label="Enlarge photo: Commodore Grille · Nashville">
             <img src="images/take_me_crazy.jpg" alt="Reb Yen playing guitar at the Commodore Grille" width="480" height="360" loading="lazy">
             <span>Commodore Grille · Nashville</span>
           </button>
-          <button type="button" class="gallery-item" data-photo="images/crawled_edge.jpg" aria-label="Enlarge photo: With Lenny Charles · Roots Music Project">
+          <button type="button" class="gallery-item" data-tilt data-photo="images/crawled_edge.jpg" aria-label="Enlarge photo: With Lenny Charles · Roots Music Project">
             <img src="images/crawled_edge.jpg" alt="Reb Yen and Lenny Charles performing together" width="480" height="360" loading="lazy">
             <span>With Lenny Charles · Roots Music Project</span>
           </button>
-          <button type="button" class="gallery-item" data-photo="images/are_you_listening.jpg" aria-label="Enlarge photo: Trio · The Alley">
+          <button type="button" class="gallery-item" data-tilt data-photo="images/are_you_listening.jpg" aria-label="Enlarge photo: Trio · The Alley">
             <img src="images/are_you_listening.jpg" alt="Reb Yen performing with her trio at The Alley" width="480" height="360" loading="lazy">
             <span>Trio · The Alley</span>
           </button>
