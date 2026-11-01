@@ -481,11 +481,11 @@ p + p {
 }
 
 .hero-record {
-  --rec: 176px;
+  --rec: 250px;
   display: flex;
   align-items: center;
-  gap: 20px;
-  max-width: 560px;
+  gap: 22px;
+  max-width: 600px;
   margin: 6px 0 0;
   padding: 18px 18px 18px 16px;
   background: rgba(255, 250, 241, 0.07);
@@ -595,18 +595,18 @@ p + p {
 /* Play / stop badge ? does not rotate with the disc */
 .record-play {
   position: absolute;
-  left: -2px;
-  bottom: -2px;
+  left: 0;
+  bottom: 0;
   z-index: 2;
-  width: 56px;
-  height: 56px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   background: var(--cream);
   color: var(--plum-dark);
-  font-size: 20px;
   line-height: 1;
+  font-size: 24px;
   border: 3px solid var(--orange);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
   transition: transform 0.2s ease, background-color 0.2s ease;
@@ -734,11 +734,15 @@ p + p {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 4px;
 }
 
-.record-pick-btn {
-  flex: 1 1 auto;
+.record-actions:not(:has(:not([hidden]))) {
+  display: none;
+}
+
+.record-stop-btn {
+  min-height: 44px;
+  padding: 8px 18px;
 }
 
 .record-stop-btn[hidden] {
@@ -2785,7 +2789,7 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
     max-width: 400px;
   }
   .hero-record {
-    --rec: 180px;
+    --rec: 240px;
     flex-direction: column;
     align-items: stretch;
     gap: 18px;
@@ -2793,6 +2797,15 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
   }
   .turntable {
     align-self: center;
+  }
+  .record-step,
+  .record-now,
+  .record-cta {
+    text-align: center;
+    justify-content: center;
+  }
+  .record-actions {
+    justify-content: center;
   }
 }
 
@@ -2897,7 +2910,7 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
     margin: 12px 0 18px;
   }
   .hero-record {
-    --rec: min(66vw, 260px);
+    --rec: min(76vw, 310px);
     flex-direction: column;
     align-items: stretch;
     max-width: none;
@@ -2909,9 +2922,12 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
     align-self: center;
   }
   .record-play {
-    width: 60px;
-    height: 60px;
-    font-size: 22px;
+    width: 70px;
+    height: 70px;
+    font-size: 26px;
+  }
+  .record-actions {
+    justify-content: center;
   }
 
   .record-step,
@@ -3115,7 +3131,7 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
 
 @media (max-width: 365px) {
   .hero-record {
-    --rec: 62vw;
+    --rec: 72vw;
     padding: 16px 12px 14px;
   }
 }

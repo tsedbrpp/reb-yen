@@ -216,8 +216,6 @@ const recordLabelTitle = document.getElementById('record-label-title');
 const recordPlayIcon = document.getElementById('record-play-icon');
 const recordNowLabel = document.getElementById('record-now-label');
 const recordNowTitle = document.getElementById('record-now-title');
-const recordPickBtn = document.getElementById('record-pick-btn');
-const recordPickText = document.getElementById('record-pick-text');
 const recordStopBtn = document.getElementById('record-stop-btn');
 const songPicker = document.getElementById('song-picker');
 const songPickerList = document.getElementById('song-picker-list');
@@ -373,14 +371,13 @@ function setRecordStatus(trackId) {
     recordNowTitle.textContent = isLoaded ? name : '9 original songs';
     recordNowTitle.classList.toggle('is-idle', !isLoaded);
   }
-  if (recordPickText) recordPickText.textContent = isLoaded ? 'Change song' : 'Pick a song';
   if (recordStopBtn) recordStopBtn.hidden = !isLoaded;
 
   const statusMsg = !isLoaded
-    ? 'Tap the vinyl to choose a song.'
+    ? 'Tap the vinyl to choose a song'
     : isCued
       ? `Almost there — tap the big ▶ in the music player to start “${name}”`
-      : `♫ Now playing “${name}”`;
+      : `♫ Now playing “${name}” · tap the vinyl to change songs`;
   if (recordCtaText) recordCtaText.textContent = statusMsg;
   else if (recordCta) recordCta.textContent = statusMsg;
 
@@ -582,9 +579,8 @@ function stopPlayer({ returnFocus = true } = {}) {
 
 stopBtn?.addEventListener('click', () => stopPlayer());
 
-// Hero turntable: the vinyl (and the "Pick a song" button) open the song picker.
+// Hero turntable: the vinyl is the song selector — tapping it opens the picker.
 heroRecord?.addEventListener('click', openSongPicker);
-recordPickBtn?.addEventListener('click', openSongPicker);
 recordStopBtn?.addEventListener('click', () => {
   stopPlayer({ returnFocus: false });
   heroRecord?.focus({ preventScroll: true });
