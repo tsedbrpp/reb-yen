@@ -50,6 +50,7 @@ document.querySelectorAll('[data-track]').forEach(link=>{
     playerStatus.textContent=link.dataset.title+' selected. Press play in the Bandcamp player to listen.';
     setRecordStatus(id);
     player.focus({preventScroll:true});
+    if(!player.classList.contains('is-docked')) player.scrollIntoView({behavior:'smooth',block:'center'});
   });
 });
 minimize?.addEventListener('click',()=>setExpanded(playerBody.hidden));
