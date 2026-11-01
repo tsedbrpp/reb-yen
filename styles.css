@@ -37,3 +37,52 @@
 .hero-record-ctl select{min-width:240px}
 .record-cta{font-size:17px;font-weight:700;color:#f7ead2}
 @media(max-width:700px){.hero-record{max-width:none}.spin-record{width:150px;height:150px}.spin-record .arm{height:92px}}
+
+/* November 2026: compact hero and clearer listening/booking hierarchy */
+.hero{min-height:560px}
+.hero-content{padding:74px 0 64px}
+.hero .tagline{font-size:24px;max-width:590px}
+.hero .location{margin:14px 0 24px}
+.hero .actions{margin-bottom:0}
+.hero-booking-link{margin:12px 0 0;font-size:15px;color:#e9d5e1}
+.hero-booking-link a{color:#ffbe92;font-weight:700}
+.hero-record{flex-direction:row;text-align:left;align-items:center;gap:18px;max-width:490px;margin:22px 0 0;padding:15px 18px}
+.spin-record{width:96px;height:96px}
+.spin-record .label{width:36px;height:36px;font-size:7px}
+.spin-record .arm{height:62px;right:-10px;width:4px}
+.spin-record .disc,.spin-record:not(.playing) .disc{animation:none;box-shadow:0 4px 18px #0008;transition:box-shadow .2s}
+.spin-record.selected .disc,.spin-record:hover .disc{box-shadow:0 0 0 3px #efa97766,0 4px 18px #0009}
+.hero-record-ctl{align-items:flex-start;text-align:left;min-width:0}
+.hero-record-ctl select{min-width:0;width:min(100%,255px)}
+.record-cta{font-size:13px;font-weight:500;line-height:1.4}
+.player-slot{min-height:110px}
+.player-body[hidden]{display:none}
+.video-poster{position:relative;display:block;width:100%;aspect-ratio:16/9;border:1px solid #80657b;border-radius:4px;background:#1e141e;overflow:hidden;color:#fff;padding:0;cursor:pointer}
+.video-poster img{width:100%;height:100%;object-fit:cover;filter:brightness(.79)}
+.video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:70px;height:52px;background:#e16b38;border-radius:12px;color:#261626;font-size:24px;box-shadow:0 4px 18px #0009}
+.video-poster:hover .video-play,.video-poster:focus-visible .video-play{background:#f5a171}
+.contact-form input:focus-visible,.contact-form select:focus-visible,.contact-form textarea:focus-visible{outline:3px solid #efa977;outline-offset:3px}
+@media(max-width:700px){
+  .hero{min-height:0}
+  .hero-photo{object-position:63% 22%;opacity:.54}
+  .hero:after{background:linear-gradient(0deg,#2c192c 0%,rgba(44,25,44,.96) 36%,rgba(44,25,44,.48) 100%)}
+  .hero-content{padding:145px 0 40px}
+  .hero h1{font-size:52px;margin-bottom:11px}
+  .hero .tagline{font-size:20px}
+  .hero .location{margin:12px 0 18px}
+  .hero-record{flex-direction:row;max-width:none;margin-top:20px;padding:12px;gap:14px;text-align:left}
+  .spin-record{width:78px;height:78px}
+  .spin-record .label{width:30px;height:30px}
+  .spin-record .arm{height:51px;right:-7px}
+  .hero-record-ctl{min-width:0;flex:1;align-items:stretch}
+  .hero-record-ctl select{width:100%;min-width:0;font-size:15px}
+  .record-cta{font-size:12px}
+  .section{padding:54px 0}
+  .song-info p{font-size:13px;line-height:1.45}
+}
+@media(max-width:365px){
+  .hero-record{gap:9px}
+  .spin-record{width:64px;height:64px}
+  .spin-record .arm{height:41px}
+  .hero-record-ctl select{font-size:13px}
+}

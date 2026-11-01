@@ -1,6 +1,4 @@
 'use strict';
-if('scrollRestoration' in history) history.scrollRestoration='manual';
-if(!location.hash) window.scrollTo(0,0);
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.site-nav');
 function closeMenu(){ navigation?.classList.remove('is-open'); menuButton?.setAttribute('aria-expanded','false'); }
@@ -50,6 +48,7 @@ document.querySelectorAll('[data-track]').forEach(link=>{
     const fallback=document.getElementById('player-fallback');
     fallback.href=link.href;
     playerStatus.textContent=link.dataset.title+' selected. Press play in the Bandcamp player to listen.';
+    setRecordStatus(id);
     player.focus({preventScroll:true});
   });
 });
@@ -67,7 +66,8 @@ document.getElementById('player-stop')?.addEventListener('click',()=>{
   playerTitle.textContent='Choose a song to listen';
   setExpanded(false);
   document.querySelectorAll('.song-row').forEach(row=>row.removeAttribute('aria-current'));
-  playerStatus.textContent='Music stopped. Choose any Listen button to start again.';
+  playerStatus.textContent='Player closed. Choose any Listen button to load a song.';
+  setRecordStatus(null);
   document.querySelector('#music [data-track]')?.focus({preventScroll:true});
 });
 
@@ -85,24 +85,39 @@ lightbox?.addEventListener('click',event=>{if(event.target===lightbox){const box
 lightbox?.addEventListener('close',()=>lastPhotoButton?.focus());
 document.getElementById('print-kit')?.addEventListener('click',()=>window.print());
 
-// Hero record player: plays the song chosen in the dropdown via the shared player.
+// The embedded Bandcamp player cannot report actual playback state to this page.
+// The decorative record therefore opens a song; it never claims audio is playing.
 const heroRecord=document.getElementById('hero-record');
 const heroTrack=document.getElementById('hero-track');
 const recordCta=document.getElementById('record-cta');
-function setSpinning(on){
-  if(!heroRecord) return;
-  heroRecord.classList.toggle('playing',on);
-  heroRecord.setAttribute('aria-pressed',String(on));
-  heroRecord.setAttribute('aria-label',on?'Stop the music':'Play the selected song');
-  recordCta.innerHTML=on?'<span aria-hidden="true">❚❚</span> Playing – press play in the player below, tap the record to stop':'<span aria-hidden="true">▶</span> Tap the record to play';
-}
-function playHero(){
-  const link=document.querySelector('#music .listen-link[data-track="'+heroTrack.value+'"]');
-  if(link){ link.click(); setSpinning(true); }
+function setRecordStatus(trackId){
+  if(!heroRecord || !heroTrack || !recordCta) return;
+  if(trackId) heroTrack.value=trackId;
+  const name=heroTrack.options[heroTrack.selectedIndex]?.text || 'selected song';
+  heroRecord.classList.toggle('selected',Boolean(trackId));
+  heroRecord.setAttribute('aria-label','Open song player for '+name);
+  recordCta.textContent=trackId
+    ? name+' is loaded. Press play in the Bandcamp player.'
+    : 'Tap the record to open the song player';
 }
 heroRecord?.addEventListener('click',()=>{
-  if(heroRecord.classList.contains('playing')) document.getElementById('player-stop')?.click();
-  else playHero();
+  const link=document.querySelector('#music .listen-link[data-track="'+heroTrack.value+'"]');
+  link?.click();
 });
-heroTrack?.addEventListener('change',()=>{ if(heroRecord.classList.contains('playing')) playHero(); });
-document.getElementById('player-stop')?.addEventListener('click',()=>setSpinning(false));
+heroTrack?.addEventListener('change',()=>setRecordStatus(null));
+setRecordStatus(null);
+
+// Load video embeds only after an explicit click to reduce initial page weight.
+document.querySelectorAll('.video-poster[data-video-id]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const id=button.dataset.videoId;
+    if(!/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+    const video=document.createElement('iframe');
+    video.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0';
+    video.title=button.getAttribute('aria-label').replace(/^Play /,'');
+    video.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    video.allowFullscreen=true;
+    button.replaceWith(video);
+    video.focus({preventScroll:true});
+  });
+});
