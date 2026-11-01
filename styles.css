@@ -320,7 +320,7 @@ p + p {
    ========================================================================== */
 .hero {
   position: relative;
-  min-height: 560px;
+  min-height: 600px;
   isolation: isolate;
   background: var(--plum-dark);
   color: var(--cream);
@@ -331,10 +331,11 @@ p + p {
   position: absolute;
   right: 0;
   top: 0;
-  width: 54%;
+  width: 58%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 34%;
+  object-position: 54% 27%;
+  filter: brightness(1.15) contrast(1.04) saturate(1.05);
   z-index: -2;
 }
 
@@ -343,14 +344,20 @@ p + p {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    linear-gradient(90deg, #2c192c 0%, #2c192c 37%, rgba(44, 25, 44, 0.83) 48%, rgba(44, 25, 44, 0.08) 72%),
-    linear-gradient(0deg, rgba(44, 25, 44, 0.38), rgba(44, 25, 44, 0.13));
+  background: linear-gradient(
+    90deg,
+    #2c192c 0%,
+    #2c192c 42.5%,
+    rgba(44, 25, 44, 0.68) 49%,
+    rgba(44, 25, 44, 0.14) 55%,
+    rgba(44, 25, 44, 0) 61%
+  );
 }
 
 .hero-content {
   padding: 74px 0 64px;
-  max-width: 650px;
+  max-width: 540px;
+  text-shadow: 0 2px 12px rgba(24, 11, 29, 0.45);
 }
 
 .hero .eyebrow {
@@ -1570,16 +1577,30 @@ body.has-player {
 /* ==========================================================================
    Responsive Breakpoints
    ========================================================================== */
-@media (min-width: 1600px) {
+@media (min-width: 1345px) {
   .hero-photo {
-    width: 51%;
+    width: 780px;
+    right: calc((100% - 1345px) / 2);
   }
   .hero::after {
-    background: linear-gradient(90deg, #2c192c 0%, #2c192c 42%, rgba(44, 25, 44, 0.7) 55%, rgba(44, 25, 44, 0.1) 75%);
+    background:
+      linear-gradient(
+        90deg,
+        #2c192c 0%,
+        #2c192c calc(50% - 104px),
+        rgba(44, 25, 44, 0.62) calc(50% - 20px),
+        rgba(44, 25, 44, 0) calc(50% + 90px)
+      ),
+      linear-gradient(
+        270deg,
+        #2c192c 0%,
+        #2c192c calc(50% - 669px),
+        rgba(44, 25, 44, 0) calc(50% - 570px)
+      );
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .site-nav {
     gap: 16px;
   }
@@ -1592,8 +1613,23 @@ body.has-player {
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .hero-photo {
+    width: 60%;
+    right: 0;
+    object-position: 56% 27%;
+  }
+  .hero::after {
+    background: linear-gradient(
+      90deg,
+      #2c192c 0%,
+      #2c192c 40.5%,
+      rgba(44, 25, 44, 0.65) 49%,
+      rgba(44, 25, 44, 0.18) 57%,
+      rgba(44, 25, 44, 0) 66%
+    );
+  }
   .hero-content {
-    max-width: 540px;
+    max-width: 460px;
   }
   .hero .tagline {
     max-width: 400px;
@@ -1655,15 +1691,24 @@ body.has-player {
     min-height: 0;
   }
   .hero-photo {
+    right: 0;
     width: 100%;
-    object-position: 63% 22%;
-    opacity: 0.54;
+    height: 390px;
+    object-position: 54% 26%;
+    opacity: 1;
+    filter: brightness(1.12) contrast(1.04) saturate(1.05);
   }
   .hero::after {
-    background: linear-gradient(0deg, #2c192c 0%, rgba(44, 25, 44, 0.96) 36%, rgba(44, 25, 44, 0.48) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(44, 25, 44, 0) 0px,
+      rgba(44, 25, 44, 0.04) 205px,
+      rgba(44, 25, 44, 0.68) 285px,
+      #2c192c 375px
+    );
   }
   .hero-content {
-    padding: 140px 0 40px;
+    padding: 255px 0 40px;
     max-width: none;
   }
   .hero h1 {
