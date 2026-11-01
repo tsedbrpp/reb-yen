@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    Reb Yen — Design System, Base & Typography
    ========================================================================== */
 @view-transition {
@@ -2225,41 +2225,42 @@ dialog.is-fallback-open {
 }
 
 /* ==========================================================================
-   Song Picker Dialog (opened from the hero vinyl)
+   Song Picker Modal (opened from the hero vinyl — iOS/macOS Safari safe)
    ========================================================================== */
 .song-picker {
-  width: min(520px, calc(100% - 24px));
-  max-width: none;
-  max-height: min(660px, 86vh);
-  padding: 0;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.song-picker[hidden] {
+  display: none !important;
+}
+
+.song-picker-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(33, 17, 34, 0.74);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.song-picker-panel {
+  position: relative;
+  z-index: 1;
+  width: min(520px, 100%);
+  max-height: 86vh;
+  max-height: 86dvh;
   border: 1px solid var(--line);
   border-radius: 14px;
   background: var(--paper);
   color: var(--plum);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-}
-
-.song-picker[open] {
-  display: flex;
-  flex-direction: column;
-  animation: picker-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes picker-in {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.song-picker::backdrop {
-  background: rgba(33, 17, 34, 0.72);
-  backdrop-filter: blur(3px);
 }
 
 .song-picker-head {
@@ -2280,15 +2281,26 @@ dialog.is-fallback-open {
 }
 
 .song-picker-list {
+  display: block;
   list-style: none;
   margin: 0;
   padding: 8px;
+  max-height: min(460px, calc(82vh - 110px));
+  max-height: min(460px, calc(82dvh - 110px));
   overflow-y: auto;
-  flex: 1;
+  -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
 }
 
+.song-picker-list > li {
+  margin: 0;
+  padding: 0;
+}
+
 .picker-song {
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
   width: 100%;
   min-height: 72px;
   display: flex;
@@ -2298,9 +2310,16 @@ dialog.is-fallback-open {
   border: 1px solid transparent;
   border-radius: 10px;
   background: transparent;
-  color: inherit;
+  color: var(--plum);
   text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(223, 115, 63, 0.2);
   transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.picker-song > * {
+  pointer-events: none;
 }
 
 .picker-song:hover,
@@ -2389,14 +2408,15 @@ dialog.is-fallback-open {
 
 @media (max-width: 700px) {
   .song-picker {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .song-picker-panel {
     width: 100%;
-    max-height: 88vh;
-    margin: auto 0 0;
+    max-height: 85vh;
+    max-height: 85dvh;
     border-radius: 18px 18px 0 0;
     border-bottom: 0;
-  }
-  .song-picker[open] {
-    animation: sheet-up 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .song-picker-head {
     padding: 16px 16px 12px;
@@ -2404,17 +2424,13 @@ dialog.is-fallback-open {
   .song-picker-head h2 {
     font-size: 23px;
   }
+  .song-picker-list {
+    max-height: calc(78vh - 110px);
+    max-height: calc(78dvh - 110px);
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
   .song-picker-foot {
     padding: 12px 16px calc(16px + env(safe-area-inset-bottom));
-  }
-}
-
-@keyframes sheet-up {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: none;
   }
 }
 

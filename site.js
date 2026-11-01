@@ -368,7 +368,6 @@ function updateJukeboxSleeve(trackId, isPlaying) {
 function setExpanded(expanded) {
   if (!playerBody || !minimizeBtn) return;
   playerBody.hidden = !expanded;
-  playerBody.inert = !expanded;
   minimizeBtn.setAttribute('aria-expanded', String(expanded));
   minimizeBtn.setAttribute(
     'aria-label',
@@ -460,7 +459,6 @@ function renderSongPicker() {
       img.alt = '';
       img.width = 56;
       img.height = 56;
-      img.loading = 'lazy';
       if (meta.pos) img.style.objectPosition = meta.pos;
 
       const text = document.createElement('span');
@@ -476,7 +474,6 @@ function renderSongPicker() {
       go.setAttribute('aria-hidden', 'true');
 
       btn.append(img, text, go);
-      btn.addEventListener('click', () => pickSong(id));
       li.append(btn);
       songPickerList.append(li);
     });
@@ -501,23 +498,22 @@ function renderSongPicker() {
 function openSongPicker() {
   if (!songPicker) return;
   renderSongPicker();
-  openDialog(songPicker);
-  const target =
-    songPickerList?.querySelector('.picker-song[aria-current="true"]') ||
-    songPickerList?.querySelector('.picker-song');
-  target?.focus({ preventScroll: false });
+  songPicker.hidden = false;
+  document.body.classList.add('dialog-open');
+  document.getElementById('song-picker-close')?.focus({ preventScroll: true });
 }
 
 function closeSongPicker() {
-  closeDialog(songPicker);
+  if (!songPicker || songPicker.hidden) return;
+  songPicker.hidden = true;
+  document.body.classList.remove('dialog-open');
 }
 
 function pickSong(trackId) {
   closeSongPicker();
-  if (trackId !== selectedTrack) {
+  if (trackId) {
     selectTrackById(trackId, { dock: true, focusPlayer: false });
   }
-  heroRecord?.focus({ preventScroll: true });
 }
 
 function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
@@ -525,13 +521,19 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   const targetLink =
     document.querySelector(`#music .listen-link[data-track="${trackId}"]`) ||
     document.querySelector(`[data-track="${trackId}"]`);
-  if (!targetLink) return;
-
   const meta = TRACK_META[trackId];
-  const title = meta?.title || targetLink.dataset.title || 'Selected song';
-  const href = meta?.href || targetLink.getAttribute('href') || 'https://rebyen.bandcamp.com/';
+  if (!meta && !targetLink) return;
 
-  if (trackId !== selectedTrack) {
+  const title = meta?.title || targetLink?.dataset.title || 'Selected song';
+  const href = meta?.href || targetLink?.getAttribute('href') || 'https://rebyen.bandcamp.com/';
+
+  if (options.dock) {
+    player.classList.add('is-docked');
+    document.body.classList.add('has-player');
+  }
+  setExpanded(true);
+
+  if (trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
     frame.src = bandcampEmbedUrl(trackId);
     selectedTrack = trackId;
     setCued(true);
@@ -540,12 +542,6 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   frame.title = `${title} by Reb Yen — Bandcamp audio player`;
   if (playerTitle) playerTitle.textContent = title;
   if (stopBtn) stopBtn.hidden = false;
-
-  if (options.dock) {
-    player.classList.add('is-docked');
-    document.body.classList.add('has-player');
-  }
-  setExpanded(true);
   updateCatalogSelection(trackId);
 
   const fallback = document.getElementById('player-fallback');
@@ -627,26 +623,28 @@ stopBtn?.addEventListener('click', () => stopPlayer());
 
 // Hero turntable: the vinyl is the song selector — tapping it opens the picker.
 heroRecord?.addEventListener('click', openSongPicker);
+songPickerList?.addEventListener('click', event => {
+  const btn = event.target.closest('.picker-song[data-pick]');
+  if (!btn) return;
+  event.preventDefault();
+  pickSong(btn.dataset.pick);
+});
 recordStopBtn?.addEventListener('click', () => {
   stopPlayer({ returnFocus: false });
   heroRecord?.focus({ preventScroll: true });
 });
 document.getElementById('song-picker-close')?.addEventListener('click', closeSongPicker);
+document.getElementById('song-picker-backdrop')?.addEventListener('click', closeSongPicker);
 document.getElementById('song-picker-stop')?.addEventListener('click', () => {
   closeSongPicker();
   stopPlayer({ returnFocus: false });
   heroRecord?.focus({ preventScroll: true });
 });
-// Click on the dimmed backdrop closes the picker
-songPicker?.addEventListener('click', event => {
-  if (event.target !== songPicker) return;
-  const box = songPicker.getBoundingClientRect();
-  const outside =
-    event.clientX < box.left ||
-    event.clientX > box.right ||
-    event.clientY < box.top ||
-    event.clientY > box.bottom;
-  if (outside) closeSongPicker();
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && songPicker && !songPicker.hidden) {
+    closeSongPicker();
+    heroRecord?.focus({ preventScroll: true });
+  }
 });
 
 // Catalog Filter Pills (All / Featured / Studio / Live)
