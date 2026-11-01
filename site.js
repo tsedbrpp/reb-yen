@@ -1001,13 +1001,13 @@ document.querySelectorAll('.video-poster[data-video-id]').forEach(button => {
 const STAGE_SPECS = {
   Solo: {
     title: 'Solo Acoustic · Intimate Storytelling',
-    instruments: 'Lead vocals with acoustic guitar, banjo, keyboard or harmonica',
+    instruments: 'Lead vocals with guitar, keyboard or harmonica',
     venues: 'Listening rooms, bistros, house concerts & private gatherings',
     cta: 'Inquire about Solo →'
   },
   Duo: {
     title: 'Acoustic Duo · Harmonies & Counterpoint',
-    instruments: 'Two performers with vocal harmonies, acoustic guitars & multi-instrumental textures',
+    instruments: 'Two performers with vocal harmonies, guitars & multi-instrumental textures',
     venues: 'Wine bars, hotel lounges, receptions & intimate stages',
     cta: 'Inquire about Duo →'
   },
@@ -1135,7 +1135,7 @@ const JOURNEY_CHAPTERS = [
   },
   {
     title: 'Boulder & the Front Range · Roots Music Project & Beyond',
-    text: 'Now based in Boulder, performing originals and curated covers on guitar, banjo, keyboard and harmonica at Roots Music Project, St. Julien Hotel, Bricks On Main, The Alley and Attic Bistro.'
+    text: 'Now based in Boulder, performing originals and curated covers on guitar, keyboard and harmonica at Roots Music Project, St. Julien Hotel, Bricks On Main, The Alley and Attic Bistro.'
   }
 ];
 
