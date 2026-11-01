@@ -132,9 +132,9 @@ const TRACK_META = {
     vinyl: 'GOTTA LET\nIT GO',
     eyebrow: 'Featured original · ReverbNation Spotlight',
     desc: 'Written and arranged by Reb about knowing when to let go and move forward—featured on the ReverbNation homepage.',
-    img: 'images/storm.jpg',
-    alt: 'Reb Yen performing live with acoustic guitar',
-    caption: 'Reb Yen performing live on stage',
+    img: 'images/gotta_let_it_go.jpg',
+    alt: 'Reb Yen singing Gotta Let It Go with acoustic guitar',
+    caption: 'Gotta Let It Go ? from the lyric video',
     href: 'https://rebyen.bandcamp.com/track/gotta-let-it-go-2'
   },
   '1271869476': {
@@ -210,16 +210,18 @@ const prevBtn = document.getElementById('player-prev');
 const nextBtn = document.getElementById('player-next');
 const playerStatus = document.getElementById('player-status');
 const heroRecord = document.getElementById('hero-record');
-const heroTrack = document.getElementById('hero-track');
-const heroTrackPrev = document.getElementById('hero-track-prev');
-const heroTrackNext = document.getElementById('hero-track-next');
 const recordCta = document.getElementById('record-cta');
 const recordCtaText = document.getElementById('record-cta-text');
 const recordLabelTitle = document.getElementById('record-label-title');
 const recordPlayIcon = document.getElementById('record-play-icon');
-const recordPlayBtn = document.getElementById('record-play-btn');
-const recordBtnIcon = document.getElementById('record-btn-icon');
-const recordBtnText = document.getElementById('record-btn-text');
+const recordNowLabel = document.getElementById('record-now-label');
+const recordNowTitle = document.getElementById('record-now-title');
+const recordPickBtn = document.getElementById('record-pick-btn');
+const recordPickText = document.getElementById('record-pick-text');
+const recordStopBtn = document.getElementById('record-stop-btn');
+const songPicker = document.getElementById('song-picker');
+const songPickerList = document.getElementById('song-picker-list');
+const songPickerFoot = document.getElementById('song-picker-foot');
 
 const featureSleeve = document.getElementById('feature-sleeve');
 const sleeveVinylLabel = document.getElementById('sleeve-vinyl-label');
@@ -354,30 +356,125 @@ function updateCatalogSelection(trackId) {
 }
 
 function setRecordStatus(trackId) {
-  if (!heroRecord || !heroTrack) return;
-  if (trackId) heroTrack.value = trackId;
-  const name = heroTrack.options[heroTrack.selectedIndex]?.text || 'this song';
-  const isLoaded = Boolean(trackId && trackId === heroTrack.value);
+  if (!heroRecord) return;
+  const isLoaded = Boolean(trackId);
+  const name = (trackId && TRACK_META[trackId]?.title) || 'this song';
 
   heroRecord.classList.toggle('selected', isLoaded);
-  heroRecord.setAttribute('aria-label', isLoaded ? `Stop ${name}` : `Play ${name}`);
-  heroRecord.setAttribute('aria-pressed', String(isLoaded));
-  if (recordLabelTitle) recordLabelTitle.textContent = name;
-  if (recordPlayIcon) recordPlayIcon.textContent = isLoaded ? '■' : '▶';
+  heroRecord.setAttribute(
+    'aria-label',
+    isLoaded ? `Change song — now playing ${name}` : 'Choose a song to play'
+  );
+  if (recordLabelTitle) recordLabelTitle.textContent = isLoaded ? name : 'Pick a song';
+  if (recordPlayIcon) recordPlayIcon.textContent = isLoaded ? '♫' : '▶';
 
-  if (recordPlayBtn) {
-    recordPlayBtn.classList.toggle('is-playing', isLoaded);
-    if (recordBtnIcon) recordBtnIcon.textContent = isLoaded ? '■' : '▶';
-    if (recordBtnText) recordBtnText.textContent = isLoaded ? 'Stop record' : `Play ${name}`;
+  if (recordNowLabel) recordNowLabel.textContent = isLoaded ? 'Now on the turntable' : 'Reb’s jukebox';
+  if (recordNowTitle) {
+    recordNowTitle.textContent = isLoaded ? name : '9 original songs';
+    recordNowTitle.classList.toggle('is-idle', !isLoaded);
   }
+  if (recordPickText) recordPickText.textContent = isLoaded ? 'Change song' : 'Pick a song';
+  if (recordStopBtn) recordStopBtn.hidden = !isLoaded;
 
   const statusMsg = !isLoaded
-    ? 'Pick a song, then tap the vinyl or Play.'
+    ? 'Tap the vinyl to choose a song.'
     : isCued
       ? `Almost there — tap the big ▶ in the music player to start “${name}”`
       : `♫ Now playing “${name}”`;
   if (recordCtaText) recordCtaText.textContent = statusMsg;
   else if (recordCta) recordCta.textContent = statusMsg;
+
+  renderSongPicker();
+}
+
+// ----------------------------------------------------------------------------
+// Song picker pop-up (tap the vinyl → choose a song → it loads in the player)
+// ----------------------------------------------------------------------------
+function renderSongPicker() {
+  if (!songPickerList) return;
+  if (!songPickerList.childElementCount) {
+    catalogRows.forEach(row => {
+      const id = row.dataset.song;
+      const meta = TRACK_META[id];
+      if (!meta) return;
+      const subtitle = row.querySelector('.song-info p')?.textContent.trim() || '';
+
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'picker-song';
+      btn.dataset.pick = id;
+
+      const img = document.createElement('img');
+      img.className = 'picker-thumb';
+      img.src = meta.img;
+      img.alt = '';
+      img.width = 56;
+      img.height = 56;
+      img.loading = 'lazy';
+      if (meta.pos) img.style.objectPosition = meta.pos;
+
+      const text = document.createElement('span');
+      text.className = 'picker-text';
+      const strong = document.createElement('strong');
+      strong.textContent = meta.title;
+      const small = document.createElement('small');
+      small.textContent = subtitle;
+      text.append(strong, small);
+
+      const go = document.createElement('span');
+      go.className = 'picker-go';
+      go.setAttribute('aria-hidden', 'true');
+
+      btn.append(img, text, go);
+      btn.addEventListener('click', () => pickSong(id));
+      li.append(btn);
+      songPickerList.append(li);
+    });
+  }
+
+  songPickerList.querySelectorAll('.picker-song').forEach(btn => {
+    const current = btn.dataset.pick === selectedTrack;
+    const title = TRACK_META[btn.dataset.pick]?.title || 'song';
+    btn.toggleAttribute('aria-current', current);
+    if (current) btn.setAttribute('aria-current', 'true');
+    btn.setAttribute('aria-label', current ? `${title} (now playing)` : `Play ${title}`);
+    const go = btn.querySelector('.picker-go');
+    if (go) {
+      go.innerHTML = current
+        ? '<span class="eq-bars"><i></i><i></i><i></i></span> Playing'
+        : '▶';
+    }
+  });
+  if (songPickerFoot) songPickerFoot.hidden = !selectedTrack;
+}
+
+function openSongPicker() {
+  if (!songPicker) return;
+  renderSongPicker();
+  if (typeof songPicker.showModal === 'function') {
+    songPicker.showModal();
+  } else {
+    songPicker.setAttribute('open', '');
+  }
+  const target =
+    songPickerList?.querySelector('.picker-song[aria-current="true"]') ||
+    songPickerList?.querySelector('.picker-song');
+  target?.focus({ preventScroll: false });
+}
+
+function closeSongPicker() {
+  if (!songPicker) return;
+  if (typeof songPicker.close === 'function' && songPicker.open) songPicker.close();
+  else songPicker.removeAttribute('open');
+}
+
+function pickSong(trackId) {
+  closeSongPicker();
+  if (trackId !== selectedTrack) {
+    selectTrackById(trackId, { dock: true, focusPlayer: false });
+  }
+  heroRecord?.focus({ preventScroll: true });
 }
 
 function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
@@ -485,39 +582,30 @@ function stopPlayer({ returnFocus = true } = {}) {
 
 stopBtn?.addEventListener('click', () => stopPlayer());
 
-// Hero turntable: choosing a song previews it on the label; the record and
-// the Play button toggle play/stop. If a record is already spinning, changing
-// the song swaps the record straight away.
-function toggleHeroRecord() {
-  if (!heroTrack?.value) return;
-  if (selectedTrack && selectedTrack === heroTrack.value) {
-    stopPlayer({ returnFocus: false });
-  } else {
-    selectTrackById(heroTrack.value, { dock: true, focusPlayer: false });
-  }
-}
-
-function onHeroTrackChanged() {
-  if (!heroTrack?.value) return;
-  if (selectedTrack) {
-    selectTrackById(heroTrack.value, { dock: true, focusPlayer: false });
-  } else {
-    setRecordStatus(null);
-  }
-}
-
-function stepHeroTrack(offset) {
-  if (!heroTrack || heroTrack.options.length === 0) return;
-  const count = heroTrack.options.length;
-  heroTrack.selectedIndex = (heroTrack.selectedIndex + offset + count) % count;
-  onHeroTrackChanged();
-}
-
-heroRecord?.addEventListener('click', toggleHeroRecord);
-recordPlayBtn?.addEventListener('click', toggleHeroRecord);
-heroTrack?.addEventListener('change', onHeroTrackChanged);
-heroTrackPrev?.addEventListener('click', () => stepHeroTrack(-1));
-heroTrackNext?.addEventListener('click', () => stepHeroTrack(1));
+// Hero turntable: the vinyl (and the "Pick a song" button) open the song picker.
+heroRecord?.addEventListener('click', openSongPicker);
+recordPickBtn?.addEventListener('click', openSongPicker);
+recordStopBtn?.addEventListener('click', () => {
+  stopPlayer({ returnFocus: false });
+  heroRecord?.focus({ preventScroll: true });
+});
+document.getElementById('song-picker-close')?.addEventListener('click', closeSongPicker);
+document.getElementById('song-picker-stop')?.addEventListener('click', () => {
+  closeSongPicker();
+  stopPlayer({ returnFocus: false });
+  heroRecord?.focus({ preventScroll: true });
+});
+// Click on the dimmed backdrop closes the picker
+songPicker?.addEventListener('click', event => {
+  if (event.target !== songPicker) return;
+  const box = songPicker.getBoundingClientRect();
+  const outside =
+    event.clientX < box.left ||
+    event.clientX > box.right ||
+    event.clientY < box.top ||
+    event.clientY > box.bottom;
+  if (outside) closeSongPicker();
+});
 
 // Catalog Filter Pills (All / Featured / Studio / Live)
 const filterPills = Array.from(document.querySelectorAll('.filter-pill[data-filter]'));
