@@ -522,6 +522,12 @@ p + p {
   border-radius: 20px;
   box-shadow: 0 18px 44px rgba(14, 6, 16, 0.42);
   text-shadow: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.hero-record:hover {
+  border-color: rgba(239, 169, 119, 0.52);
 }
 
 /* Turntable: large tappable record + tonearm */
@@ -747,6 +753,32 @@ p + p {
   letter-spacing: 1.4px;
   text-transform: uppercase;
   color: #efa977;
+}
+
+.record-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.record-browse-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  background: rgba(223, 115, 63, 0.2);
+  border: 1px solid rgba(239, 169, 119, 0.45);
+  color: #ffd3b0;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.hero-record:hover .record-browse-pill {
+  background: var(--orange);
+  color: #231121;
 }
 
 .record-now {
@@ -1069,6 +1101,10 @@ p + p {
 .player-more-below {
   margin: 10px 0 0 !important;
   font-size: 15px;
+}
+
+.player:not(.is-docked):has(#player-body:not([hidden])) + .player-more-below {
+  display: none;
 }
 
 .player {
@@ -1480,7 +1516,8 @@ body.has-player {
   padding: 16px 12px;
   border-bottom: 1px solid var(--line);
   border-left: 3px solid transparent;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, padding-left 0.15s ease;
 }
 
 .song-row[hidden] {
@@ -1653,12 +1690,30 @@ body.has-player {
   width: 100%;
   aspect-ratio: 16 / 9;
   border: 1px solid #80657b;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   background: #1e141e;
   overflow: hidden;
   color: #fff;
   padding: 0;
   cursor: pointer;
+}
+
+.video-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(28, 15, 28, 0.82);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 250, 241, 0.18);
+  color: #ffd3b0;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .video-poster img {
@@ -1962,7 +2017,8 @@ body.has-player {
 }
 
 .lyric-band p {
-  font: clamp(28px, 4vw, 44px)/1.28 'Rye', Georgia, serif;
+  font: 700 clamp(26px, 3.8vw, 40px)/1.28 'Plus Jakarta Sans', 'Karla', sans-serif;
+  letter-spacing: -0.02em;
   color: #f7ead2;
   margin: 0 0 16px;
   text-shadow: 0 4px 28px rgba(223, 115, 63, 0.24);
@@ -2054,9 +2110,28 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
   margin-top: 20px;
 }
 
+.about-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.about-chips span {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--sand);
+  border: 1px solid #ccb595;
+  color: var(--plum);
+  font-size: 13px;
+  font-weight: 800;
+}
+
 .about-copy .text-link {
   display: inline-block;
-  margin-top: 24px;
+  margin-top: 22px;
 }
 
 .journey-wrap {
@@ -2170,6 +2245,21 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
   border-left: 4px solid var(--orange);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.journey-detail-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.journey-nav {
+  display: flex;
+  gap: 6px;
+  flex: none;
 }
 
 .journey-detail strong {
@@ -2944,7 +3034,8 @@ dialog.is-fallback-open {
   }
   .record-step,
   .record-now,
-  .record-cta {
+  .record-cta,
+  .record-title-row {
     text-align: center;
     justify-content: center;
   }
@@ -3079,7 +3170,8 @@ dialog.is-fallback-open {
 
   .record-step,
   .record-now,
-  .record-cta {
+  .record-cta,
+  .record-title-row {
     text-align: center;
     justify-content: center;
   }

@@ -425,6 +425,8 @@ function setRecordStatus(trackId) {
     recordNowTitle.textContent = isLoaded ? name : '9 original songs';
     recordNowTitle.classList.toggle('is-idle', !isLoaded);
   }
+  const browsePill = document.getElementById('record-browse-pill');
+  if (browsePill) browsePill.textContent = isLoaded ? 'Change track ▾' : 'Choose track ▾';
   if (recordStopBtn) recordStopBtn.hidden = !isLoaded;
 
   const statusMsg = !isLoaded
@@ -626,8 +628,18 @@ function stopPlayer({ returnFocus = true } = {}) {
 
 stopBtn?.addEventListener('click', () => stopPlayer());
 
-// Hero turntable: the vinyl is the song selector — tapping it opens the picker.
+// Hero turntable: tapping the vinyl or card opens the picker.
 heroRecord?.addEventListener('click', openSongPicker);
+document.getElementById('hero-turntable')?.addEventListener('click', event => {
+  if (event.target.closest('#hero-record, #record-stop-btn, .record-more-link, a, button')) return;
+  openSongPicker();
+});
+catalogRows.forEach(row => {
+  row.addEventListener('click', event => {
+    if (event.target.closest('a, button')) return;
+    if (row.dataset.song) selectTrackById(row.dataset.song, { dock: true, focusPlayer: false });
+  });
+});
 songPickerList?.addEventListener('click', event => {
   const btn = event.target.closest('.picker-song[data-pick]');
   if (!btn) return;
@@ -1143,13 +1155,16 @@ const journeyStops = Array.from(document.querySelectorAll('.journey-stop[data-st
 const journeyDetail = document.getElementById('journey-detail');
 const journeyDetailTitle = document.getElementById('journey-detail-title');
 const journeyDetailText = document.getElementById('journey-detail-text');
+let currentJourneyIndex = 0;
 
 function activateJourneyStop(index, focusTab = false) {
-  const chapter = JOURNEY_CHAPTERS[index];
-  if (!chapter || journeyStops.length === 0) return;
+  if (journeyStops.length === 0) return;
+  currentJourneyIndex = (index + journeyStops.length) % journeyStops.length;
+  const chapter = JOURNEY_CHAPTERS[currentJourneyIndex];
+  if (!chapter) return;
 
   journeyStops.forEach((btn, idx) => {
-    const active = idx === index;
+    const active = idx === currentJourneyIndex;
     btn.classList.toggle('is-active', active);
     btn.setAttribute('aria-selected', String(active));
     btn.tabIndex = active ? 0 : -1;
@@ -1186,6 +1201,13 @@ if (journeyStops.length > 0) {
         activateJourneyStop(nextIdx, true);
       }
     });
+  });
+
+  document.getElementById('journey-prev')?.addEventListener('click', () => {
+    activateJourneyStop(currentJourneyIndex - 1, false);
+  });
+  document.getElementById('journey-next')?.addEventListener('click', () => {
+    activateJourneyStop(currentJourneyIndex + 1, false);
   });
 }
 
