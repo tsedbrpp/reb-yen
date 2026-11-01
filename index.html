@@ -17,8 +17,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Rye&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261101m">
-  <script defer src="site.js?v=20261101m"></script>
+  <link rel="stylesheet" href="styles.css?v=20261101n">
+  <script defer src="site.js?v=20261101n"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -143,20 +143,20 @@
         <div class="featured">
           <div class="feature-sleeve-wrap" id="feature-sleeve">
             <div class="sleeve-vinyl" aria-hidden="true">
-              <span class="sleeve-vinyl-label">TAKE ME<br>CRAZY</span>
+              <span class="sleeve-vinyl-label" id="sleeve-vinyl-label">TAKE ME<br>CRAZY</span>
             </div>
             <figure class="feature-art" data-tilt>
-              <img src="images/take_me_crazy.jpg" alt="Reb Yen performing Take Me Crazy in Nashville" width="480" height="360">
-              <figcaption>On stage at the Commodore Grille, Nashville</figcaption>
+              <img id="featured-img" src="images/take_me_crazy.jpg" alt="Reb Yen performing Take Me Crazy in Nashville" width="480" height="360">
+              <figcaption id="featured-caption">On stage at the Commodore Grille, Nashville</figcaption>
             </figure>
           </div>
           <div class="featured-copy">
-            <p class="eyebrow">Featured original</p>
-            <h3>Take Me Crazy</h3>
-            <p>Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb, with a live performance filmed in Nashville.</p>
+            <p class="eyebrow" id="featured-eyebrow">Featured original · ReverbNation Spotlight</p>
+            <h3 id="featured-heading">Take Me Crazy</h3>
+            <p id="featured-desc">Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb, with a live performance filmed in Nashville.</p>
             <div class="actions">
-              <a href="https://rebyen.bandcamp.com/track/take-me-crazy" class="button primary" data-track="1827482453" data-title="Take Me Crazy"><span aria-hidden="true">▶</span> Listen to Take Me Crazy</a>
-              <a href="https://rebyen.bandcamp.com/track/take-me-crazy" target="_blank" rel="noopener noreferrer" class="text-link">Lyrics &amp; download ↗</a>
+              <a id="featured-listen-btn" href="https://rebyen.bandcamp.com/track/take-me-crazy" class="button primary" data-track="1827482453" data-title="Take Me Crazy"><span aria-hidden="true">▶</span> <span id="featured-listen-label">Listen to Take Me Crazy</span></a>
+              <a id="featured-lyrics-link" href="https://rebyen.bandcamp.com/track/take-me-crazy" target="_blank" rel="noopener noreferrer" class="text-link">Lyrics &amp; download ↗</a>
             </div>
             <div class="player-slot">
               <aside id="music-player" class="player" tabindex="-1" aria-label="Reb Yen music player">
@@ -188,11 +188,24 @@
         <p class="sr-only" id="player-status" role="status" aria-live="polite"></p>
 
         <div class="catalog-head">
-          <h3>Explore the originals</h3>
-          <span class="catalog-note">Choose a song, then press play · Lyrics on Bandcamp</span>
+          <div>
+            <h3>Explore the originals</h3>
+            <span class="catalog-note">Choose a song to load in the jukebox · Pluck any guitar string divider</span>
+          </div>
+          <div class="catalog-controls">
+            <div class="catalog-filters" role="group" aria-label="Filter original songs">
+              <button type="button" class="filter-pill is-active" data-filter="all" aria-pressed="true">All <span>9</span></button>
+              <button type="button" class="filter-pill" data-filter="featured" aria-pressed="false">Featured <span>3</span></button>
+              <button type="button" class="filter-pill" data-filter="studio" aria-pressed="false">Studio <span>6</span></button>
+              <button type="button" class="filter-pill" data-filter="live" aria-pressed="false">Live <span>3</span></button>
+            </div>
+            <button type="button" class="string-sound-toggle" id="string-sound-toggle" aria-pressed="true" title="Toggle acoustic guitar string sound when plucking dividers">
+              <span aria-hidden="true" id="string-sound-icon">♪</span> <span id="string-sound-label">Strings: On</span>
+            </button>
+          </div>
         </div>
 
-        <div class="guitar-string" data-guitar-string aria-hidden="true">
+        <div class="guitar-string" data-guitar-string data-note="146.83" aria-hidden="true">
           <svg viewBox="0 0 1000 32" preserveAspectRatio="none">
             <path class="string-glow" d="M0,16 Q500,16 1000,16"></path>
             <path class="string-wire" d="M0,16 Q500,16 1000,16"></path>
@@ -200,11 +213,11 @@
         </div>
 
         <div class="song-list">
-          <article class="song-row" data-song="1827482453">
+          <article class="song-row" data-song="1827482453" data-tags="featured studio">
             <span class="song-index" aria-hidden="true">01</span>
             <div class="song-info">
               <h3>Take Me Crazy</h3>
-              <p>A realistic love song · original recording</p>
+              <p>A realistic love song · original recording · ReverbNation Featured</p>
             </div>
             <div class="song-actions">
               <a class="listen-link" href="https://rebyen.bandcamp.com/track/take-me-crazy" data-track="1827482453" data-title="Take Me Crazy" aria-label="Listen to Take Me Crazy"><span aria-hidden="true">▶</span> Listen</a>
@@ -212,11 +225,11 @@
             </div>
           </article>
 
-          <article class="song-row" data-song="235047036">
+          <article class="song-row" data-song="235047036" data-tags="featured studio">
             <span class="song-index" aria-hidden="true">02</span>
             <div class="song-info">
               <h3>Should I?</h3>
-              <p>Original song · studio recording</p>
+              <p>Original song · studio recording · ReverbNation Featured</p>
             </div>
             <div class="song-actions">
               <a class="listen-link" href="https://rebyen.bandcamp.com/track/should-i" data-track="235047036" data-title="Should I?" aria-label="Listen to Should I?"><span aria-hidden="true">▶</span> Listen</a>
@@ -224,11 +237,11 @@
             </div>
           </article>
 
-          <article class="song-row" data-song="4028698566">
+          <article class="song-row" data-song="4028698566" data-tags="featured studio">
             <span class="song-index" aria-hidden="true">03</span>
             <div class="song-info">
               <h3>Gotta Let It Go</h3>
-              <p>About knowing when to let go · original recording</p>
+              <p>About knowing when to let go · original recording · ReverbNation Featured</p>
             </div>
             <div class="song-actions">
               <a class="listen-link" href="https://rebyen.bandcamp.com/track/gotta-let-it-go-2" data-track="4028698566" data-title="Gotta Let It Go" aria-label="Listen to Gotta Let It Go"><span aria-hidden="true">▶</span> Listen</a>
@@ -236,7 +249,7 @@
             </div>
           </article>
 
-          <article class="song-row" data-song="1271869476">
+          <article class="song-row" data-song="1271869476" data-tags="live">
             <span class="song-index" aria-hidden="true">04</span>
             <div class="song-info">
               <h3>The Solitude</h3>
@@ -248,11 +261,11 @@
             </div>
           </article>
 
-          <article class="song-row" data-song="1638570894">
+          <article class="song-row" data-song="1638570894" data-tags="studio">
             <span class="song-index" aria-hidden="true">05</span>
             <div class="song-info">
               <h3>A New Beginning</h3>
-              <p>On loss, remembrance and beginning again</p>
+              <p>On loss, remembrance and beginning again · studio recording</p>
             </div>
             <div class="song-actions">
               <a class="listen-link" href="https://rebyen.bandcamp.com/track/a-new-beginning" data-track="1638570894" data-title="A New Beginning" aria-label="Listen to A New Beginning"><span aria-hidden="true">▶</span> Listen</a>
@@ -260,7 +273,7 @@
             </div>
           </article>
 
-          <article class="song-row" data-song="3496903015">
+          <article class="song-row" data-song="3496903015" data-tags="studio">
             <span class="song-index" aria-hidden="true">06</span>
             <div class="song-info">
               <h3>Are You Listening Now?</h3>
@@ -272,7 +285,7 @@
             </div>
           </article>
 
-          <article class="song-row" data-song="1698636065">
+          <article class="song-row" data-song="1698636065" data-tags="live">
             <span class="song-index" aria-hidden="true">07</span>
             <div class="song-info">
               <h3>Birds Of Prey</h3>
@@ -284,7 +297,7 @@
             </div>
           </article>
 
-          <article class="song-row" data-song="1560882348">
+          <article class="song-row" data-song="1560882348" data-tags="live">
             <span class="song-index" aria-hidden="true">08</span>
             <div class="song-info">
               <h3>Take A Stand</h3>
@@ -296,7 +309,7 @@
             </div>
           </article>
 
-          <article class="song-row" data-song="244119541">
+          <article class="song-row" data-song="244119541" data-tags="studio">
             <span class="song-index" aria-hidden="true">09</span>
             <div class="song-info">
               <h3>Out Of Body</h3>
@@ -392,23 +405,26 @@
           <a href="#contact" class="button">Inquire about a date</a>
         </div>
 
-        <div class="format-cards" aria-label="Performance formats">
-          <article>
+        <div class="format-cards" aria-label="Performance formats — select a format to preview stage lineup">
+          <article class="is-selected-format" data-format-card="Solo" tabindex="0">
             <div>
+              <span class="format-badge">1 Performer</span>
               <h3>Solo acoustic</h3>
               <p>Reb with guitar, banjo or harmonica. Suited to listening rooms, bistros and private gatherings.</p>
             </div>
             <a href="#contact" class="format-select-link" data-select-format="Solo">Book solo acoustic →</a>
           </article>
-          <article>
+          <article data-format-card="Duo" tabindex="0">
             <div>
+              <span class="format-badge">2 Performers</span>
               <h3>Duo</h3>
               <p>Two players and harmonies. A fuller sound that still fits smaller rooms and events.</p>
             </div>
             <a href="#contact" class="format-select-link" data-select-format="Duo">Book duo →</a>
           </article>
-          <article>
+          <article data-format-card="Full band" tabindex="0">
             <div>
+              <span class="format-badge">Full Ensemble</span>
               <h3>Full band</h3>
               <p>Originals and covers with the band, for festivals, main stages and lively venues.</p>
             </div>
@@ -416,8 +432,26 @@
           </article>
         </div>
 
+        <div class="stage-spec-panel" id="stage-spec-panel" aria-live="polite">
+          <div class="stage-spec-grid">
+            <div>
+              <span class="spec-label">Selected stage setup</span>
+              <strong id="spec-title">Solo Acoustic · Intimate Storytelling</strong>
+            </div>
+            <div>
+              <span class="spec-label">Instruments &amp; vocals</span>
+              <p id="spec-instruments">Lead vocals with acoustic guitar, banjo, keyboard or harmonica</p>
+            </div>
+            <div>
+              <span class="spec-label">Ideal room &amp; occasion</span>
+              <p id="spec-venues">Listening rooms, bistros, house concerts &amp; private gatherings</p>
+            </div>
+          </div>
+          <a href="#contact" class="button primary" id="spec-cta" data-select-format="Solo">Inquire about Solo →</a>
+        </div>
+
         <div class="past-venues open">
-          <div class="guitar-string venues-string" data-guitar-string aria-hidden="true">
+          <div class="guitar-string venues-string" data-guitar-string data-note="220.00" aria-hidden="true">
             <svg viewBox="0 0 1000 32" preserveAspectRatio="none">
               <path class="string-glow" d="M0,16 Q500,16 1000,16"></path>
               <path class="string-wire" d="M0,16 Q500,16 1000,16"></path>
@@ -444,7 +478,7 @@
 
     <section class="lyric-band" aria-label="Lyric from A New Beginning">
       <div class="container">
-        <div class="guitar-string lyric-string" data-guitar-string aria-hidden="true">
+        <div class="guitar-string lyric-string" data-guitar-string data-note="293.66" aria-hidden="true">
           <svg viewBox="0 0 1000 32" preserveAspectRatio="none">
             <path class="string-glow" d="M0,16 Q500,16 1000,16"></path>
             <path class="string-wire" d="M0,16 Q500,16 1000,16"></path>
@@ -457,7 +491,7 @@
           </p>
           <footer>— Reb Yen, <a href="https://rebyen.bandcamp.com/track/a-new-beginning" class="lyric-song-cta" data-track="1638570894" data-title="A New Beginning">A New Beginning ↗</a></footer>
         </blockquote>
-        <div class="guitar-string lyric-string" data-guitar-string aria-hidden="true">
+        <div class="guitar-string lyric-string" data-guitar-string data-note="369.99" aria-hidden="true">
           <svg viewBox="0 0 1000 32" preserveAspectRatio="none">
             <path class="string-glow" d="M0,16 Q500,16 1000,16"></path>
             <path class="string-wire" d="M0,16 Q500,16 1000,16"></path>
@@ -477,6 +511,49 @@
           <p>Reb Yen writes, arranges and performs songs that move between personal reflection and observations of the wider world. Based in Boulder, Colorado, with roots in Orlando, Florida, she blends Americana, folk, indie, country, pop and rock.</p>
           <p>Her story reaches far beyond the singer-songwriter stage: she began as a professional singer and dancer with the Aman World Music &amp; Dance Ensemble, performed at Lincoln Center, worked in entertainment at Walt Disney World and toured internationally with performance art combining music, dance and illusion. Today she brings that experience—and guitar, banjo, keyboard and harmonica—to her original songs and live performances.</p>
           <a class="text-link" href="press-kit.html">Read the bio &amp; explore the press kit ↗</a>
+        </div>
+      </div>
+
+      <div class="container journey-wrap" data-reveal>
+        <div class="journey-head">
+          <p class="eyebrow">Stages &amp; chapters</p>
+          <p class="journey-hint">Select any stop along Reb’s performance journey</p>
+        </div>
+        <div class="journey-rail" role="tablist" aria-label="Career milestones">
+          <button type="button" class="journey-stop is-active" role="tab" aria-selected="true" data-stop="0">
+            <span class="journey-pin" aria-hidden="true"></span>
+            <span class="journey-place">Los Angeles</span>
+            <span class="journey-sub">Aman Ensemble</span>
+          </button>
+          <button type="button" class="journey-stop" role="tab" aria-selected="false" data-stop="1">
+            <span class="journey-pin" aria-hidden="true"></span>
+            <span class="journey-place">New York City</span>
+            <span class="journey-sub">Lincoln Center</span>
+          </button>
+          <button type="button" class="journey-stop" role="tab" aria-selected="false" data-stop="2">
+            <span class="journey-pin" aria-hidden="true"></span>
+            <span class="journey-place">Orlando</span>
+            <span class="journey-sub">Walt Disney World</span>
+          </button>
+          <button type="button" class="journey-stop" role="tab" aria-selected="false" data-stop="3">
+            <span class="journey-pin" aria-hidden="true"></span>
+            <span class="journey-place">International</span>
+            <span class="journey-sub">European Tours</span>
+          </button>
+          <button type="button" class="journey-stop" role="tab" aria-selected="false" data-stop="4">
+            <span class="journey-pin" aria-hidden="true"></span>
+            <span class="journey-place">Nashville</span>
+            <span class="journey-sub">Commodore Grille</span>
+          </button>
+          <button type="button" class="journey-stop" role="tab" aria-selected="false" data-stop="5">
+            <span class="journey-pin" aria-hidden="true"></span>
+            <span class="journey-place">Boulder, CO</span>
+            <span class="journey-sub">Front Range</span>
+          </button>
+        </div>
+        <div class="journey-detail" id="journey-detail" role="tabpanel" aria-live="polite">
+          <strong id="journey-detail-title">Los Angeles · Aman World Music &amp; Dance Ensemble</strong>
+          <p id="journey-detail-text">Began her professional performance career as a singer and dancer with the acclaimed Aman World Music &amp; Dance Ensemble.</p>
         </div>
       </div>
     </section>
