@@ -11,3 +11,16 @@
 @media print{.site-header,.footer,.print-button,.press-header .actions,.press-main .button{display:none!important}body{background:#fff;font-size:11pt;color:#222}.container{width:100%}.press-header{padding:0 0 20px}.press-header h1{font-size:30pt}.press-grid{display:block}.press-facts{margin-bottom:20px;padding:15px;background:#f4f1eb}.press-main h2{font-size:17pt}.press-photo{break-inside:avoid}.press-photos{display:grid;grid-template-columns:1fr 1fr}.section{padding:0}.press-main p{color:#222}}
 
 .lyric-band{background:var(--plum);color:var(--cream);padding:64px 0;text-align:center}.lyric-band blockquote{margin:0}.lyric-band p{font:clamp(28px,4vw,44px)/1.25 'Rye',Georgia,serif;color:#f7ead2;margin:0 0 16px}.lyric-band footer{font-size:15px;color:#efa977}.lyric-band a{color:#efa977}
+
+.hero-record{display:flex;align-items:center;gap:40px;margin-top:30px}
+.spin-record{position:relative;width:118px;height:118px;flex:none;border:0;padding:0;background:none;border-radius:50%}
+.spin-record .disc{position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(#151016 0 2px,#2c222b 3px 4px);box-shadow:0 8px 24px #0008;display:grid;place-items:center;animation:spin 3.5s linear infinite;animation-play-state:paused}
+.spin-record .label{width:40px;height:40px;border-radius:50%;background:var(--orange);color:#2c192c;font:700 7px 'Karla',sans-serif;display:grid;place-items:center;letter-spacing:1px}
+.spin-record .arm{position:absolute;top:-4px;right:-10px;width:4px;height:74px;background:#d8c6ad;border-radius:3px;transform-origin:top center;transform:rotate(-28deg);transition:transform .5s}
+.spin-record.playing .disc{animation-play-state:running}.spin-record.playing .arm{transform:rotate(-8deg)}
+.spin-record:focus-visible{outline:3px solid #efa977;outline-offset:6px}
+.hero-record-ctl label{display:block;font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#efa977;margin-bottom:6px}
+.hero-record-ctl select{background:#2c192c;color:var(--cream);border:1px solid #99778e;border-radius:4px;padding:8px 10px;min-height:44px;max-width:240px}
+.record-cta{margin:10px 0 0;font-size:15px;color:#e0c5b7}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:700px){.spin-record{width:88px;height:88px}.spin-record .arm{height:56px}}

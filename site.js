@@ -82,3 +82,25 @@ document.getElementById('close-photo')?.addEventListener('click',()=>lightbox.cl
 lightbox?.addEventListener('click',event=>{if(event.target===lightbox){const box=lightbox.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)lightbox.close();}});
 lightbox?.addEventListener('close',()=>lastPhotoButton?.focus());
 document.getElementById('print-kit')?.addEventListener('click',()=>window.print());
+
+// Hero record player: plays the song chosen in the dropdown via the shared player.
+const heroRecord=document.getElementById('hero-record');
+const heroTrack=document.getElementById('hero-track');
+const recordCta=document.getElementById('record-cta');
+function setSpinning(on){
+  if(!heroRecord) return;
+  heroRecord.classList.toggle('playing',on);
+  heroRecord.setAttribute('aria-pressed',String(on));
+  heroRecord.setAttribute('aria-label',on?'Stop the music':'Play the selected song');
+  recordCta.innerHTML=on?'<span aria-hidden="true">❚❚</span> Playing – press play in the player below, tap the record to stop':'<span aria-hidden="true">▶</span> Tap the record to play';
+}
+function playHero(){
+  const link=document.querySelector('#music .listen-link[data-track="'+heroTrack.value+'"]');
+  if(link){ link.click(); setSpinning(true); }
+}
+heroRecord?.addEventListener('click',()=>{
+  if(heroRecord.classList.contains('playing')) document.getElementById('player-stop')?.click();
+  else playHero();
+});
+heroTrack?.addEventListener('change',()=>{ if(heroRecord.classList.contains('playing')) playHero(); });
+document.getElementById('player-stop')?.addEventListener('click',()=>setSpinning(false));
