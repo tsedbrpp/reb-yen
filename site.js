@@ -3,6 +3,58 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ============================================================================
+// Dialog helpers — native <dialog> where supported (Safari 15.4+, all modern
+// browsers), with a fixed-position overlay fallback for older iOS Safari.
+// ============================================================================
+const supportsDialog =
+  typeof HTMLDialogElement === 'function' &&
+  typeof HTMLDialogElement.prototype.showModal === 'function';
+let dialogFallbackBackdrop = null;
+
+function openDialog(dialog) {
+  if (!dialog) return;
+  document.body.classList.add('dialog-open');
+  if (supportsDialog) {
+    if (!dialog.open) dialog.showModal();
+    return;
+  }
+  dialog.setAttribute('open', '');
+  dialog.classList.add('is-fallback-open');
+  if (!dialogFallbackBackdrop) {
+    dialogFallbackBackdrop = document.createElement('div');
+    dialogFallbackBackdrop.className = 'dialog-fallback-backdrop';
+    dialogFallbackBackdrop.addEventListener('click', () => {
+      closeDialog(document.querySelector('dialog.is-fallback-open'));
+    });
+    document.body.append(dialogFallbackBackdrop);
+  }
+  dialogFallbackBackdrop.hidden = false;
+}
+
+function closeDialog(dialog) {
+  if (!dialog) return;
+  if (supportsDialog) {
+    if (dialog.open) dialog.close();
+    return;
+  }
+  if (!dialog.hasAttribute('open')) return;
+  dialog.removeAttribute('open');
+  dialog.classList.remove('is-fallback-open');
+  if (dialogFallbackBackdrop) dialogFallbackBackdrop.hidden = true;
+  dialog.dispatchEvent(new Event('close'));
+}
+
+document.querySelectorAll('dialog').forEach(dialog => {
+  dialog.addEventListener('close', () => document.body.classList.remove('dialog-open'));
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !supportsDialog) {
+    closeDialog(document.querySelector('dialog.is-fallback-open'));
+  }
+});
+
+// ============================================================================
 // Mobile Navigation & Active Section Spy
 // ============================================================================
 const menuButton = document.querySelector('.menu-toggle');
@@ -501,11 +553,7 @@ function renderSongPicker() {
 function openSongPicker() {
   if (!songPicker) return;
   renderSongPicker();
-  if (typeof songPicker.showModal === 'function') {
-    songPicker.showModal();
-  } else {
-    songPicker.setAttribute('open', '');
-  }
+  openDialog(songPicker);
   const target =
     songPickerList?.querySelector('.picker-song[aria-current="true"]') ||
     songPickerList?.querySelector('.picker-song');
@@ -513,9 +561,7 @@ function openSongPicker() {
 }
 
 function closeSongPicker() {
-  if (!songPicker) return;
-  if (typeof songPicker.close === 'function' && songPicker.open) songPicker.close();
-  else songPicker.removeAttribute('open');
+  closeDialog(songPicker);
 }
 
 function pickSong(trackId) {
@@ -1230,7 +1276,7 @@ galleryButtons.forEach((button, index) => {
   button.addEventListener('click', () => {
     lastPhotoButton = button;
     renderLightboxPhoto(index, false);
-    lightbox?.showModal();
+    openDialog(lightbox);
   });
 });
 
@@ -1243,7 +1289,7 @@ document.getElementById('next-photo')?.addEventListener('click', () => {
 });
 
 document.getElementById('close-photo')?.addEventListener('click', () => {
-  lightbox?.close();
+  closeDialog(lightbox);
 });
 
 lightbox?.addEventListener('click', event => {
@@ -1255,7 +1301,7 @@ lightbox?.addEventListener('click', event => {
       event.clientY < box.top ||
       event.clientY > box.bottom
     ) {
-      lightbox.close();
+      closeDialog(lightbox);
     }
   }
 });

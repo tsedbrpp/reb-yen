@@ -2145,6 +2145,48 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
 
 
 /* ==========================================================================
+   Dialog base + fallback for browsers without native <dialog> (iOS Safari < 15.4)
+   ========================================================================== */
+dialog:not([open]) {
+  display: none;
+}
+
+body.dialog-open {
+  overflow: hidden;
+}
+
+.dialog-fallback-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(33, 17, 34, 0.72);
+}
+
+.dialog-fallback-backdrop[hidden] {
+  display: none;
+}
+
+dialog.is-fallback-open {
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  animation: none !important;
+}
+
+@media (max-width: 700px) {
+  .song-picker.is-fallback-open {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: none;
+  }
+}
+
+/* ==========================================================================
    Song Picker Dialog (opened from the hero vinyl)
    ========================================================================== */
 .song-picker {
