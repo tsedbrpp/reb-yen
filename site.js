@@ -211,9 +211,15 @@ const nextBtn = document.getElementById('player-next');
 const playerStatus = document.getElementById('player-status');
 const heroRecord = document.getElementById('hero-record');
 const heroTrack = document.getElementById('hero-track');
+const heroTrackPrev = document.getElementById('hero-track-prev');
+const heroTrackNext = document.getElementById('hero-track-next');
 const recordCta = document.getElementById('record-cta');
-const recordCtaIcon = document.getElementById('record-cta-icon');
 const recordCtaText = document.getElementById('record-cta-text');
+const recordLabelTitle = document.getElementById('record-label-title');
+const recordPlayIcon = document.getElementById('record-play-icon');
+const recordPlayBtn = document.getElementById('record-play-btn');
+const recordBtnIcon = document.getElementById('record-btn-icon');
+const recordBtnText = document.getElementById('record-btn-text');
 
 const featureSleeve = document.getElementById('feature-sleeve');
 const sleeveVinylLabel = document.getElementById('sleeve-vinyl-label');
@@ -321,21 +327,28 @@ function updateCatalogSelection(trackId) {
 }
 
 function setRecordStatus(trackId) {
-  if (!heroRecord || !heroTrack || !recordCta) return;
+  if (!heroRecord || !heroTrack) return;
   if (trackId) heroTrack.value = trackId;
-  const name = heroTrack.options[heroTrack.selectedIndex]?.text || 'selected song';
+  const name = heroTrack.options[heroTrack.selectedIndex]?.text || 'this song';
   const isLoaded = Boolean(trackId && trackId === heroTrack.value);
+
   heroRecord.classList.toggle('selected', isLoaded);
-  heroRecord.setAttribute('aria-label', `Open song player for ${name}`);
-  const statusMsg = isLoaded
-    ? `${name} is loaded — press play in the player below.`
-    : `Tap the record to load ${name}`;
-  if (recordCtaText) {
-    recordCtaText.textContent = statusMsg;
-    if (recordCtaIcon) recordCtaIcon.textContent = isLoaded ? '♫' : '▶';
-  } else {
-    recordCta.textContent = statusMsg;
+  heroRecord.setAttribute('aria-label', isLoaded ? `Stop ${name}` : `Play ${name}`);
+  heroRecord.setAttribute('aria-pressed', String(isLoaded));
+  if (recordLabelTitle) recordLabelTitle.textContent = name;
+  if (recordPlayIcon) recordPlayIcon.textContent = isLoaded ? '■' : '▶';
+
+  if (recordPlayBtn) {
+    recordPlayBtn.classList.toggle('is-playing', isLoaded);
+    if (recordBtnIcon) recordBtnIcon.textContent = isLoaded ? '■' : '▶';
+    if (recordBtnText) recordBtnText.textContent = isLoaded ? 'Stop record' : `Play ${name}`;
   }
+
+  const statusMsg = isLoaded
+    ? `♫ ${name} is on the turntable. Press ▶ in the Bandcamp player at the bottom of the screen to hear it.`
+    : 'Pick a song, then tap the record or Play.';
+  if (recordCtaText) recordCtaText.textContent = statusMsg;
+  else if (recordCta) recordCta.textContent = statusMsg;
 }
 
 function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
@@ -421,7 +434,7 @@ document.getElementById('player-return')?.addEventListener('click', () => {
   setExpanded(true);
 });
 
-stopBtn?.addEventListener('click', () => {
+function stopPlayer({ returnFocus = true } = {}) {
   if (frame) frame.src = 'about:blank';
   selectedTrack = null;
   if (stopBtn) stopBtn.hidden = true;
@@ -434,20 +447,46 @@ stopBtn?.addEventListener('click', () => {
     playerStatus.textContent = 'Player closed. Choose any Listen button to load a song.';
   }
   setRecordStatus(null);
-  document.querySelector('#music [data-track]')?.focus({ preventScroll: true });
-});
-
-heroRecord?.addEventListener('click', () => {
-  if (heroTrack?.value) {
-    selectTrackById(heroTrack.value, { dock: true, focusPlayer: true });
+  if (returnFocus) {
+    document.querySelector('#music [data-track]')?.focus({ preventScroll: true });
   }
-});
+}
 
-heroTrack?.addEventListener('change', () => {
-  if (heroTrack.value) {
+stopBtn?.addEventListener('click', () => stopPlayer());
+
+// Hero turntable: choosing a song previews it on the label; the record and
+// the Play button toggle play/stop. If a record is already spinning, changing
+// the song swaps the record straight away.
+function toggleHeroRecord() {
+  if (!heroTrack?.value) return;
+  if (selectedTrack && selectedTrack === heroTrack.value) {
+    stopPlayer({ returnFocus: false });
+  } else {
     selectTrackById(heroTrack.value, { dock: true, focusPlayer: false });
   }
-});
+}
+
+function onHeroTrackChanged() {
+  if (!heroTrack?.value) return;
+  if (selectedTrack) {
+    selectTrackById(heroTrack.value, { dock: true, focusPlayer: false });
+  } else {
+    setRecordStatus(null);
+  }
+}
+
+function stepHeroTrack(offset) {
+  if (!heroTrack || heroTrack.options.length === 0) return;
+  const count = heroTrack.options.length;
+  heroTrack.selectedIndex = (heroTrack.selectedIndex + offset + count) % count;
+  onHeroTrackChanged();
+}
+
+heroRecord?.addEventListener('click', toggleHeroRecord);
+recordPlayBtn?.addEventListener('click', toggleHeroRecord);
+heroTrack?.addEventListener('change', onHeroTrackChanged);
+heroTrackPrev?.addEventListener('click', () => stepHeroTrack(-1));
+heroTrackNext?.addEventListener('click', () => stepHeroTrack(1));
 
 // Catalog Filter Pills (All / Featured / Studio / Live)
 const filterPills = Array.from(document.querySelectorAll('.filter-pill[data-filter]'));
