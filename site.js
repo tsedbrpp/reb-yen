@@ -1,4 +1,6 @@
 'use strict';
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+if(!location.hash) window.scrollTo(0,0);
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.site-nav');
 function closeMenu(){ navigation?.classList.remove('is-open'); menuButton?.setAttribute('aria-expanded','false'); }
@@ -17,7 +19,7 @@ const playerBody = document.getElementById('player-body');
 const playerTitle = document.getElementById('player-title');
 const minimize = document.getElementById('player-minimize');
 const playerStatus = document.getElementById('player-status');
-let selectedTrack = frame?.dataset.track;
+let selectedTrack = null; // iframe loads on first play so Bandcamp can't grab focus and scroll the page on load
 function setExpanded(expanded){
   if(!playerBody) return;
   playerBody.hidden = !expanded;
