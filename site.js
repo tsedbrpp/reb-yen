@@ -651,6 +651,10 @@ recordStopBtn?.addEventListener('click', () => {
   heroRecord?.focus({ preventScroll: true });
 });
 document.getElementById('song-picker-close')?.addEventListener('click', closeSongPicker);
+document.getElementById('song-picker-dismiss')?.addEventListener('click', () => {
+  closeSongPicker();
+  heroRecord?.focus({ preventScroll: true });
+});
 document.getElementById('song-picker-backdrop')?.addEventListener('click', closeSongPicker);
 document.getElementById('song-picker-stop')?.addEventListener('click', () => {
   closeSongPicker();
