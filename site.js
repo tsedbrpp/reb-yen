@@ -200,8 +200,51 @@ const TRACK_META = {
   }
 };
 
+// Reb's full ReverbNation catalogue (legacy.reverbnation.com/rebyen), played through
+// ReverbNation's official embeddable player. `bc` links a song to its Bandcamp twin
+// so the catalog "Listen" buttons and the jukebox sleeve stay in sync.
+const REVERBNATION_ARTIST_ID = '6720947';
+const RN_SONGS = [
+  { rn: '33863436', title: "Take Me Crazy", note: "Original · ReverbNation Featured", length: '3:48', bc: '1827482453', featured: true, art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/35118509/original/resize:600x600/crop:x0y800w3199h2399/hash:1684988150/IMG_6558.jpeg?1684988150" },
+  { rn: '33355990', title: "Should I?", note: "Original · ReverbNation Featured", length: '3:08', bc: '235047036', featured: true, art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/35163458/original/resize:600x642/crop:x0y158w992h744/hash:1687447680/IMG_6543.jpeg?1687447680" },
+  { rn: '33993499', title: "Gotta Let It Go", note: "Original · ReverbNation Featured", length: '3:35', bc: '4028698566', featured: true, art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/35109995/original/resize:600x600/crop:x0y400w3200h2400/hash:1684513132/295BBB59-4422-44E8-A4EE-53831EA73C89.jpeg?1684513132" },
+  { rn: '33992872', title: "A New Beginning", note: "Original", length: '3:03', bc: '1638570894', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/35284339/original/resize:600x620/crop:x0y155w1103h827/hash:1694148385/IMG_1691.jpeg?1694148385" },
+  { rn: '33391779', title: "Are You Listening Now?", note: "Original", length: '3:10', bc: '3496903015', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/34023239/original/resize:600x687/crop:x0y194w981h736/hash:1631534546/320DA474-EB68-4D57-9929-D69BB813292B.jpeg?1631534546" },
+  { rn: '32557441', title: "Out Of Body", note: "Original", length: '3:19', bc: '244119541', art: "https://d3e6ckxkrs5ntg.cloudfront.net/artists/images/6720947/original/resize:600x600/crop:x0y230w2000h1500/hash:1780613206/IMG_8485.jpeg?1780613206" },
+  { rn: '32929366', title: "I Can Feel U", note: "Original", length: '2:56', art: "https://d3e6ckxkrs5ntg.cloudfront.net/artists/images/6720947/original/resize:600x600/crop:x0y230w2000h1500/hash:1780613206/IMG_8485.jpeg?1780613206" },
+  { rn: '32943176', title: "Shut In World", note: "Original · Reb Yen & Jim O’Rourke", length: '2:23', art: "https://d3e6ckxkrs5ntg.cloudfront.net/artists/images/6720947/original/resize:600x600/crop:x0y230w2000h1500/hash:1780613206/IMG_8485.jpeg?1780613206" },
+  { rn: '32520637', title: "Crawled To The Edge", note: "Original · first draft", length: '2:35', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/33848828/original/resize:702x600/crop:x0y199w1995h1497/hash:1623612105/D9082673-E086-42D8-86AA-59A3F7B7C78B.jpeg?1623612105" },
+  { rn: '32896520', title: "The Solitude", note: "Original · live", length: '1:34', bc: '1271869476', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/35623740/original/resize:600x600/crop:x0y399w3199h2399/hash:1713789906/IMG_8300.jpeg?1713789906" },
+  { rn: '32271655', title: "The Solitude", note: "Original · full version", length: '2:56', art: "https://d3e6ckxkrs5ntg.cloudfront.net/artists/images/6720947/original/resize:600x600/crop:x0y230w2000h1500/hash:1780613206/IMG_8485.jpeg?1780613206" },
+  { rn: '33866102', title: "Birds Of Prey", note: "Original · live", length: '2:37', bc: '1698636065', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/34053201/original/resize:673x600/crop:x0y211w2044h1533/hash:1632942680/DD998DBB-2202-4924-BC13-EF1FA7691E37.jpeg?1632942680" },
+  { rn: '32178754', title: "Birds Of Prey", note: "Original · solo version", length: '2:14', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/34053201/original/resize:673x600/crop:x0y211w2044h1533/hash:1632942680/DD998DBB-2202-4924-BC13-EF1FA7691E37.jpeg?1632942680" },
+  { rn: '32896774', title: "Take A Stand", note: "Original · live", length: '3:06', bc: '1560882348', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/35163458/original/resize:600x642/crop:x0y158w992h744/hash:1687447680/IMG_6543.jpeg?1687447680" },
+  { rn: '32563022', title: "The Storm", note: "Original · live", length: '3:09', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/34023522/original/resize:724x600/crop:x0y70w1576h1182/hash:1631546248/EEBAE3F0-62FA-4D37-8D32-FCD4B2A04732.jpeg?1631546248" },
+  { rn: '32930467', title: "Missing Clues", note: "Original · live", length: '1:24', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/34053201/original/resize:673x600/crop:x0y211w2044h1533/hash:1632942680/DD998DBB-2202-4924-BC13-EF1FA7691E37.jpeg?1632942680" },
+  { rn: '32981405', title: "In Cyber Love", note: "Original · live", length: '1:49', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/35163458/original/resize:600x642/crop:x0y158w992h744/hash:1687447680/IMG_6543.jpeg?1687447680" },
+  { rn: '32901138', title: "Time Machine", note: "Original · live", length: '2:32', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/34053201/original/resize:673x600/crop:x0y211w2044h1533/hash:1632942680/DD998DBB-2202-4924-BC13-EF1FA7691E37.jpeg?1632942680" },
+  { rn: '32693242', title: "For You To Know", note: "Original · live", length: '2:41', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/34053201/original/resize:673x600/crop:x0y211w2044h1533/hash:1632942680/DD998DBB-2202-4924-BC13-EF1FA7691E37.jpeg?1632942680" },
+  { rn: '33353012', title: "RSVP", note: "Original · live", length: '3:03', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/35217783/original/resize:600x753/crop:x0y339w1340h1005/hash:1690464691/IMG_6723.jpeg?1690464691" },
+  { rn: '31360418', title: "Dancing With My Cell", note: "Original · live", length: '1:58', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/33848828/original/resize:702x600/crop:x0y199w1995h1497/hash:1623612105/D9082673-E086-42D8-86AA-59A3F7B7C78B.jpeg?1623612105" },
+  { rn: '31438949', title: "Are You Listening?", note: "Original · live version", length: '2:30', art: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/34023239/original/resize:600x687/crop:x0y194w981h736/hash:1631534546/320DA474-EB68-4D57-9929-D69BB813292B.jpeg?1631534546" }
+];
+
+const RN_BY_BC = Object.fromEntries(RN_SONGS.filter(s => s.bc).map(s => [s.bc, s]));
+const RN_BY_ID = Object.fromEntries(RN_SONGS.map(s => [s.rn, s]));
+
+// A "track key" is the Bandcamp id for songs that also appear in the catalog
+// below (keeps the catalog + sleeve in sync), or "rn:<id>" for ReverbNation-only songs.
+function keyForSong(song) {
+  return song.bc || `rn:${song.rn}`;
+}
+function songForKey(key) {
+  if (!key) return null;
+  return key.startsWith('rn:') ? RN_BY_ID[key.slice(3)] || null : RN_BY_BC[key] || null;
+}
+const PLAYLIST_KEYS = RN_SONGS.map(keyForSong);
+
 const player = document.getElementById('music-player');
-const frame = document.getElementById('bandcamp-player');
+const frame = document.getElementById('song-frame');
 const playerBody = document.getElementById('player-body');
 const playerTitle = document.getElementById('player-title');
 const minimizeBtn = document.getElementById('player-minimize');
@@ -236,30 +279,32 @@ const catalogRows = Array.from(document.querySelectorAll('.song-row[data-song]')
 let selectedTrack = null;
 let sleeveSwapTimer = 0;
 
-// Bandcamp's embed cannot autoplay or be controlled from the page, so a freshly
-// loaded track is "cued" (needle down, record waiting) until the visitor taps
-// into the Bandcamp player. That tap moves focus into the iframe, which we can
-// observe via window blur + document.activeElement.
+// ReverbNation's player is asked to autoplay. Browsers allow that right after the
+// visitor's tap on the vinyl/song (the iframe has allow="autoplay"), but some — notably
+// iOS Safari — still need a tap inside the player. Until the visitor interacts with the
+// player we show a gentle "No sound? Tap ▶" hint; a tap inside moves focus into the
+// iframe, which we observe via window blur + document.activeElement.
 let isCued = false;
 
-function bandcampEmbedUrl(trackId) {
-  return `https://bandcamp.com/EmbeddedPlayer/track=${encodeURIComponent(trackId)}/size=large/bgcol=fffaf1/linkcol=a8411a/tracklist=false/artwork=small/transparent=true/`;
+function reverbnationEmbedUrl(rnSongId) {
+  const params = new URLSearchParams({
+    widget_id: '55',
+    'pwc[song_ids]': rnSongId,
+    'pwc[autoplay]': '1',
+    context_type: 'song',
+    id_unique: `song_${rnSongId}`
+  });
+  return `https://legacy.reverbnation.com/widget_code/html_widget/artist_${REVERBNATION_ARTIST_ID}?${params}`;
 }
 
 function setCued(cued) {
   isCued = Boolean(cued && selectedTrack);
   player?.classList.toggle('is-cued', isCued);
-  heroRecord?.classList.toggle('is-cued', isCued);
-  featureSleeve?.classList.toggle('is-cued', isCued);
 }
 
 window.addEventListener('blur', () => {
   setTimeout(() => {
-    if (isCued && frame && document.activeElement === frame) {
-      setCued(false);
-      setRecordStatus(selectedTrack);
-      if (playerStatus) playerStatus.textContent = `Now playing ${playerTitle?.textContent || 'the song'}.`;
-    }
+    if (isCued && frame && document.activeElement === frame) setCued(false);
   }, 0);
 });
 
@@ -350,13 +395,13 @@ function updateCatalogSelection(trackId) {
     }
   });
 
-  updateJukeboxSleeve(trackId, Boolean(trackId));
+  updateJukeboxSleeve(trackId, Boolean(trackId && TRACK_META[trackId]));
 }
 
 function setRecordStatus(trackId) {
   if (!heroRecord) return;
   const isLoaded = Boolean(trackId);
-  const name = (trackId && TRACK_META[trackId]?.title) || 'this song';
+  const name = songForKey(trackId)?.title || 'this song';
 
   heroRecord.classList.toggle('selected', isLoaded);
   heroRecord.setAttribute(
@@ -368,16 +413,14 @@ function setRecordStatus(trackId) {
 
   if (recordNowLabel) recordNowLabel.textContent = isLoaded ? 'Now on the turntable' : 'Reb’s jukebox';
   if (recordNowTitle) {
-    recordNowTitle.textContent = isLoaded ? name : '9 original songs';
+    recordNowTitle.textContent = isLoaded ? name : `${RN_SONGS.length} original songs`;
     recordNowTitle.classList.toggle('is-idle', !isLoaded);
   }
   if (recordStopBtn) recordStopBtn.hidden = !isLoaded;
 
   const statusMsg = !isLoaded
     ? 'Tap the vinyl to choose a song'
-    : isCued
-      ? `Almost there — tap the big ▶ in the music player to start “${name}”`
-      : `♫ Now playing “${name}” · tap the vinyl to change songs`;
+    : `♫ Now playing “${name}” · tap the vinyl to change songs`;
   if (recordCtaText) recordCtaText.textContent = statusMsg;
   else if (recordCta) recordCta.textContent = statusMsg;
 
@@ -390,52 +433,61 @@ function setRecordStatus(trackId) {
 function renderSongPicker() {
   if (!songPickerList) return;
   if (!songPickerList.childElementCount) {
-    catalogRows.forEach(row => {
-      const id = row.dataset.song;
-      const meta = TRACK_META[id];
-      if (!meta) return;
-      const subtitle = row.querySelector('.song-info p')?.textContent.trim() || '';
+    const groups = [
+      { label: 'Featured on ReverbNation', songs: RN_SONGS.filter(s => s.featured) },
+      { label: 'More originals', songs: RN_SONGS.filter(s => !s.featured) }
+    ];
+    groups.forEach(group => {
+      const heading = document.createElement('li');
+      heading.className = 'picker-group';
+      heading.setAttribute('role', 'presentation');
+      heading.textContent = group.label;
+      songPickerList.append(heading);
 
-      const li = document.createElement('li');
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'picker-song';
-      btn.dataset.pick = id;
+      group.songs.forEach(song => {
+        const key = keyForSong(song);
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'picker-song';
+        btn.dataset.pick = key;
 
-      const img = document.createElement('img');
-      img.className = 'picker-thumb';
-      img.src = meta.img;
-      img.alt = '';
-      img.width = 56;
-      img.height = 56;
-      img.loading = 'lazy';
-      if (meta.pos) img.style.objectPosition = meta.pos;
+        const img = document.createElement('img');
+        img.className = 'picker-thumb';
+        img.src = song.art;
+        img.alt = '';
+        img.width = 56;
+        img.height = 56;
+        img.loading = 'lazy';
+        img.referrerPolicy = 'no-referrer';
 
-      const text = document.createElement('span');
-      text.className = 'picker-text';
-      const strong = document.createElement('strong');
-      strong.textContent = meta.title;
-      const small = document.createElement('small');
-      small.textContent = subtitle;
-      text.append(strong, small);
+        const text = document.createElement('span');
+        text.className = 'picker-text';
+        const strong = document.createElement('strong');
+        strong.textContent = song.title;
+        const small = document.createElement('small');
+        small.textContent = `${song.note} · ${song.length}`;
+        text.append(strong, small);
 
-      const go = document.createElement('span');
-      go.className = 'picker-go';
-      go.setAttribute('aria-hidden', 'true');
+        const go = document.createElement('span');
+        go.className = 'picker-go';
+        go.setAttribute('aria-hidden', 'true');
 
-      btn.append(img, text, go);
-      btn.addEventListener('click', () => pickSong(id));
-      li.append(btn);
-      songPickerList.append(li);
+        btn.append(img, text, go);
+        btn.addEventListener('click', () => pickSong(key));
+        li.append(btn);
+        songPickerList.append(li);
+      });
     });
   }
 
   songPickerList.querySelectorAll('.picker-song').forEach(btn => {
     const current = btn.dataset.pick === selectedTrack;
-    const title = TRACK_META[btn.dataset.pick]?.title || 'song';
-    btn.toggleAttribute('aria-current', current);
+    const song = songForKey(btn.dataset.pick);
+    const label = song ? `${song.title} (${song.note})` : 'song';
     if (current) btn.setAttribute('aria-current', 'true');
-    btn.setAttribute('aria-label', current ? `${title} (now playing)` : `Play ${title}`);
+    else btn.removeAttribute('aria-current');
+    btn.setAttribute('aria-label', current ? `${label} — now playing` : `Play ${label}`);
     const go = btn.querySelector('.picker-go');
     if (go) {
       go.innerHTML = current
@@ -476,22 +528,19 @@ function pickSong(trackId) {
 
 function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   if (!player || !frame) return;
-  const targetLink =
-    document.querySelector(`#music .listen-link[data-track="${trackId}"]`) ||
-    document.querySelector(`[data-track="${trackId}"]`);
-  if (!targetLink) return;
+  const song = songForKey(trackId);
+  if (!song) return;
 
-  const meta = TRACK_META[trackId];
-  const title = meta?.title || targetLink.dataset.title || 'Selected song';
-  const href = meta?.href || targetLink.getAttribute('href') || 'https://rebyen.bandcamp.com/';
+  const title = song.title;
+  const songUrl = `https://legacy.reverbnation.com/rebyen/song/${song.rn}`;
 
   if (trackId !== selectedTrack) {
-    frame.src = bandcampEmbedUrl(trackId);
+    frame.src = reverbnationEmbedUrl(song.rn);
     selectedTrack = trackId;
     setCued(true);
   }
 
-  frame.title = `${title} by Reb Yen — Bandcamp audio player`;
+  frame.title = `${title} by Reb Yen — ReverbNation player`;
   if (playerTitle) playerTitle.textContent = title;
   if (stopBtn) stopBtn.hidden = false;
 
@@ -503,10 +552,10 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   updateCatalogSelection(trackId);
 
   const fallback = document.getElementById('player-fallback');
-  if (fallback && href.startsWith('http')) fallback.href = href;
+  if (fallback) fallback.href = songUrl;
 
   if (playerStatus) {
-    playerStatus.textContent = `${title} loaded. Press play in the Bandcamp player to listen.`;
+    playerStatus.textContent = `Playing ${title}. If you don't hear it, press play in the ReverbNation player.`;
   }
   setRecordStatus(trackId);
 
@@ -516,17 +565,15 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
 }
 
 function stepTrack(offset) {
-  if (catalogRows.length === 0) return;
-  const visibleRows = catalogRows.filter(row => !row.hidden);
-  const pool = visibleRows.length > 0 ? visibleRows : catalogRows;
-  const currentIndex = pool.findIndex(row => row.dataset.song === selectedTrack);
+  if (PLAYLIST_KEYS.length === 0) return;
+  const currentIndex = PLAYLIST_KEYS.indexOf(selectedTrack);
   const nextIndex =
     currentIndex === -1
       ? offset >= 0
         ? 0
-        : pool.length - 1
-      : (currentIndex + offset + pool.length) % pool.length;
-  const nextTrackId = pool[nextIndex]?.dataset.song;
+        : PLAYLIST_KEYS.length - 1
+      : (currentIndex + offset + PLAYLIST_KEYS.length) % PLAYLIST_KEYS.length;
+  const nextTrackId = PLAYLIST_KEYS[nextIndex];
   if (nextTrackId) {
     selectTrackById(nextTrackId, { dock: true, focusPlayer: false });
   }
