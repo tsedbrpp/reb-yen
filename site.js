@@ -372,7 +372,7 @@ function setRecordStatus(trackId) {
   }
 
   const statusMsg = !isLoaded
-    ? 'Pick a song, then tap the record or Play.'
+    ? 'Pick a song, then tap the vinyl or Play.'
     : isCued
       ? `Almost there — tap the big ▶ in the music player to start “${name}”`
       : `♫ Now playing “${name}”`;
