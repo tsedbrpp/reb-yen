@@ -21,8 +21,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Rye&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261101y">
-  <script defer src="site.js?v=20261101y"></script>
+  <link rel="stylesheet" href="styles.css?v=20261101z">
+  <script defer src="site.js?v=20261101z"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -73,10 +73,10 @@
           <p class="location">Singer-songwriter &amp; multi-instrumentalist<br>Based in Boulder, Colorado</p>
           <div class="hero-record" id="hero-turntable">
             <div class="turntable">
-              <button type="button" class="spin-record" id="hero-record" aria-label="Choose a song to play" aria-haspopup="dialog" aria-controls="song-picker">
+              <button type="button" class="spin-record" id="hero-record" aria-label="Tap to pick a song" aria-haspopup="dialog" aria-controls="song-picker">
                 <span class="disc" aria-hidden="true">
                   <span class="label">
-                    <span class="label-title" id="record-label-title">Pick a song</span>
+                    <span class="label-title" id="record-label-title">Tap to pick a song</span>
                     <span class="label-artist">Reb Yen</span>
                   </span>
                 </span>
@@ -85,14 +85,14 @@
               <span class="arm" aria-hidden="true"></span>
             </div>
             <div class="hero-record-ctl">
-              <p class="record-step" id="record-now-label">Reb’s jukebox</p>
+              <p class="record-step" id="record-now-label" hidden>Now playing</p>
               <p class="record-now is-idle" id="record-now-title">9 original songs</p>
               <div class="record-actions">
                 <button type="button" class="button light record-stop-btn" id="record-stop-btn" hidden>
                   <span aria-hidden="true">■</span> Stop
                 </button>
               </div>
-              <p class="record-cta" id="record-cta" role="status" aria-live="polite"><span id="record-cta-text">Tap the vinyl to choose a song</span></p>
+              <p class="record-cta" id="record-cta" role="status" aria-live="polite" hidden><span id="record-cta-text"></span></p>
             </div>
           </div>
           <div class="hero-secondary">
@@ -198,7 +198,7 @@
         <div class="catalog-head">
           <div>
             <h3>Explore the originals</h3>
-            <span class="catalog-note">Choose a song to load in the jukebox · Pluck any guitar string divider</span>
+            <span class="catalog-note">Choose a song to listen · Pluck any guitar string divider</span>
           </div>
           <div class="catalog-controls">
             <div class="catalog-filters" role="group" aria-label="Filter original songs">
@@ -673,7 +673,7 @@
     <div class="song-picker-panel">
       <div class="song-picker-head">
         <div>
-          <p class="eyebrow">Reb’s jukebox</p>
+          <p class="eyebrow">9 original songs</p>
           <h2 id="song-picker-title">Choose a song</h2>
         </div>
         <button type="button" class="icon-button" id="song-picker-close" aria-label="Close song list">×</button>

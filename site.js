@@ -412,12 +412,15 @@ function setRecordStatus(trackId) {
   heroRecord.classList.toggle('selected', isLoaded);
   heroRecord.setAttribute(
     'aria-label',
-    isLoaded ? `Change song — now playing ${name}` : 'Choose a song to play'
+    isLoaded ? `Change song — now playing ${name}` : 'Tap to pick a song'
   );
-  if (recordLabelTitle) recordLabelTitle.textContent = isLoaded ? name : 'Pick a song';
+  if (recordLabelTitle) recordLabelTitle.textContent = isLoaded ? name : 'Tap to pick a song';
   if (recordPlayIcon) recordPlayIcon.textContent = isLoaded ? '♫' : '▶';
 
-  if (recordNowLabel) recordNowLabel.textContent = isLoaded ? 'Now on the turntable' : 'Reb’s jukebox';
+  if (recordNowLabel) {
+    recordNowLabel.textContent = 'Now playing';
+    recordNowLabel.hidden = !isLoaded;
+  }
   if (recordNowTitle) {
     recordNowTitle.textContent = isLoaded ? name : '9 original songs';
     recordNowTitle.classList.toggle('is-idle', !isLoaded);
@@ -425,10 +428,11 @@ function setRecordStatus(trackId) {
   if (recordStopBtn) recordStopBtn.hidden = !isLoaded;
 
   const statusMsg = !isLoaded
-    ? 'Tap the vinyl to choose a song'
+    ? ''
     : isCued
       ? `Almost there — tap the big ▶ in the music player to start “${name}”`
-      : `♫ Now playing “${name}” · tap the vinyl to change songs`;
+      : `♫ Now playing “${name}” · tap to change songs`;
+  if (recordCta) recordCta.hidden = !isLoaded;
   if (recordCtaText) recordCtaText.textContent = statusMsg;
   else if (recordCta) recordCta.textContent = statusMsg;
 
