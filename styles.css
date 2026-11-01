@@ -86,3 +86,13 @@
   .spin-record .arm{height:41px}
   .hero-record-ctl select{font-size:13px}
 }
+
+/* Verified artist recognition section; the profile reports a feature, not a chart rank. */
+.recognition{background:var(--sand);padding:27px 0;border-bottom:1px solid #ccb595}
+.recognition-inner{display:grid;grid-template-columns:minmax(240px,.85fr) minmax(0,1.4fr);gap:34px;align-items:center}
+.recognition-heading .eyebrow{margin-bottom:7px}
+.recognition h2{font-family:'Karla',system-ui,sans-serif;font-size:clamp(23px,2.5vw,30px);font-weight:800;line-height:1.25}
+.recognition-copy p{font-size:16px;line-height:1.5;color:var(--plum)}
+.recognition-links{display:flex;flex-wrap:wrap;gap:10px 23px;margin-top:10px;font-weight:800;font-size:14px}
+.recognition-links a{color:#8a3518}
+@media(max-width:700px){.recognition{padding:24px 0}.recognition-inner{grid-template-columns:1fr;gap:10px}.recognition h2{font-size:24px}.recognition-copy p{font-size:15px}}
