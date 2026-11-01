@@ -24,3 +24,5 @@
 .record-cta{margin:10px 0 0;font-size:15px;color:#e0c5b7}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:700px){.spin-record{width:88px;height:88px}.spin-record .arm{height:56px}}
+
+.contact-form{display:grid;gap:6px}.contact-form label{font-weight:700;font-size:15px;margin-top:8px}.contact-form input,.contact-form select,.contact-form textarea{font:inherit;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--plum);min-height:44px}.contact-form button{margin-top:14px;justify-self:start}.contact-form .hp{position:absolute;left:-9999px}
