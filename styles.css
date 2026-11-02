@@ -411,90 +411,6 @@ p + p {
   z-index: 1;
 }
 
-.hero-spotlight {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0.86;
-  transition: opacity 0.7s ease;
-  animation: spotlight-warmup 1.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-}
-
-.hero.is-stage-lit .hero-spotlight {
-  opacity: 1;
-}
-
-/* Crisp overhead theater follow-spot shaft across the darkened evening brick backdrop */
-.hero-spotlight::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      ellipse 46px 16px at 85.5% 0%,
-      rgba(255, 242, 214, 0.34) 0%,
-      transparent 100%
-    ),
-    conic-gradient(
-      from 198deg at 91% -22%,
-      transparent 0deg,
-      rgba(255, 218, 164, 0.06) 1.1deg,
-      rgba(255, 232, 194, 0.22) 2.8deg,
-      rgba(255, 242, 218, 0.26) 9.5deg,
-      rgba(255, 232, 194, 0.22) 16.2deg,
-      rgba(255, 218, 164, 0.06) 17.9deg,
-      transparent 19deg
-    );
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.92) 28%, rgba(0, 0, 0, 0.42) 56%, rgba(0, 0, 0, 0.16) 84%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.92) 28%, rgba(0, 0, 0, 0.42) 56%, rgba(0, 0, 0, 0.16) 84%, transparent 100%);
-  filter: blur(3.5px);
-  transform-origin: 91% -22%;
-  animation: spotlight-breathe 10s ease-in-out 1.4s infinite alternate;
-}
-
-/* Faint stage-dust motes strictly inside the beam shaft */
-.hero-spotlight::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle 1.5px at 83% 11%, rgba(255, 240, 214, 0.46) 0%, transparent 100%),
-    radial-gradient(circle 2px at 79% 21%, rgba(255, 228, 192, 0.38) 0%, transparent 100%),
-    radial-gradient(circle 1.5px at 73% 34%, rgba(255, 220, 180, 0.28) 0%, transparent 100%),
-    radial-gradient(circle 1.5px at 66% 52%, rgba(255, 232, 198, 0.24) 0%, transparent 100%);
-  animation: stage-motes 12s ease-in-out infinite alternate;
-}
-
-@keyframes spotlight-warmup {
-  from {
-    opacity: 0;
-  }
-}
-
-@keyframes spotlight-breathe {
-  0% {
-    opacity: 0.9;
-    transform: rotate(-0.4deg);
-  }
-  100% {
-    opacity: 1;
-    transform: rotate(0.4deg);
-  }
-}
-
-@keyframes stage-motes {
-  0% {
-    opacity: 0.45;
-    transform: translate3d(-4px, 6px, 0);
-  }
-  100% {
-    opacity: 0.85;
-    transform: translate3d(7px, -9px, 0);
-  }
-}
-
 @keyframes hero-photo-warmup {
   from {
     filter: brightness(0.86) contrast(1.08) saturate(0.98);
@@ -3438,11 +3354,6 @@ dialog.is-fallback-open {
    Responsive Breakpoints
    ========================================================================== */
 @media (min-width: 1345px) {
-  .hero-spotlight {
-    width: 1345px;
-    left: calc(50% - 672.5px);
-    right: auto;
-  }
   .hero-photo {
     width: 780px;
     right: calc((100% - 1345px) / 2);
@@ -3603,31 +3514,6 @@ dialog.is-fallback-open {
     flex: 1;
     display: flex;
     flex-direction: column;
-  }
-  .hero-spotlight {
-    inset: 0;
-    width: auto;
-    left: 0;
-    right: 0;
-  }
-  .hero-spotlight::before {
-    background:
-      radial-gradient(
-        ellipse 36px 14px at 88% 0%,
-        rgba(255, 242, 214, 0.32) 0%,
-        transparent 100%
-      ),
-      conic-gradient(
-        from 195deg at 94% -18%,
-        transparent 0deg,
-        rgba(255, 218, 164, 0.06) 1.2deg,
-        rgba(255, 232, 194, 0.21) 3deg,
-        rgba(255, 242, 218, 0.25) 10deg,
-        rgba(255, 232, 194, 0.21) 17deg,
-        rgba(255, 218, 164, 0.06) 18.8deg,
-        transparent 20deg
-      );
-    transform-origin: 94% -18%;
   }
   .hero-photo {
     position: absolute;

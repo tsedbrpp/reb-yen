@@ -409,7 +409,6 @@ function setRecordStatus(trackId) {
   const isLoaded = Boolean(trackId);
   const name = (trackId && TRACK_META[trackId]?.title) || 'this song';
 
-  document.getElementById('home')?.classList.toggle('is-stage-lit', isLoaded);
   heroRecord.classList.toggle('selected', isLoaded);
   heroRecord.setAttribute(
     'aria-label',
