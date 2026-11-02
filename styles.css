@@ -3097,15 +3097,18 @@ dialog.is-fallback-open {
 }
 
 .contact-photo {
-  margin: 0;
+  margin: -42px 0 0;
   width: 100%;
   max-width: 475px;
   justify-self: end;
-  border-radius: 8px;
+  background: transparent;
+  filter: drop-shadow(0 18px 34px rgba(10, 4, 12, 0.5));
+}
+
+.contact-photo picture {
+  display: block;
+  border-radius: 6px;
   overflow: hidden;
-  border: 1px solid rgba(255, 250, 241, 0.22);
-  box-shadow: 0 20px 48px rgba(12, 5, 14, 0.48);
-  background: #231223;
 }
 
 .contact-photo img {
@@ -3398,9 +3401,58 @@ dialog.is-fallback-open {
 /* ==========================================================================
    Responsive Breakpoints
    ========================================================================== */
+@media (min-width: 961px) {
+  .hero-photo {
+    width: 52.5%;
+    object-position: 50% 18%;
+  }
+  .hero::after {
+    background:
+      linear-gradient(
+        90deg,
+        #2c192c 0%,
+        #2c192c 48%,
+        rgba(44, 25, 44, 0.72) 54%,
+        rgba(44, 25, 44, 0.18) 60%,
+        rgba(44, 25, 44, 0) 65.5%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(22, 10, 24, 0.18) 0%,
+        rgba(22, 10, 24, 0) 24%
+      );
+  }
+  .hero-content {
+    max-width: min(470px, 44vw);
+  }
+  .hero-record {
+    --rec: clamp(188px, 17vw, 220px);
+    width: fit-content;
+    max-width: min(432px, 43vw);
+    gap: 16px;
+    padding: 14px 20px 14px 14px;
+  }
+  .hero-record-ctl {
+    flex: 0 1 auto;
+    max-width: 172px;
+    gap: 8px;
+  }
+  .record-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .record-now {
+    font-size: 20px;
+  }
+  .record-now.is-idle {
+    font-size: 19px;
+  }
+}
+
 @media (min-width: 1345px) {
   .hero-photo {
-    width: 725px;
+    width: 685px;
     right: calc((100% - 1345px) / 2);
   }
   .hero::after {
@@ -3408,9 +3460,9 @@ dialog.is-fallback-open {
       linear-gradient(
         90deg,
         #2c192c 0%,
-        #2c192c calc(50% - 48px),
-        rgba(44, 25, 44, 0.68) calc(50% + 36px),
-        rgba(44, 25, 44, 0) calc(50% + 145px)
+        #2c192c calc(50% - 10px),
+        rgba(44, 25, 44, 0.68) calc(50% + 58px),
+        rgba(44, 25, 44, 0) calc(50% + 152px)
       ),
       linear-gradient(
         270deg,
@@ -3424,6 +3476,12 @@ dialog.is-fallback-open {
         rgba(22, 10, 24, 0) 24%
       );
   }
+  .hero-content {
+    max-width: 490px;
+  }
+  .hero-record {
+    max-width: 440px;
+  }
 }
 
 @media (max-width: 960px) {
@@ -3436,36 +3494,45 @@ dialog.is-fallback-open {
   .press-grid {
     gap: 35px;
   }
+}
+
+@media (min-width: 701px) and (max-width: 960px) {
   .hero-photo {
-    width: 60%;
+    width: 56%;
     right: 0;
-    object-position: 54% 20%;
+    object-position: 47% 20%;
   }
   .hero::after {
     background: linear-gradient(
       90deg,
       #2c192c 0%,
-      #2c192c 40.5%,
-      rgba(44, 25, 44, 0.65) 49%,
-      rgba(44, 25, 44, 0.18) 57%,
+      #2c192c 44.5%,
+      rgba(44, 25, 44, 0.66) 51.5%,
+      rgba(44, 25, 44, 0.18) 58.5%,
       rgba(44, 25, 44, 0) 66%
     );
   }
   .hero-content {
-    max-width: 460px;
+    max-width: min(375px, 43vw);
   }
   .hero .tagline {
-    max-width: 400px;
+    max-width: 100%;
   }
   .hero-record {
-    --rec: 240px;
+    --rec: clamp(172px, 21.5vw, 200px);
+    width: fit-content;
+    max-width: min(264px, 37vw);
     flex-direction: column;
-    align-items: stretch;
-    gap: 18px;
-    padding: 18px;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
   }
   .turntable {
     align-self: center;
+  }
+  .hero-record-ctl {
+    max-width: 220px;
+    align-items: center;
   }
   .record-step,
   .record-now,
@@ -3850,6 +3917,7 @@ dialog.is-fallback-open {
     padding: 24px;
   }
   .contact-photo {
+    margin-top: -22px;
     max-width: 350px;
     justify-self: center;
   }
