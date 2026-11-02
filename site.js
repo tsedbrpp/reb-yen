@@ -422,7 +422,7 @@ function setRecordStatus(trackId) {
     recordNowLabel.hidden = !isLoaded;
   }
   if (recordNowTitle) {
-    recordNowTitle.textContent = isLoaded ? name : '9 original songs';
+    recordNowTitle.textContent = isLoaded ? name : 'Original songs';
     recordNowTitle.classList.toggle('is-idle', !isLoaded);
   }
   const browsePill = document.getElementById('record-browse-pill');
