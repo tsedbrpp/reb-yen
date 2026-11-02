@@ -27,6 +27,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       background: #2b1929;
@@ -94,10 +98,12 @@
       background: linear-gradient(135deg, #f08b58, var(--orange));
       color: #231121;
       box-shadow: 0 4px 14px rgba(223, 115, 63, 0.35);
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, border-color 0.2s ease;
     }
 
     .btn:hover {
       background: linear-gradient(135deg, #ffa06f, #ee824c);
+      transform: translateY(-1px);
     }
 
     .btn-ghost {
@@ -109,6 +115,7 @@
 
     .btn-ghost:hover {
       background: rgba(255, 250, 241, 0.18);
+      border-color: rgba(239, 169, 119, 0.45);
     }
 
     .booklet {
@@ -128,6 +135,34 @@
       padding: 48px 54px;
       position: relative;
       overflow: hidden;
+      scroll-margin-top: 78px;
+      transition: border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    html.js-motion .page.reveal-ready {
+      opacity: 0;
+      transform: translate3d(0, 24px, 0);
+      transition:
+        opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.28s ease,
+        box-shadow 0.28s ease;
+    }
+
+    html.js-motion .page.reveal-ready.is-revealed {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes sb-enter {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 14px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     /* Cover Page */
@@ -153,6 +188,7 @@
       text-transform: uppercase;
       color: #ffbe92;
       margin: 0 0 10px;
+      animation: sb-enter 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.04s both;
     }
 
     .page-cover h1 {
@@ -163,6 +199,7 @@
       line-height: 1.02;
       margin: 0 0 12px;
       color: var(--paper);
+      animation: sb-enter 0.68s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
     }
 
     .cover-sub {
@@ -171,12 +208,14 @@
       color: #f3e4d2;
       margin: 0 0 18px;
       line-height: 1.35;
+      animation: sb-enter 0.68s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
     }
 
     .cover-meta {
       font-size: 14px;
       color: #d9c3d4;
       margin: 0 0 26px;
+      animation: sb-enter 0.68s cubic-bezier(0.22, 1, 0.36, 1) 0.27s both;
     }
 
     .cover-photo-frame {
@@ -184,6 +223,14 @@
       border: 1px solid rgba(239, 169, 119, 0.35);
       padding: 10px;
       border-radius: 8px;
+      overflow: hidden;
+      animation: sb-enter 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+      transition: border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .cover-photo-frame:hover {
+      border-color: rgba(239, 169, 119, 0.62);
+      box-shadow: 0 14px 36px rgba(10, 4, 12, 0.4);
     }
 
     .cover-photo-frame img {
@@ -194,12 +241,18 @@
       display: block;
       border-radius: 4px;
       filter: brightness(1.18) contrast(1.03);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .cover-photo-frame:hover img {
+      transform: scale(1.025);
     }
 
     .toc {
       margin-top: 34px;
       padding-top: 24px;
       border-top: 1px solid rgba(255, 250, 241, 0.16);
+      animation: sb-enter 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.34s both;
     }
 
     .toc-title {
@@ -229,16 +282,23 @@
       font-size: 14px;
       font-weight: 700;
       padding: 4px 0;
+      transition: color 0.18s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .toc-grid a:hover {
       color: #ffbe92;
+      transform: translateX(4px);
     }
 
     .toc-num {
       font-size: 11px;
       font-weight: 800;
       color: var(--orange);
+      transition: color 0.18s ease;
+    }
+
+    .toc-grid a:hover .toc-num {
+      color: #ffd39e;
     }
 
     /* Song Pages */
@@ -297,6 +357,12 @@
       object-fit: cover;
       border: 1px solid var(--line);
       box-shadow: 0 6px 16px rgba(36, 19, 35, 0.12);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+    }
+
+    .song-art:hover {
+      transform: translateY(-3px) rotate(1.5deg);
+      box-shadow: 0 10px 24px rgba(36, 19, 35, 0.2);
     }
 
     .song-story {
@@ -441,6 +507,18 @@
       }
       .page-cover h1 {
         font-size: 40px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        animation: none !important;
       }
     }
 
@@ -1190,6 +1268,32 @@ The sleep wakes your mind</p>
         e.preventDefault();
       }
     });
+
+    (function () {
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced || !('IntersectionObserver' in window)) return;
+
+      document.documentElement.classList.add('js-motion');
+      var cutoff = window.innerHeight * 0.94;
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08, rootMargin: '0px 0px -28px 0px' }
+      );
+
+      document.querySelectorAll('.booklet > .page:not(.page-cover)').forEach(function (page) {
+        if (page.getBoundingClientRect().top > cutoff) {
+          page.classList.add('reveal-ready');
+          observer.observe(page);
+        }
+      });
+    })();
   </script>
 </body>
 </html>
