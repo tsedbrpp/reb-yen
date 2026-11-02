@@ -1611,6 +1611,90 @@ body.has-player {
 }
 
 /* ==========================================================================
+   What the Critics Are Saying Section
+   ========================================================================== */
+.critics-section {
+  background: var(--sand);
+  border-top: 1px solid #ccb595;
+  border-bottom: 1px solid #ccb595;
+}
+
+.critics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.critic-card {
+  margin: 0;
+  padding: 26px 24px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--orange);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.critic-tag {
+  align-self: flex-start;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--rust);
+  background: rgba(223, 115, 63, 0.14);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.critic-card p {
+  margin: 0;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--plum);
+}
+
+.critic-verdict {
+  margin-top: 24px;
+  padding: 24px 28px;
+  background: var(--plum-dark);
+  color: var(--cream);
+  border: 1px solid rgba(239, 169, 119, 0.35);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 32px;
+}
+
+.critic-verdict-copy {
+  flex: 1 1 420px;
+}
+
+.critic-verdict-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #ffbe92;
+  margin-bottom: 6px;
+}
+
+.critic-verdict-copy p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--paper);
+}
+
+/* ==========================================================================
    Videos Section
    ========================================================================== */
 .video-section {
@@ -3331,6 +3415,16 @@ dialog.is-fallback-open {
   }
   .song-actions .listen-link {
     min-width: 110px;
+  }
+  .critics-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .critic-card {
+    padding: 20px;
+  }
+  .critic-verdict {
+    padding: 20px;
   }
   .video-grid {
     grid-template-columns: 1fr;
