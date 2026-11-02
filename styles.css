@@ -2243,8 +2243,7 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
 
 .about-grid {
   display: grid;
-  grid-template-columns: 0.7fr 1.3fr;
-  gap: 64px;
+  grid-template-columns: 1fr;
   align-items: start;
 }
 
@@ -2275,7 +2274,7 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
   font-size: clamp(19px, 2vw, 21px);
   font-weight: 500;
   line-height: 1.75;
-  max-width: 62ch;
+  max-width: 68ch;
   margin-top: 22px;
 }
 
