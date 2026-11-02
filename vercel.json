@@ -11,6 +11,16 @@
       "has": [{ "type": "host", "value": "www.rebyenmusic.com" }],
       "destination": "https://rebyenmusic.com/$1",
       "permanent": true
+    },
+    {
+      "source": "/press-kit.html",
+      "destination": "/#about",
+      "permanent": true
+    },
+    {
+      "source": "/press-kit",
+      "destination": "/#about",
+      "permanent": true
     }
   ]
 }

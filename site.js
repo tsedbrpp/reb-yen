@@ -1414,27 +1414,41 @@ lightbox?.addEventListener('close', () => {
 });
 
 // ============================================================================
-// Press Kit Actions (Print & Copy Short Bio)
+// Expandable Full Biography & Vocal Background Drawer (#about)
 // ============================================================================
-document.getElementById('print-kit')?.addEventListener('click', () => window.print());
+const aboutMoreToggle = document.getElementById('about-more-toggle');
+const aboutMoreLabel = document.getElementById('about-more-label');
+const aboutMoreDrawer = document.getElementById('about-more-drawer');
+let aboutDrawerCloseTimer = 0;
 
-const copyBioBtn = document.getElementById('copy-bio');
-const shortBioText = document.getElementById('short-bio-text');
+aboutMoreToggle?.addEventListener('click', () => {
+  if (!aboutMoreDrawer) return;
+  const isOpen = aboutMoreToggle.getAttribute('aria-expanded') === 'true';
+  const nextOpen = !isOpen;
 
-copyBioBtn?.addEventListener('click', async () => {
-  if (!shortBioText || !navigator.clipboard) return;
-  try {
-    await navigator.clipboard.writeText(shortBioText.textContent.trim());
-    const originalLabel = copyBioBtn.textContent;
-    copyBioBtn.textContent = 'Copied to clipboard ✓';
-    setTimeout(() => {
-      copyBioBtn.textContent = originalLabel;
-    }, 2200);
-  } catch {
-    const range = document.createRange();
-    range.selectNodeContents(shortBioText);
-    const sel = window.getSelection();
-    sel?.removeAllRanges();
-    sel?.addRange(range);
+  clearTimeout(aboutDrawerCloseTimer);
+  aboutMoreToggle.setAttribute('aria-expanded', String(nextOpen));
+  if (aboutMoreLabel) {
+    aboutMoreLabel.textContent = nextOpen
+      ? 'Hide full biography & vocal background'
+      : 'Read full biography & vocal background';
+  }
+
+  if (nextOpen) {
+    aboutMoreDrawer.hidden = false;
+    requestAnimationFrame(() => {
+      aboutMoreDrawer.classList.add('is-open');
+    });
+  } else {
+    aboutMoreDrawer.classList.remove('is-open');
+    if (prefersReducedMotion) {
+      aboutMoreDrawer.hidden = true;
+    } else {
+      aboutDrawerCloseTimer = window.setTimeout(() => {
+        if (!aboutMoreDrawer.classList.contains('is-open')) {
+          aboutMoreDrawer.hidden = true;
+        }
+      }, 370);
+    }
   }
 });
