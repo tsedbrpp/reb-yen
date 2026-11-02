@@ -23,8 +23,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261102l">
-  <script defer src="site.js?v=20261102l"></script>
+  <link rel="stylesheet" href="styles.css?v=20261102m">
+  <script defer src="site.js?v=20261102m"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -581,60 +581,34 @@
 
     <section class="section contact" id="contact" aria-labelledby="contact-title">
       <div class="container contact-grid">
-        <div>
-          <p class="eyebrow">Let’s make music</p>
-          <h2 id="contact-title">Bring Reb<br>to your stage.</h2>
-          <p>Booking a venue, a private event, or a festival?<br>Have a song or collaboration in mind?</p>
-          <p>Get in touch about the music, the format, and the occasion.</p>
+        <div class="contact-intro">
+          <h2 id="contact-title">Connect with Reb.</h2>
+          <span class="contact-rule" aria-hidden="true"></span>
+          <p>Have a question about the music? Interested in learning more about Reb’s songs, recordings, or performances?</p>
+          <p>Whether you’d like more information or simply want to say hello, feel free to get in touch.</p>
         </div>
         <div class="contact-card">
-          <h3>Send Reb a message</h3>
+          <h3>Your Message</h3>
           <form class="contact-form" action="https://formsubmit.co/rebyenmusic@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="New message from the Reb Yen website">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_next" value="https://rebyen.com/thanks.html">
             <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-            <label for="cf-name">Your name</label>
+            <label for="cf-name">Your name <span class="req-star" aria-hidden="true">*</span></label>
             <input id="cf-name" name="name" type="text" autocomplete="name" required>
 
-            <label for="cf-email">Your email</label>
+            <label for="cf-email">Your email <span class="req-star" aria-hidden="true">*</span></label>
             <input id="cf-email" name="email" type="email" autocomplete="email" required>
 
-            <label for="cf-topic">Inquiry type</label>
-            <select id="cf-topic" name="event_type">
-              <option>Venue or club</option>
-              <option>Festival</option>
-              <option>Private event</option>
-              <option>Vocal coaching or workshop</option>
-              <option>Collaboration</option>
-              <option>Press</option>
-              <option>Just saying hi</option>
-            </select>
+            <label for="cf-phone">Your phone number (optional)</label>
+            <input id="cf-phone" name="phone" type="tel" autocomplete="tel">
 
-            <div class="form-row" id="booking-details-row">
-              <div>
-                <label for="cf-format">Preferred format</label>
-                <select id="cf-format" name="format">
-                  <option>Not sure yet</option>
-                  <option>Solo</option>
-                  <option>Duo</option>
-                  <option>Full band</option>
-                </select>
-              </div>
-              <div>
-                <label for="cf-date">Target date</label>
-                <input id="cf-date" name="date" type="date">
-              </div>
-            </div>
-
-            <label for="cf-msg">Message</label>
-            <textarea id="cf-msg" name="message" rows="5" required placeholder="For bookings, please include the date, venue/city, approximate set length, and whether you'd like solo, duo or band."></textarea>
+            <label for="cf-msg">Message <span class="req-star" aria-hidden="true">*</span></label>
+            <textarea id="cf-msg" name="message" rows="5" required placeholder="Let me know how I can help, or share any questions you have about the music, recordings, or performances."></textarea>
 
             <button type="submit" class="button primary">Send message</button>
-            <p class="small-note">Your message goes straight to Reb’s inbox.</p>
           </form>
-          <p class="small-note"><a href="press-kit.html">Read Reb’s full biography and career background →</a></p>
         </div>
       </div>
     </section>

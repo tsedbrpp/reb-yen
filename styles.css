@@ -3021,37 +3021,60 @@ dialog.is-fallback-open {
    Contact & Booking Form
    ========================================================================== */
 .contact {
-  background: var(--plum);
+  background: var(--plum-dark);
   color: var(--cream);
   border-top: 4px solid var(--orange);
 }
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1.08fr 1fr;
   gap: 64px;
   align-items: start;
 }
 
-.contact .eyebrow {
-  color: #efb081;
+.contact-intro {
+  padding-top: 28px;
+}
+
+.contact-intro h2 {
+  font-size: clamp(38px, 4.8vw, 52px);
+  color: var(--paper);
+}
+
+.contact-rule {
+  display: block;
+  width: 58px;
+  height: 3px;
+  background: var(--orange);
+  border-radius: 2px;
+  margin: 20px 0 24px;
 }
 
 .contact p {
-  color: #dfc9d9;
+  color: #ede0ea;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.55;
+  max-width: 480px;
   margin-top: 20px;
 }
 
+.contact-intro p:first-of-type {
+  margin-top: 0;
+}
+
 .contact-card {
-  background: #422d40;
+  background: #301a30;
   padding: 32px;
-  border: 1px solid #71546a;
-  border-radius: 6px;
+  border: 1px solid rgba(255, 250, 241, 0.22);
+  border-radius: 8px;
 }
 
 .contact-card h3 {
-  font-size: 23px;
-  margin-bottom: 6px;
+  font-size: 26px;
+  color: var(--paper);
+  margin-bottom: 10px;
 }
 
 .contact-card p {
@@ -3072,9 +3095,15 @@ dialog.is-fallback-open {
 
 .contact-form label {
   font-weight: 700;
-  font-size: 15px;
-  margin-top: 8px;
+  font-size: 14px;
+  color: #f2e6ef;
+  margin-top: 10px;
   display: block;
+}
+
+.req-star {
+  color: var(--orange);
+  margin-left: 2px;
 }
 
 .contact-form input,
@@ -3764,6 +3793,9 @@ dialog.is-fallback-open {
   }
   .gallery-item span {
     font-size: 12px;
+  }
+  .contact-intro {
+    padding-top: 0;
   }
   .contact-card {
     padding: 24px;
