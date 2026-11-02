@@ -895,7 +895,7 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
     { parent: '.venue-grid', children: ':scope > div', step: 75, mod: 3 },
     { parent: '.about-chips', children: 'span', step: 55, mod: 4 },
     { parent: '.journey-rail', children: '.journey-stop', step: 50, mod: 6 },
-    { parent: '.gallery-grid', children: '.gallery-item', step: 65, mod: 4 },
+    { parent: '.gallery-grid', children: '.gallery-item', step: 65, mod: 3 },
     { parent: '.press-photos', children: '.press-photo', step: 80, mod: 2 }
   ];
 
