@@ -436,8 +436,7 @@ p + p {
   height: calc(100% + 56px);
   object-fit: cover;
   object-position: 54% 27%;
-  filter: brightness(1.03) contrast(1.06) saturate(1.04);
-  animation: hero-photo-warmup 1.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  filter: brightness(1.24) contrast(1.02) saturate(1.08);
   transform: translate3d(0, var(--hero-parallax, 0px), 0);
   will-change: transform;
   z-index: -2;
@@ -448,20 +447,14 @@ p + p {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    linear-gradient(
-      90deg,
-      #2c192c 0%,
-      #2c192c 43%,
-      rgba(44, 25, 44, 0.72) 50%,
-      rgba(44, 25, 44, 0.18) 57%,
-      rgba(44, 25, 44, 0) 64%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(22, 10, 24, 0.36) 0%,
-      rgba(22, 10, 24, 0) 28%
-    );
+  background: linear-gradient(
+    90deg,
+    #2c192c 0%,
+    #2c192c 42.5%,
+    rgba(44, 25, 44, 0.68) 49%,
+    rgba(44, 25, 44, 0.14) 55%,
+    rgba(44, 25, 44, 0) 61%
+  );
 }
 
 .hero-content {
@@ -3408,19 +3401,14 @@ dialog.is-fallback-open {
         90deg,
         #2c192c 0%,
         #2c192c calc(50% - 104px),
-        rgba(44, 25, 44, 0.68) calc(50% - 16px),
-        rgba(44, 25, 44, 0) calc(50% + 95px)
+        rgba(44, 25, 44, 0.62) calc(50% - 20px),
+        rgba(44, 25, 44, 0) calc(50% + 90px)
       ),
       linear-gradient(
         270deg,
         #2c192c 0%,
         #2c192c calc(50% - 669px),
-        rgba(44, 25, 44, 0) calc(50% - 565px)
-      ),
-      linear-gradient(
-        180deg,
-        rgba(22, 10, 24, 0.36) 0%,
-        rgba(22, 10, 24, 0) 28%
+        rgba(44, 25, 44, 0) calc(50% - 570px)
       );
   }
 }
@@ -3441,20 +3429,14 @@ dialog.is-fallback-open {
     object-position: 56% 27%;
   }
   .hero::after {
-    background:
-      linear-gradient(
-        90deg,
-        #2c192c 0%,
-        #2c192c 40.5%,
-        rgba(44, 25, 44, 0.68) 49%,
-        rgba(44, 25, 44, 0.18) 57%,
-        rgba(44, 25, 44, 0) 66%
-      ),
-      linear-gradient(
-        180deg,
-        rgba(22, 10, 24, 0.36) 0%,
-        rgba(22, 10, 24, 0) 28%
-      );
+    background: linear-gradient(
+      90deg,
+      #2c192c 0%,
+      #2c192c 40.5%,
+      rgba(44, 25, 44, 0.65) 49%,
+      rgba(44, 25, 44, 0.18) 57%,
+      rgba(44, 25, 44, 0) 66%
+    );
   }
   .hero-content {
     max-width: 460px;
@@ -3574,7 +3556,7 @@ dialog.is-fallback-open {
     z-index: -2;
     transform: none;
     will-change: auto;
-    filter: brightness(1.02) contrast(1.06) saturate(1.04);
+    filter: brightness(1.22) contrast(1.03) saturate(1.08);
     -webkit-mask-image: none;
     mask-image: none;
   }
@@ -3583,10 +3565,10 @@ dialog.is-fallback-open {
     background:
       linear-gradient(
         180deg,
-        rgba(22, 10, 24, 0.56) 0%,
-        rgba(22, 10, 24, 0.08) 28%,
-        rgba(22, 10, 24, 0) 70%,
-        rgba(22, 10, 24, 0.84) 100%
+        rgba(28, 14, 28, 0.56) 0%,
+        rgba(28, 14, 28, 0.08) 26%,
+        rgba(28, 14, 28, 0) 74%,
+        rgba(28, 14, 28, 0.82) 100%
       ),
       radial-gradient(
         ellipse 56% 56% at 14% 32%,
