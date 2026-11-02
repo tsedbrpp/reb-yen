@@ -890,7 +890,6 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
 
   const staggerGroups = [
     { parent: '.song-list', children: '.song-row', step: 35, mod: 5 },
-    { parent: '.critics-grid', children: '.critic-card', step: 85, mod: 3 },
     { parent: '.video-grid', children: '.video', step: 80, mod: 2 },
     { parent: '.format-cards', children: 'article', step: 75, mod: 3 },
     { parent: '.venue-grid', children: ':scope > div', step: 75, mod: 3 },
@@ -913,7 +912,7 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
 
   document
     .querySelectorAll(
-      '[data-reveal], .recognition-inner, .section-head, .feature-sleeve-wrap, .critic-verdict, .upcoming, .stage-spec-panel, .about-image, .about-copy, .contact-grid > div, .press-main h2, .press-main > p, .press-facts'
+      '[data-reveal], .recognition-inner, .section-head, .feature-sleeve-wrap, .upcoming, .stage-spec-panel, .about-image, .about-copy, .contact-grid > div, .press-main h2, .press-main > p, .press-facts'
     )
     .forEach(el => revealTargets.add(el));
 
