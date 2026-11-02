@@ -431,12 +431,12 @@ p + p {
 .hero-photo {
   position: absolute;
   right: 0;
-  top: -18px;
-  width: 54%;
-  height: calc(100% + 36px);
+  top: -36px;
+  width: 58%;
+  height: calc(100% + 56px);
   object-fit: cover;
-  object-position: 82% 44%;
-  filter: brightness(1.02) contrast(1.04) saturate(1.02);
+  object-position: 54% 27%;
+  filter: brightness(1.03) contrast(1.06) saturate(1.04);
   animation: hero-photo-warmup 1.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   transform: translate3d(0, var(--hero-parallax, 0px), 0);
   will-change: transform;
@@ -452,15 +452,15 @@ p + p {
     linear-gradient(
       90deg,
       #2c192c 0%,
-      #2c192c 46%,
-      rgba(44, 25, 44, 0.72) 53%,
-      rgba(44, 25, 44, 0.18) 60%,
-      rgba(44, 25, 44, 0) 67%
+      #2c192c 43%,
+      rgba(44, 25, 44, 0.72) 50%,
+      rgba(44, 25, 44, 0.18) 57%,
+      rgba(44, 25, 44, 0) 64%
     ),
     linear-gradient(
       180deg,
-      rgba(22, 10, 24, 0.34) 0%,
-      rgba(22, 10, 24, 0) 26%
+      rgba(22, 10, 24, 0.36) 0%,
+      rgba(22, 10, 24, 0) 28%
     );
 }
 
@@ -3355,51 +3355,28 @@ dialog.is-fallback-open {
    ========================================================================== */
 @media (min-width: 1345px) {
   .hero-photo {
-    width: 730px;
-    right: 0;
+    width: 780px;
+    right: calc((100% - 1345px) / 2);
   }
   .hero::after {
     background:
       linear-gradient(
         90deg,
         #2c192c 0%,
-        #2c192c calc(100% - 730px),
-        rgba(44, 25, 44, 0.72) calc(100% - 635px),
-        rgba(44, 25, 44, 0.16) calc(100% - 540px),
-        rgba(44, 25, 44, 0) calc(100% - 455px)
-      ),
-      linear-gradient(
-        180deg,
-        rgba(22, 10, 24, 0.34) 0%,
-        rgba(22, 10, 24, 0) 26%
-      );
-  }
-}
-
-@media (min-width: 1680px) {
-  .hero-photo {
-    width: 760px;
-    right: calc((100% - 1680px) / 2);
-  }
-  .hero::after {
-    background:
-      linear-gradient(
-        90deg,
-        #2c192c 0%,
-        #2c192c calc(50% + 80px),
-        rgba(44, 25, 44, 0.72) calc(50% + 175px),
-        rgba(44, 25, 44, 0) calc(50% + 355px)
+        #2c192c calc(50% - 104px),
+        rgba(44, 25, 44, 0.68) calc(50% - 16px),
+        rgba(44, 25, 44, 0) calc(50% + 95px)
       ),
       linear-gradient(
         270deg,
         #2c192c 0%,
-        #2c192c calc(50% - 838px),
-        rgba(44, 25, 44, 0) calc(50% - 796px)
+        #2c192c calc(50% - 669px),
+        rgba(44, 25, 44, 0) calc(50% - 565px)
       ),
       linear-gradient(
         180deg,
-        rgba(22, 10, 24, 0.34) 0%,
-        rgba(22, 10, 24, 0) 26%
+        rgba(22, 10, 24, 0.36) 0%,
+        rgba(22, 10, 24, 0) 28%
       );
   }
 }
@@ -3417,7 +3394,7 @@ dialog.is-fallback-open {
   .hero-photo {
     width: 60%;
     right: 0;
-    object-position: 82% 46%;
+    object-position: 56% 27%;
   }
   .hero::after {
     background:
@@ -3529,7 +3506,7 @@ dialog.is-fallback-open {
     justify-content: center;
   }
   .hero {
-    min-height: 600px;
+    min-height: 560px;
     display: flex;
     flex-direction: column;
   }
@@ -3540,38 +3517,37 @@ dialog.is-fallback-open {
   }
   .hero-photo {
     position: absolute;
-    left: 0;
+    inset: 0;
     right: 0;
     top: 0;
-    bottom: auto;
     width: 100%;
-    height: 86%;
+    height: 100%;
     aspect-ratio: auto;
     max-height: none;
     object-fit: cover;
-    object-position: 100% 34%;
+    object-position: 56% 58%;
     opacity: 1;
     z-index: -2;
     transform: none;
     will-change: auto;
-    filter: brightness(1.01) contrast(1.04) saturate(1.02);
-    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
-    mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
+    filter: brightness(1.02) contrast(1.06) saturate(1.04);
+    -webkit-mask-image: none;
+    mask-image: none;
   }
   .hero::after {
     display: block;
     background:
       linear-gradient(
         180deg,
-        rgba(22, 10, 24, 0.54) 0%,
-        rgba(22, 10, 24, 0.08) 26%,
-        rgba(22, 10, 24, 0) 68%,
-        rgba(44, 25, 44, 0.92) 92%
+        rgba(22, 10, 24, 0.56) 0%,
+        rgba(22, 10, 24, 0.08) 28%,
+        rgba(22, 10, 24, 0) 70%,
+        rgba(22, 10, 24, 0.84) 100%
       ),
       radial-gradient(
-        ellipse 52% 48% at 12% 24%,
+        ellipse 56% 56% at 14% 32%,
         rgba(28, 14, 28, 0.68) 0%,
-        rgba(28, 14, 28, 0.22) 62%,
+        rgba(28, 14, 28, 0.24) 62%,
         transparent 100%
       );
   }
@@ -3588,35 +3564,35 @@ dialog.is-fallback-open {
   .hero h1 {
     font-size: 34px;
     margin-bottom: 4px;
-    max-width: 52%;
+    max-width: 54%;
   }
   .hero .eyebrow {
     margin-bottom: 6px;
     font-size: 11px;
   }
   .hero .tagline {
-    font-size: 14px;
+    font-size: 14.5px;
     line-height: 1.28;
-    max-width: 44%;
+    max-width: 48%;
   }
   .hero .location {
     font-size: 12px;
     line-height: 1.3;
     margin: 4px 0 10px;
-    max-width: 44%;
+    max-width: 48%;
   }
   .hero-record {
-    --rec: clamp(136px, 36vw, 150px);
+    --rec: clamp(156px, 42vw, 180px);
     width: fit-content;
     align-self: flex-start;
     flex-direction: row;
     align-items: center;
     max-width: none;
-    margin: auto 0 14px;
-    padding: 6px;
+    margin: 56px 0 0;
+    padding: 7px;
     gap: 0;
     border-radius: 50%;
-    background: rgba(24, 11, 26, 0.68);
+    background: rgba(24, 11, 26, 0.66);
     border: 1px solid rgba(239, 169, 119, 0.46);
     box-shadow: 0 14px 32px rgba(10, 4, 12, 0.56);
   }
@@ -3657,8 +3633,8 @@ dialog.is-fallback-open {
     display: none;
   }
   .hero-secondary {
-    margin-top: 0;
-    padding-top: 4px;
+    margin-top: auto;
+    padding-top: 38px;
     gap: 8px 14px;
   }
   .hero-bottom .container {
