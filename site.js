@@ -1218,13 +1218,105 @@ if (journeyStops.length > 0) {
 }
 
 // ============================================================================
-// Gallery Lightbox with Smooth Crossfade & Keyboard Navigation
+// Gallery Share, Email & Lightbox with Smooth Crossfade & Keyboard Navigation
 // ============================================================================
+const siteShareOrigin = /^https?:$/.test(window.location.protocol)
+  ? window.location.origin
+  : 'https://rebyen.com';
+
+function buildMailtoHref(subject, body) {
+  return `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+async function shareOrCopyLink({ title, text, url }, labelEl, defaultLabel) {
+  if (typeof navigator.share === 'function') {
+    try {
+      await navigator.share({ title, text, url });
+      return;
+    } catch (err) {
+      if (err && err.name === 'AbortError') return;
+    }
+  }
+
+  let copied = false;
+  if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+    try {
+      await navigator.clipboard.writeText(url);
+      copied = true;
+    } catch {
+      copied = false;
+    }
+  }
+
+  if (!copied) {
+    const temp = document.createElement('textarea');
+    temp.value = url;
+    temp.setAttribute('readonly', '');
+    temp.style.position = 'fixed';
+    temp.style.opacity = '0';
+    document.body.append(temp);
+    temp.select();
+    try {
+      copied = document.execCommand('copy');
+    } catch {
+      copied = false;
+    }
+    temp.remove();
+  }
+
+  if (copied && labelEl) {
+    labelEl.textContent = 'Link copied ✓';
+    window.setTimeout(() => {
+      labelEl.textContent = defaultLabel;
+    }, 2200);
+  }
+}
+
+const shareGalleryBtn = document.getElementById('share-gallery-btn');
+const shareGalleryLabel = document.getElementById('share-gallery-label');
+const emailGalleryBtn = document.getElementById('email-gallery-btn');
+const galleryShareUrl = `${siteShareOrigin}/#gallery`;
+
+if (emailGalleryBtn) {
+  emailGalleryBtn.href = buildMailtoHref(
+    'Reb Yen — On Stage & Original Music',
+    `Take a look at singer-songwriter Reb Yen on stage and hear her original songs:\n\n${galleryShareUrl}`
+  );
+}
+
+shareGalleryBtn?.addEventListener('click', () => {
+  shareOrCopyLink(
+    {
+      title: 'Reb Yen — On Stage & Original Music',
+      text: 'Take a look at singer-songwriter Reb Yen on stage and hear her original songs:',
+      url: galleryShareUrl
+    },
+    shareGalleryLabel,
+    'Share'
+  );
+});
+
 const lightbox = document.getElementById('photo-dialog');
 const galleryButtons = Array.from(document.querySelectorAll('[data-photo]'));
+const sharePhotoBtn = document.getElementById('share-photo-btn');
+const sharePhotoLabel = document.getElementById('share-photo-label');
+const emailPhotoBtn = document.getElementById('email-photo-btn');
 let currentPhotoIndex = -1;
 let lastPhotoButton = null;
 let switchTimer = 0;
+
+function updateLightboxShareTargets(photoSrc, photoTitle) {
+  const fullPhotoUrl = new URL(photoSrc, `${siteShareOrigin}/`).href;
+  if (emailPhotoBtn) {
+    emailPhotoBtn.href = buildMailtoHref(
+      `Reb Yen — ${photoTitle}`,
+      `${photoTitle} — Reb Yen on stage:\n${fullPhotoUrl}\n\nExplore more music and videos:\n${galleryShareUrl}`
+    );
+  }
+  if (sharePhotoLabel) {
+    sharePhotoLabel.textContent = 'Share photo';
+  }
+}
 
 function renderLightboxPhoto(index, animate = false) {
   if (!lightbox || galleryButtons.length === 0) return;
@@ -1237,6 +1329,7 @@ function renderLightboxPhoto(index, animate = false) {
   const nextSrc = button.dataset.photo;
   const nextAlt = button.querySelector('img')?.alt || '';
   const nextTitle = button.querySelector('span')?.textContent || 'Performance photo';
+  updateLightboxShareTargets(nextSrc, nextTitle);
 
   if (animate && !prefersReducedMotion) {
     clearTimeout(switchTimer);
@@ -1255,6 +1348,22 @@ function renderLightboxPhoto(index, animate = false) {
     if (title) title.textContent = nextTitle;
   }
 }
+
+sharePhotoBtn?.addEventListener('click', () => {
+  if (currentPhotoIndex < 0 || !galleryButtons[currentPhotoIndex]) return;
+  const button = galleryButtons[currentPhotoIndex];
+  const photoTitle = button.querySelector('span')?.textContent || 'Performance photo';
+  const fullPhotoUrl = new URL(button.dataset.photo, `${siteShareOrigin}/`).href;
+  shareOrCopyLink(
+    {
+      title: `Reb Yen — ${photoTitle}`,
+      text: `${photoTitle} — Reb Yen on stage`,
+      url: fullPhotoUrl
+    },
+    sharePhotoLabel,
+    'Share photo'
+  );
+});
 
 galleryButtons.forEach((button, index) => {
   button.addEventListener('click', () => {

@@ -23,8 +23,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261102n">
-  <script defer src="site.js?v=20261102n"></script>
+  <link rel="stylesheet" href="styles.css?v=20261102o">
+  <script defer src="site.js?v=20261102o"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -515,7 +515,14 @@
             <p class="eyebrow">A few moments along the way</p>
             <h2 id="gallery-title">On stage.</h2>
           </div>
-          <a href="press-kit.html#photos" class="text-link">Download performance photos ↗</a>
+          <div class="actions gallery-share-actions">
+            <button type="button" class="button gallery-share-btn" id="share-gallery-btn" aria-label="Share performance photos">
+              <span aria-hidden="true">↗</span> <span id="share-gallery-label">Share</span>
+            </button>
+            <a class="button gallery-share-btn" id="email-gallery-btn" href="mailto:?subject=Reb%20Yen%20%E2%80%94%20On%20Stage%20%26%20Original%20Music&amp;body=Take%20a%20look%20at%20singer-songwriter%20Reb%20Yen%20on%20stage%20and%20hear%20her%20original%20songs%3A%0A%0Ahttps%3A%2F%2Frebyen.com%2F%23gallery">
+              <span aria-hidden="true">✉</span> Email
+            </a>
+          </div>
         </div>
         <div class="gallery-grid">
           <button type="button" class="gallery-item" data-tilt data-photo="images/storm.jpg" aria-label="Enlarge photo: The Storm · with the band">
@@ -708,6 +715,14 @@
     <figure class="lightbox-figure">
       <img id="dialog-image" alt="">
     </figure>
+    <div class="dialog-share-bar">
+      <button type="button" class="button gallery-share-btn" id="share-photo-btn">
+        <span aria-hidden="true">↗</span> <span id="share-photo-label">Share photo</span>
+      </button>
+      <a class="button gallery-share-btn" id="email-photo-btn" href="mailto:?subject=Reb%20Yen%20%E2%80%94%20On%20Stage&amp;body=https%3A%2F%2Frebyen.com%2F%23gallery">
+        <span aria-hidden="true">✉</span> Email photo
+      </a>
+    </div>
   </dialog>
 </body>
 </html>

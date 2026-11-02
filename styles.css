@@ -2467,6 +2467,32 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
   padding-top: 0;
 }
 
+.gallery-share-actions {
+  gap: 10px;
+}
+
+.gallery-share-btn {
+  min-height: 40px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 1px solid #c6af92;
+  color: var(--plum);
+  box-shadow: var(--shadow-sm);
+  gap: 7px;
+  cursor: pointer;
+}
+
+.gallery-share-btn:hover,
+.gallery-share-btn:focus-visible {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: var(--cream);
+  transform: translateY(-1px);
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -2913,6 +2939,16 @@ dialog.is-fallback-open {
   display: flex;
   gap: 8px;
   align-items: center;
+}
+
+.dialog-share-bar {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 /* ==========================================================================
@@ -3553,9 +3589,12 @@ dialog.is-fallback-open {
     display: block;
     margin-bottom: 28px;
   }
+  .section-head > .text-link,
+  .section-head > .actions {
+    margin-top: 16px;
+  }
   .section-head > .text-link {
     display: inline-block;
-    margin-top: 16px;
   }
   .featured {
     grid-template-columns: 1fr;
