@@ -3033,13 +3033,13 @@ dialog.is-fallback-open {
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1.08fr 1fr;
-  gap: 64px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 52px;
   align-items: start;
 }
 
 .contact-intro {
-  padding-top: 28px;
+  margin-bottom: 36px;
 }
 
 .contact-intro h2 {
@@ -3061,12 +3061,30 @@ dialog.is-fallback-open {
   font-size: 18px;
   font-weight: 600;
   line-height: 1.55;
-  max-width: 480px;
+  max-width: 620px;
   margin-top: 20px;
 }
 
 .contact-intro p:first-of-type {
   margin-top: 0;
+}
+
+.contact-photo {
+  margin: 0;
+  width: 100%;
+  max-width: 475px;
+  justify-self: end;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 250, 241, 0.22);
+  box-shadow: 0 20px 48px rgba(12, 5, 14, 0.48);
+  background: #231223;
+}
+
+.contact-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .contact-card {
@@ -3798,9 +3816,14 @@ dialog.is-fallback-open {
   }
   .contact-intro {
     padding-top: 0;
+    margin-bottom: 24px;
   }
   .contact-card {
     padding: 24px;
+  }
+  .contact-photo {
+    max-width: 350px;
+    justify-self: center;
   }
   .player.is-docked {
     bottom: 8px;
