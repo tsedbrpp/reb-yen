@@ -436,7 +436,7 @@ p + p {
   height: calc(100% + 56px);
   object-fit: cover;
   object-position: 54% 27%;
-  filter: brightness(1.24) contrast(1.02) saturate(1.08);
+  filter: brightness(1.16) contrast(1.03) saturate(1.07);
   transform: translate3d(0, var(--hero-parallax, 0px), 0);
   will-change: transform;
   z-index: -2;
@@ -447,14 +447,20 @@ p + p {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(
-    90deg,
-    #2c192c 0%,
-    #2c192c 42.5%,
-    rgba(44, 25, 44, 0.68) 49%,
-    rgba(44, 25, 44, 0.14) 55%,
-    rgba(44, 25, 44, 0) 61%
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #2c192c 0%,
+      #2c192c 42.8%,
+      rgba(44, 25, 44, 0.7) 49.5%,
+      rgba(44, 25, 44, 0.16) 56%,
+      rgba(44, 25, 44, 0) 62.5%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(22, 10, 24, 0.18) 0%,
+      rgba(22, 10, 24, 0) 24%
+    );
 }
 
 .hero-content {
@@ -3401,14 +3407,19 @@ dialog.is-fallback-open {
         90deg,
         #2c192c 0%,
         #2c192c calc(50% - 104px),
-        rgba(44, 25, 44, 0.62) calc(50% - 20px),
-        rgba(44, 25, 44, 0) calc(50% + 90px)
+        rgba(44, 25, 44, 0.65) calc(50% - 18px),
+        rgba(44, 25, 44, 0) calc(50% + 92px)
       ),
       linear-gradient(
         270deg,
         #2c192c 0%,
         #2c192c calc(50% - 669px),
-        rgba(44, 25, 44, 0) calc(50% - 570px)
+        rgba(44, 25, 44, 0) calc(50% - 568px)
+      ),
+      linear-gradient(
+        180deg,
+        rgba(22, 10, 24, 0.18) 0%,
+        rgba(22, 10, 24, 0) 24%
       );
   }
 }
@@ -3556,7 +3567,7 @@ dialog.is-fallback-open {
     z-index: -2;
     transform: none;
     will-change: auto;
-    filter: brightness(1.22) contrast(1.03) saturate(1.08);
+    filter: brightness(1.15) contrast(1.03) saturate(1.07);
     -webkit-mask-image: none;
     mask-image: none;
   }
