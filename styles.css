@@ -2247,6 +2247,22 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
   align-items: start;
 }
 
+.about-banner {
+  margin: 0 0 36px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-bottom: 3px solid var(--orange);
+  background: #140b14;
+  box-shadow: var(--shadow-md);
+}
+
+.about-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .about-image {
   margin: 0;
   background: var(--paper);
@@ -3719,6 +3735,9 @@ dialog.is-fallback-open {
   .about-grid,
   .contact-grid {
     gap: 30px;
+  }
+  .about-banner {
+    margin-bottom: 24px;
   }
   .about-image {
     max-width: 330px;
