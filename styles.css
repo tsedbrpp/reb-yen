@@ -432,11 +432,11 @@ p + p {
   position: absolute;
   right: 0;
   top: -36px;
-  width: 58%;
+  width: 55%;
   height: calc(100% + 56px);
   object-fit: cover;
-  object-position: 54% 27%;
-  filter: brightness(1.16) contrast(1.03) saturate(1.07);
+  object-position: 54% 18%;
+  filter: brightness(1.06) contrast(1.04) saturate(1.06);
   transform: translate3d(0, var(--hero-parallax, 0px), 0);
   will-change: transform;
   z-index: -2;
@@ -451,10 +451,10 @@ p + p {
     linear-gradient(
       90deg,
       #2c192c 0%,
-      #2c192c 42.8%,
-      rgba(44, 25, 44, 0.7) 49.5%,
-      rgba(44, 25, 44, 0.16) 56%,
-      rgba(44, 25, 44, 0) 62.5%
+      #2c192c 45.5%,
+      rgba(44, 25, 44, 0.72) 52%,
+      rgba(44, 25, 44, 0.18) 58%,
+      rgba(44, 25, 44, 0) 64%
     ),
     linear-gradient(
       180deg,
@@ -3398,7 +3398,7 @@ dialog.is-fallback-open {
    ========================================================================== */
 @media (min-width: 1345px) {
   .hero-photo {
-    width: 780px;
+    width: 725px;
     right: calc((100% - 1345px) / 2);
   }
   .hero::after {
@@ -3406,15 +3406,15 @@ dialog.is-fallback-open {
       linear-gradient(
         90deg,
         #2c192c 0%,
-        #2c192c calc(50% - 104px),
-        rgba(44, 25, 44, 0.65) calc(50% - 18px),
-        rgba(44, 25, 44, 0) calc(50% + 92px)
+        #2c192c calc(50% - 48px),
+        rgba(44, 25, 44, 0.68) calc(50% + 36px),
+        rgba(44, 25, 44, 0) calc(50% + 145px)
       ),
       linear-gradient(
         270deg,
         #2c192c 0%,
         #2c192c calc(50% - 669px),
-        rgba(44, 25, 44, 0) calc(50% - 568px)
+        rgba(44, 25, 44, 0) calc(50% - 585px)
       ),
       linear-gradient(
         180deg,
@@ -3437,7 +3437,7 @@ dialog.is-fallback-open {
   .hero-photo {
     width: 60%;
     right: 0;
-    object-position: 56% 27%;
+    object-position: 54% 20%;
   }
   .hero::after {
     background: linear-gradient(
@@ -3562,12 +3562,12 @@ dialog.is-fallback-open {
     aspect-ratio: auto;
     max-height: none;
     object-fit: cover;
-    object-position: 56% 58%;
+    object-position: 10% 45%;
     opacity: 1;
     z-index: -2;
     transform: none;
     will-change: auto;
-    filter: brightness(1.15) contrast(1.03) saturate(1.07);
+    filter: brightness(1.06) contrast(1.04) saturate(1.06);
     -webkit-mask-image: none;
     mask-image: none;
   }
@@ -3610,13 +3610,13 @@ dialog.is-fallback-open {
   .hero .tagline {
     font-size: 14.5px;
     line-height: 1.28;
-    max-width: 48%;
+    max-width: 41%;
   }
   .hero .location {
     font-size: 12px;
     line-height: 1.3;
     margin: 4px 0 10px;
-    max-width: 48%;
+    max-width: 39%;
   }
   .hero-record {
     --rec: clamp(156px, 42vw, 180px);
