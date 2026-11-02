@@ -2242,7 +2242,8 @@ body.has-player {
 }
 
 .lyric-band {
-  background: radial-gradient(ellipse 70% 80% at 50% 50%, #432840 0%, var(--plum) 72%);
+  background: radial-gradient(ellipse 70% 80% at 50% 50%, #3a2138 0%, var(--plum-dark) 78%);
+  border-top: 1px solid rgba(239, 169, 119, 0.22);
   color: var(--cream);
   padding: 54px 0;
   text-align: center;
