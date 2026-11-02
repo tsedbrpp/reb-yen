@@ -356,6 +356,36 @@
       font-weight: 800;
     }
 
+    .song-share-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .song-share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 13px;
+      border-radius: 999px;
+      border: 1px solid #c6af92;
+      background: var(--cream);
+      color: var(--plum-dark);
+      font: 800 12.5px/1.2 'Karla', sans-serif;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+
+    .song-share-btn:hover,
+    .song-share-btn:focus-visible {
+      background: var(--plum);
+      border-color: var(--plum);
+      color: var(--cream);
+      transform: translateY(-1px);
+    }
+
     .song-art {
       width: 112px;
       height: 112px;
@@ -600,6 +630,10 @@
           <h2>Take Me Crazy</h2>
           <p class="song-credits">Take Me (Crazy) © 2022 Reb Yen · Written, arranged &amp; performed by Reb Yen</p>
           <p class="song-credits">Instrumentation: Guitar, all vocals, banjo, keyboard (cello), cajon</p>
+          <div class="song-share-bar">
+            <button type="button" class="song-share-btn" data-share-song="song-1" data-song-title="Take Me Crazy"><span aria-hidden="true">↗</span> <span class="share-label">Share lyrics</span></button>
+            <a class="song-share-btn" href="mailto:?subject=%E2%80%9CTake%20Me%20Crazy%E2%80%9D%20%E2%80%94%20Lyrics%20by%20Reb%20Yen&amp;body=Read%20the%20lyrics%20to%20%E2%80%9CTake%20Me%20Crazy%E2%80%9D%20in%20Reb%20Yen%E2%80%99s%20Original%20Songbook%3A%0Ahttps%3A%2F%2Frebyen.com%2Fsongbook.html%23song-1%0A%0AListen%20to%20the%20song%3A%0Ahttps%3A%2F%2Frebyen.bandcamp.com%2Ftrack%2Ftake-me-crazy"><span aria-hidden="true">✉</span> Email</a>
+          </div>
         </div>
         <img class="song-art" src="images/take_me_crazy.jpg" alt="Reb Yen performing Take Me Crazy in Nashville">
       </header>
@@ -700,6 +734,10 @@ Take me, Take me, Take me as I am</p>
           <p class="song-credits">Should I? © 2021 Reb Yen · All tracks performed by Reb Yen</p>
           <p class="song-credits">Instrumentation: Vocals, rhythm guitar, lead guitar, cajon</p>
           <span class="song-chords-pill">Guitar Chords — Verses &amp; Outro: G, C · Chorus: Gm, Dm</span>
+          <div class="song-share-bar">
+            <button type="button" class="song-share-btn" data-share-song="song-2" data-song-title="Should I?"><span aria-hidden="true">↗</span> <span class="share-label">Share lyrics</span></button>
+            <a class="song-share-btn" href="mailto:?subject=%E2%80%9CShould%20I%3F%E2%80%9D%20%E2%80%94%20Lyrics%20by%20Reb%20Yen&amp;body=Read%20the%20lyrics%20to%20%E2%80%9CShould%20I%3F%E2%80%9D%20in%20Reb%20Yen%E2%80%99s%20Original%20Songbook%3A%0Ahttps%3A%2F%2Frebyen.com%2Fsongbook.html%23song-2%0A%0AListen%20to%20the%20song%3A%0Ahttps%3A%2F%2Frebyen.bandcamp.com%2Ftrack%2Fshould-i"><span aria-hidden="true">✉</span> Email</a>
+          </div>
         </div>
         <img class="song-art" src="images/hero-guitar.jpg" alt="Reb Yen playing acoustic guitar" style="object-position: 52% 30%">
       </header>
@@ -793,6 +831,10 @@ Should I run the other way</p>
           <h2>Gotta Let It Go</h2>
           <p class="song-credits">Gotta Let It Go © 2021 Reb Yen · Written &amp; arranged by Reb Yen</p>
           <p class="song-credits">Performed by Reb Yen (vocals, guitar, cajon) &amp; Jim O’Rourke (lead guitar)</p>
+          <div class="song-share-bar">
+            <button type="button" class="song-share-btn" data-share-song="song-3" data-song-title="Gotta Let It Go"><span aria-hidden="true">↗</span> <span class="share-label">Share lyrics</span></button>
+            <a class="song-share-btn" href="mailto:?subject=%E2%80%9CGotta%20Let%20It%20Go%E2%80%9D%20%E2%80%94%20Lyrics%20by%20Reb%20Yen&amp;body=Read%20the%20lyrics%20to%20%E2%80%9CGotta%20Let%20It%20Go%E2%80%9D%20in%20Reb%20Yen%E2%80%99s%20Original%20Songbook%3A%0Ahttps%3A%2F%2Frebyen.com%2Fsongbook.html%23song-3%0A%0AListen%20to%20the%20song%3A%0Ahttps%3A%2F%2Frebyen.bandcamp.com%2Ftrack%2Fgotta-let-it-go-2"><span aria-hidden="true">✉</span> Email</a>
+          </div>
         </div>
         <img class="song-art" src="images/gotta_let_it_go.jpg" alt="Reb Yen performing Gotta Let It Go">
       </header>
@@ -860,7 +902,11 @@ Got to let it go… just breakin’ my heart (×3)</p>
           <span class="song-track-num">Track 04 · Live Recording</span>
           <h2>The Solitude</h2>
           <p class="song-credits">The Solitude © Reb Yen · All tracks performed by Reb Yen</p>
-          <p class="song-credits">Instrumentation: Electric guitar &amp; vocals</p>
+          <p class="song-credits">Instrumentation: Acoustic guitar &amp; vocals</p>
+          <div class="song-share-bar">
+            <button type="button" class="song-share-btn" data-share-song="song-4" data-song-title="The Solitude"><span aria-hidden="true">↗</span> <span class="share-label">Share lyrics</span></button>
+            <a class="song-share-btn" href="mailto:?subject=%E2%80%9CThe%20Solitude%E2%80%9D%20%E2%80%94%20Lyrics%20by%20Reb%20Yen&amp;body=Read%20the%20lyrics%20to%20%E2%80%9CThe%20Solitude%E2%80%9D%20in%20Reb%20Yen%E2%80%99s%20Original%20Songbook%3A%0Ahttps%3A%2F%2Frebyen.com%2Fsongbook.html%23song-4%0A%0AListen%20to%20the%20song%3A%0Ahttps%3A%2F%2Frebyen.bandcamp.com%2Ftrack%2Fthe-solitude-live"><span aria-hidden="true">✉</span> Email</a>
+          </div>
         </div>
         <img class="song-art" src="images/solitude.jpg" alt="Reb Yen performing The Solitude live at Roots Music Project">
       </header>
@@ -926,6 +972,10 @@ The solitude is all your own</p>
           <h2>A New Beginning</h2>
           <p class="song-credits">A New Beginning © Reb Yen · All tracks performed by Reb Yen</p>
           <p class="song-credits">Instrumentation: Vocals, guitars, keyboard (performed live with harmonica &amp; acoustic guitar)</p>
+          <div class="song-share-bar">
+            <button type="button" class="song-share-btn" data-share-song="song-5" data-song-title="A New Beginning"><span aria-hidden="true">↗</span> <span class="share-label">Share lyrics</span></button>
+            <a class="song-share-btn" href="mailto:?subject=%E2%80%9CA%20New%20Beginning%E2%80%9D%20%E2%80%94%20Lyrics%20by%20Reb%20Yen&amp;body=Read%20the%20lyrics%20to%20%E2%80%9CA%20New%20Beginning%E2%80%9D%20in%20Reb%20Yen%E2%80%99s%20Original%20Songbook%3A%0Ahttps%3A%2F%2Frebyen.com%2Fsongbook.html%23song-5%0A%0AListen%20to%20the%20song%3A%0Ahttps%3A%2F%2Frebyen.bandcamp.com%2Ftrack%2Fa-new-beginning"><span aria-hidden="true">✉</span> Email</a>
+          </div>
         </div>
         <img class="song-art" src="images/newbeginning.jpg" alt="Reb Yen performing A New Beginning at The Copper Rocket">
       </header>
@@ -987,6 +1037,10 @@ Don’t call it the end; it’s a new beginning</p>
           <h2>Are You Listening Now?</h2>
           <p class="song-credits">Are You Listening Now? © Reb Yen · All tracks performed by Reb Yen</p>
           <p class="song-credits">Instrumentation: Vocals, acoustic guitar, lead electric guitar, cajon</p>
+          <div class="song-share-bar">
+            <button type="button" class="song-share-btn" data-share-song="song-6" data-song-title="Are You Listening Now?"><span aria-hidden="true">↗</span> <span class="share-label">Share lyrics</span></button>
+            <a class="song-share-btn" href="mailto:?subject=%E2%80%9CAre%20You%20Listening%20Now%3F%E2%80%9D%20%E2%80%94%20Lyrics%20by%20Reb%20Yen&amp;body=Read%20the%20lyrics%20to%20%E2%80%9CAre%20You%20Listening%20Now%3F%E2%80%9D%20in%20Reb%20Yen%E2%80%99s%20Original%20Songbook%3A%0Ahttps%3A%2F%2Frebyen.com%2Fsongbook.html%23song-6%0A%0AListen%20to%20the%20song%3A%0Ahttps%3A%2F%2Frebyen.bandcamp.com%2Ftrack%2Fare-you-listening-now"><span aria-hidden="true">✉</span> Email</a>
+          </div>
         </div>
         <img class="song-art" src="images/are_you_listening.jpg" alt="Reb Yen performing with her trio at The Alley">
       </header>
@@ -1038,6 +1092,10 @@ Gotta be your own fan, when nobody else… can.</p>
           <h2>Birds Of Prey</h2>
           <p class="song-credits">Birds Of Prey © 2020 Reb Yen · Written &amp; performed by Reb Yen</p>
           <p class="song-credits">Instrumentation: Vocals &amp; guitar (recorded live on stage)</p>
+          <div class="song-share-bar">
+            <button type="button" class="song-share-btn" data-share-song="song-7" data-song-title="Birds Of Prey"><span aria-hidden="true">↗</span> <span class="share-label">Share lyrics</span></button>
+            <a class="song-share-btn" href="mailto:?subject=%E2%80%9CBirds%20Of%20Prey%E2%80%9D%20%E2%80%94%20Lyrics%20by%20Reb%20Yen&amp;body=Read%20the%20lyrics%20to%20%E2%80%9CBirds%20Of%20Prey%E2%80%9D%20in%20Reb%20Yen%E2%80%99s%20Original%20Songbook%3A%0Ahttps%3A%2F%2Frebyen.com%2Fsongbook.html%23song-7%0A%0AListen%20to%20the%20song%3A%0Ahttps%3A%2F%2Frebyen.bandcamp.com%2Ftrack%2Fbirds-of-prey-live"><span aria-hidden="true">✉</span> Email</a>
+          </div>
         </div>
         <img class="song-art" src="images/storm.jpg" alt="Reb Yen performing live on stage">
       </header>
@@ -1087,6 +1145,10 @@ I’ll fly away, fly away… just fly away</p>
           <h2>Take A Stand</h2>
           <p class="song-credits">Take A Stand © Reb Yen · All tracks performed by Reb Yen</p>
           <p class="song-credits">Instrumentation: Vocals &amp; guitar</p>
+          <div class="song-share-bar">
+            <button type="button" class="song-share-btn" data-share-song="song-8" data-song-title="Take A Stand"><span aria-hidden="true">↗</span> <span class="share-label">Share lyrics</span></button>
+            <a class="song-share-btn" href="mailto:?subject=%E2%80%9CTake%20A%20Stand%E2%80%9D%20%E2%80%94%20Lyrics%20by%20Reb%20Yen&amp;body=Read%20the%20lyrics%20to%20%E2%80%9CTake%20A%20Stand%E2%80%9D%20in%20Reb%20Yen%E2%80%99s%20Original%20Songbook%3A%0Ahttps%3A%2F%2Frebyen.com%2Fsongbook.html%23song-8%0A%0AListen%20to%20the%20song%3A%0Ahttps%3A%2F%2Frebyen.bandcamp.com%2Ftrack%2Ftake-a-stand-live"><span aria-hidden="true">✉</span> Email</a>
+          </div>
         </div>
         <img class="song-art" src="images/are_you_listening.jpg" alt="Reb Yen live performance">
       </header>
@@ -1143,6 +1205,10 @@ You’ve gotta make a plan. You’ve gotta take a stand.</p>
           <h2>Out Of Body</h2>
           <p class="song-credits">Out Of Body © Reb Yen · All tracks performed by Reb Yen</p>
           <p class="song-credits">Instrumentation: Guitar, vocals, keyboard</p>
+          <div class="song-share-bar">
+            <button type="button" class="song-share-btn" data-share-song="song-9" data-song-title="Out Of Body"><span aria-hidden="true">↗</span> <span class="share-label">Share lyrics</span></button>
+            <a class="song-share-btn" href="mailto:?subject=%E2%80%9COut%20Of%20Body%E2%80%9D%20%E2%80%94%20Lyrics%20by%20Reb%20Yen&amp;body=Read%20the%20lyrics%20to%20%E2%80%9COut%20Of%20Body%E2%80%9D%20in%20Reb%20Yen%E2%80%99s%20Original%20Songbook%3A%0Ahttps%3A%2F%2Frebyen.com%2Fsongbook.html%23song-9%0A%0AListen%20to%20the%20song%3A%0Ahttps%3A%2F%2Frebyen.bandcamp.com%2Ftrack%2Fout-of-body"><span aria-hidden="true">✉</span> Email</a>
+          </div>
         </div>
         <img class="song-art" src="images/reb_yen_photo.jpg" alt="Reb Yen portrait" style="object-position: 50% 38%">
       </header>
@@ -1265,6 +1331,50 @@ The sleep wakes your mind</p>
           page.classList.add('reveal-ready');
           observer.observe(page);
         }
+      });
+    })();
+
+    (function () {
+      document.querySelectorAll('[data-share-song]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var songId = btn.getAttribute('data-share-song');
+          var title = btn.getAttribute('data-song-title') || 'Song';
+          var shareUrl = 'https://rebyen.com/songbook.html#' + songId;
+          var labelEl = btn.querySelector('.share-label');
+
+          function flashCopied() {
+            if (!labelEl) return;
+            labelEl.textContent = 'Link copied ✓';
+            clearTimeout(btn._shareTimer);
+            btn._shareTimer = setTimeout(function () {
+              labelEl.textContent = 'Share lyrics';
+            }, 2200);
+          }
+
+          if (navigator.share) {
+            navigator
+              .share({
+                title: '“' + title + '” — Lyrics by Reb Yen',
+                text: 'Read the lyrics to “' + title + '” in Reb Yen’s Original Songbook:',
+                url: shareUrl
+              })
+              .catch(function (err) {
+                if (err && err.name === 'AbortError') return;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                  navigator.clipboard.writeText(shareUrl).then(flashCopied);
+                }
+              });
+            return;
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(shareUrl).then(flashCopied).catch(function () {
+              window.prompt('Copy link to share these lyrics:', shareUrl);
+            });
+          } else {
+            window.prompt('Copy link to share these lyrics:', shareUrl);
+          }
+        });
       });
     })();
   </script>

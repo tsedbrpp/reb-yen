@@ -193,9 +193,9 @@ const TRACK_META = {
     title: 'The Solitude',
     vinyl: 'THE\nSOLITUDE',
     eyebrow: 'Original song · Live recording',
-    desc: 'Captured live on stage—an atmospheric original showcasing Reb’s electric guitar work and expressive storytelling.',
+    desc: 'Captured live on stage—an atmospheric original showcasing Reb’s acoustic guitar work and expressive storytelling.',
     img: 'images/solitude.jpg',
-    alt: 'Reb Yen performing The Solitude live on electric guitar',
+    alt: 'Reb Yen performing The Solitude live on acoustic guitar',
     caption: 'Performing The Solitude live at Roots Music Project',
     href: 'https://rebyen.bandcamp.com/track/the-solitude-live'
   },
