@@ -3427,7 +3427,7 @@ dialog.is-fallback-open {
     justify-content: center;
   }
   .hero {
-    min-height: 540px;
+    min-height: 560px;
     display: flex;
     flex-direction: column;
   }
@@ -3509,19 +3509,19 @@ dialog.is-fallback-open {
     max-width: 48%;
   }
   .hero-record {
-    --rec: clamp(122px, 33vw, 140px);
+    --rec: clamp(156px, 42vw, 180px);
     width: fit-content;
     align-self: flex-start;
     flex-direction: row;
     align-items: center;
     max-width: none;
-    margin: 2px 0 0;
-    padding: 6px;
+    margin: 56px 0 0;
+    padding: 7px;
     gap: 0;
     border-radius: 50%;
-    background: rgba(24, 11, 26, 0.62);
-    border: 1px solid rgba(239, 169, 119, 0.42);
-    box-shadow: 0 12px 28px rgba(10, 4, 12, 0.52);
+    background: rgba(24, 11, 26, 0.66);
+    border: 1px solid rgba(239, 169, 119, 0.46);
+    box-shadow: 0 14px 32px rgba(10, 4, 12, 0.56);
   }
   .turntable {
     width: var(--rec);
@@ -3537,23 +3537,23 @@ dialog.is-fallback-open {
     animation: vinyl-spin 3.8s linear infinite;
   }
   .spin-record .label {
-    width: 52%;
-    height: 52%;
-    padding: 0 5%;
-    gap: 2px;
+    width: 50%;
+    height: 50%;
+    padding: 0 6%;
+    gap: 3px;
   }
   .label-title {
-    font-size: 9.5px;
-    line-height: 1.06;
+    font-size: 11.5px;
+    line-height: 1.08;
   }
   .label-artist {
-    font-size: 7.5px;
-    letter-spacing: 0.9px;
+    font-size: 8.5px;
+    letter-spacing: 1px;
   }
   .record-play {
-    width: 42px;
-    height: 42px;
-    font-size: 16px;
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
     border-width: 2.5px;
   }
   .hero-record-ctl {
@@ -3561,7 +3561,7 @@ dialog.is-fallback-open {
   }
   .hero-secondary {
     margin-top: auto;
-    padding-top: 170px;
+    padding-top: 38px;
     gap: 8px 14px;
   }
   .hero-bottom .container {
@@ -3765,8 +3765,8 @@ dialog.is-fallback-open {
 
 @media (max-width: 365px) {
   .hero-record {
-    --rec: 114px;
-    padding: 5px;
+    --rec: 144px;
+    padding: 6px;
     gap: 0;
   }
 }
