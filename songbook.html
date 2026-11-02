@@ -445,43 +445,20 @@
     }
 
     @media print {
-      @page {
-        size: letter portrait;
-        margin: 0.45in;
-      }
-      body {
-        background: #fff;
-      }
-      .toolbar {
+      .toolbar,
+      .booklet {
         display: none !important;
       }
-      .booklet {
-        max-width: none;
-        margin: 0;
-        padding: 0;
-        gap: 0;
+      body {
+        background: #fff !important;
       }
-      .page {
-        box-shadow: none;
-        border: 0;
-        border-radius: 0;
-        padding: 0.2in 0.25in;
-        page-break-after: always;
-        break-after: page;
-      }
-      .page:last-child {
-        page-break-after: auto;
-        break-after: auto;
-      }
-      .page-cover {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        border-radius: 6px;
-        padding: 0.45in;
-      }
-      .song-story, .song-chords-pill, .colophon-box {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+      body::before {
+        content: "© 2026 Reb Yen. All rights reserved. Printing of this songbook is disabled.";
+        display: block;
+        padding: 64px 24px;
+        text-align: center;
+        font: 700 18px/1.5 'Karla', sans-serif;
+        color: #241323;
       }
     }
   </style>
@@ -490,11 +467,10 @@
   <header class="toolbar">
     <a class="toolbar-brand" href="index.html">
       Reb Yen Songbook
-      <span>9 Original Songs · Print-Ready Edition</span>
+      <span>9 Original Songs · Lyrics &amp; Liner Notes</span>
     </a>
     <div class="toolbar-actions">
       <a class="btn btn-ghost" href="index.html">← Back to rebyen.com</a>
-      <button type="button" class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
     </div>
   </header>
 
@@ -1189,12 +1165,6 @@ The sleep wakes your mind</p>
           <p>
             She received formal training in singing and vocal technique and has experience as a vocal coach, including professional involvement with the National Association of Teachers of Singing (NATS).
           </p>
-
-          <div class="signature-box">
-            <p class="signature-label">Artist Autograph / Dedication</p>
-            <div class="signature-line"></div>
-            <small style="color:var(--muted)">Signed by Reb Yen</small>
-          </div>
         </div>
 
         <div class="colophon-box">
@@ -1211,9 +1181,16 @@ The sleep wakes your mind</p>
 
       <footer class="page-footer">
         <span>© 2026 Reb Yen. All rights reserved.</span>
-        <span>Printed Edition · rebyen.com</span>
+        <span>rebyen.com</span>
       </footer>
     </section>
   </main>
+  <script>
+    window.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P')) {
+        e.preventDefault();
+      }
+    });
+  </script>
 </body>
 </html>
