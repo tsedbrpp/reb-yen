@@ -6,18 +6,20 @@
 }
 
 :root {
-  --cream: #f7eedf;
-  --paper: #fffaf1;
-  --sand: #ead9bd;
-  --plum: #352033;
-  --plum-deep: #291827;
+  --cream: #e3d2b8;
+  --paper: #ede0cc;
+  --sand: #d6c1a2;
+  --ivory: #f7eedf;
+  --ivory-bright: #fffaf1;
+  --plum: #2c182b;
+  --plum-deep: #261525;
   --plum-dark: #2c192c;
-  --muted: #6a5362;
+  --muted: #563f50;
   --orange: #df733f;
   --orange-hover: #ee8a57;
-  --rust: #a8411a;
-  --teal: #276e69;
-  --line: #d8c6ad;
+  --rust: #862d0e;
+  --teal: #246460;
+  --line: #c2ac8e;
   --max: 1160px;
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -177,7 +179,7 @@ p + p {
 
 .button:hover {
   background: var(--plum);
-  color: var(--cream);
+  color: var(--ivory);
 }
 
 .button.primary {
@@ -219,11 +221,11 @@ p + p {
 
 .button.light {
   border-color: #bca6b7;
-  color: var(--cream);
+  color: var(--ivory);
 }
 
 .button.light:hover {
-  background: var(--cream);
+  background: var(--ivory);
   color: var(--plum);
 }
 
@@ -281,7 +283,7 @@ p + p {
   background: rgba(31, 17, 30, 0.84);
   -webkit-backdrop-filter: blur(16px) saturate(145%);
   backdrop-filter: blur(16px) saturate(145%);
-  color: var(--cream);
+  color: var(--ivory);
   border-bottom: 1px solid rgba(255, 250, 241, 0.1);
   box-shadow: 0 8px 28px rgba(15, 7, 18, 0.28);
 }
@@ -313,7 +315,7 @@ p + p {
   gap: 9px;
   font: 700 22px/1 'Plus Jakarta Sans', 'Karla', sans-serif;
   letter-spacing: 0.02em;
-  color: var(--paper);
+  color: var(--ivory-bright);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -402,7 +404,7 @@ p + p {
   min-height: 600px;
   isolation: isolate;
   background: var(--plum-dark);
-  color: var(--cream);
+  color: var(--ivory);
   overflow: hidden;
 }
 
@@ -475,7 +477,7 @@ p + p {
   letter-spacing: -0.025em;
   line-height: 1.05;
   margin-bottom: 14px;
-  color: var(--paper);
+  color: var(--ivory-bright);
   animation: hero-enter 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.04s both;
 }
 
@@ -678,7 +680,7 @@ p + p {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--cream);
+  background: var(--ivory);
   color: var(--plum-dark);
   line-height: 1;
   font-size: 24px;
@@ -723,7 +725,7 @@ p + p {
 
 .spin-record.selected .record-play {
   background: var(--orange);
-  border-color: var(--cream);
+  border-color: var(--ivory);
 }
 
 .spin-record:focus-visible {
@@ -827,7 +829,7 @@ p + p {
 .record-now {
   margin: 0;
   font: 800 23px/1.2 'Karla', sans-serif;
-  color: var(--cream);
+  color: var(--ivory);
 }
 
 .record-now.is-idle {
@@ -963,7 +965,7 @@ p + p {
   position: relative;
   overflow: hidden;
   background: var(--plum);
-  color: var(--cream);
+  color: var(--ivory);
   box-shadow: 0 3px 10px rgba(53, 32, 51, 0.18);
 }
 
@@ -1413,7 +1415,7 @@ p + p {
 .player.is-docked .player-bar {
   background: rgba(53, 32, 51, 0.95);
   backdrop-filter: blur(10px);
-  color: var(--cream);
+  color: var(--ivory);
 }
 
 .player.is-docked small {
@@ -1423,7 +1425,7 @@ p + p {
 .player.is-docked .icon-button,
 .player.is-docked .player-nav-btn {
   background: rgba(255, 250, 241, 0.08);
-  color: var(--cream);
+  color: var(--ivory);
   border-color: #836c7a;
 }
 
@@ -1507,7 +1509,7 @@ body.has-player {
 
 .filter-pill.is-active {
   background: var(--plum);
-  color: var(--cream);
+  color: var(--ivory);
 }
 
 .filter-pill.is-active span {
@@ -1614,7 +1616,7 @@ body.has-player {
 }
 
 .song-row:hover {
-  background: rgba(234, 217, 189, 0.36);
+  background: rgba(237, 224, 204, 0.58);
 }
 
 @media (hover: hover) and (min-width: 701px) {
@@ -1688,7 +1690,7 @@ body.has-player {
 .song-row[aria-current="true"] .listen-link {
   background: var(--plum);
   border-color: var(--plum);
-  color: var(--cream);
+  color: var(--ivory);
 }
 
 .music-footer {
@@ -1704,7 +1706,7 @@ body.has-player {
    ========================================================================== */
 .video-section {
   background: var(--plum);
-  color: var(--cream);
+  color: var(--ivory);
 }
 
 .video-section .eyebrow {
@@ -1960,7 +1962,7 @@ body.has-player {
   align-items: center;
   gap: 24px;
   background: var(--plum);
-  color: var(--cream);
+  color: var(--ivory);
   padding: 22px 26px;
   border-radius: var(--radius-md);
   border: 1px solid #6b4a63;
@@ -2109,7 +2111,7 @@ body.has-player {
 .lyric-band {
   background: radial-gradient(ellipse 70% 80% at 50% 50%, #3a2138 0%, var(--plum-dark) 78%);
   border-top: 1px solid rgba(239, 169, 119, 0.22);
-  color: var(--cream);
+  color: var(--ivory);
   padding: 54px 0;
   text-align: center;
   overflow: hidden;
@@ -2379,7 +2381,7 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
 }
 
 .journey-stop:hover {
-  background: rgba(255, 250, 241, 0.7);
+  background: rgba(237, 224, 204, 0.72);
   transform: translateY(-2px);
 }
 
@@ -2515,7 +2517,7 @@ html.js-motion .kinetic-quote.reveal-ready.is-revealed footer {
 .gallery-share-btn:focus-visible {
   background: var(--plum);
   border-color: var(--plum);
-  color: var(--cream);
+  color: var(--ivory);
   transform: translateY(-1px);
 }
 
@@ -2822,7 +2824,7 @@ dialog.is-fallback-open {
 .picker-song[aria-current="true"] .picker-go {
   padding: 0 12px;
   background: var(--plum);
-  color: var(--cream);
+  color: var(--ivory);
   font-size: 12px;
   font-weight: 800;
 }
@@ -3038,7 +3040,7 @@ dialog.is-fallback-open {
 .email-choice:focus-visible {
   background: var(--plum);
   border-color: var(--plum);
-  color: var(--cream);
+  color: var(--ivory);
 }
 
 .email-choice small {
@@ -3052,7 +3054,7 @@ dialog.is-fallback-open {
    ========================================================================== */
 .contact {
   background: var(--plum-dark);
-  color: var(--cream);
+  color: var(--ivory);
   border-top: 4px solid var(--orange);
 }
 
@@ -3069,7 +3071,7 @@ dialog.is-fallback-open {
 
 .contact-intro h2 {
   font-size: clamp(38px, 4.8vw, 52px);
-  color: var(--paper);
+  color: var(--ivory-bright);
 }
 
 .contact-rule {
@@ -3121,7 +3123,7 @@ dialog.is-fallback-open {
 
 .contact-card h3 {
   font-size: 26px;
-  color: var(--paper);
+  color: var(--ivory-bright);
   margin-bottom: 10px;
 }
 
@@ -3162,7 +3164,7 @@ dialog.is-fallback-open {
   padding: 10px 12px;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  background: #fff;
+  background: #f7efe2;
   color: var(--plum);
   min-height: 44px;
 }
@@ -3505,7 +3507,7 @@ dialog.is-fallback-open {
     background: transparent;
     border: 1px solid #99778e;
     border-radius: var(--radius-sm);
-    color: var(--cream);
+    color: var(--ivory);
     font-size: 14px;
     font-weight: 700;
     min-height: 40px;
@@ -3799,7 +3801,7 @@ dialog.is-fallback-open {
     display: none;
   }
   .journey-stop {
-    background: rgba(255, 250, 241, 0.55);
+    background: rgba(237, 224, 204, 0.58);
     border-color: var(--line);
     padding: 12px 10px;
   }
