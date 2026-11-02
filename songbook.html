@@ -386,6 +386,102 @@
       transform: translateY(-1px);
     }
 
+    .email-chooser {
+      padding: 24px;
+      width: min(400px, calc(100% - 32px));
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--orange);
+      border-radius: 12px;
+      background: var(--paper);
+      color: var(--plum-dark);
+      box-shadow: 0 24px 60px rgba(15, 7, 15, 0.55);
+    }
+
+    .email-chooser:not([open]) {
+      display: none;
+    }
+
+    .email-chooser::backdrop {
+      background: rgba(24, 12, 24, 0.72);
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
+    }
+
+    .email-chooser-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .email-chooser-head h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0 0 4px;
+      color: var(--plum-dark);
+    }
+
+    .email-chooser-sub {
+      margin: 0;
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+
+    .email-chooser-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--cream);
+      color: var(--plum-dark);
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1;
+      cursor: pointer;
+      flex: none;
+    }
+
+    .email-chooser-close:hover {
+      background: var(--plum);
+      color: var(--cream);
+    }
+
+    .email-chooser-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .email-choice {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 14px;
+      border-radius: 8px;
+      border: 1px solid #cdb699;
+      background: var(--cream);
+      color: var(--plum-dark);
+      font: 700 15px/1.3 'Karla', sans-serif;
+      text-decoration: none;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+    }
+
+    .email-choice:hover,
+    .email-choice:focus-visible {
+      background: var(--plum);
+      border-color: var(--plum);
+      color: var(--cream);
+    }
+
+    .email-choice small {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.78;
+    }
+
     .song-art {
       width: 112px;
       height: 112px;
@@ -560,7 +656,8 @@
 
     @media print {
       .toolbar,
-      .booklet {
+      .booklet,
+      .email-chooser {
         display: none !important;
       }
       body {
@@ -1301,6 +1398,39 @@ The sleep wakes your mind</p>
       </footer>
     </section>
   </main>
+
+  <dialog class="email-chooser" id="email-chooser" aria-labelledby="email-chooser-title">
+    <div class="email-chooser-head">
+      <div>
+        <h3 id="email-chooser-title">Send Lyrics by Email</h3>
+        <p class="email-chooser-sub" id="email-chooser-sub">Choose how you’d like to send this song:</p>
+      </div>
+      <button type="button" class="email-chooser-close" id="email-chooser-close" aria-label="Close">×</button>
+    </div>
+    <div class="email-chooser-list">
+      <a class="email-choice" id="ec-gmail" href="#" target="_blank" rel="noopener noreferrer">
+        <span>Open in Gmail</span>
+        <small>Web ↗</small>
+      </a>
+      <a class="email-choice" id="ec-yahoo" href="#" target="_blank" rel="noopener noreferrer">
+        <span>Open in Yahoo Mail</span>
+        <small>Web ↗</small>
+      </a>
+      <a class="email-choice" id="ec-outlook" href="#" target="_blank" rel="noopener noreferrer">
+        <span>Open in Outlook / Hotmail</span>
+        <small>Web ↗</small>
+      </a>
+      <a class="email-choice" id="ec-mailto" href="#">
+        <span>Default Email App</span>
+        <small>Phone / Mac / Mail</small>
+      </a>
+      <button type="button" class="email-choice" id="ec-copy">
+        <span id="ec-copy-label">Copy Email Message &amp; Link</span>
+        <small>Paste anywhere</small>
+      </button>
+    </div>
+  </dialog>
+
   <script>
     window.addEventListener('keydown', function (e) {
       if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P')) {
@@ -1376,6 +1506,97 @@ The sleep wakes your mind</p>
           }
         });
       });
+    })();
+
+    (function () {
+      var chooser = document.getElementById('email-chooser');
+      var closeBtn = document.getElementById('email-chooser-close');
+      var gmailLink = document.getElementById('ec-gmail');
+      var yahooLink = document.getElementById('ec-yahoo');
+      var outlookLink = document.getElementById('ec-outlook');
+      var mailtoLink = document.getElementById('ec-mailto');
+      var copyBtn = document.getElementById('ec-copy');
+      var copyLabel = document.getElementById('ec-copy-label');
+      var subText = document.getElementById('email-chooser-sub');
+      var activePayload = { subject: '', body: '' };
+
+      function parseMailto(href) {
+        var out = { subject: '', body: '' };
+        var qIndex = href.indexOf('?');
+        if (qIndex === -1) return out;
+        href
+          .slice(qIndex + 1)
+          .split('&')
+          .forEach(function (pair) {
+            var eq = pair.indexOf('=');
+            if (eq === -1) return;
+            var k = decodeURIComponent(pair.slice(0, eq)).toLowerCase();
+            var v = decodeURIComponent(pair.slice(eq + 1));
+            if (k === 'subject') out.subject = v;
+            if (k === 'body') out.body = v;
+          });
+        return out;
+      }
+
+      function closeChooser() {
+        if (!chooser) return;
+        if (typeof chooser.close === 'function' && chooser.open) chooser.close();
+        else chooser.removeAttribute('open');
+      }
+
+      document.querySelectorAll('.song-share-bar a[href^="mailto:"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          if (!chooser) return;
+          e.preventDefault();
+          var parsed = parseMailto(link.getAttribute('href') || '');
+          activePayload = parsed;
+          var encSub = encodeURIComponent(parsed.subject);
+          var encBody = encodeURIComponent(parsed.body);
+
+          if (subText) subText.textContent = parsed.subject || 'Choose your email service:';
+          if (gmailLink) gmailLink.href = 'https://mail.google.com/mail/?view=cm&fs=1&su=' + encSub + '&body=' + encBody;
+          if (yahooLink) yahooLink.href = 'https://compose.mail.yahoo.com/?subject=' + encSub + '&body=' + encBody;
+          if (outlookLink) outlookLink.href = 'https://outlook.live.com/mail/0/deeplink/compose?subject=' + encSub + '&body=' + encBody;
+          if (mailtoLink) mailtoLink.href = link.getAttribute('href') || 'mailto:';
+          if (copyLabel) copyLabel.textContent = 'Copy Email Message & Link';
+
+          if (typeof chooser.showModal === 'function') chooser.showModal();
+          else chooser.setAttribute('open', '');
+        });
+      });
+
+      [gmailLink, yahooLink, outlookLink, mailtoLink].forEach(function (el) {
+        if (!el) return;
+        el.addEventListener('click', function () {
+          setTimeout(closeChooser, 120);
+        });
+      });
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+          var fullText = (activePayload.subject ? activePayload.subject + '\n\n' : '') + activePayload.body;
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(fullText).then(function () {
+              if (copyLabel) copyLabel.textContent = 'Copied to clipboard ✓';
+              setTimeout(closeChooser, 900);
+            });
+          } else {
+            window.prompt('Copy email message:', fullText);
+          }
+        });
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', closeChooser);
+      if (chooser) {
+        chooser.addEventListener('click', function (e) {
+          if (e.target === chooser) {
+            var r = chooser.getBoundingClientRect();
+            if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) {
+              closeChooser();
+            }
+          }
+        });
+      }
     })();
   </script>
 </body>

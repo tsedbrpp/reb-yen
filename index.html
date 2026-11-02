@@ -29,8 +29,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261102x">
-  <script defer src="site.js?v=20261102x"></script>
+  <link rel="stylesheet" href="styles.css?v=20261102y">
+  <script defer src="site.js?v=20261102y"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -715,6 +715,38 @@
       <a class="button gallery-share-btn" id="email-photo-btn" href="mailto:?subject=Reb%20Yen%20%E2%80%94%20On%20Stage&amp;body=https%3A%2F%2Frebyen.com%2F%23gallery">
         <span aria-hidden="true">✉</span> Email photo
       </a>
+    </div>
+  </dialog>
+
+  <dialog id="email-chooser" class="email-chooser" aria-labelledby="email-chooser-title">
+    <div class="email-chooser-head">
+      <div>
+        <h3 id="email-chooser-title">Send by Email</h3>
+        <p class="email-chooser-sub" id="email-chooser-sub">Choose your email service:</p>
+      </div>
+      <button type="button" class="icon-button" id="email-chooser-close" aria-label="Close">×</button>
+    </div>
+    <div class="email-chooser-list">
+      <a class="email-choice" id="ec-gmail" href="#" target="_blank" rel="noopener noreferrer">
+        <span>Open in Gmail</span>
+        <small>Web ↗</small>
+      </a>
+      <a class="email-choice" id="ec-yahoo" href="#" target="_blank" rel="noopener noreferrer">
+        <span>Open in Yahoo Mail</span>
+        <small>Web ↗</small>
+      </a>
+      <a class="email-choice" id="ec-outlook" href="#" target="_blank" rel="noopener noreferrer">
+        <span>Open in Outlook / Hotmail</span>
+        <small>Web ↗</small>
+      </a>
+      <a class="email-choice" id="ec-mailto" href="#">
+        <span>Default Email App</span>
+        <small>Phone / Mac / Mail</small>
+      </a>
+      <button type="button" class="email-choice" id="ec-copy">
+        <span id="ec-copy-label">Copy Email Message &amp; Link</span>
+        <small>Paste anywhere</small>
+      </button>
     </div>
   </dialog>
 </body>

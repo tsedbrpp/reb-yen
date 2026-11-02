@@ -2984,6 +2984,76 @@ dialog.is-fallback-open {
   gap: 10px;
 }
 
+.email-chooser {
+  padding: 24px;
+  width: min(400px, calc(100% - 32px));
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--orange);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--plum);
+  box-shadow: 0 24px 60px rgba(15, 7, 15, 0.55);
+}
+
+.email-chooser::backdrop {
+  background: rgba(24, 12, 24, 0.72);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.email-chooser-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.email-chooser-head h3 {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 4px;
+}
+
+.email-chooser-sub {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.email-chooser-list {
+  display: grid;
+  gap: 8px;
+}
+
+.email-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border-radius: 8px;
+  border: 1px solid #cdb699;
+  background: var(--cream);
+  color: var(--plum);
+  font: 700 15px/1.3 'Karla', sans-serif;
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.email-choice:hover,
+.email-choice:focus-visible {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: var(--cream);
+}
+
+.email-choice small {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.78;
+}
+
 /* ==========================================================================
    Contact & Booking Form
    ========================================================================== */

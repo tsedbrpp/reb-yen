@@ -1412,3 +1412,83 @@ lightbox?.addEventListener('keydown', event => {
 lightbox?.addEventListener('close', () => {
   lastPhotoButton?.focus();
 });
+
+// ============================================================================
+// Webmail + Mailto Chooser (ensures Email works on Gmail/Yahoo/Outlook Web)
+// ============================================================================
+const emailChooser = document.getElementById('email-chooser');
+const ecCloseBtn = document.getElementById('email-chooser-close');
+const ecGmail = document.getElementById('ec-gmail');
+const ecYahoo = document.getElementById('ec-yahoo');
+const ecOutlook = document.getElementById('ec-outlook');
+const ecMailto = document.getElementById('ec-mailto');
+const ecCopy = document.getElementById('ec-copy');
+const ecCopyLabel = document.getElementById('ec-copy-label');
+const ecSub = document.getElementById('email-chooser-sub');
+let activeEmailPayload = { subject: '', body: '' };
+
+function parseMailtoHref(href) {
+  const out = { subject: '', body: '' };
+  const qIndex = href.indexOf('?');
+  if (qIndex === -1) return out;
+  href
+    .slice(qIndex + 1)
+    .split('&')
+    .forEach(pair => {
+      const eq = pair.indexOf('=');
+      if (eq === -1) return;
+      const k = decodeURIComponent(pair.slice(0, eq)).toLowerCase();
+      const v = decodeURIComponent(pair.slice(eq + 1));
+      if (k === 'subject') out.subject = v;
+      if (k === 'body') out.body = v;
+    });
+  return out;
+}
+
+document.querySelectorAll('#email-gallery-btn, #email-photo-btn').forEach(link => {
+  link.addEventListener('click', event => {
+    if (!emailChooser) return;
+    event.preventDefault();
+    const rawHref = link.getAttribute('href') || '';
+    const parsed = parseMailtoHref(rawHref);
+    activeEmailPayload = parsed;
+    const encSub = encodeURIComponent(parsed.subject);
+    const encBody = encodeURIComponent(parsed.body);
+
+    if (ecSub) ecSub.textContent = parsed.subject || 'Choose your email service:';
+    if (ecGmail) ecGmail.href = `https://mail.google.com/mail/?view=cm&fs=1&su=${encSub}&body=${encBody}`;
+    if (ecYahoo) ecYahoo.href = `https://compose.mail.yahoo.com/?subject=${encSub}&body=${encBody}`;
+    if (ecOutlook) ecOutlook.href = `https://outlook.live.com/mail/0/deeplink/compose?subject=${encSub}&body=${encBody}`;
+    if (ecMailto) ecMailto.href = rawHref || 'mailto:';
+    if (ecCopyLabel) ecCopyLabel.textContent = 'Copy Email Message & Link';
+
+    openDialog(emailChooser);
+  });
+});
+
+[ecGmail, ecYahoo, ecOutlook, ecMailto].forEach(el => {
+  el?.addEventListener('click', () => {
+    setTimeout(() => closeDialog(emailChooser), 120);
+  });
+});
+
+ecCopy?.addEventListener('click', async () => {
+  const fullText = `${activeEmailPayload.subject ? `${activeEmailPayload.subject}\n\n` : ''}${activeEmailPayload.body}`;
+  try {
+    await navigator.clipboard.writeText(fullText);
+    if (ecCopyLabel) ecCopyLabel.textContent = 'Copied to clipboard ✓';
+    setTimeout(() => closeDialog(emailChooser), 900);
+  } catch {
+    window.prompt('Copy email message:', fullText);
+  }
+});
+
+ecCloseBtn?.addEventListener('click', () => closeDialog(emailChooser));
+emailChooser?.addEventListener('click', event => {
+  if (event.target === emailChooser) {
+    const r = emailChooser.getBoundingClientRect();
+    if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) {
+      closeDialog(emailChooser);
+    }
+  }
+});
