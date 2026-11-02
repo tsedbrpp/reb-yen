@@ -413,102 +413,88 @@ p + p {
 
 .hero-spotlight {
   position: absolute;
-  inset: -12% -6% -6% -6%;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
   mix-blend-mode: screen;
-  opacity: 0.88;
-  transition: opacity 0.8s ease, filter 0.8s ease;
-  animation: spotlight-warmup 1.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  opacity: 0.75;
+  transition: opacity 0.7s ease;
+  animation: spotlight-warmup 1.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
 .hero.is-stage-lit .hero-spotlight {
   opacity: 1;
-  filter: brightness(1.22) saturate(1.1);
 }
 
-/* Soft overhead theater follow-spot cone angled onto Reb & her guitar */
+/* Crisp, subtle diagonal stage-light shaft across the dark stage toward Reb's guitar */
 .hero-spotlight::before {
   content: '';
   position: absolute;
   inset: 0;
   background:
+    radial-gradient(
+      ellipse 34px 12px at 36.6% 0%,
+      rgba(255, 242, 218, 0.24) 0%,
+      transparent 100%
+    ),
     conic-gradient(
-      from 188deg at 78% -6%,
+      from 149deg at 35% -8%,
       transparent 0deg,
-      rgba(255, 206, 148, 0.08) 12deg,
-      rgba(255, 224, 178, 0.34) 24deg,
-      rgba(223, 115, 63, 0.16) 36deg,
-      transparent 52deg
-    ),
-    radial-gradient(
-      ellipse 44% 58% at 70% 42%,
-      rgba(255, 214, 165, 0.2) 0%,
-      rgba(223, 115, 63, 0.08) 48%,
-      transparent 76%
-    ),
-    radial-gradient(
-      ellipse 34% 40% at 24% 56%,
-      rgba(223, 115, 63, 0.14) 0%,
-      transparent 72%
+      rgba(255, 224, 178, 0.09) 1.1deg,
+      rgba(255, 236, 205, 0.125) 6.5deg,
+      rgba(255, 224, 178, 0.09) 11.9deg,
+      transparent 13deg
     );
-  filter: blur(22px);
-  animation: spotlight-breathe 9s ease-in-out 1.65s infinite alternate;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.85) 38%, rgba(0, 0, 0, 0.35) 72%, transparent 94%);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.85) 38%, rgba(0, 0, 0, 0.35) 72%, transparent 94%);
+  filter: blur(2.5px);
+  transform-origin: 35% -8%;
+  animation: spotlight-breathe 10s ease-in-out 1.4s infinite alternate;
 }
 
-/* Subtle warm stage-dust motes suspended inside the beam */
+/* Faint stage-dust motes strictly inside the narrow beam shaft */
 .hero-spotlight::after {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle 2.5px at 68% 26%, rgba(255, 236, 206, 0.55) 0%, transparent 100%),
-    radial-gradient(circle 2px at 74% 44%, rgba(255, 214, 168, 0.44) 0%, transparent 100%),
-    radial-gradient(circle 3px at 62% 52%, rgba(239, 176, 129, 0.38) 0%, transparent 100%),
-    radial-gradient(circle 2px at 56% 34%, rgba(255, 232, 198, 0.4) 0%, transparent 100%),
-    radial-gradient(circle 2.5px at 30% 42%, rgba(255, 226, 189, 0.32) 0%, transparent 100%);
+    radial-gradient(circle 1.5px at 40% 20%, rgba(255, 240, 214, 0.34) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 44% 36%, rgba(255, 228, 192, 0.28) 0%, transparent 100%),
+    radial-gradient(circle 2px at 48% 52%, rgba(255, 220, 180, 0.22) 0%, transparent 100%);
   animation: stage-motes 12s ease-in-out infinite alternate;
 }
 
 @keyframes spotlight-warmup {
-  0% {
+  from {
     opacity: 0;
-    transform: translate3d(14px, -18px, 0) scale(0.97);
-  }
-  100% {
-    opacity: 0.88;
-    transform: none;
   }
 }
 
 @keyframes spotlight-breathe {
   0% {
-    opacity: 0.86;
-    transform: scale(1);
+    opacity: 0.9;
+    transform: rotate(-0.45deg);
   }
   100% {
     opacity: 1;
-    transform: scale(1.03);
+    transform: rotate(0.45deg);
   }
 }
 
 @keyframes stage-motes {
   0% {
     opacity: 0.45;
-    transform: translate3d(-5px, 7px, 0);
+    transform: translate3d(-4px, 6px, 0);
   }
   100% {
-    opacity: 0.9;
-    transform: translate3d(10px, -12px, 0);
+    opacity: 0.85;
+    transform: translate3d(7px, -9px, 0);
   }
 }
 
 @keyframes hero-photo-warmup {
   from {
-    filter: brightness(0.88) contrast(1.04) saturate(0.96);
-  }
-  to {
-    filter: brightness(1.24) contrast(1.02) saturate(1.08);
+    filter: brightness(0.96) contrast(1.03) saturate(1);
   }
 }
 
@@ -532,7 +518,7 @@ p + p {
   object-fit: cover;
   object-position: 54% 27%;
   filter: brightness(1.24) contrast(1.02) saturate(1.08);
-  animation: hero-photo-warmup 1.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-photo-warmup 1.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   transform: translate3d(0, var(--hero-parallax, 0px), 0);
   will-change: transform;
   z-index: -2;
@@ -3594,23 +3580,24 @@ dialog.is-fallback-open {
     flex-direction: column;
   }
   .hero-spotlight {
-    inset: -8% -8% -4% -8%;
+    inset: 0;
   }
   .hero-spotlight::before {
     background:
-      conic-gradient(
-        from 186deg at 86% -4%,
-        transparent 0deg,
-        rgba(255, 206, 148, 0.08) 12deg,
-        rgba(255, 224, 178, 0.32) 26deg,
-        rgba(223, 115, 63, 0.14) 40deg,
-        transparent 56deg
-      ),
       radial-gradient(
-        ellipse 54% 52% at 72% 42%,
-        rgba(255, 214, 165, 0.18) 0%,
-        transparent 74%
+        ellipse 28px 10px at 22% 0%,
+        rgba(255, 242, 218, 0.22) 0%,
+        transparent 100%
+      ),
+      conic-gradient(
+        from 154deg at 20% -6%,
+        transparent 0deg,
+        rgba(255, 224, 178, 0.085) 1.2deg,
+        rgba(255, 236, 205, 0.115) 7deg,
+        rgba(255, 224, 178, 0.085) 12.8deg,
+        transparent 14deg
       );
+    transform-origin: 20% -6%;
   }
   .hero-photo {
     position: absolute;
