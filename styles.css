@@ -3552,7 +3552,7 @@ dialog.is-fallback-open {
     justify-content: center;
   }
   .hero {
-    min-height: 605px;
+    min-height: 615px;
     display: flex;
     flex-direction: column;
   }
@@ -3569,7 +3569,7 @@ dialog.is-fallback-open {
     right: -8px;
     bottom: 0;
     width: clamp(275px, 78%, 430px);
-    height: 80%;
+    height: 76%;
     aspect-ratio: auto;
     max-height: none;
     object-fit: cover;
@@ -3593,9 +3593,9 @@ dialog.is-fallback-open {
     background:
       linear-gradient(
         180deg,
-        rgba(44, 25, 44, 0.92) 0%,
-        rgba(44, 25, 44, 0.42) 24%,
-        rgba(44, 25, 44, 0) 44%,
+        rgba(44, 25, 44, 0.96) 0%,
+        rgba(44, 25, 44, 0.72) 24%,
+        rgba(44, 25, 44, 0) 42%,
         rgba(28, 14, 28, 0) 76%,
         rgba(28, 14, 28, 0.84) 100%
       ),
@@ -3615,26 +3615,36 @@ dialog.is-fallback-open {
     padding: 16px 0 18px;
     margin-top: 0;
     max-width: none;
+    width: 100%;
   }
   .hero h1 {
-    font-size: 35px;
-    margin-bottom: 5px;
-    max-width: 75%;
+    font-size: clamp(44px, 12vw, 56px);
+    line-height: 1.02;
+    margin-bottom: 6px;
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
   }
   .hero .eyebrow {
     margin-bottom: 6px;
     font-size: 11px;
   }
   .hero .tagline {
-    font-size: 15.5px;
-    line-height: 1.32;
-    max-width: 74%;
+    font-size: clamp(17.5px, 4.7vw, 22px);
+    line-height: 1.26;
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
   }
   .hero .location {
-    font-size: 12.5px;
+    font-size: clamp(10.4px, 2.9vw, 14px);
     line-height: 1.35;
-    margin: 6px 0 10px;
-    max-width: 62%;
+    margin: 9px 0 10px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(239, 169, 119, 0.3);
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
   }
   .hero-record {
     --rec: clamp(130px, 34vw, 156px);
