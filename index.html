@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reb Yen | Original Music &amp; Live Shows</title>
-  <meta name="description" content="Listen to original Americana, folk and indie songs by Boulder singer-songwriter Reb Yen. Watch her live performances and explore her original songbook.">
+  <title>Reb Yen | Boulder Singer-Songwriter — Original Music &amp; Live Shows</title>
+  <meta name="description" content="Boulder, Colorado singer-songwriter &amp; multi-instrumentalist Reb Yen writes and performs original Americana, folk, indie, country, and rock songs. Listen to featured tracks, watch live performances, and explore her songbook.">
+  <meta name="geo.region" content="US-CO">
+  <meta name="geo.placename" content="Boulder, Colorado">
   <link rel="canonical" href="https://rebyen.com/">
   <script>
     if (location.hostname.endsWith('.github.io')) {
@@ -17,8 +19,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta property="og:title" content="Reb Yen — Original Music &amp; Live Performances">
-  <meta property="og:description" content="Listen to original Americana, folk and indie songs by Boulder singer-songwriter Reb Yen. Watch her live performances and explore her original songbook.">
+  <meta property="og:site_name" content="Reb Yen">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Reb Yen | Boulder Singer-Songwriter — Original Music &amp; Live Performances">
+  <meta property="og:description" content="Boulder, Colorado singer-songwriter &amp; multi-instrumentalist Reb Yen writes and performs original Americana, folk, indie, country, and rock songs. Listen to featured tracks, watch live performances, and explore her songbook.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://rebyen.com/">
   <meta property="og:image" content="https://rebyen.com/images/og-share.jpg">
@@ -34,18 +38,68 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "MusicGroup",
-    "name": "Reb Yen",
-    "url": "https://rebyen.com/",
-    "image": "https://rebyen.com/images/hero-guitar.jpg",
-    "description": "Listen to original Americana, folk and indie songs by Boulder singer-songwriter Reb Yen. Watch her live performances and explore her original songbook.",
-    "genre": ["Americana", "Folk", "Indie", "Country", "Pop", "Rock"],
-    "sameAs": [
-      "https://rebyen.com/",
-      "https://rebyenmusic.com/",
-      "https://rebyen.bandcamp.com/",
-      "https://legacy.reverbnation.com/rebyen",
-      "https://www.youtube.com/@RebYenMusic"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://rebyen.com/#website",
+        "url": "https://rebyen.com/",
+        "name": "Reb Yen",
+        "description": "Official website of Boulder, Colorado singer-songwriter and multi-instrumentalist Reb Yen.",
+        "publisher": { "@id": "https://rebyen.com/#artist" }
+      },
+      {
+        "@type": "MusicGroup",
+        "@id": "https://rebyen.com/#artist",
+        "name": "Reb Yen",
+        "alternateName": "Rebekah Yen",
+        "url": "https://rebyen.com/",
+        "image": "https://rebyen.com/images/hero-guitar.jpg",
+        "description": "Boulder, Colorado singer-songwriter and multi-instrumentalist Reb Yen writes, arranges, and performs original Americana, folk, indie, country, pop, and rock music.",
+        "genre": ["Americana", "Folk", "Indie", "Country", "Pop", "Rock"],
+        "location": {
+          "@type": "Place",
+          "name": "Boulder, Colorado",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Boulder",
+            "addressRegion": "CO",
+            "addressCountry": "US"
+          }
+        },
+        "areaServed": [
+          { "@type": "City", "name": "Boulder", "containedInPlace": { "@type": "State", "name": "Colorado" } },
+          { "@type": "State", "name": "Colorado" },
+          { "@type": "City", "name": "Orlando", "containedInPlace": { "@type": "State", "name": "Florida" } }
+        ],
+        "member": {
+          "@type": "Person",
+          "@id": "https://rebyen.com/#person",
+          "name": "Reb Yen",
+          "alternateName": "Rebekah Yen",
+          "jobTitle": "Singer-Songwriter & Multi-Instrumentalist",
+          "url": "https://rebyen.com/",
+          "homeLocation": {
+            "@type": "City",
+            "name": "Boulder, Colorado"
+          },
+          "knowsAbout": ["Songwriting", "Acoustic Guitar", "Keyboard", "Harmonica", "Americana Music", "Folk Music", "Indie Music", "Live Music Performance"]
+        },
+        "track": [
+          { "@type": "MusicRecording", "name": "Take Me Crazy", "url": "https://rebyen.bandcamp.com/track/take-me-crazy", "byArtist": { "@id": "https://rebyen.com/#artist" } },
+          { "@type": "MusicRecording", "name": "Should I?", "url": "https://rebyen.bandcamp.com/track/should-i", "byArtist": { "@id": "https://rebyen.com/#artist" } },
+          { "@type": "MusicRecording", "name": "Gotta Let It Go", "url": "https://rebyen.bandcamp.com/track/gotta-let-it-go", "byArtist": { "@id": "https://rebyen.com/#artist" } },
+          { "@type": "MusicRecording", "name": "The Solitude", "url": "https://rebyen.bandcamp.com/track/the-solitude", "byArtist": { "@id": "https://rebyen.com/#artist" } },
+          { "@type": "MusicRecording", "name": "A New Beginning", "url": "https://rebyen.bandcamp.com/track/a-new-beginning", "byArtist": { "@id": "https://rebyen.com/#artist" } },
+          { "@type": "MusicRecording", "name": "Are You Listening Now?", "url": "https://rebyen.bandcamp.com/track/are-you-listening-now", "byArtist": { "@id": "https://rebyen.com/#artist" } }
+        ],
+        "sameAs": [
+          "https://rebyen.com/",
+          "https://rebyenmusic.com/",
+          "https://rebyen.bandcamp.com/",
+          "https://legacy.reverbnation.com/rebyen",
+          "https://www.youtube.com/@RebYenMusic"
+        ]
+      }
     ]
   }
   </script>
@@ -72,7 +126,7 @@
 
   <main id="main">
     <section class="hero" id="home" aria-labelledby="hero-title">
-      <img class="hero-photo" src="images/hero-guitar.jpg?v=20261102ao" alt="Reb Yen singing and playing acoustic guitar" width="688" height="996" fetchpriority="high">
+      <img class="hero-photo" src="images/hero-guitar.jpg?v=20261102ao" alt="Boulder singer-songwriter Reb Yen singing and playing acoustic guitar live on stage" width="688" height="996" fetchpriority="high">
       <div class="container">
         <div class="hero-content">
           <h1 id="hero-title">Reb Yen</h1>
@@ -433,7 +487,7 @@
             <footer>— Reb Yen, <a href="https://rebyen.bandcamp.com/track/a-new-beginning" class="lyric-song-cta" data-track="1638570894" data-title="A New Beginning">A New Beginning ↗</a></footer>
           </blockquote>
           <figure class="lyric-portrait" data-reveal>
-            <img src="images/lyric-reb.jpg?v=20261102al" alt="Reb Yen with her acoustic guitar" width="768" height="956" loading="lazy">
+            <img src="images/lyric-reb.jpg?v=20261102al" alt="Boulder singer-songwriter Reb Yen with her acoustic guitar" width="768" height="956" loading="lazy">
           </figure>
         </div>
         <div class="guitar-string lyric-string" data-guitar-string data-note="369.99" aria-hidden="true">
@@ -531,7 +585,7 @@
             <span>Commodore Grille · Nashville</span>
           </button>
           <button type="button" class="gallery-item" data-tilt data-photo="images/crawled_edge.jpg" aria-label="Enlarge photo: With Lenny Charles · Roots Music Project">
-            <img src="images/crawled_edge.jpg" alt="Reb Yen and Lenny Charles performing together" width="480" height="360" loading="lazy">
+            <img src="images/crawled_edge.jpg" alt="Reb Yen and Lenny Charles performing live at Roots Music Project in Boulder, Colorado" width="480" height="360" loading="lazy">
             <span>With Lenny Charles · Roots Music Project</span>
           </button>
           <button type="button" class="gallery-item" data-tilt data-photo="images/are_you_listening.jpg" aria-label="Enlarge photo: Trio · The Alley">
