@@ -3611,7 +3611,7 @@ dialog.is-fallback-open {
     justify-content: center;
   }
   .hero {
-    min-height: 590px;
+    min-height: 605px;
     display: flex;
     flex-direction: column;
   }
@@ -3696,13 +3696,13 @@ dialog.is-fallback-open {
     max-width: 62%;
   }
   .hero-record {
-    --rec: clamp(134px, 36vw, 164px);
+    --rec: clamp(130px, 34vw, 156px);
     width: fit-content;
     align-self: flex-start;
     flex-direction: row;
     align-items: center;
     max-width: none;
-    margin: 46px 0 0 -4px;
+    margin: auto 0 16px -10px;
     padding: 6px;
     gap: 0;
     border-radius: 50%;
@@ -3747,8 +3747,8 @@ dialog.is-fallback-open {
     display: none;
   }
   .hero-secondary {
-    margin-top: auto;
-    padding-top: 24px;
+    margin-top: 0;
+    padding-top: 0;
     gap: 8px 14px;
   }
   .hero-bottom .container {
@@ -3967,7 +3967,7 @@ dialog.is-fallback-open {
 
 @media (max-width: 365px) {
   .hero-record {
-    --rec: 130px;
+    --rec: 126px;
     padding: 6px;
     gap: 0;
   }
