@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Reb Yen | Boulder Singer-Songwriter — Original Songbook, Lyrics &amp; Liner Notes</title>
   <meta name="description" content="Official songbook, lyrics, and liner notes for 9 original Americana, folk, and indie songs by Boulder, Colorado singer-songwriter Reb Yen.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -659,6 +659,21 @@
     }
 
     @media (max-width: 700px) {
+      .toolbar {
+        padding: 10px 16px;
+        flex-wrap: nowrap;
+        gap: 10px;
+      }
+      .toolbar-brand {
+        font-size: 15.5px;
+        min-height: 42px;
+      }
+      .btn {
+        padding: 9px 14px;
+        min-height: 40px;
+        font-size: 13.5px;
+        white-space: nowrap;
+      }
       .page, .page-cover {
         padding: 28px 22px;
       }
@@ -666,13 +681,29 @@
         grid-template-columns: 1fr;
       }
       .toc-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .toc-grid a {
+        min-height: 42px;
+        align-items: center;
+        padding: 8px 6px;
+        border-bottom: 1px solid rgba(255, 250, 241, 0.08);
       }
       .lyrics-columns {
         column-count: 1;
       }
       .page-cover h1 {
         font-size: 40px;
+      }
+      .page-footer {
+        flex-wrap: wrap;
+        gap: 6px 12px;
+      }
+      .page-footer a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
       }
     }
 

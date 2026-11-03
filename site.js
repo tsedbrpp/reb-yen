@@ -57,18 +57,37 @@ document.addEventListener('keydown', event => {
 // ============================================================================
 // Mobile Navigation & Active Section Spy
 // ============================================================================
+const siteHeader = document.querySelector('.site-header');
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.site-nav');
+let navBackdrop = null;
+
+function syncMenuUI(open) {
+  if (!navigation || !menuButton) return;
+  navigation.classList.toggle('is-open', open);
+  siteHeader?.classList.toggle('is-menu-open', open);
+  menuButton.setAttribute('aria-expanded', String(open));
+  menuButton.innerHTML = open
+    ? 'Close <span aria-hidden="true">✕</span>'
+    : 'Menu <span aria-hidden="true">☰</span>';
+  if (open && !navBackdrop) {
+    navBackdrop = document.createElement('div');
+    navBackdrop.className = 'nav-backdrop';
+    navBackdrop.addEventListener('click', closeMenu);
+    document.body.append(navBackdrop);
+  }
+  if (navBackdrop) {
+    navBackdrop.hidden = !open;
+  }
+}
 
 function closeMenu() {
-  if (!navigation || !menuButton) return;
-  navigation.classList.remove('is-open');
-  menuButton.setAttribute('aria-expanded', 'false');
+  syncMenuUI(false);
 }
 
 menuButton?.addEventListener('click', () => {
-  const open = navigation.classList.toggle('is-open');
-  menuButton.setAttribute('aria-expanded', String(open));
+  const open = !navigation?.classList.contains('is-open');
+  syncMenuUI(open);
 });
 
 navigation?.querySelectorAll('a').forEach(link => {
@@ -84,6 +103,16 @@ document.addEventListener('click', event => {
     closeMenu();
   }
 });
+
+window.addEventListener(
+  'resize',
+  () => {
+    if (window.innerWidth > 700 && navigation?.classList.contains('is-open')) {
+      closeMenu();
+    }
+  },
+  { passive: true }
+);
 
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') {
@@ -502,12 +531,19 @@ function renderSongPicker() {
   if (pickerStopBtn) pickerStopBtn.hidden = !selectedTrack;
 }
 
-function openSongPicker() {
+function openSongPicker(event) {
   if (!songPicker) return;
+  closeMenu();
   renderSongPicker();
   songPicker.hidden = false;
   document.body.classList.add('dialog-open');
-  document.getElementById('song-picker-close')?.focus({ preventScroll: true });
+  const openedByKeyboard = Boolean(event && event.type === 'click' && event.detail === 0);
+  if (openedByKeyboard) {
+    document.getElementById('song-picker-close')?.focus({ preventScroll: true });
+  } else {
+    if (!songPicker.hasAttribute('tabindex')) songPicker.setAttribute('tabindex', '-1');
+    songPicker.focus({ preventScroll: true });
+  }
 }
 
 function closeSongPicker() {
