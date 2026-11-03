@@ -265,7 +265,6 @@ const heroRecord = document.getElementById('hero-record');
 const recordCta = document.getElementById('record-cta');
 const recordCtaText = document.getElementById('record-cta-text');
 const recordLabelTitle = document.getElementById('record-label-title');
-const recordPlayIcon = document.getElementById('record-play-icon');
 const recordNowLabel = document.getElementById('record-now-label');
 const recordNowTitle = document.getElementById('record-now-title');
 const recordStopBtn = document.getElementById('record-stop-btn');
@@ -415,7 +414,6 @@ function setRecordStatus(trackId) {
     isLoaded ? `Change song — now playing ${name}` : 'Tap to pick a song'
   );
   if (recordLabelTitle) recordLabelTitle.textContent = isLoaded ? name : 'Tap to pick a song';
-  if (recordPlayIcon) recordPlayIcon.textContent = isLoaded ? '♫' : '▶';
 
   if (recordNowLabel) {
     recordNowLabel.textContent = 'Now playing';

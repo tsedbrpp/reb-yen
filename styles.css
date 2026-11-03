@@ -668,65 +668,6 @@ p + p {
   }
 }
 
-/* Play / stop badge ? does not rotate with the disc */
-.record-play {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: 2;
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--ivory);
-  color: var(--plum-dark);
-  line-height: 1;
-  font-size: 24px;
-  border: 3px solid var(--orange);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
-  transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.record-play #record-play-icon {
-  transform: translateX(2px);
-}
-
-.spin-record.selected .record-play #record-play-icon {
-  transform: none;
-}
-
-.spin-record:not(.selected) .record-play::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  border: 3px solid var(--orange);
-  animation: play-pulse 2s ease-out infinite;
-}
-
-@keyframes play-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1.45);
-    opacity: 0;
-  }
-}
-
-.spin-record:hover .record-play,
-.spin-record:focus-visible .record-play {
-  transform: scale(1.08);
-  background: #fff;
-}
-
-.spin-record.selected .record-play {
-  background: var(--orange);
-  border-color: var(--ivory);
-}
-
 .spin-record:focus-visible {
   outline: 3px solid #efa977;
   outline-offset: 6px;
@@ -3736,12 +3677,6 @@ dialog.is-fallback-open {
   .spin-record.selected .label-title {
     font-size: calc(var(--rec) * 0.068);
     line-height: 1.08;
-  }
-  .record-play {
-    width: 44px;
-    height: 44px;
-    font-size: 17px;
-    border-width: 2.5px;
   }
   .hero-record-ctl {
     display: none;
