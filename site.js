@@ -157,7 +157,7 @@ updateScrollEffects();
 // Dynamic Jukebox Sleeve, Music Player, Turntable & Track Filters
 // ============================================================================
 const TRACK_META = {
-  '1827482453': {
+  '33863436': {
     title: 'Take Me Crazy',
     vinyl: 'TAKE ME\nCRAZY',
     eyebrow: 'Featured original · ReverbNation Spotlight',
@@ -165,9 +165,9 @@ const TRACK_META = {
     img: 'images/take_me_crazy.jpg',
     alt: 'Reb Yen performing Take Me Crazy in Nashville',
     caption: 'On stage at the Commodore Grille, Nashville',
-    href: 'https://rebyen.bandcamp.com/track/take-me-crazy'
+    href: 'https://www.reverbnation.com/rebyen/song/33863436-take-me-crazy-original'
   },
-  '235047036': {
+  '33355990': {
     title: 'Should I?',
     vinyl: 'SHOULD\nI?',
     eyebrow: 'Original studio recording · ReverbNation Spotlight',
@@ -177,9 +177,9 @@ const TRACK_META = {
     bright: true,
     alt: 'Reb Yen singing and playing acoustic guitar',
     caption: 'Reb Yen · Original studio recording',
-    href: 'https://rebyen.bandcamp.com/track/should-i'
+    href: 'https://www.reverbnation.com/rebyen/song/33355990-should-i-original'
   },
-  '4028698566': {
+  '33993499': {
     title: 'Gotta Let It Go',
     vinyl: 'GOTTA LET\nIT GO',
     eyebrow: 'Featured original · ReverbNation Spotlight',
@@ -187,9 +187,9 @@ const TRACK_META = {
     img: 'images/gotta_let_it_go.jpg',
     alt: 'Reb Yen singing Gotta Let It Go with acoustic guitar',
     caption: 'Gotta Let It Go · from the lyric video',
-    href: 'https://rebyen.bandcamp.com/track/gotta-let-it-go-2'
+    href: 'https://www.reverbnation.com/rebyen/song/33993499-gotta-let-go-by-reb-yen-original'
   },
-  '1271869476': {
+  '32896520': {
     title: 'The Solitude',
     vinyl: 'THE\nSOLITUDE',
     eyebrow: 'Original song · Live recording',
@@ -197,9 +197,9 @@ const TRACK_META = {
     img: 'images/solitude.jpg',
     alt: 'Reb Yen performing The Solitude live on acoustic guitar',
     caption: 'Performing The Solitude live at Roots Music Project',
-    href: 'https://rebyen.bandcamp.com/track/the-solitude-live'
+    href: 'https://www.reverbnation.com/rebyen/song/32896520-the-solitude-original--live'
   },
-  '1638570894': {
+  '33992872': {
     title: 'A New Beginning',
     vinyl: 'A NEW\nBEGINNING',
     eyebrow: 'Original song · Studio recording',
@@ -207,9 +207,9 @@ const TRACK_META = {
     img: 'images/newbeginning.jpg',
     alt: 'Reb Yen performing A New Beginning with guitar and harmonica',
     caption: 'A New Beginning · Live at The Copper Rocket',
-    href: 'https://rebyen.bandcamp.com/track/a-new-beginning'
+    href: 'https://www.reverbnation.com/rebyen/song/33992872-a-new-beginning-original'
   },
-  '3496903015': {
+  '33391779': {
     title: 'Are You Listening Now?',
     vinyl: 'ARE YOU\nLISTENING',
     eyebrow: 'Original song · Studio recording',
@@ -217,9 +217,9 @@ const TRACK_META = {
     img: 'images/are_you_listening.jpg',
     alt: 'Reb Yen performing on stage with her trio at The Alley',
     caption: 'Reb Yen performing with her trio at The Alley',
-    href: 'https://rebyen.bandcamp.com/track/are-you-listening-now'
+    href: 'https://www.reverbnation.com/rebyen/song/33391779-are-you-listening-now-original'
   },
-  '1698636065': {
+  '33866102': {
     title: 'Birds Of Prey',
     vinyl: 'BIRDS OF\nPREY',
     eyebrow: 'Original song · Live recording',
@@ -227,9 +227,9 @@ const TRACK_META = {
     img: 'images/storm.jpg',
     alt: 'Reb Yen performing live with her band',
     caption: 'Live stage performance · Original catalog',
-    href: 'https://rebyen.bandcamp.com/track/birds-of-prey-live'
+    href: 'https://www.reverbnation.com/rebyen/song/33866102-birds-of-prey-original--live'
   },
-  '1560882348': {
+  '32896774': {
     title: 'Take A Stand',
     vinyl: 'TAKE A\nSTAND',
     eyebrow: 'Original song · Live recording',
@@ -237,9 +237,9 @@ const TRACK_META = {
     img: 'images/are_you_listening.jpg',
     alt: 'Reb Yen singing and playing acoustic guitar on stage',
     caption: 'On stage · Original live recording',
-    href: 'https://rebyen.bandcamp.com/track/take-a-stand-live'
+    href: 'https://www.reverbnation.com/rebyen/song/32896774-take-a-stand-original--live'
   },
-  '244119541': {
+  '32557441': {
     title: 'Out Of Body',
     vinyl: 'OUT OF\nBODY',
     eyebrow: 'Original song · Studio recording',
@@ -248,12 +248,12 @@ const TRACK_META = {
     pos: '50% 38%',
     alt: 'Artistic portrait of Reb Yen with guitar fretboard',
     caption: 'Reb Yen · Studio original',
-    href: 'https://rebyen.bandcamp.com/track/out-of-body'
+    href: 'https://www.reverbnation.com/rebyen/song/32557441-out-of-body--original'
   }
 };
 
 const player = document.getElementById('music-player');
-const frame = document.getElementById('bandcamp-player');
+const frame = document.getElementById('reverbnation-player');
 const playerBody = document.getElementById('player-body');
 const playerTitle = document.getElementById('player-title');
 const minimizeBtn = document.getElementById('player-minimize');
@@ -287,14 +287,16 @@ const catalogRows = Array.from(document.querySelectorAll('.song-row[data-song]')
 let selectedTrack = null;
 let sleeveSwapTimer = 0;
 
-// Bandcamp's embed cannot autoplay or be controlled from the page, so a freshly
-// loaded track is "cued" (needle down, record waiting) until the visitor taps
-// into the Bandcamp player. That tap moves focus into the iframe, which we can
-// observe via window blur + document.activeElement.
+// iOS WebKit blocks cross-origin iframe autoplay even with allow="autoplay", so
+// on iPhone/iPad a freshly loaded track stays "cued" until the visitor taps ▶
+// inside the ReverbNation widget. Desktop & Android start playing automatically.
+const requiresWidgetTap =
+  /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let isCued = false;
 
-function bandcampEmbedUrl(trackId) {
-  return `https://bandcamp.com/EmbeddedPlayer/track=${encodeURIComponent(trackId)}/size=large/bgcol=fffaf1/linkcol=a8411a/tracklist=false/artwork=small/transparent=true/`;
+function reverbnationEmbedUrl(trackId) {
+  return `https://www.reverbnation.com/widget_code/html_widget/artist_6720947?widget_id=55&pwc[included_songs]=0&pwc[song_ids]=${encodeURIComponent(trackId)}&context_type=song&pwc[size]=small&pwc[autoplay]=1`;
 }
 
 function setCued(cued) {
@@ -315,7 +317,7 @@ window.addEventListener('blur', () => {
 });
 
 function updateJukeboxSleeve(trackId, isPlaying) {
-  const effectiveId = trackId && TRACK_META[trackId] ? trackId : '1827482453';
+  const effectiveId = trackId && TRACK_META[trackId] ? trackId : '33863436';
   const meta = TRACK_META[effectiveId];
   if (!meta) return;
 
@@ -530,7 +532,7 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   if (!meta && !targetLink) return;
 
   const title = meta?.title || targetLink?.dataset.title || 'Selected song';
-  const href = meta?.href || targetLink?.getAttribute('href') || 'https://rebyen.bandcamp.com/';
+  const href = meta?.href || targetLink?.getAttribute('href') || 'https://www.reverbnation.com/rebyen';
 
   if (options.dock) {
     player.classList.add('is-docked');
@@ -539,12 +541,12 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   setExpanded(true);
 
   if (trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
-    frame.src = bandcampEmbedUrl(trackId);
+    frame.src = reverbnationEmbedUrl(trackId);
     selectedTrack = trackId;
-    setCued(true);
+    setCued(requiresWidgetTap);
   }
 
-  frame.title = `${title} by Reb Yen — Bandcamp audio player`;
+  frame.title = `${title} by Reb Yen — ReverbNation audio player`;
   if (playerTitle) playerTitle.textContent = title;
   if (stopBtn) stopBtn.hidden = false;
   updateCatalogSelection(trackId);
@@ -553,7 +555,7 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   if (fallback && href.startsWith('http')) fallback.href = href;
 
   if (playerStatus) {
-    playerStatus.textContent = `${title} loaded. Press play in the Bandcamp player to listen.`;
+    playerStatus.textContent = `${title} loaded. Press play in the ReverbNation player to listen.`;
   }
   setRecordStatus(trackId);
 
