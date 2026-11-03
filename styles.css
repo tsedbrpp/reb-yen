@@ -625,8 +625,8 @@ p + p {
 .spin-record .label {
   position: relative;
   z-index: 1;
-  width: 45%;
-  height: 45%;
+  width: 47%;
+  height: 47%;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #f59563, var(--orange) 70%);
   color: var(--plum-dark);
@@ -634,23 +634,22 @@ p + p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 0 8%;
+  padding: 0 3.8%;
   text-align: center;
   box-shadow: inset 0 0 0 3px rgba(44, 25, 44, 0.2);
 }
 
 .label-title {
-  font: 800 calc(var(--rec) * 0.052) / 1.08 'Karla', sans-serif;
+  font: 800 calc(var(--rec) * 0.08) / 1.1 'Karla', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
+  text-wrap: balance;
 }
 
-.label-artist {
-  font: 700 calc(var(--rec) * 0.04) / 1 'Karla', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 1.4px;
-  opacity: 0.72;
+.spin-record.selected .label-title {
+  font-size: calc(var(--rec) * 0.058);
+  line-height: 1.1;
+  letter-spacing: 0.25px;
 }
 
 .spin-record:hover .disc {
@@ -3725,18 +3724,18 @@ dialog.is-fallback-open {
     animation: vinyl-spin 3.8s linear infinite;
   }
   .spin-record .label {
-    width: 52%;
-    height: 52%;
-    padding: 0 6%;
-    gap: 2px;
+    width: 53%;
+    height: 53%;
+    padding: 0 4.5%;
   }
   .label-title {
-    font-size: 10.5px;
-    line-height: 1.06;
+    font-size: calc(var(--rec) * 0.088);
+    line-height: 1.1;
+    letter-spacing: 0.35px;
   }
-  .label-artist {
-    font-size: 8px;
-    letter-spacing: 0.8px;
+  .spin-record.selected .label-title {
+    font-size: calc(var(--rec) * 0.068);
+    line-height: 1.08;
   }
   .record-play {
     width: 44px;
