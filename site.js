@@ -212,95 +212,117 @@ const TRACK_META = {
   '33863436': {
     title: 'Take Me Crazy',
     vinyl: 'TAKE ME\nCRAZY',
+    catNo: 'RY-01 · ORIGINAL',
     eyebrow: 'Featured original · ReverbNation Spotlight',
     desc: 'Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb — live performance filmed in Nashville.',
     img: 'images/featured-reb-guitar.jpg',
-    portrait: true,
+    pos: '50% 24%',
     alt: 'Singer-songwriter Reb Yen with her acoustic guitar',
-    caption: 'Reb Yen · Singer-songwriter',
+    caption: 'Written, arranged & performed by Reb Yen',
     href: 'https://www.reverbnation.com/rebyen/song/33863436-take-me-crazy-original'
   },
   '33355990': {
     title: 'Should I?',
     vinyl: 'SHOULD\nI?',
+    catNo: 'RY-02 · STUDIO',
     eyebrow: 'Original studio recording · ReverbNation Spotlight',
     desc: 'An original studio recording written, arranged and performed by Reb—one of three songs featured on the ReverbNation homepage.',
     img: 'images/hero-guitar.jpg',
-    pos: '52% 30%',
+    pos: '54% 24%',
     bright: true,
     alt: 'Reb Yen singing and playing acoustic guitar',
-    caption: 'Reb Yen · Original studio recording',
+    caption: 'Original studio recording · All tracks by Reb Yen',
     href: 'https://www.reverbnation.com/rebyen/song/33355990-should-i-original'
   },
   '33993499': {
     title: 'Gotta Let It Go',
     vinyl: 'GOTTA LET\nIT GO',
+    catNo: 'RY-03 · ORIGINAL',
     eyebrow: 'Featured original · ReverbNation Spotlight',
     desc: 'Written and arranged by Reb about knowing when to let go and move forward—featured on the ReverbNation homepage.',
     img: 'images/gotta_let_it_go.jpg',
+    pos: '50% 50%',
+    scale: '1.34',
+    origin: '50% 42%',
     alt: 'Reb Yen singing Gotta Let It Go with acoustic guitar',
-    caption: 'Gotta Let It Go · from the lyric video',
+    caption: 'Written & arranged by Reb Yen',
     href: 'https://www.reverbnation.com/rebyen/song/33993499-gotta-let-go-by-reb-yen-original'
   },
   '32896520': {
     title: 'The Solitude',
     vinyl: 'THE\nSOLITUDE',
+    catNo: 'RY-04 · LIVE',
     eyebrow: 'Original song · Live recording',
     desc: 'Captured live on stage—an atmospheric original showcasing Reb’s acoustic guitar work and expressive storytelling.',
-    img: 'images/solitude.jpg',
+    img: 'images/about-solitude.jpg',
+    pos: '46% 8%',
     alt: 'Reb Yen performing The Solitude live on acoustic guitar',
-    caption: 'Performing The Solitude live at Roots Music Project',
+    caption: 'Recorded live at Roots Music Project',
     href: 'https://www.reverbnation.com/rebyen/song/32896520-the-solitude-original--live'
   },
   '33992872': {
     title: 'A New Beginning',
     vinyl: 'A NEW\nBEGINNING',
+    catNo: 'RY-05 · STUDIO',
     eyebrow: 'Original song · Studio recording',
     desc: 'Written on loss, remembrance and beginning again—“Don’t call it the end; it’s a new beginning.”',
     img: 'images/newbeginning.jpg',
+    pos: '50% 56%',
+    scale: '1.46',
+    origin: '50% 56%',
     alt: 'Reb Yen performing A New Beginning with guitar and harmonica',
-    caption: 'A New Beginning · Live at The Copper Rocket',
+    caption: 'Written, arranged & performed by Reb Yen',
     href: 'https://www.reverbnation.com/rebyen/song/33992872-a-new-beginning-original'
   },
   '33391779': {
     title: 'Are You Listening Now?',
     vinyl: 'ARE YOU\nLISTENING',
+    catNo: 'RY-06 · STUDIO',
     eyebrow: 'Original song · Studio recording',
     desc: 'An original studio recording blending folk-rock urgency with Reb’s direct, observational songwriting.',
     img: 'images/are_you_listening.jpg',
+    pos: '52% 44%',
+    scale: '1.12',
     alt: 'Reb Yen performing on stage with her trio at The Alley',
-    caption: 'Reb Yen performing with her trio at The Alley',
+    caption: 'Original studio recording · Reb Yen',
     href: 'https://www.reverbnation.com/rebyen/song/33391779-are-you-listening-now-original'
   },
   '33866102': {
     title: 'Birds Of Prey',
     vinyl: 'BIRDS OF\nPREY',
+    catNo: 'RY-07 · LIVE',
     eyebrow: 'Original song · Live recording',
     desc: 'Recorded live on stage, bringing raw room energy to Reb’s original songwriting and arrangement.',
     img: 'images/storm.jpg',
+    pos: '52% 38%',
+    scale: '1.08',
     alt: 'Reb Yen performing live with her band',
-    caption: 'Live stage performance · Original catalog',
+    caption: 'Recorded live on stage · Original catalog',
     href: 'https://www.reverbnation.com/rebyen/song/33866102-birds-of-prey-original--live'
   },
   '32896774': {
     title: 'Take A Stand',
     vinyl: 'TAKE A\nSTAND',
+    catNo: 'RY-08 · LIVE',
     eyebrow: 'Original song · Live recording',
     desc: 'A live original recording driven by conviction, acoustic rhythm and the immediacy of the stage.',
     img: 'images/are_you_listening.jpg',
+    pos: '52% 44%',
+    scale: '1.12',
     alt: 'Reb Yen singing and playing acoustic guitar on stage',
-    caption: 'On stage · Original live recording',
+    caption: 'Original live recording · Reb Yen',
     href: 'https://www.reverbnation.com/rebyen/song/32896774-take-a-stand-original--live'
   },
   '32557441': {
     title: 'Out Of Body',
     vinyl: 'OUT OF\nBODY',
+    catNo: 'RY-09 · STUDIO',
     eyebrow: 'Original song · Studio recording',
     desc: 'An introspective studio original exploring perspective and reflection across Reb’s indie-folk palette.',
     img: 'images/reb_yen_photo.jpg',
     pos: '50% 38%',
     alt: 'Artistic portrait of Reb Yen with guitar fretboard',
-    caption: 'Reb Yen · Studio original',
+    caption: 'Original studio recording · Reb Yen',
     href: 'https://www.reverbnation.com/rebyen/song/32557441-out-of-body--original'
   }
 };
@@ -443,6 +465,8 @@ const sleeveDisc = featureSleeve?.querySelector('.sleeve-vinyl') || null;
 const sleeveVinylLabel = document.getElementById('sleeve-vinyl-label');
 const featuredImg = document.getElementById('featured-img');
 const featuredCaption = document.getElementById('featured-caption');
+const featuredCoverTitle = document.getElementById('featured-cover-title');
+const featuredCatNo = document.getElementById('featured-cat-no');
 const featuredEyebrow = document.getElementById('featured-eyebrow');
 const featuredHeading = document.getElementById('featured-heading');
 const featuredDesc = document.getElementById('featured-desc');
@@ -730,6 +754,8 @@ function updateJukeboxSleeve(trackId, isPlaying) {
   if (!meta) return;
 
   if (sleeveVinylLabel) sleeveVinylLabel.textContent = meta.vinyl;
+  if (featuredCoverTitle) featuredCoverTitle.textContent = meta.title;
+  if (featuredCatNo) featuredCatNo.textContent = meta.catNo || 'ORIGINAL';
   if (featuredEyebrow) featuredEyebrow.textContent = meta.eyebrow;
   if (featuredHeading) featuredHeading.textContent = meta.title;
   if (featuredDesc) featuredDesc.textContent = meta.desc;
@@ -757,14 +783,18 @@ function updateJukeboxSleeve(trackId, isPlaying) {
     if (!isAlbumMotionDisabled()) {
       featureSleeve?.classList.add('is-swapping-disc');
     }
+    const applyLpImgStyles = () => {
+      featuredImg.style.setProperty('--lp-pos', meta.pos || '50% 45%');
+      featuredImg.style.setProperty('--lp-scale', meta.scale || '1');
+      featuredImg.style.setProperty('--lp-origin', meta.origin || 'center center');
+      featuredImg.classList.toggle('is-brightened', Boolean(meta.bright));
+    };
+
     const applyImg = () => {
       featuredImg.onload = () => featuredImg.classList.remove('is-swapping');
       featuredImg.setAttribute('src', meta.img);
       featuredImg.alt = meta.alt;
-      featuredImg.style.objectPosition = meta.pos || '50% 50%';
-      featuredImg.classList.toggle('is-brightened', Boolean(meta.bright));
-      featuredImg.classList.toggle('is-portrait', Boolean(meta.portrait));
-      featureSleeve?.classList.toggle('is-portrait-sleeve', Boolean(meta.portrait));
+      applyLpImgStyles();
       featureSleeve?.classList.remove('is-swapping-disc');
       if (featuredImg.complete) featuredImg.classList.remove('is-swapping');
     };
@@ -776,10 +806,10 @@ function updateJukeboxSleeve(trackId, isPlaying) {
       applyImg();
     }
   } else if (featuredImg) {
-    featuredImg.style.objectPosition = meta.pos || '50% 50%';
+    featuredImg.style.setProperty('--lp-pos', meta.pos || '50% 45%');
+    featuredImg.style.setProperty('--lp-scale', meta.scale || '1');
+    featuredImg.style.setProperty('--lp-origin', meta.origin || 'center center');
     featuredImg.classList.toggle('is-brightened', Boolean(meta.bright));
-    featuredImg.classList.toggle('is-portrait', Boolean(meta.portrait));
-    featureSleeve?.classList.toggle('is-portrait-sleeve', Boolean(meta.portrait));
   }
 
   featureSleeve?.classList.toggle('is-playing', Boolean(isPlaying));

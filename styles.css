@@ -1451,7 +1451,9 @@ p + p {
 
 .feature-sleeve-wrap {
   position: relative;
-  padding-right: 28%;
+  width: 100%;
+  max-width: 548px;
+  padding-right: 39.5%;
   isolation: isolate;
   cursor: pointer;
 }
@@ -1462,21 +1464,20 @@ p + p {
   border-radius: 6px;
 }
 
-.feature-sleeve-wrap.is-portrait-sleeve {
-  max-width: 500px;
-  width: 100%;
-  justify-self: start;
-}
-
 .sleeve-vinyl {
   position: absolute;
-  top: 48%;
-  right: 0;
-  width: 56%;
-  aspect-ratio: 1;
+  top: 50%;
+  right: 0.5%;
+  height: 94%;
+  width: auto;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
-  background: repeating-radial-gradient(#140f15 0 2px, #2b202a 3px 4.5px);
-  box-shadow: 0 14px 32px rgba(35, 18, 34, 0.34);
+  background:
+    radial-gradient(circle at 50% 50%, transparent 67%, rgba(255, 240, 220, 0.08) 68%, transparent 69.5%),
+    repeating-radial-gradient(#120c13 0 2px, #2a1f29 2.6px 4.4px);
+  box-shadow:
+    0 18px 36px rgba(24, 11, 24, 0.42),
+    inset 0 0 0 1.5px rgba(255, 236, 214, 0.14);
   display: grid;
   place-items: center;
   transform: translateY(-50%) rotate(0deg);
@@ -1489,17 +1490,17 @@ p + p {
 
 @keyframes sleeve-slide-reveal {
   from {
-    right: 22%;
+    right: 20%;
     transform: translateY(-50%);
   }
   to {
-    right: 0;
+    right: 0.5%;
     transform: translateY(-50%);
   }
 }
 
 html.js-motion .feature-sleeve-wrap.reveal-ready:not(.is-revealed) .sleeve-vinyl {
-  right: 22%;
+  right: 20%;
   animation: none;
 }
 
@@ -1508,7 +1509,7 @@ html.js-motion .feature-sleeve-wrap.reveal-ready.is-revealed .sleeve-vinyl {
 }
 
 .feature-sleeve-wrap.is-swapping-disc .sleeve-vinyl {
-  right: 18% !important;
+  right: 16% !important;
   transition: right 0.22s ease-in !important;
 }
 
@@ -1518,13 +1519,13 @@ html.js-motion .feature-sleeve-wrap.reveal-ready.is-revealed .sleeve-vinyl {
   inset: 0;
   border-radius: 50%;
   background: conic-gradient(
-    from 40deg,
+    from 36deg,
     transparent 0deg,
-    rgba(255, 236, 212, 0.22) 30deg,
-    transparent 62deg,
+    rgba(255, 238, 216, 0.24) 28deg,
+    transparent 60deg,
     transparent 180deg,
-    rgba(255, 236, 212, 0.18) 210deg,
-    transparent 242deg,
+    rgba(255, 238, 216, 0.19) 208deg,
+    transparent 240deg,
     transparent 360deg
   );
 }
@@ -1532,64 +1533,215 @@ html.js-motion .feature-sleeve-wrap.reveal-ready.is-revealed .sleeve-vinyl {
 .sleeve-vinyl-label {
   position: relative;
   z-index: 1;
-  width: 36%;
-  height: 36%;
+  width: 34%;
+  height: 34%;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #f59a6b, var(--orange) 74%);
+  background: radial-gradient(circle at 35% 32%, #f79d6e, var(--orange) 72%, #c95d2b 100%);
   color: var(--plum-dark);
-  font: 800 clamp(8.5px, 0.95vw, 10.5px)/1.15 'Karla', sans-serif;
-  letter-spacing: 0.85px;
+  padding: 8% 6%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   text-align: center;
-  white-space: pre-line;
-  display: grid;
-  place-items: center;
   box-shadow:
-    inset 0 0 0 3px rgba(44, 25, 44, 0.24),
-    0 0 0 6px rgba(18, 10, 19, 0.45);
+    inset 0 0 0 2.5px rgba(44, 25, 44, 0.28),
+    inset 0 0 0 5px rgba(255, 245, 230, 0.22),
+    0 0 0 6px rgba(16, 9, 17, 0.55);
+}
+
+.sleeve-label-artist {
+  font: 800 clamp(6.5px, 0.68vw, 8px)/1 'Plus Jakarta Sans', 'Karla', sans-serif;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.sleeve-spindle {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #1a0f1a;
+  box-shadow:
+    0 0 0 1.5px rgba(255, 238, 216, 0.45),
+    inset 0 1px 2px rgba(0, 0, 0, 0.85);
+  flex: none;
+}
+
+.sleeve-label-song {
+  font: 800 clamp(7px, 0.78vw, 9px)/1.08 'Karla', sans-serif;
+  letter-spacing: 0.55px;
+  text-transform: uppercase;
+  white-space: pre-line;
 }
 
 .feature-sleeve-wrap:hover .sleeve-vinyl,
 .feature-sleeve-wrap.is-playing .sleeve-vinyl {
-  right: -3.5%;
-  box-shadow: 0 18px 38px rgba(35, 18, 34, 0.42);
+  right: -1.6%;
+  box-shadow:
+    0 22px 42px rgba(24, 11, 24, 0.5),
+    inset 0 0 0 1.5px rgba(255, 236, 214, 0.18);
 }
 
-.feature-art {
+/* 12-inch Square LP Album Jacket */
+.feature-art.lp-jacket {
   position: relative;
   z-index: 1;
-  padding: 15px 15px 0;
-  background: var(--paper);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--line);
-  transform: rotate(-1deg);
+  width: 100%;
+  aspect-ratio: 1 / 1;
   margin: 0;
+  padding: 0;
+  border-radius: 3px;
+  background: #1b0f1b;
+  border: 1px solid rgba(44, 24, 43, 0.45);
+  box-shadow:
+    8px 0 18px rgba(12, 5, 13, 0.42),
+    0 18px 38px rgba(34, 17, 33, 0.28);
+  overflow: hidden;
+  transform: perspective(950px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
 }
 
-.feature-art img {
+/* Left cardboard spine crease */
+.feature-art.lp-jacket::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 12px;
+  z-index: 4;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 248, 236, 0.24) 0px,
+    rgba(255, 248, 236, 0.06) 2px,
+    rgba(10, 4, 11, 0.46) 6px,
+    rgba(255, 248, 236, 0.15) 8px,
+    transparent 12px
+  );
+  pointer-events: none;
+}
+
+/* Subtle LP ring impression + inner copper-gold sleeve border */
+.feature-art.lp-jacket::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  z-index: 3;
+  border: 1px solid rgba(245, 189, 145, 0.34);
+  border-radius: 1px;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 45%,
+    rgba(255, 246, 232, 0.05) 47.5%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+.lp-photo-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #1b0f1b;
+}
+
+.feature-art.lp-jacket img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 100%;
   object-fit: cover;
-  transition: opacity 0.22s ease, transform 0.26s ease;
+  object-position: var(--lp-pos, 50% 24%);
+  transform: scale(var(--lp-scale, 1));
+  transform-origin: var(--lp-origin, center center);
+  filter: contrast(1.04) saturate(1.04);
+  transition: opacity 0.22s ease, transform 0.32s ease;
 }
 
-.feature-art img.is-portrait {
-  aspect-ratio: 760 / 931;
+.feature-art.lp-jacket img.is-brightened {
+  filter: brightness(1.18) contrast(1.04) saturate(1.06);
 }
 
-.feature-art img.is-brightened {
-  filter: brightness(1.22) contrast(1.02) saturate(1.06);
+.feature-art.lp-jacket img.is-swapping {
+  opacity: 0.26;
 }
 
-.feature-art img.is-swapping {
-  opacity: 0.28;
-  transform: scale(0.985);
+.lp-cover-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 17px 19px 18px 21px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(22, 10, 22, 0.62) 0%,
+      rgba(22, 10, 22, 0.14) 17%,
+      rgba(22, 10, 22, 0) 32%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(20, 9, 21, 0.92) 0%,
+      rgba(24, 11, 25, 0.68) 22%,
+      rgba(24, 11, 25, 0.16) 39%,
+      rgba(24, 11, 25, 0) 50%
+    );
+  color: var(--ivory-bright);
+  pointer-events: none;
 }
 
-.feature-art figcaption {
-  padding: 13px 3px 17px;
-  font-size: 14px;
-  color: var(--muted);
+.lp-cover-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font: 800 9.5px/1.2 'Karla', sans-serif;
+  letter-spacing: 1.9px;
+  text-transform: uppercase;
+  color: rgba(255, 240, 221, 0.86);
+  text-shadow: 0 1px 6px rgba(10, 4, 12, 0.75);
+}
+
+.lp-cat-no {
+  color: #f7be93;
+}
+
+.lp-cover-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-shadow: 0 2px 12px rgba(10, 4, 12, 0.85);
+}
+
+.lp-artist-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 800 10.5px/1.1 'Plus Jakarta Sans', 'Karla', sans-serif;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: #f6b280;
+}
+
+.lp-artist-kicker::after {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: rgba(246, 178, 128, 0.65);
+}
+
+.lp-cover-title {
+  display: block;
+  font: 800 clamp(21px, 2.35vw, 29px)/1.08 'Plus Jakarta Sans', 'Karla', sans-serif;
+  letter-spacing: -0.02em;
+  color: var(--ivory-bright);
+}
+
+.lp-cover-credit {
+  display: block;
+  margin-top: 2px;
+  font: 600 11.5px/1.3 'Karla', sans-serif;
+  letter-spacing: 0.3px;
+  color: rgba(247, 238, 223, 0.82);
 }
 
 .featured h3 {
@@ -1859,14 +2011,14 @@ html.album-motion-off.js-motion .feature-sleeve-wrap.reveal-ready.is-revealed .s
 html.album-motion-off .feature-sleeve-wrap:hover .sleeve-vinyl,
 html.album-motion-off .feature-sleeve-wrap.is-playing .sleeve-vinyl,
 html.album-motion-off .feature-sleeve-wrap.is-swapping-disc .sleeve-vinyl {
-  right: 0 !important;
+  right: 0.5% !important;
   animation: none !important;
   transition: none !important;
 }
 
 html.album-motion-off .feature-art,
 html.album-motion-off .feature-art.is-tilting {
-  transform: rotate(-1deg) !important;
+  transform: none !important;
 }
 
 html.album-motion-off .spin-record:hover .disc {
@@ -4473,19 +4625,60 @@ dialog.is-fallback-open {
     margin-bottom: 32px;
   }
   .feature-sleeve-wrap {
-    max-width: 440px;
-    padding-right: 28%;
+    max-width: 400px;
+    padding-right: 39.5%;
+    margin-inline: auto;
   }
   .feature-album-col {
     align-items: center;
   }
-  .feature-sleeve-wrap.is-portrait-sleeve {
-    max-width: 360px;
-    margin-inline: auto;
-  }
   .feature-sleeve-wrap:hover .sleeve-vinyl,
   .feature-sleeve-wrap.is-playing .sleeve-vinyl {
-    right: -2%;
+    right: -1.2%;
+  }
+  .feature-art.lp-jacket::after {
+    inset: 7px;
+  }
+  .lp-cover-overlay {
+    padding: 12px 13px 13px 15px;
+  }
+  .lp-cover-top {
+    font-size: 7.5px;
+    letter-spacing: 1.25px;
+  }
+  .lp-artist-kicker {
+    font-size: 8.5px;
+    letter-spacing: 2px;
+  }
+  .lp-artist-kicker::after {
+    width: 18px;
+  }
+  .lp-cover-title {
+    font-size: clamp(16.5px, 4.8vw, 21px);
+  }
+  .lp-cover-credit {
+    font-size: 9.5px;
+    line-height: 1.25;
+  }
+  .sleeve-vinyl-label {
+    padding: 7% 5%;
+    box-shadow:
+      inset 0 0 0 2px rgba(44, 25, 44, 0.28),
+      inset 0 0 0 3.5px rgba(255, 245, 230, 0.22),
+      0 0 0 4px rgba(16, 9, 17, 0.55);
+  }
+  .sleeve-label-artist {
+    font-size: 5.8px;
+    letter-spacing: 0.9px;
+  }
+  .sleeve-spindle {
+    width: 6.5px;
+    height: 6.5px;
+  }
+  .sleeve-label-song {
+    font-size: 6.4px;
+    letter-spacing: 0.35px;
+    line-height: 1.05;
   }
   .feature-art {
     max-width: none;
@@ -4704,7 +4897,7 @@ dialog.is-fallback-open {
   }
   html.js-motion .feature-sleeve-wrap.reveal-ready:not(.is-revealed) .sleeve-vinyl,
   .feature-sleeve-wrap:hover:not(.is-playing) .sleeve-vinyl {
-    right: 0 !important;
+    right: 0.5% !important;
   }
   .button.primary,
   .button.primary:hover,
