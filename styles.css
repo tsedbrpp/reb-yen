@@ -506,6 +506,24 @@ p + p {
   animation: hero-enter 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both;
 }
 
+.hero-contact-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 6px 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffbe92;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-shadow: 0 2px 10px rgba(15, 7, 18, 0.72);
+  transition: color 0.18s ease;
+}
+
+.hero-contact-link:hover {
+  color: var(--ivory-bright);
+}
+
 .hero-record {
   --rec: 250px;
   display: flex;
