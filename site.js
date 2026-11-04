@@ -305,6 +305,115 @@ const TRACK_META = {
   }
 };
 
+// ----------------------------------------------------------------------------
+// "What Kind of Moment Are You In?" — Proposed Song Pairings
+// ----------------------------------------------------------------------------
+// Maintenance note for Reb:
+// - Update any explanation, lyric line, or photo right here.
+// - To add a 20–30 second recorded voice introduction for any song later,
+//   upload the audio clip (e.g. 'audio/intro-a-new-beginning.mp3') and set
+//   introSrc to that path (plus optional introDuration, e.g. '0:26').
+//   The voice-intro button appears automatically whenever introSrc is set.
+const MOMENT_PAIRINGS = {
+  'starting-over': {
+    slug: 'starting-over',
+    momentLabel: 'Starting over',
+    trackId: '33992872',
+    songTitle: 'A New Beginning',
+    lyricsHref: 'songbook.html#song-5',
+    img: 'images/newbeginning.jpg',
+    imgWidth: 480,
+    imgHeight: 360,
+    imgPos: '50% 56%',
+    imgScale: '1.38',
+    alt: 'Reb Yen performing A New Beginning live with acoustic guitar and harmonica',
+    caption: 'A New Beginning · Live at The Copper Rocket',
+    why: 'Written about turning the page after loss or a closed chapter—honoring the years behind you while finding the strength to climb back up and begin again.',
+    lyric: '“As the pages turn, and your soul is set free… Don’t call it the end; it’s a new beginning.”',
+    introSrc: null,
+    introLabel: 'Hear Reb’s story behind this song',
+    introDuration: '0:25'
+  },
+  'letting-go': {
+    slug: 'letting-go',
+    momentLabel: 'Letting go',
+    trackId: '33993499',
+    songTitle: 'Gotta Let It Go',
+    lyricsHref: 'songbook.html#song-3',
+    img: 'images/gotta_let_it_go.jpg',
+    imgWidth: 480,
+    imgHeight: 360,
+    imgPos: '50% 50%',
+    imgScale: '1.24',
+    imgOrigin: '50% 44%',
+    alt: 'Reb Yen singing Gotta Let It Go with acoustic guitar',
+    caption: 'Gotta Let It Go · Original recording',
+    why: 'For the moment you stop trying to force a story that isn’t working—and finally give yourself room to step back, heal, and move forward.',
+    lyric: '“Gotta let it go when it’s falling apart… time to heal, time to recover.”',
+    introSrc: null,
+    introLabel: 'Hear Reb’s story behind this song',
+    introDuration: '0:25'
+  },
+  'love-is-complicated': {
+    slug: 'love-is-complicated',
+    momentLabel: 'Love is complicated',
+    trackId: '33863436',
+    songTitle: 'Take Me Crazy',
+    lyricsHref: 'songbook.html#song-1',
+    img: 'images/take_me_crazy.jpg',
+    imgWidth: 480,
+    imgHeight: 360,
+    imgPos: '56% 42%',
+    imgScale: '1.14',
+    alt: 'Reb Yen performing Take Me Crazy live in Nashville',
+    caption: 'Take Me Crazy · Live in Nashville',
+    why: 'Skips fairy-tale perfection for real-world love—the tug-of-war, the humor in the middle ground, and choosing each other honestly as we actually are.',
+    lyric: '“Cause it’s never all or nothing, just something in between… Take me as I am, and I’ll take you as you are.”',
+    introSrc: null,
+    introLabel: 'Hear Reb’s story behind this song',
+    introDuration: '0:25'
+  },
+  'finding-my-own-way': {
+    slug: 'finding-my-own-way',
+    momentLabel: 'Finding my own way',
+    trackId: '32896520',
+    songTitle: 'The Solitude',
+    lyricsHref: 'songbook.html#song-4',
+    img: 'images/about-solitude.jpg',
+    imgWidth: 434,
+    imgHeight: 544,
+    imgPos: '46% 8%',
+    imgScale: '1',
+    alt: 'Reb Yen performing The Solitude live at Roots Music Project',
+    caption: 'The Solitude · Live at Roots Music Project',
+    why: 'Turns quietness from loneliness into self-direction—trusting your own inner compass when the road ahead feels undecided.',
+    lyric: '“Where it dazzles in your sky that’s where you go / When the music’s in your soul that’s when you know.”',
+    introSrc: null,
+    introLabel: 'Hear Reb’s story behind this song',
+    introDuration: '0:25'
+  },
+  'ready-to-speak-up': {
+    slug: 'ready-to-speak-up',
+    momentLabel: 'Ready to speak up',
+    trackId: '32896774',
+    songTitle: 'Take A Stand',
+    lyricsHref: 'songbook.html#song-8',
+    img: 'images/are_you_listening.jpg',
+    imgWidth: 480,
+    imgHeight: 360,
+    imgPos: '52% 46%',
+    imgScale: '1.12',
+    alt: 'Reb Yen singing and playing acoustic guitar live on stage',
+    caption: 'Take A Stand · Live original recording',
+    why: 'Driven by live acoustic urgency, this song meets the moment you stop watching from the sidelines and step forward for someone—or something—that matters.',
+    lyric: '“Don’t just sit while it goes by, got a cause don’t let it die… You’ve gotta take a stand.”',
+    introSrc: null,
+    introLabel: 'Hear Reb’s story behind this song',
+    introDuration: '0:25'
+  }
+};
+let syncMomentListenState = () => {};
+
 const player = document.getElementById('music-player');
 const frame = document.getElementById('reverbnation-player');
 const playerBody = document.getElementById('player-body');
@@ -636,6 +745,7 @@ function updateCatalogSelection(trackId) {
   });
 
   updateJukeboxSleeve(trackId, Boolean(trackId));
+  syncMomentListenState();
 }
 
 function setRecordStatus(trackId) {
@@ -1152,6 +1262,7 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
   document.documentElement.classList.add('js-motion');
 
   const staggerGroups = [
+    { parent: '.moment-grid', children: '.moment-card', step: 45, mod: 5 },
     { parent: '.song-list', children: '.song-row', step: 35, mod: 5 },
     { parent: '.video-grid', children: '.video', step: 80, mod: 2 },
     { parent: '.format-cards', children: 'article', step: 75, mod: 3 },
@@ -1457,6 +1568,400 @@ async function shareOrCopyLink({ title, text, url }, labelEl, defaultLabel) {
     }, 2200);
   }
 }
+
+// ============================================================================
+// "What Kind of Moment Are You In?" — Interactive Song Pairing & Measurement
+// ============================================================================
+const MOMENT_METRICS_KEY = 'rebyen_moment_metrics_v1';
+
+function readMomentMetrics() {
+  try {
+    const raw = window.localStorage.getItem(MOMENT_METRICS_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') return parsed;
+    }
+  } catch {
+    // Ignore storage errors (e.g., private browsing restrictions)
+  }
+  return { totals: {}, bySong: {} };
+}
+
+function trackMomentEvent(action, pairing, extra = {}) {
+  const payload = {
+    moment: pairing?.slug || 'none',
+    momentLabel: pairing?.momentLabel || '',
+    trackId: pairing?.trackId || '',
+    songTitle: pairing?.songTitle || '',
+    ...extra
+  };
+
+  try {
+    const store = readMomentMetrics();
+    store.totals = store.totals || {};
+    store.bySong = store.bySong || {};
+    store.totals[action] = (store.totals[action] || 0) + 1;
+    if (payload.songTitle) {
+      const songStats = store.bySong[payload.songTitle] || {};
+      songStats[action] = (songStats[action] || 0) + 1;
+      store.bySong[payload.songTitle] = songStats;
+    }
+    window.localStorage.setItem(MOMENT_METRICS_KEY, JSON.stringify(store));
+  } catch {
+    // Ignore storage errors
+  }
+
+  try {
+    if (typeof window.va === 'function') {
+      window.va('event', { name: action, data: payload });
+    }
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', action, payload);
+    }
+    if (typeof window.plausible === 'function') {
+      window.plausible(action, { props: payload });
+    }
+    window.dispatchEvent(
+      new CustomEvent('rebyen:moment_metric', {
+        detail: { action, ...payload }
+      })
+    );
+  } catch {
+    // Never let analytics hooks interrupt playback or navigation
+  }
+}
+
+const momentSection = document.getElementById('moments');
+const momentCards = Array.from(document.querySelectorAll('.moment-card[data-moment]'));
+const momentSurpriseBtn = document.getElementById('moment-surprise-btn');
+const momentResult = document.getElementById('moment-result');
+const momentCloseBtn = document.getElementById('moment-close-btn');
+const momentImg = document.getElementById('moment-img');
+const momentCaption = document.getElementById('moment-photo-caption');
+const momentKicker = document.getElementById('moment-kicker');
+const momentSongTitle = document.getElementById('moment-song-title');
+const momentWhy = document.getElementById('moment-why');
+const momentLyric = document.getElementById('moment-lyric');
+const momentVoiceWrap = document.getElementById('moment-voice');
+const momentVoiceBtn = document.getElementById('moment-voice-btn');
+const momentVoiceIcon = document.getElementById('moment-voice-icon');
+const momentVoiceLabel = document.getElementById('moment-voice-label');
+const momentVoiceTime = document.getElementById('moment-voice-time');
+const momentVoiceAudio = document.getElementById('moment-voice-audio');
+const momentListenBtn = document.getElementById('moment-listen-btn');
+const momentListenIcon = document.getElementById('moment-listen-icon');
+const momentListenLabel = document.getElementById('moment-listen-label');
+const momentLyricsLink = document.getElementById('moment-lyrics-link');
+const momentShareBtn = document.getElementById('moment-share-btn');
+const momentShareLabel = document.getElementById('moment-share-label');
+
+let activeMomentSlug = null;
+
+function formatClipTime(seconds) {
+  if (!Number.isFinite(seconds) || seconds <= 0) return '';
+  const rounded = Math.max(1, Math.round(seconds));
+  const mins = Math.floor(rounded / 60);
+  const secs = String(rounded % 60).padStart(2, '0');
+  return `${mins}:${secs}`;
+}
+
+function pauseMomentVoiceIntro(resetTime = false) {
+  if (!momentVoiceAudio) return;
+  if (!momentVoiceAudio.paused) {
+    momentVoiceAudio.pause();
+  }
+  if (resetTime) {
+    try {
+      momentVoiceAudio.currentTime = 0;
+    } catch {
+      // Ignore if metadata not loaded yet
+    }
+  }
+  momentVoiceBtn?.setAttribute('aria-pressed', 'false');
+  if (momentVoiceIcon) momentVoiceIcon.textContent = '▶';
+}
+
+syncMomentListenState = () => {
+  if (!momentListenBtn) return;
+  const pairing = activeMomentSlug ? MOMENT_PAIRINGS[activeMomentSlug] : null;
+  if (!pairing) return;
+  const isCurrent = Boolean(selectedTrack && selectedTrack === pairing.trackId);
+  if (isCurrent) {
+    if (momentListenIcon) {
+      momentListenIcon.innerHTML =
+        '<span class="eq-bars" aria-hidden="true"><i></i><i></i><i></i></span>';
+    }
+    if (momentListenLabel) momentListenLabel.textContent = 'Playing';
+    momentListenBtn.setAttribute(
+      'aria-label',
+      `${pairing.songTitle} (currently loaded in music player)`
+    );
+  } else {
+    if (momentListenIcon) momentListenIcon.textContent = '▶';
+    if (momentListenLabel) momentListenLabel.textContent = 'Listen';
+    momentListenBtn.setAttribute('aria-label', `Listen to ${pairing.songTitle}`);
+  }
+};
+
+function syncMomentVoiceUi(pairing) {
+  pauseMomentVoiceIntro(true);
+  if (!momentVoiceWrap || !momentVoiceAudio) return;
+
+  const src = typeof pairing?.introSrc === 'string' ? pairing.introSrc.trim() : '';
+  if (!src) {
+    momentVoiceWrap.hidden = true;
+    momentVoiceAudio.removeAttribute('src');
+    return;
+  }
+
+  momentVoiceWrap.hidden = false;
+  if (momentVoiceLabel) {
+    momentVoiceLabel.textContent = pairing.introLabel || 'Hear Reb’s story behind this song';
+  }
+  if (momentVoiceTime) {
+    momentVoiceTime.textContent = pairing.introDuration || '0:25';
+  }
+  if (momentVoiceAudio.getAttribute('src') !== src) {
+    momentVoiceAudio.src = src;
+  }
+}
+
+function closeMomentPairing({ focusTrigger = false } = {}) {
+  const prevSlug = activeMomentSlug;
+  activeMomentSlug = null;
+  pauseMomentVoiceIntro(true);
+
+  momentCards.forEach(card => {
+    card.classList.remove('is-active');
+    card.setAttribute('aria-pressed', 'false');
+    const cue = card.querySelector('.moment-card-cue');
+    if (cue) cue.textContent = cue.dataset.defaultCue || 'Open song →';
+  });
+
+  if (momentResult) {
+    momentResult.hidden = true;
+    momentResult.classList.remove('is-revealing-moment');
+  }
+
+  if (focusTrigger && prevSlug) {
+    const trigger = momentCards.find(c => c.dataset.moment === prevSlug);
+    trigger?.focus({ preventScroll: true });
+  }
+}
+
+function openMomentPairing(slug, { source = 'card', scrollIntoView = false } = {}) {
+  const pairing = MOMENT_PAIRINGS[slug];
+  if (!pairing || !momentResult) return null;
+
+  activeMomentSlug = slug;
+
+  momentCards.forEach(card => {
+    const active = card.dataset.moment === slug;
+    card.classList.toggle('is-active', active);
+    card.setAttribute('aria-pressed', String(active));
+    const cue = card.querySelector('.moment-card-cue');
+    if (cue) {
+      cue.textContent = active
+        ? `♪ ${pairing.songTitle}`
+        : cue.dataset.defaultCue || 'Open song →';
+    }
+  });
+
+  if (momentImg) {
+    momentImg.src = pairing.img;
+    momentImg.alt = pairing.alt;
+    momentImg.width = pairing.imgWidth || 480;
+    momentImg.height = pairing.imgHeight || 360;
+    momentImg.style.setProperty('--img-pos', pairing.imgPos || '50% 45%');
+    momentImg.style.setProperty('--img-scale', pairing.imgScale || '1');
+    momentImg.style.setProperty('--img-origin', pairing.imgOrigin || 'center center');
+  }
+  if (momentCaption) momentCaption.textContent = pairing.caption;
+  if (momentKicker) momentKicker.textContent = `${pairing.momentLabel} · Suggested song`;
+  if (momentSongTitle) momentSongTitle.textContent = pairing.songTitle;
+  if (momentWhy) momentWhy.textContent = pairing.why;
+  if (momentLyric) momentLyric.textContent = pairing.lyric;
+
+  const trackHref =
+    TRACK_META[pairing.trackId]?.href || 'https://www.reverbnation.com/rebyen';
+  if (momentListenBtn) {
+    momentListenBtn.href = trackHref;
+  }
+  if (momentLyricsLink) {
+    momentLyricsLink.href = pairing.lyricsHref;
+    momentLyricsLink.setAttribute('aria-label', `Read lyrics for ${pairing.songTitle}`);
+  }
+  if (momentShareLabel) {
+    momentShareLabel.textContent = 'Share this song';
+  }
+
+  syncMomentVoiceUi(pairing);
+  syncMomentListenState();
+
+  momentResult.hidden = false;
+  momentResult.classList.remove('is-revealing-moment');
+  if (!prefersReducedMotion) {
+    void momentResult.offsetWidth;
+    momentResult.classList.add('is-revealing-moment');
+  }
+
+  if (source === 'surprise') {
+    trackMomentEvent('moment_surprise', pairing);
+  } else if (source === 'deeplink') {
+    trackMomentEvent('moment_deeplink', pairing);
+  } else if (source === 'card') {
+    trackMomentEvent('moment_select', pairing);
+  }
+
+  if (scrollIntoView) {
+    window.requestAnimationFrame(() => {
+      const rect = momentResult.getBoundingClientRect();
+      const outOfView = rect.bottom > window.innerHeight - 16 || rect.top < 76;
+      if (outOfView) {
+        momentResult.scrollIntoView({
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+          block: 'nearest'
+        });
+      }
+    });
+  }
+
+  return pairing;
+}
+
+if (momentCards.length > 0 && momentResult) {
+  momentCards.forEach((card, index) => {
+    card.addEventListener('click', () => {
+      const slug = card.dataset.moment;
+      if (!slug) return;
+      if (activeMomentSlug === slug && !momentResult.hidden) {
+        closeMomentPairing();
+        return;
+      }
+      openMomentPairing(slug, { source: 'card', scrollIntoView: true });
+    });
+
+    card.addEventListener('keydown', event => {
+      let nextIndex = -1;
+      if (event.key === 'ArrowRight') {
+        nextIndex = (index + 1) % momentCards.length;
+      } else if (event.key === 'ArrowLeft') {
+        nextIndex = (index - 1 + momentCards.length) % momentCards.length;
+      }
+      if (nextIndex !== -1) {
+        event.preventDefault();
+        momentCards[nextIndex]?.focus();
+      }
+    });
+  });
+
+  momentSurpriseBtn?.addEventListener('click', () => {
+    const slugs = Object.keys(MOMENT_PAIRINGS);
+    if (slugs.length === 0) return;
+    const candidates =
+      slugs.length > 1 ? slugs.filter(s => s !== activeMomentSlug) : slugs;
+    const randomSlug = candidates[Math.floor(Math.random() * candidates.length)];
+    openMomentPairing(randomSlug, { source: 'surprise', scrollIntoView: true });
+  });
+
+  momentCloseBtn?.addEventListener('click', () => {
+    closeMomentPairing({ focusTrigger: true });
+  });
+
+  momentListenBtn?.addEventListener('click', event => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const pairing = activeMomentSlug ? MOMENT_PAIRINGS[activeMomentSlug] : null;
+    if (!pairing) return;
+    event.preventDefault();
+    pauseMomentVoiceIntro();
+    trackMomentEvent('moment_listen', pairing);
+    selectTrackById(pairing.trackId, { dock: true, focusPlayer: true });
+  });
+
+  momentLyricsLink?.addEventListener('click', () => {
+    const pairing = activeMomentSlug ? MOMENT_PAIRINGS[activeMomentSlug] : null;
+    if (!pairing) return;
+    pauseMomentVoiceIntro();
+    trackMomentEvent('moment_lyrics', pairing);
+  });
+
+  momentShareBtn?.addEventListener('click', () => {
+    const pairing = activeMomentSlug ? MOMENT_PAIRINGS[activeMomentSlug] : null;
+    if (!pairing) return;
+    const shareUrl = `${siteShareOrigin}/?moment=${encodeURIComponent(pairing.slug)}#moments`;
+    trackMomentEvent('moment_share', pairing);
+    shareOrCopyLink(
+      {
+        title: `“${pairing.songTitle}” — Reb Yen`,
+        text: `For a “${pairing.momentLabel.toLowerCase()}” moment — listen to “${pairing.songTitle}” and read the lyrics by Reb Yen:`,
+        url: shareUrl
+      },
+      momentShareLabel,
+      'Share this song'
+    );
+  });
+
+  momentVoiceBtn?.addEventListener('click', () => {
+    if (!momentVoiceAudio || momentVoiceWrap?.hidden) return;
+    const pairing = activeMomentSlug ? MOMENT_PAIRINGS[activeMomentSlug] : null;
+    if (momentVoiceAudio.paused) {
+      momentVoiceAudio
+        .play()
+        .then(() => {
+          momentVoiceBtn.setAttribute('aria-pressed', 'true');
+          if (momentVoiceIcon) momentVoiceIcon.textContent = '❚❚';
+          if (pairing) trackMomentEvent('moment_voice_intro', pairing);
+        })
+        .catch(() => {});
+    } else {
+      pauseMomentVoiceIntro(false);
+    }
+  });
+
+  momentVoiceAudio?.addEventListener('loadedmetadata', () => {
+    const formatted = formatClipTime(momentVoiceAudio.duration);
+    if (formatted && momentVoiceTime) {
+      momentVoiceTime.textContent = formatted;
+    }
+  });
+
+  momentVoiceAudio?.addEventListener('timeupdate', () => {
+    if (!momentVoiceTime || !Number.isFinite(momentVoiceAudio.duration)) return;
+    const remaining = Math.max(0, momentVoiceAudio.duration - momentVoiceAudio.currentTime);
+    const formatted = formatClipTime(remaining);
+    if (formatted) momentVoiceTime.textContent = formatted;
+  });
+
+  momentVoiceAudio?.addEventListener('ended', () => {
+    pauseMomentVoiceIntro(true);
+    const pairing = activeMomentSlug ? MOMENT_PAIRINGS[activeMomentSlug] : null;
+    const full = formatClipTime(momentVoiceAudio.duration) || pairing?.introDuration || '0:25';
+    if (momentVoiceTime) momentVoiceTime.textContent = full;
+  });
+
+  // Open automatically if visitor arrives via a shared ?moment=<slug> link
+  const initialMoment = new URLSearchParams(window.location.search).get('moment');
+  if (initialMoment && MOMENT_PAIRINGS[initialMoment]) {
+    openMomentPairing(initialMoment, { source: 'deeplink', scrollIntoView: false });
+    window.requestAnimationFrame(() => {
+      momentSection?.scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start'
+      });
+    });
+  }
+}
+
+window.rebYenMoments = {
+  pairings: MOMENT_PAIRINGS,
+  open: openMomentPairing,
+  close: closeMomentPairing,
+  syncVoiceUi: () => {
+    const pairing = activeMomentSlug ? MOMENT_PAIRINGS[activeMomentSlug] : null;
+    if (pairing) syncMomentVoiceUi(pairing);
+  },
+  getMetrics: readMomentMetrics
+};
 
 const shareGalleryBtn = document.getElementById('share-gallery-btn');
 const shareGalleryLabel = document.getElementById('share-gallery-label');

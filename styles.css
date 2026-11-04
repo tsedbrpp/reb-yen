@@ -984,6 +984,383 @@ p + p {
 }
 
 /* ==========================================================================
+   "What Kind of Moment Are You In?" — Song Pairing Section
+   ========================================================================== */
+.moments {
+  padding: 56px 0 60px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.moments-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.moments-head .eyebrow {
+  margin-bottom: 8px;
+}
+
+.moments-head h2 {
+  font-size: clamp(27px, 3.3vw, 38px);
+}
+
+.moments-sub {
+  margin-top: 8px;
+  max-width: 600px;
+  font-size: 16.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.moment-surprise-btn {
+  flex: none;
+  min-height: 44px;
+  padding: 9px 20px;
+  border-radius: 999px;
+  border: 1.5px solid var(--plum);
+  background: var(--ivory);
+  color: var(--plum);
+  font-size: 15px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  gap: 8px;
+}
+
+.moment-surprise-icon {
+  color: var(--rust);
+  font-size: 14px;
+  line-height: 1;
+  transition: color 0.18s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.moment-surprise-btn:hover {
+  background: var(--plum);
+  color: var(--ivory-bright);
+  border-color: var(--plum);
+}
+
+.moment-surprise-btn:hover .moment-surprise-icon {
+  color: #ffbe92;
+  transform: rotate(22deg) scale(1.1);
+}
+
+.moment-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.moment-card {
+  -webkit-appearance: none;
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 92px;
+  padding: 15px 16px 13px;
+  border-radius: 10px;
+  border: 1px solid #cbb699;
+  border-top: 3px solid #bfa686;
+  background: var(--ivory);
+  color: var(--plum);
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(44, 24, 43, 0.05);
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.22s ease;
+}
+
+.moment-card-title {
+  font-family: 'Plus Jakarta Sans', 'Karla', system-ui, sans-serif;
+  font-size: 16.5px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.moment-card-cue {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--rust);
+  transition: color 0.18s ease;
+}
+
+@media (hover: hover) {
+  .moment-card:hover {
+    transform: translateY(-2px);
+    background: var(--ivory-bright);
+    border-color: #b79673;
+    border-top-color: var(--orange);
+    box-shadow: 0 10px 22px rgba(44, 24, 43, 0.1);
+  }
+}
+
+.moment-card.is-active,
+.moment-card[aria-pressed="true"] {
+  background: var(--plum);
+  color: var(--ivory-bright);
+  border-color: var(--plum);
+  border-top-color: var(--orange);
+  box-shadow: 0 12px 26px rgba(44, 24, 43, 0.22);
+}
+
+.moment-card.is-active .moment-card-cue,
+.moment-card[aria-pressed="true"] .moment-card-cue {
+  color: #ffbe92;
+}
+
+.moment-result {
+  margin-top: 18px;
+  padding: 22px 24px;
+  border-radius: 12px;
+  border: 1px solid #cbb394;
+  border-left: 4px solid var(--orange);
+  background: var(--ivory-bright);
+  box-shadow: 0 14px 32px rgba(44, 24, 43, 0.1);
+}
+
+.moment-result[hidden] {
+  display: none !important;
+}
+
+.moment-result.is-revealing-moment {
+  animation: moment-reveal-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes moment-reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.moment-result-inner {
+  display: grid;
+  grid-template-columns: 208px minmax(0, 1fr);
+  gap: 26px;
+  align-items: center;
+}
+
+.moment-photo-wrap {
+  margin: 0;
+  padding: 9px 9px 0;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+.moment-photo-crop {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #1d111d;
+}
+
+.moment-photo-crop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--img-pos, 50% 45%);
+  transform: scale(var(--img-scale, 1));
+  transform-origin: var(--img-origin, center center);
+}
+
+.moment-photo-wrap figcaption {
+  padding: 8px 2px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.moment-body {
+  min-width: 0;
+}
+
+.moment-body-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.moment-body-top .eyebrow {
+  margin-bottom: 0;
+  font-size: 12px;
+}
+
+.moment-close-btn {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--plum);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.moment-close-btn:hover {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: var(--ivory-bright);
+}
+
+.moment-body h3 {
+  font-family: 'Plus Jakarta Sans', 'Karla', system-ui, sans-serif;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--plum);
+  margin-bottom: 8px;
+}
+
+.moment-why {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--plum);
+  max-width: 650px;
+}
+
+.moment-lyric {
+  margin: 12px 0 0;
+  padding: 6px 0 6px 14px;
+  border-left: 2px solid rgba(223, 115, 63, 0.72);
+  font-size: 15.5px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 630px;
+}
+
+.moment-voice {
+  margin-top: 14px;
+}
+
+.moment-voice[hidden] {
+  display: none !important;
+}
+
+.moment-voice-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 7px 15px 7px 9px;
+  border-radius: 999px;
+  border: 1px solid #c6aa88;
+  background: var(--paper);
+  color: var(--plum);
+  font-size: 14.5px;
+  font-weight: 700;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.moment-voice-btn:hover,
+.moment-voice-btn[aria-pressed="true"] {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: var(--ivory-bright);
+}
+
+.moment-voice-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: var(--plum-dark);
+  font-size: 11px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.moment-voice-time {
+  font-size: 12.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.78;
+}
+
+.moment-actions {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+.moment-secondary-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+}
+
+.moment-listen-btn {
+  min-height: 44px;
+  padding: 9px 20px;
+  border-radius: 6px;
+  font-size: 15.5px;
+  gap: 8px;
+}
+
+.moment-action-link {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 6px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--plum);
+  font-size: 15.5px;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: rgba(134, 45, 14, 0.45);
+  text-underline-offset: 4px;
+  cursor: pointer;
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+}
+
+.moment-action-link:hover {
+  color: var(--rust);
+  text-decoration-color: var(--rust);
+}
+
+.moment-dot {
+  color: var(--muted);
+  font-weight: 800;
+  user-select: none;
+}
+
+/* ==========================================================================
    Music Section, Player & Catalog
    ========================================================================== */
 .music {
@@ -3583,6 +3960,13 @@ dialog.is-fallback-open {
   .record-actions {
     justify-content: center;
   }
+  .moment-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .moment-result-inner {
+    grid-template-columns: 184px minmax(0, 1fr);
+    gap: 20px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -3855,6 +4239,74 @@ dialog.is-fallback-open {
   .recognition-copy p {
     font-size: 15px;
   }
+  .moments {
+    padding: 42px 0 46px;
+  }
+  .moments-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .moments-sub {
+    font-size: 15.5px;
+  }
+  .moment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .moment-card {
+    min-height: 70px;
+    padding: 13px 14px;
+    gap: 8px;
+  }
+  .moment-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+  .moment-card-title {
+    font-size: 15.5px;
+  }
+  .moment-result {
+    position: relative;
+    padding: 18px 16px;
+    margin-top: 14px;
+  }
+  .moment-result-inner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .moment-photo-wrap {
+    max-width: 232px;
+  }
+  .moment-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+  }
+  .moment-body-top {
+    padding-right: 44px;
+  }
+  .moment-why {
+    font-size: 16px;
+  }
+  .moment-actions {
+    gap: 8px 10px;
+  }
+  .moment-listen-btn {
+    padding: 9px 18px;
+    font-size: 15px;
+  }
+  .moment-dot-lead {
+    display: none;
+  }
+  .moment-secondary-links {
+    gap: 6px 10px;
+  }
+  .moment-action-link {
+    font-size: 15px;
+  }
   .section-head {
     display: block;
     margin-bottom: 28px;
@@ -4114,7 +4566,10 @@ dialog.is-fallback-open {
   .press-photo:hover,
   .song-actions .listen-link:hover,
   .journey-stop:hover,
-  .ec-option:hover {
+  .ec-option:hover,
+  .moment-card:hover,
+  .moment-surprise-btn:hover .moment-surprise-icon,
+  .moment-result.is-revealing-moment {
     transform: none !important;
   }
   .video:hover .play-badge {
@@ -4174,9 +4629,11 @@ dialog.is-fallback-open {
 /* Global reduced-motion safety net */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0.001ms !important;
+    transition: none !important;
+    animation: none !important;
     scroll-behavior: auto !important;
   }
 }
