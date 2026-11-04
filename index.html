@@ -38,8 +38,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261104b">
-  <script defer src="site.js?v=20261104b"></script>
+  <link rel="stylesheet" href="styles.css?v=20261104c">
+  <script defer src="site.js?v=20261104c"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -135,9 +135,10 @@
       </button>
       <nav class="site-nav" id="main-nav" aria-label="Main navigation">
         <a href="#music">Music</a>
-        <a href="songbook.html">Songbook</a>
+        <a href="songbook.html" title="Open complete 22-song lyric songbook">Songbook</a>
         <a href="#videos">Videos</a>
         <a href="#about">About</a>
+        <a href="#gallery">Photos</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -184,6 +185,7 @@
             </div>
           </div>
           <div class="hero-secondary">
+            <button type="button" class="button primary hero-listen-btn" id="hero-listen-btn"><span aria-hidden="true">▶</span> Listen</button>
             <a href="#videos" class="button light">Videos</a>
             <span class="hero-contact-prompt">For Inquiries <a href="#contact" class="hero-contact-link">Contact Reb</a></span>
           </div>
@@ -381,19 +383,12 @@
                     <iframe id="reverbnation-player" title="Take Me Crazy by Reb Yen — ReverbNation audio player" data-track="33863436" allow="autoplay; encrypted-media" src="about:blank"></iframe>
                   </div>
                   <p class="player-help">
-                    <button type="button" class="player-motion-btn" id="player-motion-btn" data-toggle-album-motion aria-pressed="false" aria-label="Stop album animation">
-                      <span class="motion-toggle-icon" aria-hidden="true">⏸</span>
-                      <span class="motion-toggle-label">Stop animation</span>
-                    </button>
                     <a id="player-fallback" href="https://www.reverbnation.com/rebyen/song/33863436-take-me-crazy-original" target="_blank" rel="noopener noreferrer">Open on ReverbNation ↗</a>
-                    <a href="https://www.reverbnation.com/rebyen/songs" target="_blank" rel="noopener noreferrer">All songs ↗</a>
+                    <a href="https://www.reverbnation.com/rebyen/songs" target="_blank" rel="noopener noreferrer">All 22 songs ↗</a>
                     <a class="player-return" id="player-return" href="#music">Back to music</a>
                   </p>
                 </div>
               </aside>
-              <p class="player-more-below">
-                <a href="https://www.reverbnation.com/rebyen/songs" target="_blank" rel="noopener noreferrer" class="text-link">See more songs on ReverbNation ↗</a>
-              </p>
             </div>
           </div>
         </div>
@@ -406,6 +401,9 @@
             <span class="catalog-note">22 ReverbNation tracks · 5 songs per page · Pluck any guitar string divider</span>
           </div>
           <div class="catalog-controls">
+            <div class="catalog-search-wrap">
+              <input type="search" id="catalog-search" class="catalog-search" placeholder="Search 22 songs…" aria-label="Search original songs" autocomplete="off">
+            </div>
             <div class="catalog-filters" role="group" aria-label="Filter original songs">
               <button type="button" class="filter-pill is-active" data-filter="all" aria-pressed="true">All <span>22</span></button>
               <button type="button" class="filter-pill" data-filter="featured" aria-pressed="false">Featured <span>3</span></button>
@@ -418,7 +416,7 @@
           </div>
         </div>
 
-        <div class="guitar-string" data-guitar-string data-note="146.83" aria-hidden="true">
+        <div class="guitar-string has-pluck-badge" data-guitar-string data-note="146.83" aria-hidden="true">
           <svg viewBox="0 0 1000 32" preserveAspectRatio="none">
             <path class="string-glow" d="M0,16 Q500,16 1000,16"></path>
             <path class="string-wire" d="M0,16 Q500,16 1000,16"></path>
@@ -833,6 +831,23 @@
           <p>Reb’s performance credits include Walt Disney World, Universal Studios, and New York City’s Lincoln Center, where she performed as a featured artist with the Aman World Music and Dance Ensemble. She has also toured internationally, including two tours of Europe, and performed at the Commodore Grille in Nashville, a venue known for showcasing emerging and established songwriters.</p>
           <p>Reb received formal training in singing and vocal technique and has experience as a vocal coach, including professional involvement with the National Association of Teachers of Singing (NATS). Reb Yen uses no AI-generated vocals or instrumentation in her productions. All her tracks feature live vocal performances—including layered vocal tracks—and live-recorded instrumentation, capturing the authenticity of her vocals and musicianship.</p>
           <p>Currently based in Boulder, Colorado, Reb periodically performs at local venues, including the St. Julien Hotel, the Roots Music Project, and Bricks on Main. She continues to write and perform original music, sharing her songs and connecting with audiences through live performances.</p>
+          <div class="about-highlights" aria-label="Artistry highlights">
+            <div class="about-highlight-card">
+              <span class="about-highlight-kicker">100% Human Artistry</span>
+              <strong>Zero AI Vocals or Tracks</strong>
+              <p>Every recording features Reb’s live vocal performances—including layered harmonies—and live-recorded acoustic and electric instrumentation.</p>
+            </div>
+            <div class="about-highlight-card">
+              <span class="about-highlight-kicker">National &amp; World Stages</span>
+              <strong>Lincoln Center to Europe</strong>
+              <p>Featured artist at NYC’s Lincoln Center, Walt Disney World, Universal Studios, Nashville’s Commodore Grille, and two European tours.</p>
+            </div>
+            <div class="about-highlight-card">
+              <span class="about-highlight-kicker">Musicianship &amp; Craft</span>
+              <strong>Multi-Instrumentalist &amp; Coach</strong>
+              <p>Performs on guitar, banjo, keyboard, and harmonica, backed by formal vocal training and NATS coaching experience.</p>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -1123,12 +1123,14 @@ function setRecordStatus(trackId) {
   if (recordLabelTitle) recordLabelTitle.textContent = isLoaded ? name : 'Tap to pick a song';
 
   if (recordNowLabel) {
-    if (recordNowLabelText) recordNowLabelText.textContent = 'Now playing';
+    if (recordNowLabelText) {
+      recordNowLabelText.textContent = isCued ? 'Selected · Tap ▶ in player' : 'Now playing';
+    }
     recordNowLabel.hidden = !isLoaded;
   }
   if (playerEyebrow) {
     playerEyebrow.innerHTML = isLoaded
-      ? '<span class="eq-bars eq-bars-now" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Now playing'
+      ? `<span class="eq-bars eq-bars-now" aria-hidden="true"><i></i><i></i><i></i><i></i></span> ${isCued ? 'Selected · Tap ▶ below' : 'Now playing'}`
       : 'Music player';
   }
   syncPlatters();
@@ -1288,6 +1290,7 @@ let activeCatalogFilter = 'all';
 let currentCatalogPage = 1;
 
 const filterPills = Array.from(document.querySelectorAll('.filter-pill[data-filter]'));
+const catalogSearch = document.getElementById('catalog-search');
 const catalogPagination = document.getElementById('catalog-pagination');
 const catalogPageInfo = document.getElementById('catalog-page-info');
 const catalogPageNums = document.getElementById('catalog-page-nums');
@@ -1295,10 +1298,21 @@ const catalogPagePrev = document.getElementById('catalog-page-prev');
 const catalogPageNext = document.getElementById('catalog-page-next');
 
 function getMatchingCatalogRows(filter = activeCatalogFilter) {
+  const q = (catalogSearch?.value || '').trim().toLowerCase();
   return catalogRows.filter(row => {
-    if (filter === 'all') return true;
-    const tags = (row.dataset.tags || '').split(/\s+/);
-    return tags.includes(filter);
+    if (filter !== 'all') {
+      const tags = (row.dataset.tags || '').split(/\s+/);
+      if (!tags.includes(filter)) return false;
+    }
+    if (q) {
+      const id = row.dataset.song || '';
+      const meta = TRACK_META[id];
+      const hay = meta
+        ? `${meta.num} ${meta.title} ${meta.subtitle} ${meta.desc}`.toLowerCase()
+        : (row.textContent || '').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
   });
 }
 
@@ -1375,6 +1389,9 @@ function renderCatalogPage({ animate = false, announce = false, scrollCatalogInt
 
 function syncCatalogPageForTrack(trackId) {
   if (!trackId || catalogRows.length === 0) return;
+  if (catalogSearch && catalogSearch.value) {
+    catalogSearch.value = '';
+  }
   let matching = getMatchingCatalogRows(activeCatalogFilter);
   let idx = matching.findIndex(r => r.dataset.song === trackId);
   if (idx === -1 && activeCatalogFilter !== 'all') {
@@ -1509,8 +1526,13 @@ function stopPlayer({ returnFocus = true } = {}) {
 
 stopBtn?.addEventListener('click', () => stopPlayer());
 
-// Hero turntable: tapping the vinyl or card opens the picker.
+// Hero turntable & Listen button: tapping opens the 22-song picker.
 heroRecord?.addEventListener('click', openSongPicker);
+document.getElementById('hero-listen-btn')?.addEventListener('click', openSongPicker);
+catalogSearch?.addEventListener('input', () => {
+  currentCatalogPage = 1;
+  renderCatalogPage({ animate: false, announce: true });
+});
 document.getElementById('hero-turntable')?.addEventListener('click', event => {
   if (event.target.closest('#hero-record, #record-stop-btn, .record-more-link, a, button')) return;
   openSongPicker();
