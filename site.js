@@ -480,8 +480,6 @@ function setRecordStatus(trackId) {
     recordNowTitle.textContent = isLoaded ? name : 'Original songs';
     recordNowTitle.classList.toggle('is-idle', !isLoaded);
   }
-  const browsePill = document.getElementById('record-browse-pill');
-  if (browsePill) browsePill.textContent = isLoaded ? 'Change track ▾' : 'Choose track ▾';
   if (recordStopBtn) recordStopBtn.hidden = !isLoaded;
 
   const statusMsg = !isLoaded

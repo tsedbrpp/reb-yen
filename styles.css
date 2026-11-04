@@ -745,25 +745,6 @@ p + p {
   gap: 10px;
 }
 
-.record-browse-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 11px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  background: rgba(223, 115, 63, 0.2);
-  border: 1px solid rgba(239, 169, 119, 0.45);
-  color: #ffd3b0;
-  transition: background-color 0.18s ease, transform 0.18s ease;
-}
-
-.hero-record:hover .record-browse-pill {
-  background: var(--orange);
-  color: #231121;
-}
-
 .record-now {
   margin: 0;
   font: 800 23px/1.2 'Karla', sans-serif;
@@ -3428,13 +3409,17 @@ dialog.is-fallback-open {
   .hero-record {
     --rec: clamp(188px, 17vw, 220px);
     width: fit-content;
-    max-width: min(432px, 43vw);
-    gap: 16px;
-    padding: 14px 20px 14px 14px;
+    max-width: min(472px, 44.5vw);
+    gap: 10px;
+    padding: 15px 52px 15px 16px;
+  }
+  .hero-record:has(.spin-record.selected) {
+    gap: 14px;
+    padding-right: 30px;
   }
   .hero-record-ctl {
     flex: 0 1 auto;
-    max-width: 172px;
+    max-width: 156px;
     gap: 8px;
   }
   .record-title-row {
@@ -3446,7 +3431,8 @@ dialog.is-fallback-open {
     font-size: 20px;
   }
   .record-now.is-idle {
-    font-size: 19px;
+    font-size: 18.5px;
+    white-space: nowrap;
   }
 }
 
@@ -3488,7 +3474,7 @@ dialog.is-fallback-open {
     max-width: 510px;
   }
   .hero-record {
-    max-width: 452px;
+    max-width: 480px;
   }
 }
 
