@@ -38,8 +38,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261104c">
-  <script defer src="site.js?v=20261104c"></script>
+  <link rel="stylesheet" href="styles.css?v=20261104d">
+  <script defer src="site.js?v=20261104d"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -196,7 +196,15 @@
     <div class="hero-bottom">
       <div class="container">
         <span>Original music, written &amp; arranged by Reb</span>
-        <span>Guitar · Banjo · Keyboard · Harmonica</span>
+        <span class="hero-instruments" role="group" aria-label="Tap an instrument to hear a sample chord">
+          <button type="button" class="inst-easter-btn" data-instrument="guitar" title="Strum Reb’s acoustic guitar">Guitar</button>
+          <span aria-hidden="true">·</span>
+          <button type="button" class="inst-easter-btn" data-instrument="banjo" title="Pick 5-string banjo roll">Banjo</button>
+          <span aria-hidden="true">·</span>
+          <button type="button" class="inst-easter-btn" data-instrument="keyboard" title="Play warm keyboard chord">Keyboard</button>
+          <span aria-hidden="true">·</span>
+          <button type="button" class="inst-easter-btn" data-instrument="harmonica" title="Play folk harmonica chord">Harmonica</button>
+        </span>
         <span>From the studio to the stage</span>
       </div>
     </div>
@@ -340,7 +348,7 @@
                 <figcaption class="lp-cover-overlay">
                   <span class="lp-cover-top">
                     <span class="lp-cat-no" id="featured-cat-no">RY-01 · ORIGINAL</span>
-                    <span class="lp-rpm">STEREO · 33⅓</span>
+                    <span class="lp-rpm" id="lp-rpm-btn" role="button" tabindex="0" title="Easter egg: Switch turntable speed (33⅓ / 45 / 78 RPM)">STEREO · 33⅓</span>
                   </span>
                   <span class="lp-cover-bottom">
                     <span class="lp-artist-kicker">REB YEN</span>
@@ -348,12 +356,37 @@
                     <span class="lp-cover-credit" id="featured-caption">Written, arranged &amp; performed by Reb Yen</span>
                   </span>
                 </figcaption>
+                <div class="lp-back-cover" id="lp-back-cover" aria-hidden="true">
+                  <div class="lp-back-top">
+                    <span id="lp-back-cat">RY-01 · ORIGINAL</span>
+                    <span>BOULDER, CO · STEREO</span>
+                  </div>
+                  <div class="lp-back-body">
+                    <span class="lp-back-kicker">SLEEVE LINER NOTES · REB YEN</span>
+                    <strong class="lp-back-title" id="lp-back-title">Take Me Crazy</strong>
+                    <p class="lp-back-desc" id="lp-back-desc">Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb — guitar, vocals, banjo, keyboard and cajon.</p>
+                    <div class="lp-human-stamp">
+                      <span>★ 100% HUMAN ARTISTRY · ZERO AI</span>
+                      <small>All vocals &amp; acoustic/electric instruments performed live by Reb Yen</small>
+                    </div>
+                  </div>
+                  <div class="lp-back-foot">
+                    <a id="lp-back-lyrics" href="songbook.html#song-1" class="lp-back-link">Open Lyrics in Songbook →</a>
+                    <span class="lp-back-flip-hint">Tap ↻ Flip cover to return</span>
+                  </div>
+                </div>
               </figure>
             </div>
-            <button type="button" class="album-motion-btn" id="sleeve-motion-btn" data-toggle-album-motion aria-pressed="false" aria-label="Stop album animation">
-              <span class="motion-toggle-icon" aria-hidden="true">⏸</span>
-              <span class="motion-toggle-label">Stop animation</span>
-            </button>
+            <div class="album-col-controls">
+              <button type="button" class="album-motion-btn" id="sleeve-motion-btn" data-toggle-album-motion aria-pressed="false" aria-label="Stop album animation">
+                <span class="motion-toggle-icon" aria-hidden="true">⏸</span>
+                <span class="motion-toggle-label">Stop animation</span>
+              </button>
+              <button type="button" class="album-motion-btn album-flip-btn" id="sleeve-flip-btn" aria-pressed="false" aria-label="Flip album cover to read liner notes">
+                <span class="motion-toggle-icon" aria-hidden="true">↻</span>
+                <span id="sleeve-flip-label">Flip cover</span>
+              </button>
+            </div>
           </div>
           <div class="featured-copy">
             <p class="eyebrow" id="featured-eyebrow">Featured original · ReverbNation Spotlight</p>

@@ -744,6 +744,7 @@ function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
   let coastAnim = null;
   let rampRaf = 0;
   let isSpinning = false;
+  let speedMult = 1;
 
   function getRotationDeg() {
     if (!el) return 0;
@@ -809,11 +810,11 @@ function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
         return;
       }
       const p = Math.min(1, (now - t0) / rampDuration);
-      spinAnim.playbackRate = 0.25 + 0.75 * (1 - Math.pow(1 - p, 2));
+      spinAnim.playbackRate = (0.25 + 0.75 * (1 - Math.pow(1 - p, 2))) * speedMult;
       if (p < 1) {
         rampRaf = requestAnimationFrame(ramp);
       } else {
-        spinAnim.playbackRate = 1;
+        spinAnim.playbackRate = speedMult;
         rampRaf = 0;
       }
     }
@@ -858,7 +859,14 @@ function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
     };
   }
 
-  return { start, easeToStop, stopImmediate };
+  function setSpeedMultiplier(mult) {
+    speedMult = mult || 1;
+    if (spinAnim && isSpinning && !rampRaf) {
+      spinAnim.playbackRate = speedMult;
+    }
+  }
+
+  return { start, easeToStop, stopImmediate, setSpeedMultiplier };
 }
 
 const heroPlatter = createVinylPlatterController(heroDisc, '', 2800);
@@ -1003,6 +1011,15 @@ function updateJukeboxSleeve(trackId, isPlaying) {
   if (featuredDesc) featuredDesc.textContent = meta.desc;
   if (featuredCaption) featuredCaption.textContent = meta.caption;
 
+  const lpBackCat = document.getElementById('lp-back-cat');
+  const lpBackTitle = document.getElementById('lp-back-title');
+  const lpBackDesc = document.getElementById('lp-back-desc');
+  const lpBackLyrics = document.getElementById('lp-back-lyrics');
+  if (lpBackCat) lpBackCat.textContent = meta.catNo || 'ORIGINAL';
+  if (lpBackTitle) lpBackTitle.textContent = meta.title;
+  if (lpBackDesc) lpBackDesc.textContent = meta.desc;
+  if (lpBackLyrics) lpBackLyrics.href = meta.lyricsHref || 'songbook.html';
+
   if (featuredListenBtn) {
     featuredListenBtn.href = meta.href;
     featuredListenBtn.dataset.track = effectiveId;
@@ -1057,7 +1074,8 @@ function updateJukeboxSleeve(trackId, isPlaying) {
   featureSleeve?.classList.toggle('is-playing', Boolean(isPlaying));
 }
 
-featureSleeve?.addEventListener('click', () => {
+featureSleeve?.addEventListener('click', event => {
+  if (event.target.closest('#lp-rpm-btn, .lp-back-link')) return;
   featuredListenBtn?.click();
 });
 featureSleeve?.addEventListener('keydown', event => {
@@ -1438,6 +1456,7 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   setExpanded(true);
 
   if (trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
+    if ( typeof playVinylNeedleDrop === 'function' ) playVinylNeedleDrop();
     frame.src = reverbnationEmbedUrl(trackId);
     selectedTrack = trackId;
     setCued(requiresWidgetTap);
@@ -1817,7 +1836,321 @@ document.querySelectorAll('[data-guitar-string]').forEach(stringEl => {
       ? Math.max(80, Math.min(920, ((event.clientX - rect.left) / rect.width) * 1000))
       : 500;
     pluck(x, 13);
+    handleGuitarStringEasterEgg(event.clientX, event.clientY);
   });
+});
+
+// ============================================================================
+// Musical Easter Eggs:
+// 1. Playable Hero Instrument Strip (Guitar · Banjo · Keyboard · Harmonica)
+// 2. 33⅓ / 45 / 78 RPM Turntable Speed Switch (#lp-rpm-btn)
+// 3. 12" LP Jacket Back-Cover Liner Notes Flip (#sleeve-flip-btn)
+// 4. Warm Vinyl "Needle Drop" Surface Crackle on Song Selection
+// 5. Secret Open-D Chord & Songwriter Quote Toast on 3 Guitar Plucks
+// 6. Encore Stage-Spotlight Mode (Header Logo Dot / typing "encore")
+// ============================================================================
+function spawnFloatingNote(x, y, symbol = '♪') {
+  if (prefersReducedMotion || isAlbumMotionDisabled()) return;
+  const note = document.createElement('span');
+  note.className = 'floating-music-note';
+  note.setAttribute('aria-hidden', 'true');
+  note.textContent = symbol;
+  const jitterX = (Math.random() - 0.5) * 26;
+  note.style.left = `${Math.round(x + jitterX)}px`;
+  note.style.top = `${Math.round(y - 8)}px`;
+  document.body.appendChild(note);
+  window.setTimeout(() => note.remove(), 1150);
+}
+
+let easterToastEl = null;
+let easterToastTimer = 0;
+
+function showEasterEggToast(htmlContent, actionCallback = null) {
+  if (!easterToastEl) {
+    easterToastEl = document.createElement('aside');
+    easterToastEl.className = 'easter-egg-toast';
+    easterToastEl.setAttribute('role', 'status');
+    easterToastEl.setAttribute('aria-live', 'polite');
+    document.body.appendChild(easterToastEl);
+  }
+  clearTimeout(easterToastTimer);
+  easterToastEl.innerHTML = htmlContent;
+  easterToastEl.hidden = false;
+  requestAnimationFrame(() => easterToastEl.classList.add('is-visible'));
+
+  if (actionCallback) {
+    easterToastEl.querySelector('[data-toast-action]')?.addEventListener('click', () => {
+      actionCallback();
+      easterToastEl.classList.remove('is-visible');
+    });
+  }
+
+  easterToastTimer = window.setTimeout(() => {
+    easterToastEl?.classList.remove('is-visible');
+  }, 4600);
+}
+
+// Easter Egg #1: Multi-Instrument Synth (Guitar, Banjo, Keyboard, Harmonica)
+function playInstrumentSample(instrument) {
+  if (!stringSoundEnabled) return;
+  const ctx = ensureAudioUnlocked();
+  if (!ctx) return;
+
+  const now = ctx.currentTime;
+  if (instrument === 'guitar') {
+    // Warm Open-G 6-string acoustic guitar strum
+    const notes = [196.0, 246.94, 293.66, 392.0, 493.88, 587.33];
+    notes.forEach((f, idx) => {
+      window.setTimeout(() => playGuitarHarmonic(f, 0.78), idx * 32);
+    });
+  } else if (instrument === 'banjo') {
+    // Crisp 5-string Scruggs-style forward banjo roll
+    const roll = [587.33, 293.66, 392.0, 493.88, 587.33, 783.99, 493.88, 587.33];
+    roll.forEach((f, idx) => {
+      window.setTimeout(() => playGuitarHarmonic(f, 0.85), idx * 66);
+    });
+  } else if (instrument === 'keyboard') {
+    // Warm electric-piano Dmaj9 voicing
+    const chord = [293.66, 369.99, 440.0, 554.37, 659.25];
+    chord.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const bell = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      bell.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + i * 0.018);
+      bell.frequency.setValueAtTime(freq * 2, now + i * 0.018);
+
+      const peak = (selectedTrack ? 0.025 : 0.05) / Math.sqrt(chord.length);
+      gain.gain.setValueAtTime(0.0001, now + i * 0.018);
+      gain.gain.linearRampToValueAtTime(peak, now + i * 0.018 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.55);
+
+      osc.connect(gain);
+      bell.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + i * 0.018);
+      bell.start(now + i * 0.018);
+      osc.stop(now + 1.6);
+      bell.stop(now + 1.6);
+    });
+  } else if (instrument === 'harmonica') {
+    // Folk-blues harmonica breath swell with gentle pitch bend & vibrato
+    const reeds = [392.0, 493.88, 587.33, 783.99];
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = 1150;
+    filter.Q.value = 1.6;
+    filter.connect(ctx.destination);
+
+    reeds.forEach(freq => {
+      const osc = ctx.createOscillator();
+      const lfo = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
+      const gain = ctx.createGain();
+
+      osc.type = 'sawtooth';
+      // Subtle blues draw-bend up into the note
+      osc.frequency.setValueAtTime(freq * 0.965, now);
+      osc.frequency.exponentialRampToValueAtTime(freq, now + 0.16);
+
+      lfo.frequency.value = 5.4;
+      lfoGain.gain.value = 2.8;
+      lfo.connect(lfoGain);
+      lfoGain.connect(osc.frequency);
+
+      const peak = selectedTrack ? 0.016 : 0.032;
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.linearRampToValueAtTime(peak, now + 0.18);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.35);
+
+      osc.connect(gain);
+      gain.connect(filter);
+      osc.start(now);
+      lfo.start(now);
+      osc.stop(now + 1.4);
+      lfo.stop(now + 1.4);
+    });
+  }
+}
+
+document.querySelectorAll('.inst-easter-btn[data-instrument]').forEach(btn => {
+  btn.addEventListener('click', event => {
+    const inst = btn.dataset.instrument;
+    playInstrumentSample(inst);
+    const rect = btn.getBoundingClientRect();
+    const cx = event.clientX || rect.left + rect.width / 2;
+    const cy = event.clientY || rect.top;
+    spawnFloatingNote(cx, cy, '♪');
+    window.setTimeout(() => spawnFloatingNote(cx + 12, cy - 6, '♫'), 120);
+    btn.classList.remove('is-playing-note');
+    void btn.offsetWidth;
+    btn.classList.add('is-playing-note');
+  });
+});
+
+// Easter Egg #2: 33⅓ / 45 / 78 RPM Speed Switch on the 12" LP Cover
+const lpRpmBtn = document.getElementById('lp-rpm-btn');
+const RPM_MODES = [
+  { key: '33', label: 'STEREO · 33⅓', mult: 1, toast: 'Turntable set to 33⅓ RPM · Long Play LP' },
+  { key: '45', label: '45 RPM · SINGLE', mult: 1.38, toast: 'Turntable switched to 45 RPM · Jukebox Single speed' },
+  { key: '78', label: '78 RPM · VINTAGE', mult: 2.15, toast: 'Turntable switched to 78 RPM · Vintage shellac warmth' }
+];
+let currentRpmIdx = 0;
+
+function cycleRpmMode(event) {
+  event?.stopPropagation();
+  currentRpmIdx = (currentRpmIdx + 1) % RPM_MODES.length;
+  const mode = RPM_MODES[currentRpmIdx];
+  if (lpRpmBtn) lpRpmBtn.textContent = mode.label;
+  document.documentElement.dataset.rpm = mode.key;
+  heroPlatter.setSpeedMultiplier(mode.mult);
+  sleevePlatter.setSpeedMultiplier(mode.mult);
+  if (stringSoundEnabled) {
+    ensureAudioUnlocked();
+    playGuitarHarmonic(mode.key === '78' ? 587.33 : mode.key === '45' ? 440 : 329.63, 0.55);
+  }
+  showEasterEggToast(`<span>💿 <strong>${mode.label}</strong> — ${mode.toast}</span>`);
+}
+
+lpRpmBtn?.addEventListener('click', cycleRpmMode);
+lpRpmBtn?.addEventListener('keydown', event => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    cycleRpmMode(event);
+  }
+});
+
+// Easter Egg #3: Flip the 12" LP Jacket to Read Back-Cover Liner Notes
+const sleeveFlipBtn = document.getElementById('sleeve-flip-btn');
+const sleeveFlipLabel = document.getElementById('sleeve-flip-label');
+const lpBackCover = document.getElementById('lp-back-cover');
+
+sleeveFlipBtn?.addEventListener('click', () => {
+  if (!featureSleeve) return;
+  const flipped = featureSleeve.classList.toggle('is-flipped');
+  sleeveFlipBtn.setAttribute('aria-pressed', String(flipped));
+  if (sleeveFlipLabel) {
+    sleeveFlipLabel.textContent = flipped ? 'Front cover' : 'Flip cover';
+  }
+  if (lpBackCover) {
+    lpBackCover.setAttribute('aria-hidden', String(!flipped));
+  }
+});
+
+// Easter Egg #4: Warm Vinyl "Needle Drop" Surface Crackle When Selecting a Song
+function playVinylNeedleDrop() {
+  if (!stringSoundEnabled) return;
+  const ctx = ensureAudioUnlocked();
+  if (!ctx || ctx.state !== 'running') return;
+
+  const now = ctx.currentTime;
+  // Soft stylus-in-groove thump
+  const thump = ctx.createOscillator();
+  const thumpGain = ctx.createGain();
+  thump.type = 'sine';
+  thump.frequency.setValueAtTime(92, now);
+  thump.frequency.exponentialRampToValueAtTime(36, now + 0.09);
+  thumpGain.gain.setValueAtTime(0.05, now);
+  thumpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+  thump.connect(thumpGain);
+  thumpGain.connect(ctx.destination);
+  thump.start(now);
+  thump.stop(now + 0.12);
+
+  // Brief warm vinyl dust crackle (0.45s)
+  const sr = ctx.sampleRate;
+  const len = Math.floor(sr * 0.45);
+  const buf = ctx.createBuffer(1, len, sr);
+  const ch = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) {
+    const r = Math.random();
+    ch[i] = r > 0.992 ? (Math.random() * 2 - 1) * 0.75 : (Math.random() * 2 - 1) * 0.04;
+  }
+  const noise = ctx.createBufferSource();
+  noise.buffer = buf;
+  const bp = ctx.createBiquadFilter();
+  bp.type = 'bandpass';
+  bp.frequency.value = 1950;
+  bp.Q.value = 1.2;
+  const ng = ctx.createGain();
+  ng.gain.setValueAtTime(0.035, now + 0.04);
+  ng.gain.exponentialRampToValueAtTime(0.0001, now + 0.48);
+  noise.connect(bp);
+  bp.connect(ng);
+  ng.connect(ctx.destination);
+  noise.start(now + 0.04);
+}
+
+// Hook needle drop into pickSong
+const origPickSong = pickSong;
+
+// Easter Egg #5: Secret Chord & Songwriter Quote After 3 Guitar-String Plucks
+let guitarPluckStreak = 0;
+let lastPluckTimestamp = 0;
+const SONGWRITER_QUOTES = [
+  '“Don’t call it the end; it’s a new beginning.” — A New Beginning',
+  '“Stop breaking your heart… you gotta let it go.” — Gotta Let It Go',
+  '“Sometimes the quiet is where the song finds its voice.” — The Solitude',
+  '“Original songs. Real stories. 100% live vocals & instruments.” — Reb Yen'
+];
+let quoteIdx = 0;
+
+function handleGuitarStringEasterEgg(clientX, clientY) {
+  const now = performance.now();
+  if (clientX && clientY) {
+    spawnFloatingNote(clientX, clientY, guitarPluckStreak % 2 === 0 ? '♪' : '♫');
+  }
+  if (now - lastPluckTimestamp > 6000) {
+    guitarPluckStreak = 0;
+  }
+  lastPluckTimestamp = now;
+  guitarPluckStreak++;
+
+  if (guitarPluckStreak === 3) {
+    guitarPluckStreak = 0;
+    const openD = [146.83, 220.0, 293.66, 369.99, 440.0, 587.33];
+    openD.forEach((f, idx) => {
+      window.setTimeout(() => playGuitarHarmonic(f, 0.72), idx * 38);
+    });
+    const quote = SONGWRITER_QUOTES[quoteIdx % SONGWRITER_QUOTES.length];
+    quoteIdx++;
+    showEasterEggToast(`<span>🎸 <strong>Secret Open-D Chord!</strong> ${quote}</span>`);
+  }
+}
+
+// Easter Egg #6: Encore Stage-Spotlight Mode (Typing "encore" or Shift-clicking Header Logo)
+let keyBuffer = '';
+function triggerEncoreMode() {
+  const active = document.body.classList.toggle('encore-stage-mode');
+  if (active) {
+    playInstrumentSample('guitar');
+    const deepCuts = ['32563022', '32981405', '32901138', '32178754', '33353012'];
+    const randomId = deepCuts[Math.floor(Math.random() * deepCuts.length)];
+    const meta = TRACK_META[randomId];
+    showEasterEggToast(
+      `<span>✨ <strong>Encore Stage Mode!</strong> Ready for a deep cut? <button type="button" class="toast-action-btn" data-toast-action>▶ Play “${meta?.title || 'The Storm'}”</button></span>`,
+      () => selectTrackById(randomId, { dock: true, focusPlayer: true })
+    );
+  } else {
+    showEasterEggToast('<span>💡 House lights restored.</span>');
+  }
+}
+
+document.addEventListener('keydown', event => {
+  if (event.target.closest('input, textarea, select')) return;
+  if (event.key.length === 1) {
+    keyBuffer = (keyBuffer + event.key.toLowerCase()).slice(-6);
+    if (keyBuffer === 'encore') {
+      keyBuffer = '';
+      triggerEncoreMode();
+    }
+  }
+});
+
+document.querySelector('.site-header .logo')?.addEventListener('dblclick', event => {
+  event.preventDefault();
+  triggerEncoreMode();
 });
 
 // ============================================================================
