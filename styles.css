@@ -806,8 +806,44 @@ p + p {
   padding: 8px 18px;
 }
 
-.record-stop-btn[hidden] {
-  display: none;
+.record-stop-btn[hidden],
+[data-toggle-album-motion][hidden] {
+  display: none !important;
+}
+
+.record-motion-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(239, 169, 119, 0.42);
+  background: rgba(255, 250, 241, 0.08);
+  color: #f5e6d7;
+  font: 700 13px/1.2 'Karla', sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.record-motion-btn:hover {
+  background: rgba(239, 169, 119, 0.22);
+  border-color: rgba(239, 169, 119, 0.72);
+  color: var(--ivory-bright);
+}
+
+.record-motion-btn[aria-pressed="true"] {
+  background: rgba(223, 115, 63, 0.26);
+  border-color: var(--orange);
+  color: #ffd7b8;
+}
+
+.motion-toggle-icon {
+  font-size: 12px;
+  line-height: 1;
 }
 
 .record-step[hidden],
@@ -1376,6 +1412,43 @@ p + p {
   margin-bottom: 48px;
 }
 
+.feature-album-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.album-motion-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #bfa789;
+  background: var(--paper);
+  color: var(--muted);
+  font: 700 13px/1.2 'Karla', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.album-motion-btn:hover {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: var(--ivory-bright);
+}
+
+.album-motion-btn[aria-pressed="true"] {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: #ffbe92;
+}
+
 .feature-sleeve-wrap {
   position: relative;
   padding-right: 28%;
@@ -1722,6 +1795,82 @@ html.js-motion .feature-sleeve-wrap.reveal-ready.is-revealed .sleeve-vinyl {
   flex-wrap: wrap;
   gap: 6px 14px;
   align-items: center;
+}
+
+.player-motion-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 30px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--ivory);
+  color: var(--plum);
+  font: 800 12px/1.2 'Karla', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.player-motion-btn:hover,
+.player-motion-btn[aria-pressed="true"] {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: #ffbe92;
+}
+
+.picker-motion-btn {
+  min-height: 42px;
+  padding: 8px 14px;
+  font-size: 14px;
+  gap: 7px;
+}
+
+.picker-motion-btn[aria-pressed="true"] {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: #ffbe92;
+}
+
+/* Visitor-toggled "Stop animation" mode for album & turntable controls */
+html.album-motion-off .hero-record,
+html.album-motion-off .hero-record:not(.has-entered),
+html.album-motion-off .hero-record:not(.has-entered) .hero-record-ctl,
+html.album-motion-off .hero-record:not(.has-entered) .record-now.is-idle,
+html.album-motion-off .hero-record:has(.spin-record.selected),
+html.album-motion-off .spin-record .disc,
+html.album-motion-off .turntable .arm,
+html.album-motion-off .sleeve-vinyl,
+html.album-motion-off .feature-art,
+html.album-motion-off .feature-art img,
+html.album-motion-off .eq-bars i,
+html.album-motion-off .player.is-cued .frame-wrap,
+html.album-motion-off .cue-arrow,
+html.album-motion-off .player.is-docked {
+  animation: none !important;
+  transition: none !important;
+}
+
+html.album-motion-off .sleeve-vinyl,
+html.album-motion-off.js-motion .feature-sleeve-wrap.reveal-ready:not(.is-revealed) .sleeve-vinyl,
+html.album-motion-off.js-motion .feature-sleeve-wrap.reveal-ready.is-revealed .sleeve-vinyl,
+html.album-motion-off .feature-sleeve-wrap:hover .sleeve-vinyl,
+html.album-motion-off .feature-sleeve-wrap.is-playing .sleeve-vinyl,
+html.album-motion-off .feature-sleeve-wrap.is-swapping-disc .sleeve-vinyl {
+  right: 0 !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+html.album-motion-off .feature-art,
+html.album-motion-off .feature-art.is-tilting {
+  transform: rotate(-1deg) !important;
+}
+
+html.album-motion-off .spin-record:hover .disc {
+  transform: none !important;
 }
 
 .player-return {
@@ -4326,6 +4475,9 @@ dialog.is-fallback-open {
   .feature-sleeve-wrap {
     max-width: 440px;
     padding-right: 28%;
+  }
+  .feature-album-col {
+    align-items: center;
   }
   .feature-sleeve-wrap.is-portrait-sleeve {
     max-width: 360px;

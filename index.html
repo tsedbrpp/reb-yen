@@ -12,6 +12,11 @@
     if (location.hostname.endsWith('.github.io')) {
       location.replace('https://rebyen.com' + location.pathname.replace(/^\/reb-yen\/?/, '/') + location.search + location.hash);
     }
+    try {
+      if (localStorage.getItem('rebyen_album_motion_off') === '1') {
+        document.documentElement.classList.add('album-motion-off');
+      }
+    } catch (e) {}
   </script>
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#352033">
@@ -33,8 +38,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261103n">
-  <script defer src="site.js?v=20261103n"></script>
+  <link rel="stylesheet" href="styles.css?v=20261103o">
+  <script defer src="site.js?v=20261103o"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -141,8 +146,12 @@
                 <p class="record-now is-idle" id="record-now-title">Original songs</p>
               </div>
               <div class="record-actions">
-                <button type="button" class="button light record-stop-btn" id="record-stop-btn" hidden>
+                <button type="button" class="button light record-stop-btn" id="record-stop-btn" aria-label="Stop music" hidden>
                   <span aria-hidden="true">■</span> Stop
+                </button>
+                <button type="button" class="record-motion-btn" id="hero-motion-btn" data-toggle-album-motion aria-pressed="false" aria-label="Stop album animation">
+                  <span class="motion-toggle-icon" aria-hidden="true">⏸</span>
+                  <span class="motion-toggle-label">Stop animation</span>
                 </button>
               </div>
               <p class="record-cta" id="record-cta" role="status" aria-live="polite" hidden><span id="record-cta-text"></span></p>
@@ -298,14 +307,20 @@
         </div>
 
         <div class="featured">
-          <div class="feature-sleeve-wrap is-portrait-sleeve" id="feature-sleeve" role="button" tabindex="0" aria-label="Play featured song: Take Me Crazy">
-            <div class="sleeve-vinyl" aria-hidden="true">
-              <span class="sleeve-vinyl-label" id="sleeve-vinyl-label">TAKE ME<br>CRAZY</span>
+          <div class="feature-album-col">
+            <div class="feature-sleeve-wrap is-portrait-sleeve" id="feature-sleeve" role="button" tabindex="0" aria-label="Play featured song: Take Me Crazy">
+              <div class="sleeve-vinyl" aria-hidden="true">
+                <span class="sleeve-vinyl-label" id="sleeve-vinyl-label">TAKE ME<br>CRAZY</span>
+              </div>
+              <figure class="feature-art" data-tilt>
+                <img id="featured-img" class="is-portrait" src="images/featured-reb-guitar.jpg" alt="Singer-songwriter Reb Yen with her acoustic guitar" width="760" height="931" loading="lazy">
+                <figcaption id="featured-caption">Reb Yen · Singer-songwriter</figcaption>
+              </figure>
             </div>
-            <figure class="feature-art" data-tilt>
-              <img id="featured-img" class="is-portrait" src="images/featured-reb-guitar.jpg" alt="Singer-songwriter Reb Yen with her acoustic guitar" width="760" height="931" loading="lazy">
-              <figcaption id="featured-caption">Reb Yen · Singer-songwriter</figcaption>
-            </figure>
+            <button type="button" class="album-motion-btn" id="sleeve-motion-btn" data-toggle-album-motion aria-pressed="false" aria-label="Stop album animation">
+              <span class="motion-toggle-icon" aria-hidden="true">⏸</span>
+              <span class="motion-toggle-label">Stop animation</span>
+            </button>
           </div>
           <div class="featured-copy">
             <p class="eyebrow" id="featured-eyebrow">Featured original · ReverbNation Spotlight</p>
@@ -335,6 +350,10 @@
                     <iframe id="reverbnation-player" title="Take Me Crazy by Reb Yen — ReverbNation audio player" data-track="33863436" allow="autoplay; encrypted-media" src="about:blank"></iframe>
                   </div>
                   <p class="player-help">
+                    <button type="button" class="player-motion-btn" id="player-motion-btn" data-toggle-album-motion aria-pressed="false" aria-label="Stop album animation">
+                      <span class="motion-toggle-icon" aria-hidden="true">⏸</span>
+                      <span class="motion-toggle-label">Stop animation</span>
+                    </button>
                     <a id="player-fallback" href="https://www.reverbnation.com/rebyen/song/33863436-take-me-crazy-original" target="_blank" rel="noopener noreferrer">Open on ReverbNation ↗</a>
                     <a href="https://www.reverbnation.com/rebyen/songs" target="_blank" rel="noopener noreferrer">All songs ↗</a>
                     <a class="player-return" id="player-return" href="#music">Back to music</a>
@@ -832,6 +851,10 @@
       </ul>
       <div class="song-picker-foot" id="song-picker-foot">
         <button type="button" class="button" id="song-picker-stop" hidden><span aria-hidden="true">■</span> Stop the record</button>
+        <button type="button" class="button picker-motion-btn" id="picker-motion-btn" data-toggle-album-motion aria-pressed="false" aria-label="Stop album animation">
+          <span class="motion-toggle-icon" aria-hidden="true">⏸</span>
+          <span class="motion-toggle-label">Stop animation</span>
+        </button>
         <a class="picker-more-link" href="https://www.reverbnation.com/rebyen/songs" target="_blank" rel="noopener noreferrer">See more songs on ReverbNation ↗</a>
         <button type="button" class="button picker-close-btn" id="song-picker-dismiss"><span aria-hidden="true">✕</span> Close song list</button>
       </div>

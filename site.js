@@ -461,6 +461,20 @@ const requiresWidgetTap =
   /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let isCued = false;
+const ALBUM_MOTION_KEY = 'rebyen_album_motion_off';
+let albumMotionOff = document.documentElement.classList.contains('album-motion-off');
+try {
+  if (window.localStorage.getItem(ALBUM_MOTION_KEY) === '1') {
+    albumMotionOff = true;
+  }
+} catch {
+  // Ignore storage restrictions
+}
+document.documentElement.classList.toggle('album-motion-off', albumMotionOff);
+
+function isAlbumMotionDisabled() {
+  return Boolean(prefersReducedMotion || albumMotionOff);
+}
 
 function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
   let spinAnim = null;
@@ -497,7 +511,7 @@ function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
   }
 
   function start() {
-    if (!el || typeof el.animate !== 'function' || prefersReducedMotion) {
+    if (!el || typeof el.animate !== 'function' || isAlbumMotionDisabled()) {
       stopImmediate();
       return;
     }
@@ -526,9 +540,9 @@ function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
     const t0 = performance.now();
     const rampDuration = 360;
     function ramp(now) {
-      if (!spinAnim || !isSpinning || prefersReducedMotion) {
+      if (!spinAnim || !isSpinning || isAlbumMotionDisabled()) {
         rampRaf = 0;
-        if (prefersReducedMotion) stopImmediate();
+        if (isAlbumMotionDisabled()) stopImmediate();
         return;
       }
       const p = Math.min(1, (now - t0) / rampDuration);
@@ -545,7 +559,7 @@ function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
 
   function easeToStop() {
     if (!el) return;
-    if (prefersReducedMotion || typeof el.animate !== 'function') {
+    if (isAlbumMotionDisabled() || typeof el.animate !== 'function') {
       stopImmediate();
       return;
     }
@@ -587,8 +601,77 @@ function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
 const heroPlatter = createVinylPlatterController(heroDisc, '', 2800);
 const sleevePlatter = createVinylPlatterController(sleeveDisc, 'translateY(-50%) ', 3400);
 
+const albumMotionButtons = Array.from(
+  document.querySelectorAll('[data-toggle-album-motion]')
+);
+
+function syncAlbumMotionButtons() {
+  albumMotionButtons.forEach(btn => {
+    btn.hidden = prefersReducedMotion;
+    btn.setAttribute('aria-pressed', String(albumMotionOff));
+    btn.setAttribute(
+      'aria-label',
+      albumMotionOff ? 'Resume album animation' : 'Stop album animation'
+    );
+    const icon = btn.querySelector('.motion-toggle-icon');
+    const label = btn.querySelector('.motion-toggle-label');
+    if (icon) icon.textContent = albumMotionOff ? '↻' : '⏸';
+    if (label) {
+      label.textContent = albumMotionOff ? 'Resume animation' : 'Stop animation';
+    }
+  });
+}
+
+function setAlbumMotionOff(nextOff, { persist = true } = {}) {
+  albumMotionOff = Boolean(nextOff);
+  document.documentElement.classList.toggle('album-motion-off', albumMotionOff);
+
+  if (persist) {
+    try {
+      if (albumMotionOff) {
+        window.localStorage.setItem(ALBUM_MOTION_KEY, '1');
+      } else {
+        window.localStorage.removeItem(ALBUM_MOTION_KEY);
+      }
+    } catch {
+      // Ignore storage restrictions
+    }
+  }
+
+  if (albumMotionOff) {
+    heroTurntable?.classList.add('has-entered');
+    const featureArt = featureSleeve?.querySelector('.feature-art');
+    if (featureArt) {
+      featureArt.classList.remove('is-tilting');
+      featureArt.style.removeProperty('--rx');
+      featureArt.style.removeProperty('--ry');
+    }
+  }
+
+  syncAlbumMotionButtons();
+  syncPlatters();
+
+  if (playerStatus) {
+    playerStatus.textContent = albumMotionOff
+      ? 'Album animation stopped.'
+      : 'Album animation resumed.';
+  }
+}
+
+albumMotionButtons.forEach(btn => {
+  btn.addEventListener('click', event => {
+    event.stopPropagation();
+    setAlbumMotionOff(!albumMotionOff);
+  });
+});
+
 function syncPlatters() {
-  const shouldSpin = Boolean(selectedTrack && !isCued && !prefersReducedMotion);
+  if (isAlbumMotionDisabled()) {
+    heroPlatter.stopImmediate();
+    sleevePlatter.stopImmediate();
+    return;
+  }
+  const shouldSpin = Boolean(selectedTrack && !isCued);
   if (shouldSpin) {
     heroPlatter.start();
     sleevePlatter.start();
@@ -598,15 +681,19 @@ function syncPlatters() {
   }
 }
 
+syncAlbumMotionButtons();
+
 reducedMotionCleanups.push(() => {
   heroPlatter.stopImmediate();
   sleevePlatter.stopImmediate();
   heroSection?.style.removeProperty('--hero-parallax');
   heroTurntable?.classList.add('has-entered');
+  syncAlbumMotionButtons();
 });
+reducedMotionQuery?.addEventListener?.('change', syncAlbumMotionButtons);
 
 if (heroTurntable) {
-  if (prefersReducedMotion) {
+  if (isAlbumMotionDisabled()) {
     heroTurntable.classList.add('has-entered');
   } else {
     window.setTimeout(() => {
@@ -667,7 +754,7 @@ function updateJukeboxSleeve(trackId, isPlaying) {
 
   if (featuredImg && featuredImg.getAttribute('src') !== meta.img) {
     clearTimeout(sleeveSwapTimer);
-    if (!prefersReducedMotion) {
+    if (!isAlbumMotionDisabled()) {
       featureSleeve?.classList.add('is-swapping-disc');
     }
     const applyImg = () => {
@@ -682,7 +769,7 @@ function updateJukeboxSleeve(trackId, isPlaying) {
       if (featuredImg.complete) featuredImg.classList.remove('is-swapping');
     };
 
-    if (!prefersReducedMotion) {
+    if (!isAlbumMotionDisabled()) {
       featuredImg.classList.add('is-swapping');
       sleeveSwapTimer = window.setTimeout(applyImg, 180);
     } else {
@@ -1333,7 +1420,7 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
 if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
   document.querySelectorAll('[data-tilt]').forEach(card => {
     card.addEventListener('pointermove', event => {
-      if (prefersReducedMotion) return;
+      if (prefersReducedMotion || (albumMotionOff && card.classList.contains('feature-art'))) return;
       const rect = card.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
       const px = (event.clientX - rect.left) / rect.width - 0.5;
