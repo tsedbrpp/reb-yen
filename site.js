@@ -133,17 +133,21 @@ navigation?.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 
 if (sectionLinks.size > 0 && 'IntersectionObserver' in window) {
+  const homeSection = document.getElementById('home');
   const navObserver = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           sectionLinks.forEach(navLink => navLink.removeAttribute('aria-current'));
-          sectionLinks.get(entry.target)?.setAttribute('aria-current', 'location');
+          if (entry.target !== homeSection) {
+            sectionLinks.get(entry.target)?.setAttribute('aria-current', 'location');
+          }
         }
       });
     },
     { rootMargin: '-25% 0px -60% 0px' }
   );
+  if (homeSection) navObserver.observe(homeSection);
   sectionLinks.forEach((_, section) => navObserver.observe(section));
 }
 
