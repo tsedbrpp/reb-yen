@@ -3450,6 +3450,14 @@ dialog.is-fallback-open {
   }
 }
 
+@media (min-width: 1200px) {
+  .site-header > .container,
+  .hero > .container,
+  .hero-bottom > .container {
+    width: min(1300px, calc(100% - 64px));
+  }
+}
+
 @media (min-width: 1345px) {
   .hero-photo {
     width: 685px;
@@ -3477,10 +3485,10 @@ dialog.is-fallback-open {
       );
   }
   .hero-content {
-    max-width: 490px;
+    max-width: 510px;
   }
   .hero-record {
-    max-width: 440px;
+    max-width: 452px;
   }
 }
 
