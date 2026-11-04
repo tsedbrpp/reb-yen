@@ -208,122 +208,361 @@ updateScrollEffects();
 // ============================================================================
 // Dynamic Jukebox Sleeve, Music Player, Turntable & Track Filters
 // ============================================================================
+const TRACK_ORDER = ["33863436","32896520","33992872","33391779","33355990","32930467","33993499","33866102","32896774","32929366","32981405","32557441","32901138","32563022","32693242","32520637","33353012","32943176","32178754","31360418","32271655","31438949"];
+
 const TRACK_META = {
-  '33863436': {
-    title: 'Take Me Crazy',
-    vinyl: 'TAKE ME\nCRAZY',
-    catNo: 'RY-01 · ORIGINAL',
-    eyebrow: 'Featured original · ReverbNation Spotlight',
-    desc: 'Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb — live performance filmed in Nashville.',
-    img: 'images/featured-reb-guitar.jpg',
-    pos: '50% 24%',
-    alt: 'Singer-songwriter Reb Yen with her acoustic guitar',
-    caption: 'Written, arranged & performed by Reb Yen',
-    href: 'https://www.reverbnation.com/rebyen/song/33863436-take-me-crazy-original'
+  "33863436": {
+    num: "01",
+    title: "Take Me Crazy",
+    vinyl: "TAKE ME\nCRAZY",
+    catNo: "RY-01 · ORIGINAL",
+    duration: "3:48",
+    eyebrow: "Featured original · ReverbNation Spotlight",
+    subtitle: "A realistic love song · studio recording · 3:48 · ReverbNation Featured",
+    desc: "Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb — guitar, vocals, banjo, keyboard and cajon.",
+    img: "images/songs/rn-35118509.jpg",
+    lpIdleImg: "images/featured-reb-guitar.jpg",
+    pos: "50% 42%",
+    alt: "Reb Yen — Take Me Crazy artwork",
+    caption: "Written, arranged & performed by Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/33863436-take-me-crazy-original",
+    lyricsHref: "songbook.html#song-1"
   },
-  '33355990': {
-    title: 'Should I?',
-    vinyl: 'SHOULD\nI?',
-    catNo: 'RY-02 · STUDIO',
-    eyebrow: 'Original studio recording · ReverbNation Spotlight',
-    desc: 'An original studio recording written, arranged and performed by Reb—one of three songs featured on the ReverbNation homepage.',
-    img: 'images/hero-guitar.jpg',
-    pos: '54% 24%',
-    bright: true,
-    alt: 'Reb Yen singing and playing acoustic guitar',
-    caption: 'Original studio recording · All tracks by Reb Yen',
-    href: 'https://www.reverbnation.com/rebyen/song/33355990-should-i-original'
+  "32896520": {
+    num: "02",
+    title: "The Solitude (Live)",
+    vinyl: "THE\nSOLITUDE",
+    catNo: "RY-02 · LIVE",
+    duration: "1:34",
+    eyebrow: "Original song · Live recording",
+    subtitle: "Original live performance · guitar & vocals · 1:34",
+    desc: "Captured live on stage—an atmospheric acoustic original showcasing Reb’s guitar work and expressive storytelling.",
+    img: "images/songs/rn-35623740.jpg",
+    pos: "50% 36%",
+    alt: "Reb Yen performing The Solitude live with acoustic guitar",
+    caption: "Live performance · Guitar & vocals by Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/32896520-the-solitude-original--live",
+    lyricsHref: "songbook.html#song-4"
   },
-  '33993499': {
-    title: 'Gotta Let It Go',
-    vinyl: 'GOTTA LET\nIT GO',
-    catNo: 'RY-03 · ORIGINAL',
-    eyebrow: 'Featured original · ReverbNation Spotlight',
-    desc: 'Written and arranged by Reb about knowing when to let go and move forward—featured on the ReverbNation homepage.',
-    img: 'images/gotta_let_it_go.jpg',
-    pos: '50% 50%',
-    scale: '1.34',
-    origin: '50% 42%',
-    alt: 'Reb Yen singing Gotta Let It Go with acoustic guitar',
-    caption: 'Written & arranged by Reb Yen',
-    href: 'https://www.reverbnation.com/rebyen/song/33993499-gotta-let-go-by-reb-yen-original'
+  "33992872": {
+    num: "03",
+    title: "A New Beginning",
+    vinyl: "A NEW\nBEGINNING",
+    catNo: "RY-03 · STUDIO",
+    duration: "3:03",
+    eyebrow: "Original song · Studio recording",
+    subtitle: "On loss, remembrance & beginning again · studio recording · 3:03",
+    desc: "Written on loss, remembrance and beginning again—“Don’t call it the end; it’s a new beginning.” Performed by Reb on acoustic guitar, vocals and cello keyboard.",
+    img: "images/songs/rn-35284339.jpg",
+    pos: "50% 34%",
+    alt: "Reb Yen performing A New Beginning with acoustic guitar",
+    caption: "Written, arranged & performed by Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/33992872-a-new-beginning-original",
+    lyricsHref: "songbook.html#song-5"
   },
-  '32896520': {
-    title: 'The Solitude',
-    vinyl: 'THE\nSOLITUDE',
-    catNo: 'RY-04 · LIVE',
-    eyebrow: 'Original song · Live recording',
-    desc: 'Captured live on stage—an atmospheric original showcasing Reb’s acoustic guitar work and expressive storytelling.',
-    img: 'images/about-solitude.jpg',
-    pos: '46% 8%',
-    alt: 'Reb Yen performing The Solitude live on acoustic guitar',
-    caption: 'Recorded live at Roots Music Project',
-    href: 'https://www.reverbnation.com/rebyen/song/32896520-the-solitude-original--live'
+  "33391779": {
+    num: "04",
+    title: "Are You Listening Now?",
+    vinyl: "ARE YOU\nLISTENING",
+    catNo: "RY-04 · STUDIO",
+    duration: "3:10",
+    eyebrow: "Original song · Studio recording",
+    subtitle: "Original studio remake · all instruments & vocals by Reb · 3:10",
+    desc: "An original studio recording blending folk-rock urgency with Reb’s direct songwriting—featuring acoustic and electric guitars, layered vocals, bass and drums by Reb.",
+    img: "images/songs/rn-34023239.jpg",
+    pos: "50% 35%",
+    alt: "Stage portrait of Reb Yen at the microphone",
+    caption: "Original studio recording · All tracks by Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/33391779-are-you-listening-now-original",
+    lyricsHref: "songbook.html#song-6"
   },
-  '33992872': {
-    title: 'A New Beginning',
-    vinyl: 'A NEW\nBEGINNING',
-    catNo: 'RY-05 · STUDIO',
-    eyebrow: 'Original song · Studio recording',
-    desc: 'Written on loss, remembrance and beginning again—“Don’t call it the end; it’s a new beginning.”',
-    img: 'images/newbeginning.jpg',
-    pos: '50% 56%',
-    scale: '1.46',
-    origin: '50% 56%',
-    alt: 'Reb Yen performing A New Beginning with guitar and harmonica',
-    caption: 'Written, arranged & performed by Reb Yen',
-    href: 'https://www.reverbnation.com/rebyen/song/33992872-a-new-beginning-original'
+  "33355990": {
+    num: "05",
+    title: "Should I?",
+    vinyl: "SHOULD\nI?",
+    catNo: "RY-05 · STUDIO",
+    duration: "3:08",
+    eyebrow: "Original studio recording · ReverbNation Spotlight",
+    subtitle: "Original studio recording · 3:08 · ReverbNation Featured",
+    desc: "An original studio recording written, arranged and performed by Reb on vocals, rhythm guitar, lead guitar and cajon—one of three songs featured on the ReverbNation homepage.",
+    img: "images/songs/rn-35163458.jpg",
+    pos: "50% 36%",
+    alt: "Reb Yen singing and playing sunburst acoustic guitar on stage",
+    caption: "Original studio recording · All tracks by Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/33355990-should-i-original",
+    lyricsHref: "songbook.html#song-2"
   },
-  '33391779': {
-    title: 'Are You Listening Now?',
-    vinyl: 'ARE YOU\nLISTENING',
-    catNo: 'RY-06 · STUDIO',
-    eyebrow: 'Original song · Studio recording',
-    desc: 'An original studio recording blending folk-rock urgency with Reb’s direct, observational songwriting.',
-    img: 'images/are_you_listening.jpg',
-    pos: '52% 44%',
-    scale: '1.12',
-    alt: 'Reb Yen performing on stage with her trio at The Alley',
-    caption: 'Original studio recording · Reb Yen',
-    href: 'https://www.reverbnation.com/rebyen/song/33391779-are-you-listening-now-original'
+  "32930467": {
+    num: "06",
+    title: "Missing Clues (Live)",
+    vinyl: "MISSING\nCLUES",
+    catNo: "RY-06 · LIVE",
+    duration: "1:24",
+    eyebrow: "Original song · Live recording",
+    subtitle: "Original live duet · acoustic guitar, harmonica & vocals · 1:24",
+    desc: "Written and performed live by Reb Yen (guitar, vocals) and Jim O’Rourke (harmonica, vocals)—tracing life’s mysteries, missing pages and untold stories.",
+    img: "images/songs/rn-34053201.jpg",
+    pos: "50% 42%",
+    alt: "Double-exposure silhouette artwork by the water",
+    caption: "Live performance · Reb Yen & Jim O’Rourke",
+    href: "https://www.reverbnation.com/rebyen/song/32930467-missing-clues-original--live",
+    lyricsHref: "songbook.html#song-10"
   },
-  '33866102': {
-    title: 'Birds Of Prey',
-    vinyl: 'BIRDS OF\nPREY',
-    catNo: 'RY-07 · LIVE',
-    eyebrow: 'Original song · Live recording',
-    desc: 'Recorded live on stage, bringing raw room energy to Reb’s original songwriting and arrangement.',
-    img: 'images/storm.jpg',
-    pos: '52% 38%',
-    scale: '1.08',
-    alt: 'Reb Yen performing live with her band',
-    caption: 'Recorded live on stage · Original catalog',
-    href: 'https://www.reverbnation.com/rebyen/song/33866102-birds-of-prey-original--live'
+  "33993499": {
+    num: "07",
+    title: "Gotta Let It Go",
+    vinyl: "GOTTA LET\nIT GO",
+    catNo: "RY-07 · ORIGINAL",
+    duration: "3:35",
+    eyebrow: "Featured original · ReverbNation Spotlight",
+    subtitle: "About knowing when to let go · studio recording · 3:35 · ReverbNation Featured",
+    desc: "Written, arranged and performed by Reb (vocals, guitar, cajon) about knowing when to step back, heal and move forward—featured on the ReverbNation homepage.",
+    img: "images/songs/rn-35109995.jpg",
+    pos: "50% 38%",
+    alt: "Reb Yen playing acoustic guitar on stage",
+    caption: "Written, arranged & performed by Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/33993499-gotta-let-go-by-reb-yen-original",
+    lyricsHref: "songbook.html#song-3"
   },
-  '32896774': {
-    title: 'Take A Stand',
-    vinyl: 'TAKE A\nSTAND',
-    catNo: 'RY-08 · LIVE',
-    eyebrow: 'Original song · Live recording',
-    desc: 'A live original recording driven by conviction, acoustic rhythm and the immediacy of the stage.',
-    img: 'images/are_you_listening.jpg',
-    pos: '52% 44%',
-    scale: '1.12',
-    alt: 'Reb Yen singing and playing acoustic guitar on stage',
-    caption: 'Original live recording · Reb Yen',
-    href: 'https://www.reverbnation.com/rebyen/song/32896774-take-a-stand-original--live'
+  "33866102": {
+    num: "08",
+    title: "Birds Of Prey (Live)",
+    vinyl: "BIRDS OF\nPREY",
+    catNo: "RY-08 · LIVE",
+    duration: "2:37",
+    eyebrow: "Original song · Live recording",
+    subtitle: "Original live recording · guitar & vocals · 2:37",
+    desc: "Recorded live on stage with guitar and vocals, bringing raw acoustic immediacy to Reb’s songwriting about reclaiming your own sky.",
+    img: "images/songs/rn-34053201.jpg",
+    pos: "50% 42%",
+    alt: "Birds Of Prey song artwork",
+    caption: "Original live recording · Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/33866102-birds-of-prey-original--live",
+    lyricsHref: "songbook.html#song-7"
   },
-  '32557441': {
-    title: 'Out Of Body',
-    vinyl: 'OUT OF\nBODY',
-    catNo: 'RY-09 · STUDIO',
-    eyebrow: 'Original song · Studio recording',
-    desc: 'An introspective studio original exploring perspective and reflection across Reb’s indie-folk palette.',
-    img: 'images/reb_yen_photo.jpg',
-    pos: '50% 38%',
-    alt: 'Artistic portrait of Reb Yen with guitar fretboard',
-    caption: 'Original studio recording · Reb Yen',
-    href: 'https://www.reverbnation.com/rebyen/song/32557441-out-of-body--original'
+  "32896774": {
+    num: "09",
+    title: "Take A Stand (Live)",
+    vinyl: "TAKE A\nSTAND",
+    catNo: "RY-09 · LIVE",
+    duration: "3:06",
+    eyebrow: "Original song · Live recording",
+    subtitle: "Original live recording · conviction & acoustic rhythm · 3:06",
+    desc: "A live original recording driven by conviction, acoustic rhythm and the immediacy of the stage.",
+    img: "images/songs/rn-35163458.jpg",
+    pos: "50% 36%",
+    alt: "Reb Yen singing and playing acoustic guitar on stage",
+    caption: "Original live recording · Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/32896774-take-a-stand-original--live",
+    lyricsHref: "songbook.html#song-8"
+  },
+  "32929366": {
+    num: "10",
+    title: "I Can Feel U",
+    vinyl: "I CAN\nFEEL U",
+    catNo: "RY-10 · STUDIO",
+    duration: "2:56",
+    eyebrow: "Original song · Studio recording",
+    subtitle: "Original studio recording · guitar & vocals · 2:56",
+    desc: "An atmospheric original collaboration © 2021 by Reb Yen (guitar, vocals) and Jim O’Rourke (lead guitar, backing vocals).",
+    img: "images/songs/rn-portrait.jpg",
+    pos: "50% 32%",
+    alt: "Portrait of Reb Yen with her acoustic guitar",
+    caption: "I Can Feel U © 2021 Reb Yen & Jim O’Rourke",
+    href: "https://www.reverbnation.com/rebyen/song/32929366-i-can-feel-u--original",
+    lyricsHref: "songbook.html#song-11"
+  },
+  "32981405": {
+    num: "11",
+    title: "In Cyber Love (Live)",
+    vinyl: "IN CYBER\nLOVE",
+    catNo: "RY-11 · LIVE",
+    duration: "1:49",
+    eyebrow: "Original song · Live recording",
+    subtitle: "Original live performance · vocals & acoustic guitar · 1:49",
+    desc: "Performed live by Reb on vocals and acoustic guitar—a sharp, bittersweet reflection on modern connection and “text message lovers” in cyberspace.",
+    img: "images/songs/rn-35163458.jpg",
+    pos: "50% 36%",
+    alt: "Reb Yen performing live on acoustic guitar",
+    caption: "Live performance · Written & performed by Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/32981405-in-cyber-love--original-live",
+    lyricsHref: "songbook.html#song-12"
+  },
+  "32557441": {
+    num: "12",
+    title: "Out Of Body",
+    vinyl: "OUT OF\nBODY",
+    catNo: "RY-12 · STUDIO",
+    duration: "3:19",
+    eyebrow: "Original song · Studio recording",
+    subtitle: "Original studio recording · guitar, vocals & keyboard · 3:19",
+    desc: "An introspective studio original exploring night-sky perspective and reflection, performed by Reb on guitar, vocals and keyboard.",
+    img: "images/songs/rn-portrait.jpg",
+    pos: "50% 32%",
+    alt: "Portrait of Reb Yen with her acoustic guitar",
+    caption: "Original studio recording · Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/32557441-out-of-body--original",
+    lyricsHref: "songbook.html#song-9"
+  },
+  "32901138": {
+    num: "13",
+    title: "Time Machine (Live)",
+    vinyl: "TIME\nMACHINE",
+    catNo: "RY-13 · LIVE",
+    duration: "2:32",
+    eyebrow: "Original song · Live recording",
+    subtitle: "Original live recording · finding your dream again · 2:32",
+    desc: "“Wish I could take you in my time machine, to that time when you had a dream.” Performed live with Reb on lead vocals and rhythm guitar.",
+    img: "images/songs/rn-34053201.jpg",
+    pos: "50% 42%",
+    alt: "Time Machine song artwork",
+    caption: "Live recording · Written by Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/32901138-time-machine--original-live",
+    lyricsHref: "songbook.html#song-13"
+  },
+  "32563022": {
+    num: "14",
+    title: "The Storm (Live)",
+    vinyl: "THE\nSTORM",
+    catNo: "RY-14 · LIVE",
+    duration: "3:09",
+    eyebrow: "Original song · Live recording",
+    subtitle: "Original live recording · acoustic guitar & harmonica · 3:09",
+    desc: "A urgent, dramatic live original written and arranged by Reb—featuring acoustic guitar, harmonica solo and electric lead.",
+    img: "images/songs/rn-34023522.jpg",
+    pos: "50% 50%",
+    alt: "Circular double-exposure silhouette artwork for The Storm",
+    caption: "The Storm © 2021 Reb Yen · Live recording",
+    href: "https://www.reverbnation.com/rebyen/song/32563022-the-storm--original-live",
+    lyricsHref: "songbook.html#song-14"
+  },
+  "32693242": {
+    num: "15",
+    title: "For You To Know (Live)",
+    vinyl: "FOR YOU\nTO KNOW",
+    catNo: "RY-15 · LIVE",
+    duration: "2:41",
+    eyebrow: "Original song · Live recording",
+    subtitle: "Intimate live original · vocals & acoustic guitar · 2:41",
+    desc: "Written and performed solo live by Reb on vocals and acoustic guitar—a tender remembrance of love, memory and devotion.",
+    img: "images/songs/rn-34053201.jpg",
+    pos: "50% 42%",
+    alt: "For You To Know song artwork",
+    caption: "For You To Know © 2019 Reb Yen · Live acoustic",
+    href: "https://www.reverbnation.com/rebyen/song/32693242-for-you-to-know-original-live",
+    lyricsHref: "songbook.html#song-15"
+  },
+  "32520637": {
+    num: "16",
+    title: "Crawled To The Edge (1st Draft)",
+    vinyl: "CRAWLED TO\nTHE EDGE",
+    catNo: "RY-16 · DRAFT",
+    duration: "2:35",
+    eyebrow: "Original song · First-draft recording",
+    subtitle: "Original first-draft recording · raw songwriter work-tape · 2:35",
+    desc: "An intimate first-draft original recording capturing the raw spark of Reb’s songwriting process as the arrangement first took shape.",
+    img: "images/songs/rn-33848828.jpg",
+    pos: "46% 36%",
+    alt: "Reb Yen smiling under warm stage string lights",
+    caption: "Original first-draft recording · Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/32520637-crawled-to-edge-original-1st-draft",
+    lyricsHref: "songbook.html#song-16"
+  },
+  "33353012": {
+    num: "17",
+    title: "RSVP (Live)",
+    vinyl: "RSVP\nLIVE",
+    catNo: "RY-17 · LIVE",
+    duration: "3:03",
+    eyebrow: "Original song · Live recording",
+    subtitle: "Original live performance · guitar, harmonica & vocals · 3:03",
+    desc: "Captured live on stage—RSVP showcases Reb’s dynamic live phrasing, acoustic rhythm guitar and stage presence.",
+    img: "images/songs/rn-35217783.jpg",
+    pos: "48% 30%",
+    alt: "Reb Yen singing live with acoustic guitar and harmonica",
+    caption: "RSVP © 2019 Reb Yen · Live performance",
+    href: "https://www.reverbnation.com/rebyen/song/33353012-rsvp--original-live",
+    lyricsHref: "songbook.html#song-17"
+  },
+  "32943176": {
+    num: "18",
+    title: "Shut In World",
+    vinyl: "SHUT IN\nWORLD",
+    catNo: "RY-18 · STUDIO",
+    duration: "2:23",
+    eyebrow: "Original song · Studio collaboration",
+    subtitle: "Original collaboration · Reb Yen & Jim O’Rourke · 2:23",
+    desc: "A spirited commentary on tuning out the noise and choosing empathy—music and arrangement by Reb Yen and Jim O’Rourke.",
+    img: "images/songs/rn-portrait.jpg",
+    pos: "50% 32%",
+    alt: "Portrait of Reb Yen with acoustic guitar",
+    caption: "Shut In World © Reb Yen & Jim O’Rourke",
+    href: "https://www.reverbnation.com/rebyen/song/32943176-shut-in-world--reb-yen-jim-orourke",
+    lyricsHref: "songbook.html#song-18"
+  },
+  "32178754": {
+    num: "19",
+    title: "Birds Of Prey (Solo Version)",
+    vinyl: "BIRDS OF\nPREY SOLO",
+    catNo: "RY-19 · SOLO",
+    duration: "2:14",
+    eyebrow: "Original song · Solo acoustic version",
+    subtitle: "Original solo version · stripped-back guitar & vocals · 2:14",
+    desc: "The stripped-back solo acoustic version of Birds Of Prey—putting Reb’s lyric and vocal delivery front and center.",
+    img: "images/songs/rn-34053201.jpg",
+    pos: "50% 42%",
+    alt: "Birds Of Prey solo version artwork",
+    caption: "Birds Of Prey © 2020 Reb Yen · Solo version",
+    href: "https://www.reverbnation.com/rebyen/song/32178754-birds-prey-original-solo-version",
+    lyricsHref: "songbook.html#song-19"
+  },
+  "31360418": {
+    num: "20",
+    title: "Dancing With My Cell (Live)",
+    vinyl: "DANCING\nWITH CELL",
+    catNo: "RY-20 · LIVE",
+    duration: "1:58",
+    eyebrow: "Original song · Live recording",
+    subtitle: "Playful live original · upbeat acoustic groove · 1:58",
+    desc: "Witty, upbeat live original about skipping the drama and dancing happily on your own—“I can dance with my own cell phone.”",
+    img: "images/songs/rn-33848828.jpg",
+    pos: "46% 36%",
+    alt: "Reb Yen smiling under warm cafe lights",
+    caption: "Dancing With My Cell © Reb Yen · Live performance",
+    href: "https://www.reverbnation.com/rebyen/song/31360418-dancing-with-my-cell-original-",
+    lyricsHref: "songbook.html#song-20"
+  },
+  "32271655": {
+    num: "21",
+    title: "The Solitude (Full Version)",
+    vinyl: "SOLITUDE\nFULL",
+    catNo: "RY-21 · FULL",
+    duration: "2:56",
+    eyebrow: "Original song · Full-length version",
+    subtitle: "Full-length original recording · complete arrangement · 2:56",
+    desc: "The complete 2:56 version of The Solitude—“Where it dazzles in your sky that’s where you go / When the music’s in your soul that’s when you’re home.”",
+    img: "images/songs/rn-portrait.jpg",
+    pos: "50% 32%",
+    alt: "Portrait of Reb Yen with her acoustic guitar",
+    caption: "The Solitude (Full Version) © Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/32271655-solitude--original-full-version",
+    lyricsHref: "songbook.html#song-21"
+  },
+  "31438949": {
+    num: "22",
+    title: "Are You Listening? (Live)",
+    vinyl: "ARE YOU\nLISTENING",
+    catNo: "RY-22 · LIVE",
+    duration: "2:30",
+    eyebrow: "Original song · Live version",
+    subtitle: "Original live version · “Gotta be your own fan” · 2:30",
+    desc: "Live stage version of Are You Listening?—capturing the raw acoustic energy of its bridge: “Gotta do it for yourself… gotta be your own fan.”",
+    img: "images/songs/rn-34023239.jpg",
+    pos: "50% 35%",
+    alt: "Stage portrait of Reb Yen singing at the microphone",
+    caption: "Are You Listening? (Live) © Reb Yen",
+    href: "https://www.reverbnation.com/rebyen/song/31438949-are-you-listening-original-live",
+    lyricsHref: "songbook.html#song-22"
   }
 };
 
@@ -749,9 +988,12 @@ window.addEventListener('blur', () => {
 });
 
 function updateJukeboxSleeve(trackId, isPlaying) {
-  const effectiveId = trackId && TRACK_META[trackId] ? trackId : '33863436';
+  const isIdle = !trackId || !TRACK_META[trackId];
+  const effectiveId = isIdle ? '33863436' : trackId;
   const meta = TRACK_META[effectiveId];
   if (!meta) return;
+  const targetSleeveImg = isIdle && meta.lpIdleImg ? meta.lpIdleImg : meta.img;
+  const targetSleevePos = isIdle && meta.lpIdleImg ? '50% 24%' : (meta.pos || '50% 45%');
 
   if (sleeveVinylLabel) sleeveVinylLabel.textContent = meta.vinyl;
   if (featuredCoverTitle) featuredCoverTitle.textContent = meta.title;
@@ -778,13 +1020,13 @@ function updateJukeboxSleeve(trackId, isPlaying) {
     featureSleeve.setAttribute('aria-label', `Play featured song: ${meta.title}`);
   }
 
-  if (featuredImg && featuredImg.getAttribute('src') !== meta.img) {
+  if (featuredImg && featuredImg.getAttribute('src') !== targetSleeveImg) {
     clearTimeout(sleeveSwapTimer);
     if (!isAlbumMotionDisabled()) {
       featureSleeve?.classList.add('is-swapping-disc');
     }
     const applyLpImgStyles = () => {
-      featuredImg.style.setProperty('--lp-pos', meta.pos || '50% 45%');
+      featuredImg.style.setProperty('--lp-pos', targetSleevePos);
       featuredImg.style.setProperty('--lp-scale', meta.scale || '1');
       featuredImg.style.setProperty('--lp-origin', meta.origin || 'center center');
       featuredImg.classList.toggle('is-brightened', Boolean(meta.bright));
@@ -792,7 +1034,7 @@ function updateJukeboxSleeve(trackId, isPlaying) {
 
     const applyImg = () => {
       featuredImg.onload = () => featuredImg.classList.remove('is-swapping');
-      featuredImg.setAttribute('src', meta.img);
+      featuredImg.setAttribute('src', targetSleeveImg);
       featuredImg.alt = meta.alt;
       applyLpImgStyles();
       featureSleeve?.classList.remove('is-swapping-disc');
@@ -806,7 +1048,7 @@ function updateJukeboxSleeve(trackId, isPlaying) {
       applyImg();
     }
   } else if (featuredImg) {
-    featuredImg.style.setProperty('--lp-pos', meta.pos || '50% 45%');
+    featuredImg.style.setProperty('--lp-pos', targetSleevePos);
     featuredImg.style.setProperty('--lp-scale', meta.scale || '1');
     featuredImg.style.setProperty('--lp-origin', meta.origin || 'center center');
     featuredImg.classList.toggle('is-brightened', Boolean(meta.bright));
@@ -909,16 +1151,43 @@ function setRecordStatus(trackId) {
 }
 
 // ----------------------------------------------------------------------------
-// Song picker pop-up (tap the vinyl → choose a song → it loads in the player)
+// Song picker pop-up (all 22 ReverbNation songs with images, search & playback)
 // ----------------------------------------------------------------------------
+const songPickerSearch = document.getElementById('song-picker-search');
+const songPickerCount = document.getElementById('song-picker-count');
+const songPickerEmpty = document.getElementById('song-picker-empty');
+
+function filterSongPickerList() {
+  if (!songPickerList) return;
+  const q = (songPickerSearch?.value || '').trim().toLowerCase();
+  let shown = 0;
+  songPickerList.querySelectorAll('li').forEach(li => {
+    const btn = li.querySelector('.picker-song');
+    const id = btn?.dataset.pick || '';
+    const meta = TRACK_META[id];
+    const hay = meta
+      ? `${meta.num} ${meta.title} ${meta.subtitle} ${meta.desc}`.toLowerCase()
+      : (li.textContent || '').toLowerCase();
+    const match = !q || hay.includes(q);
+    li.hidden = !match;
+    if (match) shown++;
+  });
+  if (songPickerCount) {
+    songPickerCount.textContent = q
+      ? `${shown} of ${TRACK_ORDER.length}`
+      : `${TRACK_ORDER.length} songs`;
+  }
+  if (songPickerEmpty) {
+    songPickerEmpty.hidden = shown > 0;
+  }
+}
+
 function renderSongPicker() {
   if (!songPickerList) return;
   if (!songPickerList.childElementCount) {
-    catalogRows.forEach(row => {
-      const id = row.dataset.song;
+    TRACK_ORDER.forEach(id => {
       const meta = TRACK_META[id];
       if (!meta) return;
-      const subtitle = row.querySelector('.song-info p')?.textContent.trim() || '';
 
       const li = document.createElement('li');
       const btn = document.createElement('button');
@@ -926,12 +1195,18 @@ function renderSongPicker() {
       btn.className = 'picker-song';
       btn.dataset.pick = id;
 
+      const num = document.createElement('span');
+      num.className = 'picker-num';
+      num.setAttribute('aria-hidden', 'true');
+      num.textContent = meta.num || '';
+
       const img = document.createElement('img');
       img.className = 'picker-thumb';
       img.src = meta.img;
       img.alt = '';
       img.width = 56;
       img.height = 56;
+      img.decoding = 'async';
       if (meta.pos) img.style.objectPosition = meta.pos;
 
       const text = document.createElement('span');
@@ -939,14 +1214,14 @@ function renderSongPicker() {
       const strong = document.createElement('strong');
       strong.textContent = meta.title;
       const small = document.createElement('small');
-      small.textContent = subtitle;
+      small.textContent = meta.subtitle || '';
       text.append(strong, small);
 
       const go = document.createElement('span');
       go.className = 'picker-go';
       go.setAttribute('aria-hidden', 'true');
 
-      btn.append(img, text, go);
+      btn.append(num, img, text, go);
       li.append(btn);
       songPickerList.append(li);
     });
@@ -967,14 +1242,29 @@ function renderSongPicker() {
   });
   const pickerStopBtn = document.getElementById('song-picker-stop');
   if (pickerStopBtn) pickerStopBtn.hidden = !selectedTrack;
+  filterSongPickerList();
 }
+
+songPickerSearch?.addEventListener('input', filterSongPickerList);
 
 function openSongPicker(event) {
   if (!songPicker) return;
   closeMenu();
+  if (songPickerSearch && songPickerSearch.value) {
+    songPickerSearch.value = '';
+  }
   renderSongPicker();
   songPicker.hidden = false;
   document.body.classList.add('dialog-open');
+
+  // Gently center the currently playing track inside the 22-song list if one is selected
+  if (selectedTrack && songPickerList) {
+    const activeBtn = songPickerList.querySelector(`.picker-song[data-pick="${selectedTrack}"]`);
+    activeBtn?.scrollIntoView({ block: 'nearest' });
+  } else if (songPickerList) {
+    songPickerList.scrollTop = 0;
+  }
+
   const openedByKeyboard = Boolean(event && event.type === 'click' && event.detail === 0);
   if (openedByKeyboard) {
     document.getElementById('song-picker-close')?.focus({ preventScroll: true });
@@ -988,6 +1278,122 @@ function closeSongPicker() {
   if (!songPicker || songPicker.hidden) return;
   songPicker.hidden = true;
   document.body.classList.remove('dialog-open');
+}
+
+// ----------------------------------------------------------------------------
+// "Explore the originals" — 5 Songs Per Page Pagination + Filter Pills
+// ----------------------------------------------------------------------------
+const CATALOG_PAGE_SIZE = 5;
+let activeCatalogFilter = 'all';
+let currentCatalogPage = 1;
+
+const filterPills = Array.from(document.querySelectorAll('.filter-pill[data-filter]'));
+const catalogPagination = document.getElementById('catalog-pagination');
+const catalogPageInfo = document.getElementById('catalog-page-info');
+const catalogPageNums = document.getElementById('catalog-page-nums');
+const catalogPagePrev = document.getElementById('catalog-page-prev');
+const catalogPageNext = document.getElementById('catalog-page-next');
+
+function getMatchingCatalogRows(filter = activeCatalogFilter) {
+  return catalogRows.filter(row => {
+    if (filter === 'all') return true;
+    const tags = (row.dataset.tags || '').split(/\s+/);
+    return tags.includes(filter);
+  });
+}
+
+function renderCatalogPage({ animate = false, announce = false, scrollCatalogIntoView = false } = {}) {
+  const matching = getMatchingCatalogRows(activeCatalogFilter);
+  const total = matching.length;
+  const totalPages = Math.max(1, Math.ceil(total / CATALOG_PAGE_SIZE));
+  currentCatalogPage = Math.min(Math.max(1, currentCatalogPage), totalPages);
+
+  const startIdx = (currentCatalogPage - 1) * CATALOG_PAGE_SIZE;
+  const endIdx = Math.min(startIdx + CATALOG_PAGE_SIZE, total);
+  const pageSet = new Set(matching.slice(startIdx, endIdx));
+
+  catalogRows.forEach(row => {
+    const visible = pageSet.has(row);
+    row.hidden = !visible;
+    row.classList.remove('is-filtered-in');
+    if (visible && animate && !prefersReducedMotion) {
+      void row.offsetWidth;
+      row.classList.add('is-filtered-in');
+    }
+  });
+
+  if (catalogPageInfo) {
+    if (total === 0) {
+      catalogPageInfo.textContent = 'No songs match this filter';
+    } else {
+      catalogPageInfo.innerHTML =
+        totalPages > 1
+          ? `Showing <strong>${startIdx + 1}–${endIdx}</strong> of <strong>${total}</strong> songs · Page ${currentCatalogPage} of ${totalPages}`
+          : `Showing <strong>1–${total}</strong> of <strong>${total}</strong> songs`;
+    }
+  }
+
+  if (catalogPageNums) {
+    catalogPageNums.innerHTML = '';
+    for (let p = 1; p <= totalPages; p++) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'page-num-btn' + (p === currentCatalogPage ? ' is-active' : '');
+      btn.dataset.catalogPage = String(p);
+      btn.textContent = String(p);
+      btn.setAttribute('aria-label', `Page ${p}`);
+      if (p === currentCatalogPage) btn.setAttribute('aria-current', 'page');
+      catalogPageNums.append(btn);
+    }
+  }
+
+  const controlsWrap = document.getElementById('catalog-page-controls');
+  if (controlsWrap) {
+    controlsWrap.hidden = totalPages <= 1;
+  }
+  if (catalogPagePrev) {
+    catalogPagePrev.disabled = currentCatalogPage <= 1;
+  }
+  if (catalogPageNext) {
+    catalogPageNext.disabled = currentCatalogPage >= totalPages;
+  }
+
+  if (announce && playerStatus && total > 0) {
+    playerStatus.textContent = `Page ${currentCatalogPage} of ${totalPages}: showing songs ${startIdx + 1} to ${endIdx} of ${total}.`;
+  }
+
+  if (scrollCatalogIntoView) {
+    const head = document.getElementById('explore-originals');
+    if (head) {
+      const r = head.getBoundingClientRect();
+      if (r.top < 60) {
+        head.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+      }
+    }
+  }
+}
+
+function syncCatalogPageForTrack(trackId) {
+  if (!trackId || catalogRows.length === 0) return;
+  let matching = getMatchingCatalogRows(activeCatalogFilter);
+  let idx = matching.findIndex(r => r.dataset.song === trackId);
+  if (idx === -1 && activeCatalogFilter !== 'all') {
+    activeCatalogFilter = 'all';
+    filterPills.forEach(btn => {
+      const active = (btn.dataset.filter || 'all') === 'all';
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+    matching = getMatchingCatalogRows('all');
+    idx = matching.findIndex(r => r.dataset.song === trackId);
+  }
+  if (idx !== -1) {
+    const targetPage = Math.floor(idx / CATALOG_PAGE_SIZE) + 1;
+    if (targetPage !== currentCatalogPage) {
+      currentCatalogPage = targetPage;
+    }
+    renderCatalogPage({ animate: false });
+  }
 }
 
 function pickSong(trackId) {
@@ -1023,6 +1429,7 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   frame.title = `${title} by Reb Yen — ReverbNation audio player`;
   if (playerTitle) playerTitle.textContent = title;
   if (stopBtn) stopBtn.hidden = false;
+  syncCatalogPageForTrack(trackId);
   updateCatalogSelection(trackId);
 
   const fallback = document.getElementById('player-fallback');
@@ -1039,17 +1446,17 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
 }
 
 function stepTrack(offset) {
-  if (catalogRows.length === 0) return;
-  const visibleRows = catalogRows.filter(row => !row.hidden);
-  const pool = visibleRows.length > 0 ? visibleRows : catalogRows;
-  const currentIndex = pool.findIndex(row => row.dataset.song === selectedTrack);
+  const matching = getMatchingCatalogRows(activeCatalogFilter);
+  const pool = matching.length > 0 ? matching.map(r => r.dataset.song) : TRACK_ORDER;
+  if (pool.length === 0) return;
+  const currentIndex = pool.indexOf(selectedTrack);
   const nextIndex =
     currentIndex === -1
       ? offset >= 0
         ? 0
         : pool.length - 1
       : (currentIndex + offset + pool.length) % pool.length;
-  const nextTrackId = pool[nextIndex]?.dataset.song;
+  const nextTrackId = pool[nextIndex];
   if (nextTrackId) {
     selectTrackById(nextTrackId, { dock: true, focusPlayer: false });
   }
@@ -1142,30 +1549,49 @@ document.addEventListener('keydown', event => {
   }
 });
 
-// Catalog Filter Pills (All / Featured / Studio / Live)
-const filterPills = Array.from(document.querySelectorAll('.filter-pill[data-filter]'));
+// Catalog Filter Pills (All 22 / Featured 3 / Studio 11 / Live 11) + Pagination
 filterPills.forEach(pill => {
   pill.addEventListener('click', () => {
-    const filter = pill.dataset.filter || 'all';
+    activeCatalogFilter = pill.dataset.filter || 'all';
+    currentCatalogPage = 1;
     filterPills.forEach(btn => {
       const active = btn === pill;
       btn.classList.toggle('is-active', active);
       btn.setAttribute('aria-pressed', String(active));
     });
-
-    catalogRows.forEach(row => {
-      const tags = (row.dataset.tags || '').split(/\s+/);
-      const match = filter === 'all' || tags.includes(filter);
-      row.hidden = !match;
-      row.classList.remove('is-filtered-in');
-      if (match && !prefersReducedMotion) {
-        void row.offsetWidth;
-        row.classList.add('is-filtered-in');
-      }
-    });
+    renderCatalogPage({ animate: true, announce: true });
   });
 });
 
+catalogPagePrev?.addEventListener('click', () => {
+  if (currentCatalogPage > 1) {
+    currentCatalogPage--;
+    renderCatalogPage({ animate: true, announce: true, scrollCatalogIntoView: true });
+  }
+});
+
+catalogPageNext?.addEventListener('click', () => {
+  const totalPages = Math.max(
+    1,
+    Math.ceil(getMatchingCatalogRows(activeCatalogFilter).length / CATALOG_PAGE_SIZE)
+  );
+  if (currentCatalogPage < totalPages) {
+    currentCatalogPage++;
+    renderCatalogPage({ animate: true, announce: true, scrollCatalogIntoView: true });
+  }
+});
+
+catalogPageNums?.addEventListener('click', event => {
+  const btn = event.target.closest('.page-num-btn[data-catalog-page]');
+  if (!btn) return;
+  const nextPage = Number(btn.dataset.catalogPage);
+  if (Number.isFinite(nextPage) && nextPage !== currentCatalogPage) {
+    currentCatalogPage = nextPage;
+    renderCatalogPage({ animate: true, announce: true, scrollCatalogIntoView: true });
+  }
+});
+
+renderCatalogPage({ animate: false });
 setExpanded(false);
 setRecordStatus(null);
 
