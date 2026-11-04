@@ -33,8 +33,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261103l">
-  <script defer src="site.js?v=20261103l"></script>
+  <link rel="stylesheet" href="styles.css?v=20261103m">
+  <script defer src="site.js?v=20261103m"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -133,7 +133,10 @@
           <p class="location">Singer-songwriter &amp; multi-instrumentalist</p>
           <div class="hero-record" id="hero-turntable">
             <div class="hero-record-ctl">
-              <p class="record-step" id="record-now-label" hidden>Now playing</p>
+              <p class="record-step" id="record-now-label" hidden>
+                <span class="eq-bars eq-bars-now" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                <span id="record-now-label-text">Now playing</span>
+              </p>
               <div class="record-title-row">
                 <p class="record-now is-idle" id="record-now-title">Original songs</p>
               </div>
@@ -234,7 +237,7 @@
               <aside id="music-player" class="player" tabindex="-1" aria-label="Reb Yen music player">
                 <div class="player-bar">
                   <div class="player-label">
-                    <small>Music player</small>
+                    <small id="player-eyebrow">Music player</small>
                     <strong id="player-title">Choose a song to listen</strong>
                   </div>
                   <div class="player-buttons">

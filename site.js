@@ -1,6 +1,21 @@
 'use strict';
 
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let prefersReducedMotion = reducedMotionQuery.matches;
+const reducedMotionCleanups = [];
+
+function onReducedMotionChange(event) {
+  prefersReducedMotion = Boolean(event.matches);
+  if (prefersReducedMotion) {
+    reducedMotionCleanups.forEach(fn => fn());
+  }
+}
+
+if (typeof reducedMotionQuery.addEventListener === 'function') {
+  reducedMotionQuery.addEventListener('change', onReducedMotionChange);
+} else if (typeof reducedMotionQuery.addListener === 'function') {
+  reducedMotionQuery.addListener(onReducedMotionChange);
+}
 
 // ============================================================================
 // Dialog helpers — native <dialog> where supported (Safari 15.4+, all modern
@@ -168,9 +183,13 @@ function updateScrollEffects() {
     scrollProgress.style.setProperty('--scroll-ratio', ratio.toFixed(4));
   }
 
-  if (heroSection && !prefersReducedMotion && window.innerWidth > 700 && scrollTop < 700) {
-    const offset = Math.min(36, Math.round(scrollTop * 0.07));
-    heroSection.style.setProperty('--hero-parallax', `${offset}px`);
+  if (heroSection) {
+    if (!prefersReducedMotion && window.innerWidth > 700 && scrollTop < 700) {
+      const offset = Math.min(36, Math.round(scrollTop * 0.07));
+      heroSection.style.setProperty('--hero-parallax', `${offset}px`);
+    } else if (prefersReducedMotion) {
+      heroSection.style.removeProperty('--hero-parallax');
+    }
   }
 }
 
@@ -289,6 +308,7 @@ const TRACK_META = {
 const player = document.getElementById('music-player');
 const frame = document.getElementById('reverbnation-player');
 const playerBody = document.getElementById('player-body');
+const playerEyebrow = document.getElementById('player-eyebrow');
 const playerTitle = document.getElementById('player-title');
 const minimizeBtn = document.getElementById('player-minimize');
 const stopBtn = document.getElementById('player-stop');
@@ -297,10 +317,12 @@ const nextBtn = document.getElementById('player-next');
 const playerStatus = document.getElementById('player-status');
 const heroTurntable = document.getElementById('hero-turntable');
 const heroRecord = document.getElementById('hero-record');
+const heroDisc = heroRecord?.querySelector('.disc') || null;
 const recordCta = document.getElementById('record-cta');
 const recordCtaText = document.getElementById('record-cta-text');
 const recordLabelTitle = document.getElementById('record-label-title');
 const recordNowLabel = document.getElementById('record-now-label');
+const recordNowLabelText = document.getElementById('record-now-label-text');
 const recordNowTitle = document.getElementById('record-now-title');
 const recordStopBtn = document.getElementById('record-stop-btn');
 const songPicker = document.getElementById('song-picker');
@@ -308,6 +330,7 @@ const songPickerList = document.getElementById('song-picker-list');
 const songPickerFoot = document.getElementById('song-picker-foot');
 
 const featureSleeve = document.getElementById('feature-sleeve');
+const sleeveDisc = featureSleeve?.querySelector('.sleeve-vinyl') || null;
 const sleeveVinylLabel = document.getElementById('sleeve-vinyl-label');
 const featuredImg = document.getElementById('featured-img');
 const featuredCaption = document.getElementById('featured-caption');
@@ -330,10 +353,157 @@ const requiresWidgetTap =
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let isCued = false;
 
+function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
+  let spinAnim = null;
+  let coastAnim = null;
+  let rampRaf = 0;
+  let isSpinning = false;
+
+  function getRotationDeg() {
+    if (!el) return 0;
+    const tr = window.getComputedStyle(el).transform;
+    if (!tr || tr === 'none') return 0;
+    const m = tr.match(/matrix\(([^)]+)\)/);
+    if (!m) return 0;
+    const parts = m[1].split(',').map(Number);
+    const angle = Math.atan2(parts[1], parts[0]) * (180 / Math.PI);
+    return ((angle % 360) + 360) % 360;
+  }
+
+  function stopImmediate() {
+    isSpinning = false;
+    if (rampRaf) {
+      cancelAnimationFrame(rampRaf);
+      rampRaf = 0;
+    }
+    if (spinAnim) {
+      spinAnim.cancel();
+      spinAnim = null;
+    }
+    if (coastAnim) {
+      coastAnim.cancel();
+      coastAnim = null;
+    }
+    el?.style.removeProperty('transform');
+  }
+
+  function start() {
+    if (!el || typeof el.animate !== 'function' || prefersReducedMotion) {
+      stopImmediate();
+      return;
+    }
+    if (isSpinning && spinAnim) return;
+
+    const startDeg = getRotationDeg();
+    if (coastAnim) {
+      coastAnim.cancel();
+      coastAnim = null;
+    }
+    if (rampRaf) {
+      cancelAnimationFrame(rampRaf);
+      rampRaf = 0;
+    }
+
+    spinAnim = el.animate(
+      [
+        { transform: `${baseTransform}rotate(${startDeg}deg)` },
+        { transform: `${baseTransform}rotate(${startDeg + 360}deg)` }
+      ],
+      { duration: rpmMs, iterations: Infinity, easing: 'linear' }
+    );
+    isSpinning = true;
+    spinAnim.playbackRate = 0.25;
+
+    const t0 = performance.now();
+    const rampDuration = 360;
+    function ramp(now) {
+      if (!spinAnim || !isSpinning || prefersReducedMotion) {
+        rampRaf = 0;
+        if (prefersReducedMotion) stopImmediate();
+        return;
+      }
+      const p = Math.min(1, (now - t0) / rampDuration);
+      spinAnim.playbackRate = 0.25 + 0.75 * (1 - Math.pow(1 - p, 2));
+      if (p < 1) {
+        rampRaf = requestAnimationFrame(ramp);
+      } else {
+        spinAnim.playbackRate = 1;
+        rampRaf = 0;
+      }
+    }
+    rampRaf = requestAnimationFrame(ramp);
+  }
+
+  function easeToStop() {
+    if (!el) return;
+    if (prefersReducedMotion || typeof el.animate !== 'function') {
+      stopImmediate();
+      return;
+    }
+    if (!isSpinning) return;
+
+    isSpinning = false;
+    if (rampRaf) {
+      cancelAnimationFrame(rampRaf);
+      rampRaf = 0;
+    }
+    const startDeg = getRotationDeg();
+    if (spinAnim) {
+      spinAnim.cancel();
+      spinAnim = null;
+    }
+
+    const rem = (360 - startDeg) % 360;
+    const coastDelta = rem < 55 ? rem + 360 : rem;
+    const duration = Math.round(720 + (coastDelta / 360) * 760);
+
+    coastAnim = el.animate(
+      [
+        { transform: `${baseTransform}rotate(${startDeg}deg)` },
+        { transform: `${baseTransform}rotate(${startDeg + coastDelta}deg)` }
+      ],
+      { duration, easing: 'cubic-bezier(0.14, 0.74, 0.26, 1)' }
+    );
+    coastAnim.onfinish = () => {
+      coastAnim = null;
+    };
+    coastAnim.oncancel = () => {
+      coastAnim = null;
+    };
+  }
+
+  return { start, easeToStop, stopImmediate };
+}
+
+const heroPlatter = createVinylPlatterController(heroDisc, '', 2800);
+const sleevePlatter = createVinylPlatterController(sleeveDisc, 'translateY(-50%) ', 3400);
+
+function syncPlatters() {
+  const shouldSpin = Boolean(selectedTrack && !isCued && !prefersReducedMotion);
+  if (shouldSpin) {
+    heroPlatter.start();
+    sleevePlatter.start();
+  } else {
+    heroPlatter.easeToStop();
+    sleevePlatter.easeToStop();
+  }
+}
+
+reducedMotionCleanups.push(() => {
+  heroPlatter.stopImmediate();
+  sleevePlatter.stopImmediate();
+  heroSection?.style.removeProperty('--hero-parallax');
+  heroTurntable?.classList.add('has-entered');
+});
+
 if (heroTurntable) {
-  window.setTimeout(() => {
+  if (prefersReducedMotion) {
     heroTurntable.classList.add('has-entered');
-  }, 1650);
+  } else {
+    window.setTimeout(() => {
+      heroTurntable.classList.add('has-entered');
+    }, 1350);
+  }
 }
 
 function reverbnationEmbedUrl(trackId) {
@@ -345,6 +515,7 @@ function setCued(cued) {
   player?.classList.toggle('is-cued', isCued);
   heroRecord?.classList.toggle('is-cued', isCued);
   featureSleeve?.classList.toggle('is-cued', isCued);
+  syncPlatters();
 }
 
 window.addEventListener('blur', () => {
@@ -483,9 +654,15 @@ function setRecordStatus(trackId) {
   if (recordLabelTitle) recordLabelTitle.textContent = isLoaded ? name : 'Tap to pick a song';
 
   if (recordNowLabel) {
-    recordNowLabel.textContent = 'Now playing';
+    if (recordNowLabelText) recordNowLabelText.textContent = 'Now playing';
     recordNowLabel.hidden = !isLoaded;
   }
+  if (playerEyebrow) {
+    playerEyebrow.innerHTML = isLoaded
+      ? '<span class="eq-bars eq-bars-now" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Now playing'
+      : 'Music player';
+  }
+  syncPlatters();
   if (recordNowTitle) {
     recordNowTitle.textContent = isLoaded ? name : 'Original songs';
     recordNowTitle.classList.toggle('is-idle', !isLoaded);
@@ -895,6 +1072,12 @@ document.querySelectorAll('[data-guitar-string]').forEach(stringEl => {
     stringEl.classList.add('is-vibrating');
 
     function step() {
+      if (prefersReducedMotion) {
+        setCurve(500, 16);
+        stringEl.classList.remove('is-vibrating');
+        animId = 0;
+        return;
+      }
       const force = -0.45 * disp;
       vel = (vel + force) * 0.89;
       disp += vel;
@@ -911,9 +1094,19 @@ document.querySelectorAll('[data-guitar-string]').forEach(stringEl => {
     animId = requestAnimationFrame(step);
   }
 
+  reducedMotionCleanups.push(() => {
+    if (animId) {
+      cancelAnimationFrame(animId);
+      animId = 0;
+    }
+    pulledDisp = 0;
+    setCurve(500, 16);
+    stringEl.classList.remove('is-vibrating');
+  });
+
   if (!prefersReducedMotion && paths.length > 0) {
     stringEl.addEventListener('pointermove', event => {
-      if (event.pointerType === 'touch') return;
+      if (prefersReducedMotion || event.pointerType === 'touch') return;
       const rect = stringEl.getBoundingClientRect();
       if (!rect.width) return;
       lastX = Math.max(80, Math.min(920, ((event.clientX - rect.left) / rect.width) * 1000));
@@ -953,7 +1146,7 @@ document.querySelectorAll('[data-guitar-string]').forEach(stringEl => {
 });
 
 // ============================================================================
-// Choreographed Scroll-Reveal Storytelling
+// Choreographed Scroll-Reveal Storytelling (Sections & Staggered Cards)
 // ============================================================================
 if (!prefersReducedMotion && 'IntersectionObserver' in window) {
   document.documentElement.classList.add('js-motion');
@@ -971,6 +1164,18 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
 
   const revealTargets = new Set();
 
+  // Fade whole below-the-fold sections in as you scroll (for #music, fade its
+  // top-level blocks individually so #music-player can dock fixed at any time).
+  document.querySelectorAll('main > section:not(#home):not(#music)').forEach(sec => {
+    revealTargets.add(sec);
+  });
+
+  document
+    .querySelectorAll(
+      '#music .section-head, #music .feature-sleeve-wrap, #music .featured-copy > :not(.player-slot), #music .player-slot, #music .catalog-head, #music .song-list, [data-reveal], .recognition-inner, .section-head, .upcoming, .stage-spec-panel, .about-image, .about-copy, .contact-grid > div, .press-main h2, .press-main > p, .press-facts'
+    )
+    .forEach(el => revealTargets.add(el));
+
   staggerGroups.forEach(({ parent, children, step, mod }) => {
     document.querySelectorAll(parent).forEach(group => {
       group.querySelectorAll(children).forEach((item, index) => {
@@ -979,12 +1184,6 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
       });
     });
   });
-
-  document
-    .querySelectorAll(
-      '[data-reveal], .recognition-inner, .section-head, .feature-sleeve-wrap, .upcoming, .stage-spec-panel, .about-image, .about-copy, .contact-grid > div, .press-main h2, .press-main > p, .press-facts'
-    )
-    .forEach(el => revealTargets.add(el));
 
   const viewportCutoff = window.innerHeight * 0.94;
   const revealObserver = new IntersectionObserver(
@@ -996,7 +1195,7 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
         }
       });
     },
-    { threshold: 0.1, rootMargin: '0px 0px -32px 0px' }
+    { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
   );
 
   revealTargets.forEach(el => {
@@ -1006,6 +1205,15 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
       revealObserver.observe(el);
     }
   });
+
+  reducedMotionCleanups.push(() => {
+    revealObserver.disconnect();
+    document.documentElement.classList.remove('js-motion');
+    revealTargets.forEach(el => {
+      el.classList.add('is-revealed');
+      el.classList.remove('reveal-ready');
+    });
+  });
 }
 
 // ============================================================================
@@ -1014,6 +1222,7 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
 if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
   document.querySelectorAll('[data-tilt]').forEach(card => {
     card.addEventListener('pointermove', event => {
+      if (prefersReducedMotion) return;
       const rect = card.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
       const px = (event.clientX - rect.left) / rect.width - 0.5;
@@ -1034,6 +1243,7 @@ if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
 
   document.querySelectorAll('.button.primary').forEach(btn => {
     btn.addEventListener('pointermove', event => {
+      if (prefersReducedMotion) return;
       const rect = btn.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
       const mx = (((event.clientX - rect.left) / rect.width - 0.5) * 7).toFixed(2);
@@ -1048,6 +1258,18 @@ if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
     };
     btn.addEventListener('pointerleave', resetMagnet);
     btn.addEventListener('blur', resetMagnet);
+  });
+
+  reducedMotionCleanups.push(() => {
+    document.querySelectorAll('[data-tilt]').forEach(card => {
+      card.classList.remove('is-tilting');
+      card.style.removeProperty('--rx');
+      card.style.removeProperty('--ry');
+    });
+    document.querySelectorAll('.button.primary').forEach(btn => {
+      btn.style.removeProperty('--mx');
+      btn.style.removeProperty('--my');
+    });
   });
 }
 
