@@ -191,9 +191,10 @@ const TRACK_META = {
     vinyl: 'TAKE ME\nCRAZY',
     eyebrow: 'Featured original · ReverbNation Spotlight',
     desc: 'Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb — live performance filmed in Nashville.',
-    img: 'images/take_me_crazy.jpg',
-    alt: 'Reb Yen performing Take Me Crazy in Nashville',
-    caption: 'On stage at the Commodore Grille, Nashville',
+    img: 'images/featured-reb-guitar.jpg',
+    portrait: true,
+    alt: 'Singer-songwriter Reb Yen with her acoustic guitar',
+    caption: 'Reb Yen · Singer-songwriter',
     href: 'https://www.reverbnation.com/rebyen/song/33863436-take-me-crazy-original'
   },
   '33355990': {
@@ -378,6 +379,8 @@ function updateJukeboxSleeve(trackId, isPlaying) {
       featuredImg.alt = meta.alt;
       featuredImg.style.objectPosition = meta.pos || '50% 50%';
       featuredImg.classList.toggle('is-brightened', Boolean(meta.bright));
+      featuredImg.classList.toggle('is-portrait', Boolean(meta.portrait));
+      featureSleeve?.classList.toggle('is-portrait-sleeve', Boolean(meta.portrait));
       if (featuredImg.complete) featuredImg.classList.remove('is-swapping');
     };
 
@@ -390,6 +393,8 @@ function updateJukeboxSleeve(trackId, isPlaying) {
   } else if (featuredImg) {
     featuredImg.style.objectPosition = meta.pos || '50% 50%';
     featuredImg.classList.toggle('is-brightened', Boolean(meta.bright));
+    featuredImg.classList.toggle('is-portrait', Boolean(meta.portrait));
+    featureSleeve?.classList.toggle('is-portrait-sleeve', Boolean(meta.portrait));
   }
 
   featureSleeve?.classList.toggle('is-playing', Boolean(isPlaying));

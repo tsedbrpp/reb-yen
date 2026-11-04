@@ -1009,6 +1009,12 @@ p + p {
   isolation: isolate;
 }
 
+.feature-sleeve-wrap.is-portrait-sleeve {
+  max-width: 420px;
+  width: 100%;
+  justify-self: start;
+}
+
 .sleeve-vinyl {
   position: absolute;
   top: 47%;
@@ -1097,6 +1103,10 @@ p + p {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   transition: opacity 0.22s ease, transform 0.26s ease;
+}
+
+.feature-art img.is-portrait {
+  aspect-ratio: 760 / 931;
 }
 
 .feature-art img.is-brightened {
@@ -3817,6 +3827,10 @@ dialog.is-fallback-open {
   .feature-sleeve-wrap {
     max-width: 440px;
     padding-right: 22px;
+  }
+  .feature-sleeve-wrap.is-portrait-sleeve {
+    max-width: 345px;
+    margin-inline: auto;
   }
   .feature-sleeve-wrap:hover .sleeve-vinyl,
   .feature-sleeve-wrap.is-playing .sleeve-vinyl {
