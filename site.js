@@ -374,9 +374,15 @@ function updateJukeboxSleeve(trackId, isPlaying) {
   if (featuredLyricsLink) {
     featuredLyricsLink.href = meta.href;
   }
+  if (featureSleeve) {
+    featureSleeve.setAttribute('aria-label', `Play featured song: ${meta.title}`);
+  }
 
   if (featuredImg && featuredImg.getAttribute('src') !== meta.img) {
     clearTimeout(sleeveSwapTimer);
+    if (!prefersReducedMotion) {
+      featureSleeve?.classList.add('is-swapping-disc');
+    }
     const applyImg = () => {
       featuredImg.onload = () => featuredImg.classList.remove('is-swapping');
       featuredImg.setAttribute('src', meta.img);
@@ -385,12 +391,13 @@ function updateJukeboxSleeve(trackId, isPlaying) {
       featuredImg.classList.toggle('is-brightened', Boolean(meta.bright));
       featuredImg.classList.toggle('is-portrait', Boolean(meta.portrait));
       featureSleeve?.classList.toggle('is-portrait-sleeve', Boolean(meta.portrait));
+      featureSleeve?.classList.remove('is-swapping-disc');
       if (featuredImg.complete) featuredImg.classList.remove('is-swapping');
     };
 
     if (!prefersReducedMotion) {
       featuredImg.classList.add('is-swapping');
-      sleeveSwapTimer = window.setTimeout(applyImg, 120);
+      sleeveSwapTimer = window.setTimeout(applyImg, 180);
     } else {
       applyImg();
     }
@@ -403,6 +410,16 @@ function updateJukeboxSleeve(trackId, isPlaying) {
 
   featureSleeve?.classList.toggle('is-playing', Boolean(isPlaying));
 }
+
+featureSleeve?.addEventListener('click', () => {
+  featuredListenBtn?.click();
+});
+featureSleeve?.addEventListener('keydown', event => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    featuredListenBtn?.click();
+  }
+});
 
 function setExpanded(expanded) {
   if (!playerBody || !minimizeBtn) return;
