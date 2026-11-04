@@ -1055,118 +1055,12 @@ document.querySelectorAll('.video-poster[data-video-id]').forEach(button => {
 });
 
 // ============================================================================
-// Stage Plot & Lineup Configurator + Contact Form Adaptation
+// Contact Form Redirect Target
 // ============================================================================
-const STAGE_SPECS = {
-  Solo: {
-    title: 'Solo Acoustic · Intimate Storytelling',
-    instruments: 'Lead vocals with guitar, keyboard or harmonica',
-    venues: 'Listening rooms, bistros, house concerts & private gatherings',
-    cta: 'Inquire about Solo →'
-  },
-  Duo: {
-    title: 'Acoustic Duo · Harmonies & Counterpoint',
-    instruments: 'Two performers with vocal harmonies, guitars & multi-instrumental textures',
-    venues: 'Wine bars, hotel lounges, receptions & intimate stages',
-    cta: 'Inquire about Duo →'
-  },
-  'Full band': {
-    title: 'Full Band · High-Energy Stage Set',
-    instruments: 'Full ensemble performing Reb’s originals and carefully chosen covers',
-    venues: 'Festivals, concert series, main stages & lively club rooms',
-    cta: 'Inquire about Full band →'
-  }
-};
-
-const topicSelect = document.getElementById('cf-topic');
-const formatSelect = document.getElementById('cf-format');
-const bookingDetailsRow = document.getElementById('booking-details-row');
-const messageField = document.getElementById('cf-msg');
-const formatCards = Array.from(document.querySelectorAll('[data-format-card]'));
-const specTitle = document.getElementById('spec-title');
-const specInstruments = document.getElementById('spec-instruments');
-const specVenues = document.getElementById('spec-venues');
-const specCta = document.getElementById('spec-cta');
-const specGrid = document.querySelector('.stage-spec-grid');
-
-const bookingTopics = new Set(['Venue or club', 'Festival', 'Private event']);
-
-function syncContactFormFields() {
-  if (!topicSelect || !bookingDetailsRow) return;
-  const isBooking = bookingTopics.has(topicSelect.value);
-  bookingDetailsRow.hidden = !isBooking;
-  bookingDetailsRow.inert = !isBooking;
-  if (messageField) {
-    messageField.placeholder = isBooking
-      ? "For bookings, please include the date, venue/city, approximate set length, and whether you'd like solo, duo or band."
-      : 'Write your message to Reb here...';
-  }
-}
-
-function selectStageFormat(formatKey) {
-  const spec = STAGE_SPECS[formatKey];
-  if (!spec) return;
-
-  formatCards.forEach(card => {
-    card.classList.toggle('is-selected-format', card.dataset.formatCard === formatKey);
-  });
-
-  if (specTitle) specTitle.textContent = spec.title;
-  if (specInstruments) specInstruments.textContent = spec.instruments;
-  if (specVenues) specVenues.textContent = spec.venues;
-  if (specCta) {
-    specCta.textContent = spec.cta;
-    specCta.dataset.selectFormat = formatKey;
-  }
-
-  if (specGrid && !prefersReducedMotion) {
-    specGrid.classList.remove('is-animating');
-    void specGrid.offsetWidth;
-    specGrid.classList.add('is-animating');
-  }
-
-  if (formatSelect) {
-    formatSelect.value = formatKey;
-  }
-}
-
-formatCards.forEach(card => {
-  card.addEventListener('click', () => {
-    if (card.dataset.formatCard) selectStageFormat(card.dataset.formatCard);
-  });
-
-  card.addEventListener('keydown', event => {
-    if (event.target.closest('a')) return;
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      if (card.dataset.formatCard) selectStageFormat(card.dataset.formatCard);
-    }
-  });
-});
-
 const contactNextField = document.querySelector('.contact-form input[name="_next"]');
 if (contactNextField && /^https?:$/.test(window.location.protocol)) {
   contactNextField.value = new URL('thanks.html', window.location.href).href;
 }
-
-topicSelect?.addEventListener('change', syncContactFormFields);
-syncContactFormFields();
-
-document.querySelectorAll('[data-select-format]').forEach(link => {
-  link.addEventListener('click', () => {
-    const chosenFormat = link.dataset.selectFormat;
-    if (chosenFormat && STAGE_SPECS[chosenFormat]) {
-      selectStageFormat(chosenFormat);
-    }
-    if (topicSelect && !bookingTopics.has(topicSelect.value)) {
-      topicSelect.value = 'Venue or club';
-      syncContactFormFields();
-    }
-    if (formatSelect && chosenFormat) {
-      formatSelect.value = chosenFormat;
-    }
-  });
-});
 
 // ============================================================================
 // Interactive "Stages & Chapters" Tour-Stop Strip

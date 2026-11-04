@@ -382,32 +382,10 @@ p + p {
 
 .site-nav a:hover,
 .site-nav a[aria-current="location"],
+.site-nav a[aria-current="location"],
 .site-nav a[aria-current="page"] {
-  color: #fff;
-  background: rgba(255, 250, 241, 0.1);
-}
-
-.site-nav a[aria-current="location"]:not(.nav-book),
-.site-nav a[aria-current="page"]:not(.nav-book) {
   color: #ffbe92;
   background: rgba(223, 115, 63, 0.16);
-}
-
-.site-nav .nav-book {
-  margin-left: 6px;
-  padding: 9px 18px;
-  background: linear-gradient(135deg, #f08b58, var(--orange));
-  color: #231121 !important;
-  font-weight: 800;
-  border-radius: 999px;
-  box-shadow: 0 4px 14px rgba(223, 115, 63, 0.35);
-}
-
-.site-nav .nav-book:hover,
-.site-nav .nav-book[aria-current="location"] {
-  background: linear-gradient(135deg, #ffa06f, #ee824c);
-  color: #1a0c18 !important;
-  transform: translateY(-1px);
 }
 
 .menu-toggle {
@@ -527,21 +505,6 @@ p + p {
   gap: 12px 20px;
   margin-top: 22px;
   animation: hero-enter 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both;
-}
-
-.hero-secondary .hero-booking-link {
-  margin: 0;
-}
-
-.hero-booking-link {
-  margin: 14px 0 0;
-  font-size: 15px;
-  color: #e9d5e1;
-}
-
-.hero-booking-link a {
-  color: #ffbe92;
-  font-weight: 700;
 }
 
 .hero-record {
@@ -3606,21 +3569,15 @@ dialog.is-fallback-open {
     align-items: center;
     justify-content: space-between;
   }
-  .site-nav a:not(.nav-book)::after {
+  .site-nav a::after {
     content: '›';
     font-size: 20px;
     line-height: 1;
     color: rgba(239, 169, 119, 0.72);
   }
-  .site-nav a[aria-current="location"]:not(.nav-book),
-  .site-nav a[aria-current="page"]:not(.nav-book) {
+  .site-nav a[aria-current="location"],
+  .site-nav a[aria-current="page"] {
     border-color: rgba(223, 115, 63, 0.35);
-  }
-  .site-nav .nav-book {
-    margin: 8px 0 0;
-    min-height: 48px;
-    font-size: 16px;
-    justify-content: center;
   }
   .hero {
     min-height: clamp(510px, 125vw, 585px);
