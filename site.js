@@ -295,6 +295,7 @@ const stopBtn = document.getElementById('player-stop');
 const prevBtn = document.getElementById('player-prev');
 const nextBtn = document.getElementById('player-next');
 const playerStatus = document.getElementById('player-status');
+const heroTurntable = document.getElementById('hero-turntable');
 const heroRecord = document.getElementById('hero-record');
 const recordCta = document.getElementById('record-cta');
 const recordCtaText = document.getElementById('record-cta-text');
@@ -328,6 +329,12 @@ const requiresWidgetTap =
   /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let isCued = false;
+
+if (heroTurntable) {
+  window.setTimeout(() => {
+    heroTurntable.classList.add('has-entered');
+  }, 1650);
+}
 
 function reverbnationEmbedUrl(trackId) {
   return `https://www.reverbnation.com/widget_code/html_widget/artist_6720947?widget_id=55&pwc[included_songs]=0&pwc[song_ids]=${encodeURIComponent(trackId)}&context_type=song&pwc[size]=small&pwc[autoplay]=1`;
@@ -463,6 +470,9 @@ function updateCatalogSelection(trackId) {
 function setRecordStatus(trackId) {
   if (!heroRecord) return;
   const isLoaded = Boolean(trackId);
+  if (isLoaded && heroTurntable) {
+    heroTurntable.classList.add('has-entered');
+  }
   const name = (trackId && TRACK_META[trackId]?.title) || 'this song';
 
   heroRecord.classList.toggle('selected', isLoaded);

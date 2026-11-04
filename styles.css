@@ -503,7 +503,7 @@ p + p {
   align-items: center;
   gap: 12px 20px;
   margin-top: 22px;
-  animation: hero-enter 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both;
+  animation: hero-enter 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.46s both;
 }
 
 .hero-contact-prompt {
@@ -546,7 +546,92 @@ p + p {
   text-shadow: none;
   cursor: pointer;
   transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.3s ease;
-  animation: hero-enter 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.29s both;
+}
+
+.hero-record:not(.has-entered) {
+  animation: control-slide-in 0.88s cubic-bezier(0.22, 1, 0.36, 1) 0.18s backwards;
+}
+
+.hero-record:not(.has-entered) .hero-record-ctl {
+  animation: ctl-slide-in 0.82s cubic-bezier(0.22, 1, 0.36, 1) 0.36s backwards;
+}
+
+.hero-record:not(.has-entered) .record-now.is-idle {
+  animation: ctl-title-glow 1.1s ease-out 0.36s backwards;
+}
+
+.hero-record:not(.has-entered) .spin-record:not(.selected) {
+  animation: vinyl-roll-in 1.08s cubic-bezier(0.16, 1, 0.3, 1) 0.26s backwards;
+}
+
+.hero-record:not(.has-entered) .spin-record:not(.selected) + .arm {
+  animation: arm-settle-in 0.96s cubic-bezier(0.22, 1, 0.36, 1) 0.52s backwards;
+}
+
+@keyframes control-slide-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(-64px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ctl-slide-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(-38px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ctl-title-glow {
+  0% {
+    color: #ffd5b5;
+    text-shadow: 0 0 18px rgba(239, 169, 119, 0.5);
+  }
+  55% {
+    color: #ffe2ca;
+    text-shadow: 0 0 14px rgba(239, 169, 119, 0.32);
+  }
+  100% {
+    color: #ecdbe6;
+    text-shadow: none;
+  }
+}
+
+@keyframes vinyl-roll-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(-76px, 0, 0) rotate(-165deg) scale(0.95);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes arm-settle-in {
+  0% {
+    opacity: 0;
+    transform: rotate(-9deg);
+  }
+  58% {
+    opacity: 1;
+    transform: rotate(9.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(4deg);
+  }
 }
 
 .hero-record:hover {
@@ -3761,6 +3846,32 @@ dialog.is-fallback-open {
     background: rgba(24, 11, 26, 0.66);
     border: 1px solid rgba(239, 169, 119, 0.46);
     box-shadow: 0 14px 32px rgba(10, 4, 12, 0.56);
+  }
+  .hero-record:not(.has-entered) {
+    animation-name: control-slide-in-mobile;
+  }
+  .hero-record:not(.has-entered) .spin-record:not(.selected) {
+    animation-name: vinyl-roll-in-mobile;
+  }
+  @keyframes control-slide-in-mobile {
+    0% {
+      opacity: 0;
+      transform: translate3d(-36px, 0, 0);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes vinyl-roll-in-mobile {
+    0% {
+      opacity: 0;
+      transform: translate3d(-28px, 0, 0) rotate(-135deg) scale(0.94);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
   }
   .turntable {
     width: var(--rec);
