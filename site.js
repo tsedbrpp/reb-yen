@@ -988,6 +988,9 @@ function setCued(cued) {
 window.addEventListener('blur', () => {
   setTimeout(() => {
     if (isCued && frame && document.activeElement === frame) {
+      if (typeof playVinylNeedleDrop === 'function') {
+        playVinylNeedleDrop();
+      }
       setCued(false);
       setRecordStatus(selectedTrack);
       if (playerStatus) playerStatus.textContent = `Now playing ${playerTitle?.textContent || 'the song'}.`;
@@ -1465,10 +1468,19 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   }
   setExpanded(true);
 
-  if (typeof playVinylNeedleDrop === 'function') {
-    playVinylNeedleDrop();
-  }
   if (trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
+    if (!requiresWidgetTap && typeof playVinylNeedleDrop === 'function') {
+      ensureAudioUnlocked();
+      frame.addEventListener(
+        'load',
+        () => {
+          if (selectedTrack === trackId && !isCued) {
+            playVinylNeedleDrop();
+          }
+        },
+        { once: true }
+      );
+    }
     frame.src = reverbnationEmbedUrl(trackId);
     selectedTrack = trackId;
     setCued(requiresWidgetTap);
@@ -1557,9 +1569,8 @@ function stopPlayer({ returnFocus = true } = {}) {
 
 stopBtn?.addEventListener('click', () => stopPlayer());
 
-// Hero turntable & Listen button: tapping opens the 22-song picker.
+// Hero turntable & Listen button: tapping opens the 22-song picker (no crackle until a song actually plays).
 heroRecord?.addEventListener('click', event => {
-  if (typeof playVinylNeedleDrop === 'function') playVinylNeedleDrop();
   openSongPicker(event);
 });
 document.getElementById('hero-listen-btn')?.addEventListener('click', openSongPicker);
@@ -2353,7 +2364,7 @@ sbModalPlay?.addEventListener('click', () => {
   const trackId = getTrackIdForSongHash(currentModalSongHash);
   const meta = TRACK_META[trackId];
   if (trackId && meta) {
-    loadTrack(trackId, meta.title, { scrollIntoView: false });
+    selectTrackById(trackId, { dock: true, focusPlayer: false });
     renderSongbookModalSong(currentModalSongHash);
   }
 });
