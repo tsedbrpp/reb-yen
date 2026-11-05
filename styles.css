@@ -1903,9 +1903,60 @@ html[data-rpm="78"] .feature-art.lp-jacket img {
   text-decoration: underline;
 }
 
-.lp-back-flip-hint {
-  font-size: 11px;
-  color: #bfa8ba;
+.lp-back-return-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(239, 169, 119, 0.55);
+  background: rgba(223, 115, 63, 0.22);
+  color: #ffd7b5;
+  font: 800 11.5px/1.2 'Karla', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.lp-back-return-btn:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--plum-dark);
+}
+
+.album-flip-btn {
+  border-color: rgba(209, 98, 47, 0.55);
+  background: linear-gradient(135deg, #fffdf9, #f7e6ce);
+  color: var(--rust);
+  font-weight: 800;
+}
+
+.album-flip-btn:hover {
+  border-color: var(--orange);
+  background: var(--paper);
+}
+
+@keyframes lp-peek-tilt {
+  0% {
+    transform: perspective(950px) rotateY(0deg);
+  }
+  38% {
+    transform: perspective(950px) rotateY(-16deg) rotateX(2deg) translateZ(8px);
+  }
+  68% {
+    transform: perspective(950px) rotateY(-16deg) rotateX(2deg) translateZ(8px);
+  }
+  100% {
+    transform: perspective(950px) rotateY(0deg);
+  }
+}
+
+.feature-sleeve-wrap.is-peek-teasing .feature-art.lp-jacket {
+  animation: lp-peek-tilt 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.feature-sleeve-wrap.is-peek-teasing .lp-corner-flip,
+.feature-sleeve-wrap.is-peek-teasing ~ .album-col-controls .album-flip-btn {
+  transform: scale(1.07);
+  box-shadow: 0 0 0 4px rgba(223, 115, 63, 0.32), 0 8px 22px rgba(223, 115, 63, 0.45);
 }
 
 .lp-cover-bottom {
@@ -1913,6 +1964,54 @@ html[data-rpm="78"] .feature-art.lp-jacket img {
   flex-direction: column;
   gap: 3px;
   text-shadow: 0 2px 12px rgba(10, 4, 12, 0.85);
+}
+
+.lp-cover-credit {
+  padding-right: 98px;
+}
+
+.lp-corner-flip {
+  pointer-events: auto;
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 200, 150, 0.72);
+  background: linear-gradient(135deg, rgba(223, 115, 63, 0.92), rgba(168, 65, 26, 0.92));
+  color: #fffaf1;
+  font: 800 11px/1.1 'Karla', sans-serif;
+  letter-spacing: 0.4px;
+  box-shadow:
+    0 6px 16px rgba(10, 4, 12, 0.65),
+    inset 0 1px 0 rgba(255, 245, 232, 0.35);
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, filter 0.2s ease;
+}
+
+.lp-corner-flip:hover {
+  transform: translateY(-2px) scale(1.04);
+  filter: brightness(1.08);
+  box-shadow: 0 8px 20px rgba(223, 115, 63, 0.48);
+}
+
+.lp-corner-flip-icon {
+  font-size: 13px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.lp-corner-flip:hover .lp-corner-flip-icon {
+  transform: rotate(90deg);
+}
+
+.feature-sleeve-wrap.is-flipped .lp-corner-flip {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .lp-artist-kicker {
@@ -5150,6 +5249,15 @@ dialog.is-fallback-open {
   .lp-cover-credit {
     font-size: 9.5px;
     line-height: 1.25;
+  }
+  .lp-cover-credit {
+    padding-right: 84px;
+  }
+  .lp-corner-flip {
+    right: 10px;
+    bottom: 10px;
+    padding: 5px 9px;
+    font-size: 9.5px;
   }
   .sleeve-vinyl-label {
     padding: 7% 5%;

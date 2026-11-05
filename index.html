@@ -38,8 +38,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261104e">
-  <script defer src="site.js?v=20261104e"></script>
+  <link rel="stylesheet" href="styles.css?v=20261104f">
+  <script defer src="site.js?v=20261104f"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -355,6 +355,10 @@
                     <strong class="lp-cover-title" id="featured-cover-title">Take Me Crazy</strong>
                     <span class="lp-cover-credit" id="featured-caption">Written, arranged &amp; performed by Reb Yen</span>
                   </span>
+                  <button type="button" class="lp-corner-flip" id="lp-corner-flip" aria-label="Flip album cover for liner notes" title="Flip cover to read Reb’s liner notes">
+                    <span class="lp-corner-flip-icon" aria-hidden="true">↻</span>
+                    <span>Liner notes</span>
+                  </button>
                 </figcaption>
                 <div class="lp-back-cover" id="lp-back-cover" aria-hidden="true">
                   <div class="lp-back-top">
@@ -372,7 +376,7 @@
                   </div>
                   <div class="lp-back-foot">
                     <a id="lp-back-lyrics" href="songbook.html#song-1" class="lp-back-link">Open Lyrics in Songbook →</a>
-                    <span class="lp-back-flip-hint">Tap ↻ Flip cover to return</span>
+                    <button type="button" class="lp-back-return-btn" id="lp-back-return-btn">↻ Front cover</button>
                   </div>
                 </div>
               </figure>
@@ -384,7 +388,7 @@
               </button>
               <button type="button" class="album-motion-btn album-flip-btn" id="sleeve-flip-btn" aria-pressed="false" aria-label="Flip album cover to read liner notes">
                 <span class="motion-toggle-icon" aria-hidden="true">↻</span>
-                <span id="sleeve-flip-label">Flip cover</span>
+                <span id="sleeve-flip-label">Flip for liner notes</span>
               </button>
             </div>
           </div>

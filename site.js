@@ -1075,7 +1075,11 @@ function updateJukeboxSleeve(trackId, isPlaying) {
 }
 
 featureSleeve?.addEventListener('click', event => {
-  if (event.target.closest('#lp-rpm-btn, .lp-back-link')) return;
+  if (event.target.closest('#lp-rpm-btn, #lp-corner-flip, #lp-back-return-btn, .lp-back-link')) return;
+  if (featureSleeve.classList.contains('is-flipped')) {
+    toggleLpCoverFlip();
+    return;
+  }
   featuredListenBtn?.click();
 });
 featureSleeve?.addEventListener('keydown', event => {
@@ -2028,22 +2032,61 @@ lpRpmBtn?.addEventListener('keydown', event => {
   }
 });
 
-// Easter Egg #3: Flip the 12" LP Jacket to Read Back-Cover Liner Notes
+// Easter Egg #3: Flip the 12" LP Jacket to Read Back-Cover Liner Notes + Scroll Peek Teaser
 const sleeveFlipBtn = document.getElementById('sleeve-flip-btn');
 const sleeveFlipLabel = document.getElementById('sleeve-flip-label');
+const lpCornerFlip = document.getElementById('lp-corner-flip');
+const lpBackReturnBtn = document.getElementById('lp-back-return-btn');
 const lpBackCover = document.getElementById('lp-back-cover');
 
-sleeveFlipBtn?.addEventListener('click', () => {
+function toggleLpCoverFlip(event) {
+  event?.stopPropagation();
   if (!featureSleeve) return;
+  featureSleeve.classList.remove('is-peek-teasing');
   const flipped = featureSleeve.classList.toggle('is-flipped');
-  sleeveFlipBtn.setAttribute('aria-pressed', String(flipped));
+  sleeveFlipBtn?.setAttribute('aria-pressed', String(flipped));
   if (sleeveFlipLabel) {
-    sleeveFlipLabel.textContent = flipped ? 'Front cover' : 'Flip cover';
+    sleeveFlipLabel.textContent = flipped ? 'Back to front cover' : 'Flip for liner notes';
   }
   if (lpBackCover) {
     lpBackCover.setAttribute('aria-hidden', String(!flipped));
   }
-});
+  if (stringSoundEnabled) {
+    ensureAudioUnlocked();
+    playGuitarHarmonic(flipped ? 392.0 : 329.63, 0.5);
+  }
+}
+
+sleeveFlipBtn?.addEventListener('click', toggleLpCoverFlip);
+lpCornerFlip?.addEventListener('click', toggleLpCoverFlip);
+lpBackReturnBtn?.addEventListener('click', toggleLpCoverFlip);
+
+// One-time 3D "Peek Flip" teaser when the 12" LP cover scrolls into view
+if (featureSleeve && 'IntersectionObserver' in window) {
+  let hasPeekTeased = false;
+  const peekObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasPeekTeased) {
+          hasPeekTeased = true;
+          peekObserver.disconnect();
+          if (!prefersReducedMotion && !isAlbumMotionDisabled() && !featureSleeve.classList.contains('is-flipped')) {
+            window.setTimeout(() => {
+              if (!featureSleeve.classList.contains('is-flipped') && !isAlbumMotionDisabled()) {
+                featureSleeve.classList.add('is-peek-teasing');
+                window.setTimeout(() => {
+                  featureSleeve.classList.remove('is-peek-teasing');
+                }, 1450);
+              }
+            }, 420);
+          }
+        }
+      });
+    },
+    { threshold: 0.55 }
+  );
+  peekObserver.observe(featureSleeve);
+}
 
 // Easter Egg #4: Warm Vinyl "Needle Drop" Surface Crackle When Selecting a Song
 function playVinylNeedleDrop() {
