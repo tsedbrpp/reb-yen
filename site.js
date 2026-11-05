@@ -1468,7 +1468,7 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   }
   setExpanded(true);
 
-  if (trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
+  if (options.forceReload || trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
     if (!requiresWidgetTap && typeof playVinylNeedleDrop === 'function') {
       ensureAudioUnlocked();
       frame.addEventListener(
@@ -2066,6 +2066,7 @@ const lpSongbookContent = document.getElementById('lp-songbook-content');
 const lpBackLyricsLink = document.getElementById('lp-back-lyrics');
 const lpOpenModalBtn = document.getElementById('lp-open-modal');
 
+const FEATURED_DEFAULT_ID = '33863436';
 let lpZoomScale = 1;
 let lpActiveTab = 'notes';
 let songbookCachePromise = null;
@@ -2293,8 +2294,12 @@ function renderSongbookModalSong(songHash) {
 
   if (songbookReaderTitle) songbookReaderTitle.textContent = meta.title;
   if (sbModalPrintLink) sbModalPrintLink.href = `songbook.html#${currentModalSongHash}`;
-  if (sbModalPlayLabel) {
-    sbModalPlayLabel.textContent = selectedTrack === trackId ? `Playing ${meta.title}` : `Play ${meta.title}`;
+  if (sbModalPlay) {
+    const isPlayingThis = selectedTrack === trackId && frame && frame.src && frame.src !== 'about:blank';
+    sbModalPlay.classList.toggle('is-playing', Boolean(isPlayingThis));
+    sbModalPlay.innerHTML = isPlayingThis
+      ? `<span class="eq-bars" aria-hidden="true"><i></i><i></i><i></i></span> <span id="sb-modal-play-label">Playing ${meta.title}</span>`
+      : `<span aria-hidden="true">▶</span> <span id="sb-modal-play-label">Play ${meta.title}</span>`;
   }
 
   ensureSongbookLoaded().then(entries => {
@@ -2360,11 +2365,13 @@ sbModalNext?.addEventListener('click', () => {
   renderSongbookModalSong(`song-${nextNum}`);
 });
 
-sbModalPlay?.addEventListener('click', () => {
+sbModalPlay?.addEventListener('click', event => {
+  event.preventDefault();
+  event.stopPropagation();
   const trackId = getTrackIdForSongHash(currentModalSongHash);
-  const meta = TRACK_META[trackId];
+  const meta = TRACK_META[trackId] || TRACK_META[FEATURED_DEFAULT_ID];
   if (trackId && meta) {
-    selectTrackById(trackId, { dock: true, focusPlayer: false });
+    selectTrackById(trackId, { dock: true, focusPlayer: false, forceReload: true });
     renderSongbookModalSong(currentModalSongHash);
   }
 });

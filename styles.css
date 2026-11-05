@@ -6019,3 +6019,35 @@ dialog.is-fallback-open {
     scroll-behavior: auto !important;
   }
 }
+
+body:has(#songbook-reader:not([hidden])) .player.is-docked {
+  z-index: 1260;
+}
+
+@media (min-width: 1160px) {
+  body:has(#songbook-reader:not([hidden])):has(.player.is-docked) .songbook-modal {
+    justify-content: flex-start;
+    padding-left: max(28px, calc((100vw - 1260px) / 2));
+  }
+
+  body:has(#songbook-reader:not([hidden])):has(.player.is-docked) .songbook-modal-card {
+    width: min(800px, calc(100vw - 490px));
+  }
+}
+
+@media (max-width: 1159px) {
+  body:has(#songbook-reader:not([hidden])):has(.player.is-docked) .songbook-modal {
+    align-items: flex-start;
+    padding-top: 14px;
+  }
+
+  body:has(#songbook-reader:not([hidden])):has(.player.is-docked) .songbook-modal-card {
+    max-height: calc(100vh - 275px);
+  }
+}
+
+#sb-modal-play.is-playing {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: #ffbe92;
+}
