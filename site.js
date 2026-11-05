@@ -990,9 +990,6 @@ function setCued(cued) {
 window.addEventListener('blur', () => {
   setTimeout(() => {
     if (isCued && frame && document.activeElement === frame) {
-      if (typeof playVinylNeedleDrop === 'function') {
-        playVinylNeedleDrop();
-      }
       setCued(false);
       setRecordStatus(selectedTrack);
       if (playerStatus) playerStatus.textContent = `Now playing ${playerTitle?.textContent || 'the song'}.`;
@@ -1471,18 +1468,6 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   setExpanded(true);
 
   if (options.forceReload || trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
-    if (!requiresWidgetTap && typeof playVinylNeedleDrop === 'function') {
-      ensureAudioUnlocked();
-      frame.addEventListener(
-        'load',
-        () => {
-          if (selectedTrack === trackId && !isCued) {
-            playVinylNeedleDrop();
-          }
-        },
-        { once: true }
-      );
-    }
     frame.src = reverbnationEmbedUrl(trackId);
     selectedTrack = trackId;
     setCued(requiresWidgetTap);
@@ -1875,7 +1860,6 @@ document.querySelectorAll('[data-guitar-string]').forEach(stringEl => {
 // 1. Playable Hero Instrument Strip (Guitar · Banjo · Keyboard · Harmonica)
 // 2. 33⅓ / 45 / 78 RPM Turntable Speed Switch (#lp-rpm-btn)
 // 3. 12" LP Jacket Back-Cover Liner Notes Flip (#sleeve-flip-btn)
-// 4. Warm Vinyl "Needle Drop" Surface Crackle on Song Selection
 // 5. Secret Open-D Chord & Songwriter Quote Toast on 3 Guitar Plucks
 // 6. Encore Stage-Spotlight Mode (Header Logo Dot / typing "encore")
 // ============================================================================
@@ -2422,128 +2406,6 @@ if (featureSleeve && 'IntersectionObserver' in window) {
   );
   peekObserver.observe(featureSleeve);
 }
-
-// Easter Egg #4: Warm Vinyl "Needle Drop" Surface Crackle When Selecting a Song
-function playVinylNeedleDrop() {
-  if (!stringSoundEnabled) return;
-  const ctx = ensureAudioUnlocked();
-  if (!ctx) return;
-
-  const trigger = () => {
-    const now = ctx.currentTime;
-    const sr = ctx.sampleRate;
-
-    // 1. Stylus touchdown thump (warm cartridge resonance + crisp diamond contact click)
-    const thump = ctx.createOscillator();
-    const thumpGain = ctx.createGain();
-    thump.type = 'sine';
-    thump.frequency.setValueAtTime(145, now);
-    thump.frequency.exponentialRampToValueAtTime(42, now + 0.12);
-    thumpGain.gain.setValueAtTime(0.32, now);
-    thumpGain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
-    thump.connect(thumpGain);
-    thumpGain.connect(ctx.destination);
-    thump.start(now);
-    thump.stop(now + 0.15);
-
-    // 2. 1.65-second authentic vinyl lead-in groove crackle, pops & warm surface hiss
-    const duration = 1.65;
-    const len = Math.floor(sr * duration);
-    const buf = ctx.createBuffer(1, len, sr);
-    const ch = buf.getChannelData(0);
-
-    // Warm correlated vinyl surface noise floor with subtle 33⅓ RPM rotational swish
-    let prev = 0;
-    for (let i = 0; i < len; i++) {
-      const t = i / sr;
-      const swish = 0.8 + 0.2 * Math.sin(2 * Math.PI * 1.1 * t);
-      const white = (Math.random() * 2 - 1) * 0.08 * swish;
-      prev = 0.72 * prev + 0.28 * white;
-      ch[i] = prev;
-    }
-
-    // Add initial needle-settle burst (first 35ms)
-    const settleSamples = Math.floor(sr * 0.035);
-    for (let i = 0; i < settleSamples; i++) {
-      const env = 1 - i / settleSamples;
-      ch[i] += (Math.random() * 2 - 1) * 0.55 * env;
-    }
-
-    // Add ~95 fine multi-sample vinyl crackle grains across 1.65s
-    const fineCount = 95;
-    for (let k = 0; k < fineCount; k++) {
-      const pos = Math.floor(Math.random() * (len - 40));
-      const width = 6 + Math.floor(Math.random() * 14); // 0.15ms - 0.45ms grain
-      const sign = Math.random() < 0.5 ? 1 : -1;
-      const amp = (0.32 + Math.random() * 0.38) * sign;
-      for (let j = 0; j < width; j++) {
-        const w = Math.sin((Math.PI * j) / width);
-        ch[pos + j] += amp * w * (j < width / 2 ? 1 : -0.6);
-      }
-    }
-
-    // Add 14 distinct warm vinyl dust pops (damped bipolar resonant clicks)
-    const popCount = 14;
-    for (let p = 0; p < popCount; p++) {
-      const pos = Math.floor((0.04 + Math.random() * (duration - 0.12)) * sr);
-      const width = Math.floor(sr * (0.0009 + Math.random() * 0.0012));
-      const sign = Math.random() < 0.5 ? 1 : -1;
-      const amp = (0.68 + Math.random() * 0.3) * sign;
-      for (let j = 0; j < width && pos + j < len; j++) {
-        const env = Math.exp((-3.2 * j) / width);
-        const wave = Math.sin((2 * Math.PI * 2.0 * j) / width);
-        ch[pos + j] += amp * env * wave;
-      }
-    }
-
-    const noise = ctx.createBufferSource();
-    noise.buffer = buf;
-
-    // Warm vintage phono stage filter (roll off harsh highs above 4.2kHz and sub-rumble below 220Hz)
-    const hp = ctx.createBiquadFilter();
-    hp.type = 'highpass';
-    hp.frequency.value = 240;
-
-    const lp = ctx.createBiquadFilter();
-    lp.type = 'lowpass';
-    lp.frequency.value = 4200;
-
-    const presence = ctx.createBiquadFilter();
-    presence.type = 'peaking';
-    presence.frequency.value = 1850;
-    presence.Q.value = 1.1;
-    presence.gain.value = 4.5;
-
-    const ng = ctx.createGain();
-    ng.gain.setValueAtTime(0.01, now);
-    ng.gain.linearRampToValueAtTime(0.34, now + 0.025);
-    ng.gain.setValueAtTime(0.30, now + 1.15);
-    ng.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-    noise.connect(hp);
-    hp.connect(lp);
-    lp.connect(presence);
-    presence.connect(ng);
-    ng.connect(ctx.destination);
-    noise.start(now);
-    noise.onended = () => {
-      noise.disconnect();
-      hp.disconnect();
-      lp.disconnect();
-      presence.disconnect();
-      ng.disconnect();
-    };
-  };
-
-  if (ctx.state === 'suspended') {
-    ctx.resume().then(trigger).catch(() => {});
-  } else {
-    trigger();
-  }
-}
-
-// Hook needle drop into pickSong
-const origPickSong = pickSong;
 
 // Easter Egg #5: Secret Chord & Songwriter Quote After 3 Guitar-String Plucks
 let guitarPluckStreak = 0;
