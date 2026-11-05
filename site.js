@@ -2315,8 +2315,8 @@ function renderSongbookModalSong(songHash) {
     if (songbookReaderTitle) songbookReaderTitle.textContent = entry.title || meta.title;
     songbookReaderBody.innerHTML = `
       <p class="sb-modal-credits"><strong>${entry.trackNum}</strong> · ${entry.credits}</p>
-      ${entry.storyHtml ? `<div class="sb-modal-story">${entry.storyHtml}</div>` : ''}
       <div class="sb-modal-stanzas">${entry.stanzasHtml}</div>
+      ${entry.storyHtml ? `<div class="sb-modal-story">${entry.storyHtml}</div>` : ''}
     `;
     songbookReaderBody.scrollTop = 0;
   });
