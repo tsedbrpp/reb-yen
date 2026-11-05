@@ -1015,10 +1015,17 @@ function updateJukeboxSleeve(trackId, isPlaying) {
   const lpBackTitle = document.getElementById('lp-back-title');
   const lpBackDesc = document.getElementById('lp-back-desc');
   const lpBackLyrics = document.getElementById('lp-back-lyrics');
-  if (lpBackCat) lpBackCat.textContent = meta.catNo || 'ORIGINAL';
+  if (lpBackCat) lpBackCat.textContent = `${meta.catNo || 'ORIGINAL'} · BOULDER, COLORADO`;
   if (lpBackTitle) lpBackTitle.textContent = meta.title;
   if (lpBackDesc) lpBackDesc.textContent = meta.desc;
-  if (lpBackLyrics) lpBackLyrics.href = meta.lyricsHref || 'songbook.html';
+  if (lpBackLyrics) {
+    lpBackLyrics.href = meta.lyricsHref || 'songbook.html#song-1';
+    lpBackLyrics.dataset.songHash = (meta.lyricsHref || 'songbook.html#song-1').split('#')[1] || 'song-1';
+    lpBackLyrics.dataset.trackId = effectiveId;
+  }
+  if (typeof renderBackCoverSongbook === 'function') {
+    renderBackCoverSongbook(effectiveId);
+  }
 
   if (featuredListenBtn) {
     featuredListenBtn.href = meta.href;
@@ -1075,9 +1082,8 @@ function updateJukeboxSleeve(trackId, isPlaying) {
 }
 
 featureSleeve?.addEventListener('click', event => {
-  if (event.target.closest('#lp-rpm-btn, #lp-corner-flip, #lp-back-return-btn, .lp-back-link')) return;
+  if (event.target.closest('#lp-rpm-btn, #lp-corner-flip, #lp-back-return-btn, .lp-back-link, #lp-back-cover')) return;
   if (featureSleeve.classList.contains('is-flipped')) {
-    toggleLpCoverFlip();
     return;
   }
   featuredListenBtn?.click();
@@ -2032,18 +2038,183 @@ lpRpmBtn?.addEventListener('keydown', event => {
   }
 });
 
-// Easter Egg #3: Flip the 12" LP Jacket to Read Back-Cover Liner Notes + Scroll Peek Teaser
+// Easter Egg #3: Flip the 12" LP Jacket + Easy Liner Notes Zoom + In-Sleeve Songbook (Without Stopping Playback)
 const sleeveFlipBtn = document.getElementById('sleeve-flip-btn');
 const sleeveFlipLabel = document.getElementById('sleeve-flip-label');
 const lpCornerFlip = document.getElementById('lp-corner-flip');
 const lpBackReturnBtn = document.getElementById('lp-back-return-btn');
 const lpBackCover = document.getElementById('lp-back-cover');
+const lpZoomOutBtn = document.getElementById('lp-zoom-out');
+const lpZoomInBtn = document.getElementById('lp-zoom-in');
+const lpZoomExpandBtn = document.getElementById('lp-zoom-expand');
+const lpTabNotes = document.getElementById('lp-tab-notes');
+const lpTabSongbook = document.getElementById('lp-tab-songbook');
+const lpPanelNotes = document.getElementById('lp-panel-notes');
+const lpPanelSongbook = document.getElementById('lp-panel-songbook');
+const lpSongbookContent = document.getElementById('lp-songbook-content');
+const lpBackLyricsLink = document.getElementById('lp-back-lyrics');
+const lpOpenModalBtn = document.getElementById('lp-open-modal');
+
+let lpZoomScale = 1;
+let lpActiveTab = 'notes';
+let songbookCachePromise = null;
+const songbookEntriesByHash = new Map();
+
+function ensureSongbookLoaded() {
+  if (songbookCachePromise) return songbookCachePromise;
+  songbookCachePromise = fetch('songbook.html')
+    .then(res => {
+      if (!res.ok) throw new Error('Failed to load songbook.html');
+      return res.text();
+    })
+    .then(html => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      doc.querySelectorAll('article.page[id^="song-"]').forEach(article => {
+        const id = article.id;
+        const trackNum = article.querySelector('.song-track-num')?.textContent?.trim() || '';
+        const title = article.querySelector('h2')?.textContent?.trim() || '';
+        const credits = article.querySelector('.song-credits')?.textContent?.trim() || '';
+        const storyHtml = article.querySelector('.song-story')?.innerHTML?.trim() || '';
+        const stanzasHtml = Array.from(article.querySelectorAll('.lyrics-columns .stanza'))
+          .map(p => p.outerHTML)
+          .join('');
+        songbookEntriesByHash.set(id, { id, trackNum, title, credits, storyHtml, stanzasHtml });
+      });
+      return songbookEntriesByHash;
+    })
+    .catch(err => {
+      console.warn('Songbook fetch error:', err);
+      return songbookEntriesByHash;
+    });
+  return songbookCachePromise;
+}
+
+function getTrackIdForSongHash(songHash) {
+  const targetHref = `songbook.html#${songHash}`;
+  return TRACK_ORDER.find(tid => TRACK_META[tid]?.lyricsHref === targetHref) || selectedTrack || FEATURED_DEFAULT_ID;
+}
+
+function renderBackCoverSongbook(trackId) {
+  const effectiveId = trackId && TRACK_META[trackId] ? trackId : selectedTrack || FEATURED_DEFAULT_ID;
+  const meta = TRACK_META[effectiveId] || TRACK_META[FEATURED_DEFAULT_ID];
+  const songHash = (meta.lyricsHref || 'songbook.html#song-1').split('#')[1] || 'song-1';
+  if (!lpSongbookContent) return;
+
+  ensureSongbookLoaded().then(entries => {
+    const entry = entries.get(songHash);
+    if (!entry) {
+      lpSongbookContent.innerHTML = `
+        <div class="lp-sb-header">
+          <span class="lp-sb-num">${meta.catNo || 'ORIGINAL'}</span>
+          <h4 class="lp-sb-title">${meta.title}</h4>
+          <p class="lp-sb-credits">${meta.caption || ''}</p>
+        </div>
+        <div class="lp-sb-story"><p>${meta.desc || ''}</p></div>
+      `;
+      return;
+    }
+    lpSongbookContent.innerHTML = `
+      <div class="lp-sb-header">
+        <span class="lp-sb-num">${entry.trackNum} · SONGBOOK</span>
+        <h4 class="lp-sb-title">${entry.title}</h4>
+        <p class="lp-sb-credits">${entry.credits}</p>
+      </div>
+      <div class="lp-sb-lyrics">${entry.stanzasHtml}</div>
+      ${entry.storyHtml ? `<div class="lp-sb-story">${entry.storyHtml}</div>` : ''}
+    `;
+  });
+}
+
+function setLpBackTab(tab, { autoExpand = false } = {}) {
+  lpActiveTab = tab === 'songbook' ? 'songbook' : 'notes';
+  const isSongbook = lpActiveTab === 'songbook';
+  lpTabNotes?.classList.toggle('is-active', !isSongbook);
+  lpTabNotes?.setAttribute('aria-selected', String(!isSongbook));
+  lpTabSongbook?.classList.toggle('is-active', isSongbook);
+  lpTabSongbook?.setAttribute('aria-selected', String(isSongbook));
+  if (lpPanelNotes) lpPanelNotes.hidden = isSongbook;
+  if (lpPanelSongbook) lpPanelSongbook.hidden = !isSongbook;
+  if (lpBackLyricsLink) {
+    lpBackLyricsLink.textContent = isSongbook ? '← Liner Notes' : 'Open Songbook →';
+  }
+  const bodyEl = document.getElementById('lp-back-body');
+  if (bodyEl) bodyEl.scrollTop = 0;
+  if (isSongbook) {
+    renderBackCoverSongbook(selectedTrack || FEATURED_DEFAULT_ID);
+    if (autoExpand && featureSleeve && !featureSleeve.classList.contains('is-sleeve-zoomed')) {
+      setLpSleeveExpanded(true);
+    }
+  }
+}
+
+function setLpZoomScale(nextScale) {
+  lpZoomScale = Math.min(1.6, Math.max(0.9, Math.round(nextScale * 100) / 100));
+  lpBackCover?.style.setProperty('--lp-zoom', String(lpZoomScale));
+}
+
+function setLpSleeveExpanded(expanded) {
+  if (!featureSleeve) return;
+  featureSleeve.classList.toggle('is-sleeve-zoomed', Boolean(expanded));
+  lpZoomExpandBtn?.setAttribute('aria-pressed', String(Boolean(expanded)));
+  if (lpZoomExpandBtn) {
+    lpZoomExpandBtn.textContent = expanded ? '⤡ Fit' : '🔍 Zoom';
+  }
+  if (expanded && lpZoomScale < 1.12) {
+    setLpZoomScale(1.15);
+  } else if (!expanded && lpZoomScale === 1.15) {
+    setLpZoomScale(1);
+  }
+}
+
+lpZoomOutBtn?.addEventListener('click', event => {
+  event.stopPropagation();
+  setLpZoomScale(lpZoomScale - 0.12);
+});
+
+lpZoomInBtn?.addEventListener('click', event => {
+  event.stopPropagation();
+  setLpZoomScale(lpZoomScale + 0.12);
+  if (lpZoomScale >= 1.2 && featureSleeve && !featureSleeve.classList.contains('is-sleeve-zoomed')) {
+    setLpSleeveExpanded(true);
+  }
+});
+
+lpZoomExpandBtn?.addEventListener('click', event => {
+  event.stopPropagation();
+  const next = !featureSleeve?.classList.contains('is-sleeve-zoomed');
+  setLpSleeveExpanded(next);
+});
+
+lpTabNotes?.addEventListener('click', event => {
+  event.stopPropagation();
+  setLpBackTab('notes');
+});
+
+lpTabSongbook?.addEventListener('click', event => {
+  event.stopPropagation();
+  setLpBackTab('songbook', { autoExpand: true });
+});
+
+lpBackLyricsLink?.addEventListener('click', event => {
+  event.preventDefault();
+  event.stopPropagation();
+  if (lpActiveTab === 'songbook') {
+    setLpBackTab('notes');
+  } else {
+    setLpBackTab('songbook', { autoExpand: true });
+  }
+});
 
 function toggleLpCoverFlip(event) {
   event?.stopPropagation();
   if (!featureSleeve) return;
   featureSleeve.classList.remove('is-peek-teasing');
   const flipped = featureSleeve.classList.toggle('is-flipped');
+  if (!flipped) {
+    setLpSleeveExpanded(false);
+  } else {
+    renderBackCoverSongbook(selectedTrack || FEATURED_DEFAULT_ID);
+  }
   sleeveFlipBtn?.setAttribute('aria-pressed', String(flipped));
   if (sleeveFlipLabel) {
     sleeveFlipLabel.textContent = flipped ? 'Back to front cover' : 'Flip for liner notes';
@@ -2060,6 +2231,150 @@ function toggleLpCoverFlip(event) {
 sleeveFlipBtn?.addEventListener('click', toggleLpCoverFlip);
 lpCornerFlip?.addEventListener('click', toggleLpCoverFlip);
 lpBackReturnBtn?.addEventListener('click', toggleLpCoverFlip);
+
+// Full-Screen In-Page Songbook Reader Modal (opens from ⤢ Full Screen or any Lyrics button without stopping music)
+const songbookReader = document.getElementById('songbook-reader');
+const songbookReaderTitle = document.getElementById('songbook-reader-title');
+const songbookReaderSelect = document.getElementById('songbook-reader-select');
+const songbookReaderBody = document.getElementById('songbook-reader-body');
+const songbookReaderClose = document.getElementById('songbook-reader-close');
+const sbModalZoomOut = document.getElementById('sb-modal-zoom-out');
+const sbModalZoomIn = document.getElementById('sb-modal-zoom-in');
+const sbModalZoomVal = document.getElementById('sb-modal-zoom-val');
+const sbModalPrev = document.getElementById('sb-modal-prev');
+const sbModalNext = document.getElementById('sb-modal-next');
+const sbModalPlay = document.getElementById('sb-modal-play');
+const sbModalPlayLabel = document.getElementById('sb-modal-play-label');
+const sbModalPrintLink = document.getElementById('sb-modal-print-link');
+const sbModalDone = document.getElementById('sb-modal-done');
+
+let sbModalZoom = 1;
+let currentModalSongHash = 'song-1';
+
+function populateSongbookSelect() {
+  if (!songbookReaderSelect || songbookReaderSelect.childElementCount > 0) return;
+  TRACK_ORDER.forEach(tid => {
+    const meta = TRACK_META[tid];
+    if (!meta) return;
+    const hash = (meta.lyricsHref || 'songbook.html#song-1').split('#')[1] || 'song-1';
+    const opt = document.createElement('option');
+    opt.value = hash;
+    opt.textContent = `${meta.num}. ${meta.title}`;
+    songbookReaderSelect.appendChild(opt);
+  });
+}
+
+function setSbModalZoom(nextZoom) {
+  sbModalZoom = Math.min(1.6, Math.max(0.85, Math.round(nextZoom * 100) / 100));
+  const card = songbookReader?.querySelector('.songbook-modal-card');
+  card?.style.setProperty('--sb-zoom', String(sbModalZoom));
+  if (sbModalZoomVal) {
+    sbModalZoomVal.textContent = `${Math.round(sbModalZoom * 100)}%`;
+  }
+}
+
+function renderSongbookModalSong(songHash) {
+  currentModalSongHash = songHash || 'song-1';
+  populateSongbookSelect();
+  if (songbookReaderSelect) songbookReaderSelect.value = currentModalSongHash;
+  const trackId = getTrackIdForSongHash(currentModalSongHash);
+  const meta = TRACK_META[trackId] || TRACK_META[FEATURED_DEFAULT_ID];
+
+  if (songbookReaderTitle) songbookReaderTitle.textContent = meta.title;
+  if (sbModalPrintLink) sbModalPrintLink.href = `songbook.html#${currentModalSongHash}`;
+  if (sbModalPlayLabel) {
+    sbModalPlayLabel.textContent = selectedTrack === trackId ? `Playing ${meta.title}` : `Play ${meta.title}`;
+  }
+
+  ensureSongbookLoaded().then(entries => {
+    const entry = entries.get(currentModalSongHash);
+    if (!songbookReaderBody) return;
+    if (!entry) {
+      songbookReaderBody.innerHTML = `
+        <p class="sb-modal-credits">${meta.caption || ''}</p>
+        <div class="sb-modal-story"><p>${meta.desc || ''}</p></div>
+      `;
+      return;
+    }
+    if (songbookReaderTitle) songbookReaderTitle.textContent = entry.title || meta.title;
+    songbookReaderBody.innerHTML = `
+      <p class="sb-modal-credits"><strong>${entry.trackNum}</strong> · ${entry.credits}</p>
+      ${entry.storyHtml ? `<div class="sb-modal-story">${entry.storyHtml}</div>` : ''}
+      <div class="sb-modal-stanzas">${entry.stanzasHtml}</div>
+    `;
+    songbookReaderBody.scrollTop = 0;
+  });
+}
+
+function openSongbookModal(songHash) {
+  if (!songbookReader) return;
+  const effectiveHash = songHash || (TRACK_META[selectedTrack || FEATURED_DEFAULT_ID]?.lyricsHref || 'songbook.html#song-1').split('#')[1] || 'song-1';
+  renderSongbookModalSong(effectiveHash);
+  songbookReader.hidden = false;
+  document.body.classList.add('dialog-open');
+}
+
+function closeSongbookModal() {
+  if (!songbookReader || songbookReader.hidden) return;
+  songbookReader.hidden = true;
+  document.body.classList.remove('dialog-open');
+}
+
+lpOpenModalBtn?.addEventListener('click', event => {
+  event.stopPropagation();
+  const hash = lpBackLyricsLink?.dataset.songHash || (TRACK_META[selectedTrack || FEATURED_DEFAULT_ID]?.lyricsHref || 'songbook.html#song-1').split('#')[1] || 'song-1';
+  openSongbookModal(hash);
+});
+
+songbookReaderClose?.addEventListener('click', closeSongbookModal);
+sbModalDone?.addEventListener('click', closeSongbookModal);
+songbookReader?.querySelector('[data-close-songbook]')?.addEventListener('click', closeSongbookModal);
+
+sbModalZoomOut?.addEventListener('click', () => setSbModalZoom(sbModalZoom - 0.1));
+sbModalZoomIn?.addEventListener('click', () => setSbModalZoom(sbModalZoom + 0.1));
+
+songbookReaderSelect?.addEventListener('change', () => {
+  renderSongbookModalSong(songbookReaderSelect.value);
+});
+
+sbModalPrev?.addEventListener('click', () => {
+  const num = parseInt(currentModalSongHash.replace('song-', ''), 10) || 1;
+  const prevNum = num <= 1 ? 22 : num - 1;
+  renderSongbookModalSong(`song-${prevNum}`);
+});
+
+sbModalNext?.addEventListener('click', () => {
+  const num = parseInt(currentModalSongHash.replace('song-', ''), 10) || 1;
+  const nextNum = num >= 22 ? 1 : num + 1;
+  renderSongbookModalSong(`song-${nextNum}`);
+});
+
+sbModalPlay?.addEventListener('click', () => {
+  const trackId = getTrackIdForSongHash(currentModalSongHash);
+  const meta = TRACK_META[trackId];
+  if (trackId && meta) {
+    loadTrack(trackId, meta.title, { scrollIntoView: false });
+    renderSongbookModalSong(currentModalSongHash);
+  }
+});
+
+// Intercept catalog .lyrics-link and #moment-lyrics-link so clicking "Lyrics" never stops the music!
+document.addEventListener('click', event => {
+  const lyricsAnchor = event.target.closest('a.lyrics-link, a#moment-lyrics-link');
+  if (!lyricsAnchor) return;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const href = lyricsAnchor.getAttribute('href') || '';
+  if (!href.includes('songbook.html')) return;
+  event.preventDefault();
+  const hash = href.split('#')[1] || 'song-1';
+  openSongbookModal(hash);
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && songbookReader && !songbookReader.hidden) {
+    closeSongbookModal();
+  }
+});
 
 // One-time 3D "Peek Flip" teaser when the 12" LP cover scrolls into view
 if (featureSleeve && 'IntersectionObserver' in window) {

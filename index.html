@@ -38,8 +38,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261104f">
-  <script defer src="site.js?v=20261104f"></script>
+  <link rel="stylesheet" href="styles.css?v=20261104g">
+  <script defer src="site.js?v=20261104g"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -363,19 +363,37 @@
                 <div class="lp-back-cover" id="lp-back-cover" aria-hidden="true">
                   <div class="lp-back-top">
                     <span id="lp-back-cat">RY-01 · ORIGINAL</span>
-                    <span>BOULDER, COLORADO · STEREO</span>
+                    <div class="lp-zoom-controls" role="group" aria-label="Liner notes and songbook zoom controls">
+                      <button type="button" class="lp-zoom-btn" id="lp-zoom-out" title="Decrease text size" aria-label="Decrease liner notes text size">A−</button>
+                      <button type="button" class="lp-zoom-btn" id="lp-zoom-in" title="Increase text size" aria-label="Increase liner notes text size">A+</button>
+                      <button type="button" class="lp-zoom-btn lp-zoom-expand" id="lp-zoom-expand" aria-pressed="false" title="Expand back cover for easier reading">🔍 Zoom</button>
+                    </div>
                   </div>
-                  <div class="lp-back-body">
-                    <span class="lp-back-kicker">SLEEVE LINER NOTES · REB YEN</span>
-                    <strong class="lp-back-title" id="lp-back-title">Take Me Crazy</strong>
-                    <p class="lp-back-desc" id="lp-back-desc">Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb — guitar, vocals, banjo, keyboard and cajon.</p>
-                    <div class="lp-human-stamp">
-                      <span>★ 100% HUMAN ARTISTRY · ZERO AI</span>
-                      <small>All vocals &amp; acoustic/electric instruments performed live by Reb Yen</small>
+                  <div class="lp-back-tabs" role="tablist" aria-label="Back cover view">
+                    <button type="button" role="tab" class="lp-back-tab is-active" id="lp-tab-notes" aria-selected="true" aria-controls="lp-panel-notes">Liner Notes</button>
+                    <button type="button" role="tab" class="lp-back-tab" id="lp-tab-songbook" aria-selected="false" aria-controls="lp-panel-songbook">Songbook &amp; Lyrics</button>
+                  </div>
+                  <div class="lp-back-body" id="lp-back-body">
+                    <div class="lp-back-panel" id="lp-panel-notes" role="tabpanel" aria-labelledby="lp-tab-notes">
+                      <span class="lp-back-kicker">SLEEVE LINER NOTES · BOULDER, COLORADO</span>
+                      <strong class="lp-back-title" id="lp-back-title">Take Me Crazy</strong>
+                      <p class="lp-back-desc" id="lp-back-desc">Reb calls it a realistic love song: candid, playful and about accepting one another as we are. Written, arranged and performed by Reb — guitar, vocals, banjo, keyboard and cajon.</p>
+                      <div class="lp-human-stamp">
+                        <span>★ 100% HUMAN ARTISTRY · ZERO AI</span>
+                        <small>All vocals &amp; acoustic/electric instruments performed live by Reb Yen</small>
+                      </div>
+                    </div>
+                    <div class="lp-back-panel lp-songbook-panel" id="lp-panel-songbook" role="tabpanel" aria-labelledby="lp-tab-songbook" hidden>
+                      <div class="lp-songbook-content" id="lp-songbook-content">
+                        <p class="lp-songbook-loading">Loading songbook lyrics…</p>
+                      </div>
                     </div>
                   </div>
                   <div class="lp-back-foot">
-                    <a id="lp-back-lyrics" href="songbook.html#song-1" class="lp-back-link">Open Lyrics in Songbook →</a>
+                    <div class="lp-back-foot-links">
+                      <a id="lp-back-lyrics" href="songbook.html#song-1" class="lp-back-link">Open Songbook →</a>
+                      <button type="button" class="lp-fullscreen-btn" id="lp-open-modal" title="Open full-screen Songbook reader without stopping music">⤢ Full Screen</button>
+                    </div>
                     <button type="button" class="lp-back-return-btn" id="lp-back-return-btn">↻ Front cover</button>
                   </div>
                 </div>
@@ -1347,5 +1365,40 @@
       </button>
     </div>
   </dialog>
+  <div class="songbook-modal" id="songbook-reader" role="dialog" aria-modal="true" aria-labelledby="songbook-reader-title" hidden>
+    <div class="songbook-modal-backdrop" data-close-songbook></div>
+    <div class="songbook-modal-card" role="document">
+      <div class="songbook-modal-head">
+        <div class="songbook-modal-title-wrap">
+          <p class="eyebrow">Original Songbook &amp; Liner Notes · Music keeps playing</p>
+          <h3 id="songbook-reader-title">Take Me Crazy</h3>
+        </div>
+        <div class="songbook-modal-toolbar">
+          <label class="sr-only" for="songbook-reader-select">Jump to song</label>
+          <select id="songbook-reader-select" class="songbook-select" aria-label="Select song in Songbook"></select>
+          <div class="songbook-zoom-group" role="group" aria-label="Songbook text size">
+            <button type="button" class="songbook-tool-btn" id="sb-modal-zoom-out" title="Smaller text" aria-label="Decrease songbook text size">A−</button>
+            <span class="songbook-zoom-readout" id="sb-modal-zoom-val">100%</span>
+            <button type="button" class="songbook-tool-btn" id="sb-modal-zoom-in" title="Larger text" aria-label="Increase songbook text size">A+</button>
+          </div>
+          <button type="button" class="icon-button" id="songbook-reader-close" aria-label="Close songbook reader">×</button>
+        </div>
+      </div>
+      <div class="songbook-modal-body" id="songbook-reader-body">
+        <p class="lp-songbook-loading">Loading songbook…</p>
+      </div>
+      <div class="songbook-modal-foot">
+        <div class="songbook-nav-btns">
+          <button type="button" class="button" id="sb-modal-prev">‹ Prev Song</button>
+          <button type="button" class="button" id="sb-modal-next">Next Song ›</button>
+          <button type="button" class="button primary" id="sb-modal-play"><span aria-hidden="true">▶</span> <span id="sb-modal-play-label">Play this song</span></button>
+        </div>
+        <div class="songbook-foot-right">
+          <a id="sb-modal-print-link" href="songbook.html#song-1" target="_blank" rel="noopener noreferrer" class="picker-more-link">Printable Songbook ↗</a>
+          <button type="button" class="button picker-close-btn" id="sb-modal-done">✕ Back to page</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
