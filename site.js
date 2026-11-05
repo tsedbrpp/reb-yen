@@ -726,16 +726,13 @@ const requiresWidgetTap =
   /Android|iPad|iPhone|iPod|Mobile/i.test(navigator.userAgent || '') ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let isCued = false;
-const ALBUM_MOTION_KEY = 'rebyen_album_motion_off';
-let albumMotionOff = document.documentElement.classList.contains('album-motion-off');
+let albumMotionOff = false;
 try {
-  if (window.localStorage.getItem(ALBUM_MOTION_KEY) === '1') {
-    albumMotionOff = true;
-  }
+  window.localStorage.removeItem('rebyen_album_motion_off');
 } catch {
   // Ignore storage restrictions
 }
-document.documentElement.classList.toggle('album-motion-off', albumMotionOff);
+document.documentElement.classList.remove('album-motion-off');
 
 function isAlbumMotionDisabled() {
   return Boolean(prefersReducedMotion || albumMotionOff);
@@ -874,69 +871,7 @@ function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
 const heroPlatter = createVinylPlatterController(heroDisc, '', 2800);
 const sleevePlatter = createVinylPlatterController(sleeveDisc, 'translateY(-50%) ', 3400);
 
-const albumMotionButtons = Array.from(
-  document.querySelectorAll('[data-toggle-album-motion]')
-);
-
-function syncAlbumMotionButtons() {
-  albumMotionButtons.forEach(btn => {
-    btn.hidden = prefersReducedMotion;
-    btn.setAttribute('aria-pressed', String(albumMotionOff));
-    btn.setAttribute(
-      'aria-label',
-      albumMotionOff ? 'Resume album animation' : 'Stop album animation'
-    );
-    const icon = btn.querySelector('.motion-toggle-icon');
-    const label = btn.querySelector('.motion-toggle-label');
-    if (icon) icon.textContent = albumMotionOff ? '↻' : '⏸';
-    if (label) {
-      label.textContent = albumMotionOff ? 'Resume animation' : 'Stop animation';
-    }
-  });
-}
-
-function setAlbumMotionOff(nextOff, { persist = true } = {}) {
-  albumMotionOff = Boolean(nextOff);
-  document.documentElement.classList.toggle('album-motion-off', albumMotionOff);
-
-  if (persist) {
-    try {
-      if (albumMotionOff) {
-        window.localStorage.setItem(ALBUM_MOTION_KEY, '1');
-      } else {
-        window.localStorage.removeItem(ALBUM_MOTION_KEY);
-      }
-    } catch {
-      // Ignore storage restrictions
-    }
-  }
-
-  if (albumMotionOff) {
-    heroTurntable?.classList.add('has-entered');
-    const featureArt = featureSleeve?.querySelector('.feature-art');
-    if (featureArt) {
-      featureArt.classList.remove('is-tilting');
-      featureArt.style.removeProperty('--rx');
-      featureArt.style.removeProperty('--ry');
-    }
-  }
-
-  syncAlbumMotionButtons();
-  syncPlatters();
-
-  if (playerStatus) {
-    playerStatus.textContent = albumMotionOff
-      ? 'Album animation stopped.'
-      : 'Album animation resumed.';
-  }
-}
-
-albumMotionButtons.forEach(btn => {
-  btn.addEventListener('click', event => {
-    event.stopPropagation();
-    setAlbumMotionOff(!albumMotionOff);
-  });
-});
+// Album motion toggle buttons removed
 
 function syncPlatters() {
   if (isAlbumMotionDisabled()) {
@@ -954,16 +889,16 @@ function syncPlatters() {
   }
 }
 
-syncAlbumMotionButtons();
+
 
 reducedMotionCleanups.push(() => {
   heroPlatter.stopImmediate();
   sleevePlatter.stopImmediate();
   heroSection?.style.removeProperty('--hero-parallax');
   heroTurntable?.classList.add('has-entered');
-  syncAlbumMotionButtons();
+  
 });
-reducedMotionQuery?.addEventListener?.('change', syncAlbumMotionButtons);
+
 
 if (heroTurntable) {
   if (isAlbumMotionDisabled()) {
