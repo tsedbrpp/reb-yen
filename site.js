@@ -720,8 +720,10 @@ let sleeveSwapTimer = 0;
 // iOS WebKit blocks cross-origin iframe autoplay even with allow="autoplay", so
 // on iPhone/iPad a freshly loaded track stays "cued" until the visitor taps ▶
 // inside the ReverbNation widget. Desktop & Android start playing automatically.
+// Both iOS Safari and Android Chrome (as well as ReverbNation's own mobile widget code: !l.mobile && f.autoplay)
+// require a direct tap on the ▶ button inside the ReverbNation widget before audio playback begins on mobile devices.
 const requiresWidgetTap =
-  /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
+  /Android|iPad|iPhone|iPod|Mobile/i.test(navigator.userAgent || '') ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let isCued = false;
 const ALBUM_MOTION_KEY = 'rebyen_album_motion_off';

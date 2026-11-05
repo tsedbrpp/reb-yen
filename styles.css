@@ -1820,15 +1820,15 @@ html[data-rpm="78"] .feature-art.lp-jacket img {
   gap: 6px;
   opacity: 0;
   pointer-events: none;
-  transform: rotateY(18deg) scale(0.97);
-  transition: opacity 0.28s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), inset 0.28s ease, box-shadow 0.28s ease;
+  transform: none;
+  transition: opacity 0.18s ease, inset 0.24s ease, box-shadow 0.24s ease;
   cursor: default;
 }
 
 .feature-sleeve-wrap.is-flipped .lp-back-cover {
   opacity: 1;
   pointer-events: auto;
-  transform: rotateY(0deg) scale(1);
+  transform: none;
 }
 
 .feature-sleeve-wrap.is-flipped.is-sleeve-zoomed {
@@ -1865,7 +1865,13 @@ html[data-rpm="78"] .feature-art.lp-jacket img {
     top: 96px;
   }
 
-  .feature-sleeve-wrap.is-flipped .feature-art.lp-jacket {
+  html.js-motion .feature-sleeve-wrap.is-flipped,
+.feature-sleeve-wrap.is-flipped {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.feature-sleeve-wrap.is-flipped .feature-art.lp-jacket {
     aspect-ratio: auto;
     overflow: visible;
     border-radius: 10px;
@@ -6272,5 +6278,112 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
   #sb-modal-play {
     flex: 1 1 auto;
     justify-content: center;
+  }
+}
+
+/* Ensure crisp 2D subpixel text rendering (no 3D GPU texture blur or Z-fighting) on Android, iPhone, and desktop when the LP cover is flipped */
+.feature-sleeve-wrap.is-flipped .feature-art.lp-jacket {
+  transform: none !important;
+}
+
+.feature-sleeve-wrap.is-flipped .feature-art.lp-jacket::before,
+.feature-sleeve-wrap.is-flipped .feature-art.lp-jacket::after,
+.feature-sleeve-wrap.is-flipped .lp-photo-frame,
+.feature-sleeve-wrap.is-flipped .lp-cover-overlay {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.feature-sleeve-wrap.is-flipped .lp-back-cover {
+  transform: none !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+@media (max-width: 720px) {
+  .feature-sleeve-wrap.is-flipped {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-right: 0 !important;
+  }
+
+  .feature-sleeve-wrap.is-flipped .sleeve-vinyl {
+    display: none !important;
+  }
+
+  .feature-sleeve-wrap.is-flipped .feature-art.lp-jacket {
+    width: 100% !important;
+    aspect-ratio: auto !important;
+    overflow: visible !important;
+    border-radius: 12px !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .feature-sleeve-wrap.is-flipped .lp-photo-frame,
+  .feature-sleeve-wrap.is-flipped .lp-cover-overlay {
+    display: none !important;
+  }
+
+  .feature-sleeve-wrap.is-flipped .lp-back-cover,
+  .feature-sleeve-wrap.is-flipped.is-sleeve-zoomed .lp-back-cover {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 18px 18px 16px !important;
+    border-radius: 12px !important;
+    border: 1.5px solid rgba(247, 190, 147, 0.52) !important;
+    background: #1d0f1d !important;
+    box-shadow: 0 18px 42px rgba(10, 4, 12, 0.55) !important;
+    gap: 12px !important;
+    transform: none !important;
+  }
+
+  .feature-sleeve-wrap.is-flipped .lp-back-body {
+    overflow: visible !important;
+    max-height: none !important;
+    padding-right: 0 !important;
+  }
+
+  .feature-sleeve-wrap.is-flipped .lp-songbook-panel {
+    max-height: 58vh;
+    overflow-y: auto;
+    padding-right: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .feature-sleeve-wrap.is-flipped .lp-back-title {
+    font-size: calc(24px * var(--lp-zoom)) !important;
+    line-height: 1.15 !important;
+    color: #ffffff !important;
+  }
+
+  .feature-sleeve-wrap.is-flipped .lp-back-desc {
+    font-size: calc(16px * var(--lp-zoom)) !important;
+    line-height: 1.58 !important;
+    color: #fff6ee !important;
+    font-weight: 500 !important;
+  }
+
+  .feature-sleeve-wrap.is-flipped .lp-human-stamp {
+    padding: 10px 13px !important;
+    background: rgba(223, 115, 63, 0.15) !important;
+    border: 1px dashed rgba(255, 190, 146, 0.65) !important;
+  }
+
+  .feature-sleeve-wrap.is-flipped .lp-human-stamp span {
+    font-size: calc(12px * var(--lp-zoom)) !important;
+    color: #ffc89f !important;
+  }
+
+  .feature-sleeve-wrap.is-flipped .lp-human-stamp small {
+    font-size: calc(13.5px * var(--lp-zoom)) !important;
+    line-height: 1.42 !important;
+    color: #f4e6f0 !important;
   }
 }
