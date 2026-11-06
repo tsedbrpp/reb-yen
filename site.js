@@ -225,7 +225,7 @@ const TRACK_META = {
     pos: "50% 42%",
     alt: "Reb Yen — Take Me Crazy artwork",
     caption: "Written, arranged & performed by Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/33863436-take-me-crazy-original",
+    href: "#music",
     lyricsHref: "songbook.html#song-1"
   },
   "32896520": {
@@ -241,7 +241,7 @@ const TRACK_META = {
     pos: "50% 36%",
     alt: "Reb Yen performing The Solitude live with acoustic guitar",
     caption: "Live performance · Guitar & vocals by Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/32896520-the-solitude-original--live",
+    href: "#music",
     lyricsHref: "songbook.html#song-4"
   },
   "33992872": {
@@ -257,7 +257,7 @@ const TRACK_META = {
     pos: "50% 34%",
     alt: "Reb Yen performing A New Beginning with acoustic guitar",
     caption: "Written, arranged & performed by Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/33992872-a-new-beginning-original",
+    href: "#music",
     lyricsHref: "songbook.html#song-5"
   },
   "33391779": {
@@ -273,7 +273,7 @@ const TRACK_META = {
     pos: "50% 35%",
     alt: "Stage portrait of Reb Yen at the microphone",
     caption: "Original studio recording · All tracks by Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/33391779-are-you-listening-now-original",
+    href: "#music",
     lyricsHref: "songbook.html#song-6"
   },
   "33355990": {
@@ -289,7 +289,7 @@ const TRACK_META = {
     pos: "50% 36%",
     alt: "Reb Yen singing and playing sunburst acoustic guitar on stage",
     caption: "Original studio recording · All tracks by Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/33355990-should-i-original",
+    href: "#music",
     lyricsHref: "songbook.html#song-2"
   },
   "32930467": {
@@ -305,7 +305,7 @@ const TRACK_META = {
     pos: "50% 42%",
     alt: "Double-exposure silhouette artwork by the water",
     caption: "Live performance · Reb Yen & Jim O’Rourke",
-    href: "https://www.reverbnation.com/rebyen/song/32930467-missing-clues-original--live",
+    href: "#music",
     lyricsHref: "songbook.html#song-10"
   },
   "33993499": {
@@ -321,7 +321,7 @@ const TRACK_META = {
     pos: "50% 38%",
     alt: "Reb Yen playing acoustic guitar on stage",
     caption: "Written, arranged & performed by Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/33993499-gotta-let-go-by-reb-yen-original",
+    href: "#music",
     lyricsHref: "songbook.html#song-3"
   },
   "33866102": {
@@ -337,7 +337,7 @@ const TRACK_META = {
     pos: "50% 42%",
     alt: "Birds Of Prey song artwork",
     caption: "Original live recording · Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/33866102-birds-of-prey-original--live",
+    href: "#music",
     lyricsHref: "songbook.html#song-7"
   },
   "32896774": {
@@ -353,7 +353,7 @@ const TRACK_META = {
     pos: "50% 36%",
     alt: "Reb Yen singing and playing acoustic guitar on stage",
     caption: "Original live recording · Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/32896774-take-a-stand-original--live",
+    href: "#music",
     lyricsHref: "songbook.html#song-8"
   },
   "32929366": {
@@ -369,7 +369,7 @@ const TRACK_META = {
     pos: "50% 32%",
     alt: "Portrait of Reb Yen with her acoustic guitar",
     caption: "I Can Feel U © 2021 Reb Yen & Jim O’Rourke",
-    href: "https://www.reverbnation.com/rebyen/song/32929366-i-can-feel-u--original",
+    href: "#music",
     lyricsHref: "songbook.html#song-11"
   },
   "32981405": {
@@ -385,7 +385,7 @@ const TRACK_META = {
     pos: "50% 36%",
     alt: "Reb Yen performing live on acoustic guitar",
     caption: "Live performance · Written & performed by Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/32981405-in-cyber-love--original-live",
+    href: "#music",
     lyricsHref: "songbook.html#song-12"
   },
   "32557441": {
@@ -401,7 +401,7 @@ const TRACK_META = {
     pos: "50% 32%",
     alt: "Portrait of Reb Yen with her acoustic guitar",
     caption: "Original studio recording · Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/32557441-out-of-body--original",
+    href: "#music",
     lyricsHref: "songbook.html#song-9"
   },
   "32901138": {
@@ -417,7 +417,7 @@ const TRACK_META = {
     pos: "50% 42%",
     alt: "Time Machine song artwork",
     caption: "Live recording · Written by Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/32901138-time-machine--original-live",
+    href: "#music",
     lyricsHref: "songbook.html#song-13"
   },
   "32563022": {
@@ -433,7 +433,7 @@ const TRACK_META = {
     pos: "50% 50%",
     alt: "Circular double-exposure silhouette artwork for The Storm",
     caption: "The Storm © 2021 Reb Yen · Live recording",
-    href: "https://www.reverbnation.com/rebyen/song/32563022-the-storm--original-live",
+    href: "#music",
     lyricsHref: "songbook.html#song-14"
   },
   "32693242": {
@@ -449,7 +449,7 @@ const TRACK_META = {
     pos: "50% 42%",
     alt: "For You To Know song artwork",
     caption: "For You To Know © 2019 Reb Yen · Live acoustic",
-    href: "https://www.reverbnation.com/rebyen/song/32693242-for-you-to-know-original-live",
+    href: "#music",
     lyricsHref: "songbook.html#song-15"
   },
   "32520637": {
@@ -465,7 +465,7 @@ const TRACK_META = {
     pos: "46% 36%",
     alt: "Reb Yen smiling under warm stage string lights",
     caption: "Original first-draft recording · Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/32520637-crawled-to-edge-original-1st-draft",
+    href: "#music",
     lyricsHref: "songbook.html#song-16"
   },
   "33353012": {
@@ -481,7 +481,7 @@ const TRACK_META = {
     pos: "48% 30%",
     alt: "Reb Yen singing live with acoustic guitar and harmonica",
     caption: "RSVP © 2019 Reb Yen · Live performance",
-    href: "https://www.reverbnation.com/rebyen/song/33353012-rsvp--original-live",
+    href: "#music",
     lyricsHref: "songbook.html#song-17"
   },
   "32943176": {
@@ -497,7 +497,7 @@ const TRACK_META = {
     pos: "50% 32%",
     alt: "Portrait of Reb Yen with acoustic guitar",
     caption: "Shut In World © Reb Yen & Jim O’Rourke",
-    href: "https://www.reverbnation.com/rebyen/song/32943176-shut-in-world--reb-yen-jim-orourke",
+    href: "#music",
     lyricsHref: "songbook.html#song-18"
   },
   "32178754": {
@@ -513,7 +513,7 @@ const TRACK_META = {
     pos: "50% 42%",
     alt: "Birds Of Prey solo version artwork",
     caption: "Birds Of Prey © 2020 Reb Yen · Solo version",
-    href: "https://www.reverbnation.com/rebyen/song/32178754-birds-prey-original-solo-version",
+    href: "#music",
     lyricsHref: "songbook.html#song-19"
   },
   "31360418": {
@@ -529,7 +529,7 @@ const TRACK_META = {
     pos: "46% 36%",
     alt: "Reb Yen smiling under warm cafe lights",
     caption: "Dancing With My Cell © Reb Yen · Live performance",
-    href: "https://www.reverbnation.com/rebyen/song/31360418-dancing-with-my-cell-original-",
+    href: "#music",
     lyricsHref: "songbook.html#song-20"
   },
   "32271655": {
@@ -545,7 +545,7 @@ const TRACK_META = {
     pos: "50% 32%",
     alt: "Portrait of Reb Yen with her acoustic guitar",
     caption: "The Solitude (Full Version) © Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/32271655-solitude--original-full-version",
+    href: "#music",
     lyricsHref: "songbook.html#song-21"
   },
   "31438949": {
@@ -561,7 +561,7 @@ const TRACK_META = {
     pos: "50% 35%",
     alt: "Stage portrait of Reb Yen singing at the microphone",
     caption: "Are You Listening? (Live) © Reb Yen",
-    href: "https://www.reverbnation.com/rebyen/song/31438949-are-you-listening-original-live",
+    href: "#music",
     lyricsHref: "songbook.html#song-22"
   }
 };
@@ -1394,7 +1394,7 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   if (!meta && !targetLink) return;
 
   const title = meta?.title || targetLink?.dataset.title || 'Selected song';
-  const href = meta?.href || targetLink?.getAttribute('href') || 'https://www.reverbnation.com/rebyen';
+  const href = meta?.href || targetLink?.getAttribute('href') || 'https://rebyen.com/#music';
 
   if (options.dock) {
     player.classList.add('is-docked');
@@ -2938,7 +2938,7 @@ function openMomentPairing(slug, { source = 'card', scrollIntoView = false } = {
   if (momentLyric) momentLyric.textContent = pairing.lyric;
 
   const trackHref =
-    TRACK_META[pairing.trackId]?.href || 'https://www.reverbnation.com/rebyen';
+    TRACK_META[pairing.trackId]?.href || 'https://rebyen.com/#music';
   if (momentListenBtn) {
     momentListenBtn.href = trackHref;
   }
