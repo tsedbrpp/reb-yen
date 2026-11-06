@@ -2707,6 +2707,7 @@ html[data-rpm="78"] .feature-art.lp-jacket img {
 
 /* "Tap the big play button" cue shown until the visitor taps into the ReverbNation player */
 .frame-wrap {
+  height: 150px;
   border-radius: var(--radius-sm);
   overflow: hidden;
 }

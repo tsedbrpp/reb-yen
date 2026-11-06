@@ -911,11 +911,80 @@ if (heroTurntable) {
 }
 
 function reverbnationEmbedUrl(trackId) {
-  return `https://www.reverbnation.com/widget_code/html_widget/artist_6720947?widget_id=55&pwc[included_songs]=0&pwc[song_ids]=${encodeURIComponent(trackId)}&context_type=song&pwc[size]=small&pwc[autoplay]=1`;
+  const idx = TRACK_ORDER.indexOf(String(trackId));
+  if (idx !== -1) {
+    return `https://www.reverbnation.com/widget_code/html_widget/artist_6720947?widget_id=55&pwc[included_songs]=1&pwc[track]=${idx}&pwc[size]=small&pwc[autoplay]=1&_t=${Date.now()}`;
+  }
+  return `https://www.reverbnation.com/widget_code/html_widget/artist_6720947?widget_id=55&pwc[included_songs]=0&pwc[song_ids]=${encodeURIComponent(trackId)}&context_type=song&pwc[size]=small&pwc[autoplay]=1&_t=${Date.now()}`;
 }
+
+let autoAdvanceTimer = 0;
+
+function clearAutoAdvanceTimer() {
+  if (autoAdvanceTimer) {
+    clearTimeout(autoAdvanceTimer);
+    autoAdvanceTimer = 0;
+  }
+}
+
+function getTrackDurationMs(trackId) {
+  const raw = TRACK_META[trackId]?.duration || '';
+  const parts = raw.split(':').map(Number);
+  if (parts.length === 2 && Number.isFinite(parts[0]) && Number.isFinite(parts[1])) {
+    return (parts[0] * 60 + parts[1]) * 1000;
+  }
+  return 180000;
+}
+
+function scheduleAutoAdvance(trackId, extraBufferMs = 900) {
+  clearAutoAdvanceTimer();
+  if (!trackId || isCued) return;
+  const durationMs = getTrackDurationMs(trackId);
+  autoAdvanceTimer = window.setTimeout(() => {
+    autoAdvanceTimer = 0;
+    if (!selectedTrack || selectedTrack !== trackId || isCued) return;
+    advanceToNextTrackAutomatically(trackId);
+  }, durationMs + extraBufferMs);
+}
+
+function advanceToNextTrackAutomatically(currentTrackId) {
+  const orderIdx = TRACK_ORDER.indexOf(String(currentTrackId));
+  const hasActiveFilter = activeCatalogFilter !== 'all' || Boolean((catalogSearch?.value || '').trim());
+  const matching = getMatchingCatalogRows(activeCatalogFilter);
+  const pool = !requiresWidgetTap && hasActiveFilter && matching.length > 0
+    ? matching.map(r => r.dataset.song)
+    : TRACK_ORDER;
+  if (pool.length === 0) return;
+  const poolIdx = pool.indexOf(String(currentTrackId));
+  const nextPoolIdx = poolIdx === -1 ? 0 : (poolIdx + 1) % pool.length;
+  const nextTrackId = pool[nextPoolIdx];
+  if (!nextTrackId) return;
+
+  // The ReverbNation playlist widget natively auto-advances from orderIdx to orderIdx + 1
+  // inside the same audio element without interrupting playback (including on mobile).
+  const widgetNativeAdvance =
+    orderIdx >= 0 &&
+    orderIdx < TRACK_ORDER.length - 1 &&
+    nextTrackId === TRACK_ORDER[orderIdx + 1];
+
+  selectTrackById(nextTrackId, {
+    dock: Boolean(player?.classList.contains('is-docked')),
+    focusPlayer: false,
+    skipIframeReload: widgetNativeAdvance,
+    forceReload: !widgetNativeAdvance,
+    autoAdvanced: true
+  });
+}
+
+frame?.addEventListener('load', () => {
+  if (selectedTrack && !isCued && frame.src && frame.src !== 'about:blank') {
+    scheduleAutoAdvance(selectedTrack, 1200);
+  }
+});
 
 function setCued(cued) {
   isCued = Boolean(cued && selectedTrack);
+  if (isCued) clearAutoAdvanceTimer();
   player?.classList.toggle('is-cued', isCued);
   heroRecord?.classList.toggle('is-cued', isCued);
   featureSleeve?.classList.toggle('is-cued', isCued);
@@ -928,6 +997,7 @@ window.addEventListener('blur', () => {
       setCued(false);
       setRecordStatus(selectedTrack);
       if (playerStatus) playerStatus.textContent = `Now playing ${playerTitle?.textContent || 'the song'}.`;
+      scheduleAutoAdvance(selectedTrack, 900);
     }
   }, 0);
 });
@@ -1402,10 +1472,26 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   }
   setExpanded(true);
 
-  if (options.forceReload || trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
+  const prevSelectedTrack = selectedTrack;
+  if (options.skipIframeReload) {
+    selectedTrack = trackId;
+    setCued(false);
+    scheduleAutoAdvance(trackId, 800);
+  } else if (options.forceReload || trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
+    clearAutoAdvanceTimer();
     frame.src = reverbnationEmbedUrl(trackId);
     selectedTrack = trackId;
     setCued(requiresWidgetTap);
+    if (!requiresWidgetTap) {
+      scheduleAutoAdvance(trackId, 1600);
+    }
+  }
+  if (options.autoAdvanced && typeof songbookReader !== 'undefined' && songbookReader && !songbookReader.hidden) {
+    const prevHash = (TRACK_META[prevSelectedTrack]?.lyricsHref || '').split('#')[1];
+    const nextHash = (meta?.lyricsHref || '').split('#')[1];
+    if (nextHash && (!prevHash || currentModalSongHash === prevHash)) {
+      renderSongbookModalSong(nextHash);
+    }
   }
 
   frame.title = `${title} by Reb Yen — ReverbNation audio player`;
@@ -1471,6 +1557,7 @@ document.getElementById('player-return')?.addEventListener('click', () => {
 });
 
 function stopPlayer({ returnFocus = true } = {}) {
+  clearAutoAdvanceTimer();
   if (frame) frame.src = 'about:blank';
   selectedTrack = null;
   setCued(false);
