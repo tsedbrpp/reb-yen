@@ -3,4 +3,3 @@ Allow: /
 Disallow: /thanks.html
 
 Sitemap: https://rebyen.com/sitemap.xml
-Sitemap: https://rebyenmusic.com/sitemap-rebyenmusic.xml

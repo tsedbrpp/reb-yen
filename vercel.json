@@ -1,15 +1,41 @@
 {
   "redirects": [
     {
+      "source": "/sitemap-rebyenmusic.xml",
+      "destination": "https://rebyen.com/sitemap.xml",
+      "permanent": true
+    },
+    {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.rebyen.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "www.rebyen.com"
+        }
+      ],
       "destination": "https://rebyen.com/$1",
       "permanent": true
     },
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.rebyenmusic.com" }],
-      "destination": "https://rebyenmusic.com/$1",
+      "has": [
+        {
+          "type": "host",
+          "value": "rebyenmusic.com"
+        }
+      ],
+      "destination": "https://rebyen.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.rebyenmusic.com"
+        }
+      ],
+      "destination": "https://rebyen.com/$1",
       "permanent": true
     },
     {
