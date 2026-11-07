@@ -10,7 +10,7 @@
   <meta property="og:title" content="Reb Yen | Singer-Songwriter">
   <meta property="og:description" content="Original songs and live performances by Reb Yen. Americana, folk, indie, and more from Boulder, CO & Orlando, FL.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="images/storm.jpg">
+  <meta property="og:image" content="images/og-share.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -230,7 +230,6 @@
     const { useState, useEffect } = React;
 
     const images = {
-      storm: 'images/storm.jpg',
       countingstars: 'images/countingstars.jpg',
       solitude: 'images/solitude.jpg',
       takeMeCrazy: 'images/take_me_crazy.jpg',
@@ -305,7 +304,7 @@
       }, []);
       return (
         <section className="hero" id="home">
-          <div className="hero-bg" ref={bgRef} aria-hidden="true" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.7)), url(${images.storm})` }}></div>
+          <div className="hero-bg" ref={bgRef} aria-hidden="true" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.7)), url(${images.profile})` }}></div>
           <div className="hero-content">
             <Record playing={playing} onClick={onRecord} />
             <p className="record-hint">{playing ? 'now spinning…' : 'drop the needle ↑'}</p>
@@ -411,7 +410,6 @@
 
     function Gallery() {
       const galleryImages = [
-        { src: images.storm, alt: 'Reb Yen performing The Storm live with band under purple lights', caption: 'The Storm, live' },
         { src: images.takeMeCrazy, alt: 'Reb Yen live in Nashville at the Commodore Grille performing Take Me Crazy', caption: 'Nashville, Commodore Grille' },
         { src: images.crawledEdge, alt: 'Reb Yen and Lenny Charles at Roots Music Project', caption: 'w/ Lenny Charles, Roots Music Project' },
         { src: images.countingstars, alt: 'Reb Yen covering Counting Stars solo acoustic in Boulder', caption: 'Solo acoustic, Boulder' },
