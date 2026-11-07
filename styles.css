@@ -4866,6 +4866,24 @@ dialog.is-fallback-open {
   margin-bottom: 36px;
 }
 
+.contact-banner {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 1;
+  height: auto;
+  object-fit: cover;
+  object-position: center 42%;
+  border-radius: 12px;
+  margin: 0 0 24px;
+}
+
+@media (max-width: 700px) {
+  .contact-banner {
+    aspect-ratio: 2 / 1;
+    object-fit: contain;
+  }
+}
+
 .contact-intro h2 {
   font-size: clamp(38px, 4.8vw, 52px);
   color: var(--ivory-bright);
