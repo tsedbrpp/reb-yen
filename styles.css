@@ -3402,6 +3402,11 @@ body.has-player {
   margin-top: 30px;
 }
 
+.video-more {
+  margin-top: 24px;
+  text-align: right;
+}
+
 .video {
   transition: opacity 0.35s ease, filter 0.35s ease, transform 0.3s ease;
 }
