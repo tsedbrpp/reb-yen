@@ -6402,3 +6402,12 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
     color: #f4e6f0 !important;
   }
 }
+
+/* Contact banner: preserve the supplied panoramic composition at every size. */
+.contact-stage-banner {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 0 0 24px;
+}
