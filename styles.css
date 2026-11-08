@@ -5710,18 +5710,18 @@ dialog.is-fallback-open {
   }
   .hero-record:not(:has(.spin-record.selected)) .record-now.is-idle {
     display: block;
-    font-size: clamp(23.5px, 6.4vw, 27px);
-    font-weight: 700;
-    line-height: 1.05;
-    color: #fffaf1;
-    padding: 0 2px 12px;
+    font-size: clamp(17.5px, 4.7vw, 19.5px);
+    font-weight: 600;
+    line-height: 1.08;
+    color: #f7ece4;
+    padding: 0 2px 9px;
     white-space: normal;
     text-align: center;
-    text-shadow: 0 2px 14px rgba(10, 4, 12, 0.96), 0 1px 4px rgba(10, 4, 12, 0.9);
+    text-shadow: 0 2px 12px rgba(10, 4, 12, 0.94);
   }
   .hero-record:not(:has(.spin-record.selected)) .record-now.is-idle::after {
-    width: 72px;
-    height: 11px;
+    width: 52px;
+    height: 8px;
   }
   .hero-record:not(:has(.spin-record.selected)) .record-now.is-idle span {
     display: inline;
