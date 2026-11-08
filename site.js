@@ -1170,7 +1170,11 @@ function setRecordStatus(trackId) {
   }
   syncPlatters();
   if (recordNowTitle) {
-    recordNowTitle.textContent = isLoaded ? name : 'A voice all her own.';
+    if (isLoaded) {
+      recordNowTitle.textContent = name;
+    } else {
+      recordNowTitle.innerHTML = '<span>A</span><span>Voice</span><span>All</span><span>Her</span><span>Own</span>';
+    }
     recordNowTitle.classList.toggle('is-idle', !isLoaded);
   }
   if (recordStopBtn) recordStopBtn.hidden = !isLoaded;
