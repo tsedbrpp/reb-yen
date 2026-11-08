@@ -1170,7 +1170,7 @@ function setRecordStatus(trackId) {
   }
   syncPlatters();
   if (recordNowTitle) {
-    recordNowTitle.textContent = isLoaded ? name : 'Original songs';
+    recordNowTitle.textContent = isLoaded ? name : 'A voice all her own.';
     recordNowTitle.classList.toggle('is-idle', !isLoaded);
   }
   if (recordStopBtn) recordStopBtn.hidden = !isLoaded;
