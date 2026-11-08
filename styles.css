@@ -5471,6 +5471,7 @@ dialog.is-fallback-open {
   .site-nav.is-open {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 4px;
     animation: mobile-nav-open 0.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -5488,20 +5489,18 @@ dialog.is-fallback-open {
     width: 100%;
     padding: 12px 14px;
     min-height: 48px;
-    font: 700 21px/1.15 'Plus Jakarta Sans', 'Karla', sans-serif;
+    font: italic 600 26px/1.15 'Cormorant Garamond', Georgia, serif;
     letter-spacing: 0.02em;
     color: var(--ivory-bright);
     border-radius: 10px;
     border: 1px solid transparent;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    text-align: center;
   }
   .site-nav a::after {
-    content: '›';
-    font-size: 20px;
-    line-height: 1;
-    color: rgba(239, 169, 119, 0.72);
+    content: none;
   }
   .site-nav a[aria-current="location"],
   .site-nav a[aria-current="page"] {
