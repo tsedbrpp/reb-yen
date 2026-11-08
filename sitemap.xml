@@ -1,46 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url>
-    <loc>https://rebyen.com/</loc>
-    <lastmod>2026-11-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://rebyen.com/images/hero-guitar.jpg</image:loc>
-      <image:title>Reb Yen — Singer-Songwriter in Boulder, Colorado</image:title>
-      <image:caption>Boulder, Colorado singer-songwriter Reb Yen performing live with her acoustic guitar</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://rebyen.com/images/featured-reb-guitar.jpg</image:loc>
-      <image:title>Reb Yen - Singer-Songwriter (Boulder, CO)</image:title>
-      <image:caption>Boulder singer-songwriter and multi-instrumentalist Reb Yen with her acoustic guitar</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://rebyen.com/images/crawled_edge.jpg</image:loc>
-      <image:title>Reb Yen - With Lenny Charles · Roots Music Project, Boulder</image:title>
-      <image:caption>Boulder singer-songwriter Reb Yen performing with Lenny Charles at Roots Music Project in Boulder, Colorado</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://rebyen.com/images/reb-acoustic-brick.jpg</image:loc>
-      <image:title>Reb Yen - Solo Performance at The Trident, Boulder</image:title>
-      <image:caption>Reb Yen performing solo acoustic guitar at The Trident in Boulder, Colorado</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://rebyen.com/images/reb-harmonica-sunburst.jpg</image:loc>
-      <image:title>Reb Yen - Acoustic &amp; Harmonica</image:title>
-      <image:caption>Boulder singer-songwriter Reb Yen performing live with sunburst acoustic guitar and harmonica</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://rebyen.com/images/reb-music-connects-us.jpg</image:loc>
-      <image:title>Reb Yen - Music Connects Us</image:title>
-      <image:caption>Boulder, Colorado singer-songwriter Reb Yen smiling with her acoustic guitar</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://rebyen.com/songbook.html</loc>
-    <lastmod>2026-11-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-</urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://rebyen.com/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://rebyen.com/images/hero-guitar.jpg</image:loc>
+      <image:title>Reb Yen — Singer-Songwriter in Boulder, Colorado</image:title>
+      <image:caption>Boulder, Colorado singer-songwriter Reb Yen performing live with her acoustic guitar</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://rebyen.com/images/featured-reb-guitar.jpg</image:loc>
+      <image:title>Reb Yen - Singer-Songwriter (Boulder, CO)</image:title>
+      <image:caption>Boulder singer-songwriter and multi-instrumentalist Reb Yen with her acoustic guitar</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://rebyen.com/images/crawled_edge.jpg</image:loc>
+      <image:title>Reb Yen - With Lenny Charles · Roots Music Project, Boulder, Colorado</image:title>
+      <image:caption>Boulder singer-songwriter Reb Yen performing with Lenny Charles at Roots Music Project in Boulder, Colorado</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://rebyen.com/images/reb-acoustic-brick.jpg</image:loc>
+      <image:title>Reb Yen - Solo Performance at The Trident, Boulder, Colorado</image:title>
+      <image:caption>Reb Yen performing solo acoustic guitar at The Trident in Boulder, Colorado</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://rebyen.com/images/reb-harmonica-sunburst.jpg</image:loc>
+      <image:title>Reb Yen - Acoustic &amp; Harmonica</image:title>
+      <image:caption>Boulder singer-songwriter Reb Yen performing live with sunburst acoustic guitar and harmonica</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://rebyen.com/images/reb-music-connects-us.jpg</image:loc>
+      <image:title>Reb Yen - Music Connects Us</image:title>
+      <image:caption>Boulder, Colorado singer-songwriter Reb Yen smiling with her acoustic guitar</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://rebyen.com/songbook.html</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>
