@@ -2675,28 +2675,28 @@ if (contactNextField && /^https?:$/.test(window.location.protocol)) {
 // ============================================================================
 const JOURNEY_CHAPTERS = [
   {
-    title: 'Los Angeles · Aman World Music & Dance Ensemble',
-    text: 'Began her professional performance career as a singer and dancer with the acclaimed Aman World Music & Dance Ensemble in Los Angeles.'
-  },
-  {
-    title: 'New York City · Lincoln Center',
-    text: 'Performed on stage at Lincoln Center in New York as part of the Aman World Music & Dance Ensemble.'
-  },
-  {
-    title: 'Orlando & Central Florida · Walt Disney World',
-    text: 'Worked as a singer, dancer and producer at Walt Disney World, alongside Central Florida performances at Universal Studios and Hard Rock Café.'
-  },
-  {
-    title: 'North America & Europe · Original Performance Art',
-    text: 'Created and toured an original performance-art production bringing live music, dance and illusion together across North America and Europe.'
+    title: 'Boulder & the Front Range · Roots Music Project & Beyond',
+    text: 'Now based in Boulder, performing originals and curated covers on guitar, keyboard and harmonica at Roots Music Project, St. Julien Hotel, Bricks On Main, The Alley and Attic Bistro.'
   },
   {
     title: 'Nashville · Songwriting Community & Commodore Grille',
     text: 'Immersed in Nashville’s songwriting community and performed her original songs live on stage at the Commodore Grille.'
   },
   {
-    title: 'Boulder & the Front Range · Roots Music Project & Beyond',
-    text: 'Now based in Boulder, performing originals and curated covers on guitar, keyboard and harmonica at Roots Music Project, St. Julien Hotel, Bricks On Main, The Alley and Attic Bistro.'
+    title: 'North America & Europe · Original Performance Art',
+    text: 'Created and toured an original performance-art production bringing live music, dance and illusion together across North America and Europe.'
+  },
+  {
+    title: 'Orlando & Central Florida · Walt Disney World',
+    text: 'Worked as a singer, dancer and producer at Walt Disney World, alongside Central Florida performances at Universal Studios and Hard Rock Café.'
+  },
+  {
+    title: 'New York City · Lincoln Center',
+    text: 'Performed on stage at Lincoln Center in New York as part of the Aman World Music & Dance Ensemble.'
+  },
+  {
+    title: 'Los Angeles · Aman World Music & Dance Ensemble',
+    text: 'Began her professional performance career as a singer and dancer with the acclaimed Aman World Music & Dance Ensemble in Los Angeles.'
   }
 ];
 
