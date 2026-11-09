@@ -1503,7 +1503,7 @@ body.encore-stage-mode::after {
    Music Section, Player & Catalog
    ========================================================================== */
 .music {
-  padding-top: 40px;
+  padding-top: 20px;
   background: var(--cream);
   overflow-x: clip;
 }
@@ -6602,3 +6602,38 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
 }
 .lp-play-surface:focus-visible { outline-offset: -6px; box-shadow: inset 0 0 0 9px #2c182b !important; }
 
+
+/* Music calls to action: compact spacing and a consistent left edge. */
+.music .section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.music .section-head > .actions { margin-top: 0; }
+.music-songbook-cta,
+.music-download-cta {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: var(--ivory-bright);
+  min-height: 48px;
+}
+.music-songbook-cta:hover,
+.music-download-cta:hover {
+  background: var(--rust);
+  border-color: var(--rust);
+  color: var(--ivory-bright);
+}
+.music-support {
+  max-width: 760px;
+  margin-right: auto;
+  border-left: 4px solid var(--rust);
+  text-align: left;
+}
+.music-download-cta { margin-top: 16px; }
+@media (max-width: 760px) {
+  .music.section { padding-top: 20px; }
+  .music .section-head { display: flex; flex-direction: column; align-items: flex-start; }
+  .music .section-head > .actions { margin-top: 0; }
+}
