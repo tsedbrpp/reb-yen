@@ -5262,21 +5262,23 @@ dialog.is-fallback-open {
     max-width: min(470px, 44vw);
   }
   .hero-record {
-    /* Center the player within the left content column on desktop only. */
-    margin-inline: auto;
-    --rec: clamp(188px, 17vw, 214px);
-    width: fit-content;
-    max-width: min(472px, 44.5vw);
-    gap: 28px;
-    padding: 18px 28px 18px 34px;
+    /* Desktop: start 30% across the left column and stay inside it. */
+    margin-left: 30%;
+    margin-right: 0;
+    --rec: clamp(130px, 12vw, 170px);
+    width: 70%;
+    max-width: 70%;
+    gap: 14px;
+    padding: 18px 16px;
   }
   .hero-record:has(.spin-record.selected) {
     gap: 14px;
-    padding-right: 30px;
+    padding-right: 16px;
   }
   .hero-record-ctl {
-    flex: 0 1 auto;
+    flex: 1 1 0;
     max-width: 156px;
+    overflow-wrap: anywhere;
     gap: 8px;
   }
   .record-title-row {
@@ -5288,7 +5290,7 @@ dialog.is-fallback-open {
     font-size: 20px;
   }
   .record-now.is-idle {
-    font-size: 28px;
+    font-size: 24px;
     white-space: nowrap;
   }
 }
