@@ -5262,39 +5262,44 @@ dialog.is-fallback-open {
     max-width: min(470px, 44vw);
   }
   .hero-record {
-    /* Desktop: 5% larger than the previous player, centered in the left column. */
+    /* Desktop: center over the full left half, not just the narrower text column. */
     margin-inline: auto;
-    --rec: clamp(143.325px, 13.23vw, 187.425px);
-    width: 77.175%;
-    max-width: 77.175%;
-    gap: 15.435px;
-    padding: 19.845px 17.64px;
+    position: relative;
+    left: calc((min(1160px, 100vw - 64px) / 2 - min(470px, 44vw)) / 2);
+    --rec: clamp(150.49125px, 13.8915vw, 196.79625px);
+    width: 81.03375%;
+    max-width: 81.03375%;
+    gap: 16.20675px;
+    padding: 20.83725px 18.522px;
   }
   .hero-record:has(.spin-record.selected) {
-    gap: 15.435px;
-    padding-right: 17.64px;
+    gap: 16.20675px;
+    padding-right: 18.522px;
   }
   .hero-record-ctl {
     flex: 1 1 0;
-    max-width: 171.99px;
+    max-width: 180.5895px;
     overflow-wrap: anywhere;
-    gap: 8.82px;
+    gap: 9.261px;
   }
   .record-title-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8.82px;
+    gap: 9.261px;
   }
   .record-now {
-    font-size: 22.05px;
+    font-size: 23.1525px;
   }
   .record-now.is-idle {
-    font-size: 26.46px;
+    font-size: 27.783px;
     white-space: nowrap;
   }
 }
 
 @media (min-width: 1200px) {
+  .hero-record {
+    left: calc((min(1300px, 100vw - 64px) / 2 - min(470px, 44vw)) / 2);
+  }
   .site-header > .container,
   .hero > .container,
   .hero-bottom > .container {
@@ -5332,6 +5337,7 @@ dialog.is-fallback-open {
     max-width: 510px;
   }
   .hero-record {
+    left: calc((min(1300px, 100vw - 64px) / 2 - 510px) / 2);
     max-width: 480px;
   }
 }
