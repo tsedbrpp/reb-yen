@@ -5262,8 +5262,8 @@ dialog.is-fallback-open {
     max-width: min(470px, 44vw);
   }
   .hero-record {
-    /* Desktop-only inset: keep the record clear of the portrait and preserve phone layout. */
-    margin-left: clamp(16px, 2vw, 32px);
+    /* Center the player within the left content column on desktop only. */
+    margin-inline: auto;
     --rec: clamp(188px, 17vw, 214px);
     width: fit-content;
     max-width: min(472px, 44.5vw);
