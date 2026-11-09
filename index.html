@@ -71,8 +71,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261108r">
-  <script defer src="site.js?v=20261109-reload"></script>
+  <link rel="stylesheet" href="styles.css?v=20261109a11y">
+  <script defer src="site.js?v=20261109a11y"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -357,7 +357,7 @@
 
         <div class="featured">
           <div class="feature-album-col">
-            <div class="feature-sleeve-wrap" id="feature-sleeve" role="button" tabindex="0" aria-label="Play featured song: Take Me Crazy">
+            <div class="feature-sleeve-wrap" id="feature-sleeve">
               <div class="sleeve-vinyl" aria-hidden="true">
                 <div class="sleeve-vinyl-label">
                   <span class="sleeve-label-artist">REB YEN</span>
@@ -366,13 +366,14 @@
                 </div>
               </div>
               <figure class="feature-art lp-jacket" data-tilt>
+                <button type="button" class="lp-play-surface" id="lp-play-surface" aria-label="Play featured song: Take Me Crazy"></button>
                 <div class="lp-photo-frame">
                   <img id="featured-img" src="images/featured-reb-guitar.jpg" alt="Singer-songwriter Reb Yen with her acoustic guitar" width="760" height="931" loading="lazy" style="--lp-pos: 50% 24%; --lp-scale: 1; --lp-origin: center center">
                 </div>
                 <figcaption class="lp-cover-overlay">
                   <span class="lp-cover-top">
                     <span class="lp-cat-no" id="featured-cat-no">RY-01 · ORIGINAL</span>
-                    <span class="lp-rpm" id="lp-rpm-btn" role="button" tabindex="0" title="Easter egg: Switch turntable speed (33⅓ / 45 / 78 RPM)">STEREO · 33⅓</span>
+                    <button type="button" class="lp-rpm" id="lp-rpm-btn" title="Easter egg: Switch turntable speed (33⅓ / 45 / 78 RPM)">STEREO · 33⅓</button>
                   </span>
                   <span class="lp-cover-bottom">
                     <span class="lp-artist-kicker">REB YEN</span>
@@ -384,7 +385,7 @@
                     <span>Liner notes</span>
                   </button>
                 </figcaption>
-                <div class="lp-back-cover" id="lp-back-cover" aria-hidden="true">
+                <div class="lp-back-cover" id="lp-back-cover" aria-hidden="true" inert>
                   <div class="lp-back-top">
                     <span id="lp-back-cat">RY-01 · ORIGINAL</span>
                     <div class="lp-zoom-controls" role="group" aria-label="Liner notes and songbook zoom controls">
@@ -395,7 +396,7 @@
                   </div>
                   <div class="lp-back-tabs" role="tablist" aria-label="Back cover view">
                     <button type="button" role="tab" class="lp-back-tab is-active" id="lp-tab-notes" aria-selected="true" aria-controls="lp-panel-notes">Liner Notes</button>
-                    <button type="button" role="tab" class="lp-back-tab" id="lp-tab-songbook" aria-selected="false" aria-controls="lp-panel-songbook">Songbook &amp; Lyrics</button>
+                    <button type="button" role="tab" class="lp-back-tab" id="lp-tab-songbook" tabindex="-1" aria-selected="false" aria-controls="lp-panel-songbook">Songbook &amp; Lyrics</button>
                   </div>
                   <div class="lp-back-body" id="lp-back-body">
                     <div class="lp-back-panel" id="lp-panel-notes" role="tabpanel" aria-labelledby="lp-tab-notes">
@@ -1404,7 +1405,7 @@
       <div class="songbook-modal-head">
         <div class="songbook-modal-title-wrap">
           <p class="eyebrow">Original Songbook &amp; Liner Notes · Music keeps playing</p>
-          <h3 id="songbook-reader-title">Take Me Crazy</h3>
+          <h3 id="songbook-reader-title" tabindex="-1">Take Me Crazy</h3>
         </div>
         <div class="songbook-modal-toolbar">
           <label class="sr-only" for="songbook-reader-select">Jump to song</label>

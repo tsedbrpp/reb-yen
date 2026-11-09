@@ -6562,3 +6562,18 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
 @media (min-width: 961px) and (max-height: 800px) {
   .hero-content { padding-top: 28px; padding-bottom: 24px; }
 }
+/* Accessibility: separate album actions; no layout changes. */
+.lp-play-surface {
+  position: absolute; inset: 0; z-index: 1;
+  padding: 0; border: 0; border-radius: inherit;
+  background: transparent; cursor: pointer;
+}
+.lp-rpm { font: inherit; color: inherit; letter-spacing: inherit; }
+.lp-back-cover[inert] { visibility: hidden; }
+/* Two-tone focus is visible on both the light paper and dark/photo panels. */
+:where(button, a, summary, select, input, textarea, [tabindex]):focus-visible {
+  outline: 3px solid #fffaf1 !important;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px #2c182b !important;
+}
+.lp-play-surface:focus-visible { outline-offset: -6px; box-shadow: inset 0 0 0 9px #2c182b !important; }

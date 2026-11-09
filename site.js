@@ -700,6 +700,7 @@ const songPickerList = document.getElementById('song-picker-list');
 const songPickerFoot = document.getElementById('song-picker-foot');
 
 const featureSleeve = document.getElementById('feature-sleeve');
+const lpPlaySurface = document.getElementById('lp-play-surface');
 const sleeveDisc = featureSleeve?.querySelector('.sleeve-vinyl') || null;
 const sleeveVinylLabel = document.getElementById('sleeve-vinyl-label');
 const featuredImg = document.getElementById('featured-img');
@@ -1047,8 +1048,8 @@ function updateJukeboxSleeve(trackId, isPlaying) {
   if (featuredLyricsLink) {
     featuredLyricsLink.href = meta.href;
   }
-  if (featureSleeve) {
-    featureSleeve.setAttribute('aria-label', `Play featured song: ${meta.title}`);
+  if (lpPlaySurface) {
+    lpPlaySurface.setAttribute('aria-label', `Play featured song: ${meta.title}`);
   }
 
   if (featuredImg && featuredImg.getAttribute('src') !== targetSleeveImg) {
@@ -1088,19 +1089,7 @@ function updateJukeboxSleeve(trackId, isPlaying) {
   featureSleeve?.classList.toggle('is-playing', Boolean(isPlaying));
 }
 
-featureSleeve?.addEventListener('click', event => {
-  if (event.target.closest('#lp-rpm-btn, #lp-corner-flip, #lp-back-return-btn, .lp-back-link, #lp-back-cover')) return;
-  if (featureSleeve.classList.contains('is-flipped')) {
-    return;
-  }
-  featuredListenBtn?.click();
-});
-featureSleeve?.addEventListener('keydown', event => {
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    featuredListenBtn?.click();
-  }
-});
+lpPlaySurface?.addEventListener('click', () => featuredListenBtn?.click());
 
 function setExpanded(expanded) {
   if (!playerBody || !minimizeBtn) return;
@@ -2054,12 +2043,7 @@ function cycleRpmMode(event) {
 }
 
 lpRpmBtn?.addEventListener('click', cycleRpmMode);
-lpRpmBtn?.addEventListener('keydown', event => {
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    cycleRpmMode(event);
-  }
-});
+
 
 // Easter Egg #3: Flip the 12" LP Jacket + Easy Liner Notes Zoom + In-Sleeve Songbook (Without Stopping Playback)
 const sleeveFlipBtn = document.getElementById('sleeve-flip-btn');
@@ -2156,6 +2140,8 @@ function setLpBackTab(tab, { autoExpand = false } = {}) {
   lpTabNotes?.setAttribute('aria-selected', String(!isSongbook));
   lpTabSongbook?.classList.toggle('is-active', isSongbook);
   lpTabSongbook?.setAttribute('aria-selected', String(isSongbook));
+  if (lpTabNotes) lpTabNotes.tabIndex = isSongbook ? -1 : 0;
+  if (lpTabSongbook) lpTabSongbook.tabIndex = isSongbook ? 0 : -1;
   if (lpPanelNotes) lpPanelNotes.hidden = isSongbook;
   if (lpPanelSongbook) lpPanelSongbook.hidden = !isSongbook;
   if (lpBackLyricsLink) {
@@ -2219,6 +2205,16 @@ lpTabSongbook?.addEventListener('click', event => {
   setLpBackTab('songbook', { autoExpand: true });
 });
 
+[lpTabNotes, lpTabSongbook].forEach((tab, index, tabs) => {
+  tab?.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === 'Home' ? 0 : event.key === 'End' ? 1 : 1 - index;
+    setLpBackTab(next === 0 ? 'notes' : 'songbook');
+    tabs[next]?.focus();
+  });
+});
+
 lpBackLyricsLink?.addEventListener('click', event => {
   event.preventDefault();
   event.stopPropagation();
@@ -2244,7 +2240,20 @@ function toggleLpCoverFlip(event) {
     sleeveFlipLabel.textContent = flipped ? 'Back to front cover' : 'Flip for liner notes';
   }
   if (lpBackCover) {
+    lpBackCover.inert = !flipped;
     lpBackCover.setAttribute('aria-hidden', String(!flipped));
+  }
+  // Only the visible face belongs in the keyboard/accessibility tree.
+  const frontCaption = featureSleeve.querySelector('.lp-cover-overlay');
+  if (frontCaption) {
+    frontCaption.inert = flipped;
+    frontCaption.setAttribute('aria-hidden', String(flipped));
+  }
+  if (lpPlaySurface) lpPlaySurface.inert = flipped;
+  if (flipped) {
+    (lpActiveTab === 'songbook' ? lpTabSongbook : lpTabNotes)?.focus();
+  } else {
+    sleeveFlipBtn?.focus();
   }
   if (stringSoundEnabled) {
     ensureAudioUnlocked();
@@ -2334,19 +2343,62 @@ function renderSongbookModalSong(songHash) {
   });
 }
 
+let songbookOpener = null;
+let songbookBackground = [];
+const songbookFocusable = 'a[href], button, input, select, textarea, [tabindex]';
+function songbookFocusTargets() {
+  return Array.from(songbookReader.querySelectorAll(songbookFocusable)).filter(el =>
+    el.tabIndex >= 0 && !el.disabled && !el.closest('[hidden], [inert]') && el.getClientRects().length
+  );
+}
 function openSongbookModal(songHash) {
   if (!songbookReader) return;
+  if (songbookReader.hidden) {
+    songbookOpener = document.activeElement;
+    songbookBackground = Array.from(document.body.children)
+      .filter(el => el !== songbookReader && !['SCRIPT', 'STYLE'].includes(el.tagName))
+      .map(el => ({ el, inert: el.inert }));
+    songbookBackground.forEach(({ el }) => { el.inert = true; });
+  }
   const effectiveHash = songHash || (TRACK_META[selectedTrack || FEATURED_DEFAULT_ID]?.lyricsHref || 'songbook.html#song-1').split('#')[1] || 'song-1';
   renderSongbookModalSong(effectiveHash);
   songbookReader.hidden = false;
   document.body.classList.add('dialog-open');
+  songbookReaderTitle?.focus({ preventScroll: true });
 }
-
 function closeSongbookModal() {
   if (!songbookReader || songbookReader.hidden) return;
   songbookReader.hidden = true;
+  songbookBackground.forEach(({ el, inert }) => { el.inert = inert; });
+  songbookBackground = [];
   document.body.classList.remove('dialog-open');
+  if (songbookOpener?.isConnected && !songbookOpener.closest('[hidden], [inert]')) {
+    songbookOpener.focus({ preventScroll: true });
+  }
+  songbookOpener = null;
 }
+songbookReader?.addEventListener('keydown', event => {
+  if (event.key !== 'Tab') return;
+  const targets = songbookFocusTargets();
+  const first = targets[0];
+  const last = targets[targets.length - 1];
+  const active = document.activeElement;
+  if (!first) {
+    event.preventDefault();
+    songbookReaderTitle?.focus();
+  } else if (event.shiftKey && (active === first || !targets.includes(active))) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && (active === last || !targets.includes(active))) {
+    event.preventDefault();
+    first.focus();
+  }
+});
+document.addEventListener('focusin', event => {
+  if (songbookReader && !songbookReader.hidden && !songbookReader.contains(event.target)) {
+    songbookReaderTitle?.focus({ preventScroll: true });
+  }
+});
 
 lpOpenModalBtn?.addEventListener('click', event => {
   event.stopPropagation();

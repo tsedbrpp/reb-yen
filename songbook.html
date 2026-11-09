@@ -721,23 +721,24 @@
     }
 
     @media print {
-      .toolbar,
-      .booklet,
-      .email-chooser {
-        display: none !important;
+      @page { margin: 16mm; }
+      .toolbar, .email-chooser, .song-share-btn { display: none !important; }
+      html, body { background: #fff !important; color: #000 !important; }
+      .booklet { display: block !important; width: auto; padding: 0; margin: 0; }
+      .page {
+        display: block !important; width: auto; min-height: 0; margin: 0;
+        padding: 0; border: 0; border-radius: 0; box-shadow: none; overflow: visible;
+        break-after: page; background: #fff !important; color: #000 !important;
       }
-      body {
-        background: #fff !important;
-      }
-      body::before {
-        content: "© 2026 Reb Yen. All rights reserved. Printing of this songbook is disabled.";
-        display: block;
-        padding: 64px 24px;
-        text-align: center;
-        font: 700 18px/1.5 'Karla', sans-serif;
-        color: #241323;
-      }
+      html.js-motion .page.reveal-ready { opacity: 1 !important; transform: none !important; }
+      .page * { color: #000 !important; text-shadow: none !important; }
+      .page:last-child { break-after: auto; }
+      .stanza { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+      .page-footer { display: flex; color: #000; }
+      a { text-decoration: underline; }
     }
+
   </style>
 </head>
 <body>
@@ -2220,11 +2221,7 @@ Gotta do it for yourself, not just for somebody else, Gotta be your own fan, whe
   </dialog>
 
   <script>
-    window.addEventListener('keydown', function (e) {
-      if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P')) {
-        e.preventDefault();
-      }
-    });
+
 
     (function () {
       var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
