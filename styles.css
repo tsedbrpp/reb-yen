@@ -5238,6 +5238,9 @@ dialog.is-fallback-open {
    Responsive Breakpoints
    ========================================================================== */
 @media (min-width: 961px) {
+  .hero h1 {
+    font-size: clamp(47.5px, 6.65vw, 72.2px);
+  }
   .hero-photo {
     width: 52.5%;
     object-position: 50% 18%;
