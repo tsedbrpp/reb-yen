@@ -6523,37 +6523,39 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
   margin: 0 0 24px;
 }
 
-/* Desktop-only discovery cue. Hidden at the existing mobile/tablet breakpoint. */
+/* Desktop-only cue below the iPad stand, at the foot of the hero photo. */
 .hero-explore { display: none; }
 @media (min-width: 961px) {
   .hero-explore {
     display: block;
-    margin-top: 12px;
-    color: #f7eedf;
-    font-size: 15px;
-    line-height: 1.4;
+    position: absolute;
+    z-index: 2;
+    left: calc(50% - 10px);
+    bottom: 12px;
+    width: min(360px, 39vw);
+    text-align: center;
   }
   .hero-explore-link {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
     min-height: 44px;
-    padding: 4px 2px;
-    color: #ffbe92;
-    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: rgba(38, 21, 37, 0.94);
+    color: #fffaf1;
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 4px;
   }
-  .hero-explore-link:hover { color: #fffaf1; }
+  .hero-explore-link:hover { color: #ffbe92; }
   .hero-explore-link:focus-visible {
     outline: 3px solid #fffaf1;
-    outline-offset: 4px;
-    border-radius: 2px;
+    outline-offset: 3px;
   }
-  .hero-explore p { margin: 0; }
 }
-/* Keep the cue in view on shorter desktop screens without moving the photo. */
 @media (min-width: 961px) and (max-height: 800px) {
   .hero-content { padding-top: 28px; padding-bottom: 24px; }
-  .hero-explore { margin-top: 6px; }
 }
