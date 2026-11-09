@@ -6541,7 +6541,7 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
     width: max-content;
     white-space: nowrap;
     color: #fdf6ea;
-    font: italic 600 26px/1.15 'Cormorant Garamond', Georgia, serif;
+    font: italic 600 calc(26px - 0.5pt)/1.15 'Cormorant Garamond', Georgia, serif;
     letter-spacing: 0.02em;
   }
   .hero-explore p {
