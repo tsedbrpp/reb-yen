@@ -6523,37 +6523,28 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
   margin: 0 0 24px;
 }
 
-/* Desktop-only cue below the iPad stand, at the foot of the hero photo. */
+/* Desktop-only plain-text cue, in its own strip beneath the hero image. */
 .hero-explore { display: none; }
 @media (min-width: 961px) {
   .hero-explore {
     display: block;
-    position: absolute;
-    z-index: 2;
-    left: calc(50% - 10px);
-    bottom: 12px;
-    width: min(360px, 39vw);
-    text-align: center;
+    background: var(--plum-dark);
+    color: #fdf6ea;
   }
-  .hero-explore-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    padding: 8px 14px;
-    border-radius: 6px;
-    background: rgba(38, 21, 37, 0.94);
-    color: #fffaf1;
-    font-size: 15px;
+  .hero-explore p {
+    width: 52.5%;
+    margin: 0 0 0 auto;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: clamp(20px, 2.3vw, 24px);
     line-height: 1.4;
     font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 4px;
   }
-  .hero-explore-link:hover { color: #ffbe92; }
-  .hero-explore-link:focus-visible {
-    outline: 3px solid #fffaf1;
-    outline-offset: 3px;
+}
+@media (min-width: 1345px) {
+  .hero-explore p {
+    width: 685px;
+    margin-right: calc((100% - 1345px) / 2);
   }
 }
 @media (min-width: 961px) and (max-height: 800px) {
