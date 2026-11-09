@@ -3189,7 +3189,7 @@ if (momentCards.length > 0 && momentResult) {
   const initialMoment = new URLSearchParams(window.location.search).get('moment');
   if (initialMoment && MOMENT_PAIRINGS[initialMoment]) {
     openMomentPairing(initialMoment, { source: 'deeplink', scrollIntoView: false });
-    window.requestAnimationFrame(() => {
+    if (!window.rebYenReloadToTop) window.requestAnimationFrame(() => {
       momentSection?.scrollIntoView({
         behavior: prefersReducedMotion ? 'auto' : 'smooth',
         block: 'start'
