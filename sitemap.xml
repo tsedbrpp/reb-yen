@@ -38,6 +38,17 @@
     </image:image>
   </url>
   <url>
+    <loc>https://rebyen.com/boulder-live-music.html</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://rebyen.com/images/boulder-acoustic-1200.webp</image:loc>
+      <image:title>Reb Yen — Boulder Live Musician &amp; Singer-Songwriter</image:title>
+      <image:caption>Boulder, Colorado singer-songwriter Reb Yen performing live with acoustic guitar</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://rebyen.com/songbook.html</loc>
     <lastmod>2026-11-08</lastmod>
     <changefreq>monthly</changefreq>
