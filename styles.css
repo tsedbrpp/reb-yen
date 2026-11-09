@@ -5266,32 +5266,32 @@ dialog.is-fallback-open {
     margin-inline: auto;
     position: relative;
     left: calc((min(1160px, 100vw - 64px) / 2 - min(470px, 44vw)) / 2);
-    --rec: clamp(150.49125px, 13.8915vw, 196.79625px);
-    width: 81.03375%;
-    max-width: 81.03375%;
-    gap: 16.20675px;
-    padding: 20.83725px 18.522px;
+    --rec: clamp(165.540375px, 15.28065vw, 216.475875px);
+    width: 89.137125%;
+    max-width: 89.137125%;
+    gap: 17.827425px;
+    padding: 22.920975px 20.3742px;
   }
   .hero-record:has(.spin-record.selected) {
-    gap: 16.20675px;
-    padding-right: 18.522px;
+    gap: 17.827425px;
+    padding-right: 20.3742px;
   }
   .hero-record-ctl {
     flex: 1 1 0;
-    max-width: 180.5895px;
+    max-width: 198.64845px;
     overflow-wrap: anywhere;
-    gap: 9.261px;
+    gap: 10.1871px;
   }
   .record-title-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 9.261px;
+    gap: 10.1871px;
   }
   .record-now {
-    font-size: 23.1525px;
+    font-size: 25.46775px;
   }
   .record-now.is-idle {
-    font-size: 27.783px;
+    font-size: 30.5613px;
     white-space: nowrap;
   }
 }
