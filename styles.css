@@ -6536,9 +6536,8 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
     margin: 0 0 0 auto;
     padding: 10px 20px;
     text-align: center;
-    font-size: clamp(20px, 2.3vw, 24px);
-    line-height: 1.4;
-    font-weight: 600;
+    font: italic 600 26px/1 'Cormorant Garamond', Georgia, serif;
+    letter-spacing: 0.02em;
   }
 }
 @media (min-width: 1345px) {
