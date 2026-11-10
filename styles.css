@@ -6861,3 +6861,23 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
 /* Clicking the vinyl beside the album cover plays the featured song */
 .sleeve-vinyl { pointer-events: auto; cursor: pointer; }
 .feature-sleeve-wrap.is-flipped .sleeve-vinyl { pointer-events: none; }
+
+/* Hero calls to action: Listen (primary) + Book Reb (secondary) */
+.hero-cta { min-width: 150px; font-size: 17px; text-shadow: none; }
+.hero-cta span[aria-hidden] { font-size: 14px; }
+.hero-book-btn {
+  background: rgba(30, 14, 30, 0.45);
+  border-color: rgba(255, 250, 241, 0.7);
+  color: var(--ivory-bright);
+  backdrop-filter: blur(2px);
+}
+.hero-book-btn:hover,
+.hero-book-btn:focus-visible {
+  background: var(--ivory-bright);
+  border-color: var(--ivory-bright);
+  color: var(--plum);
+}
+@media (max-width: 700px) {
+  .hero-secondary { flex-wrap: nowrap; gap: 12px; }
+  .hero-cta { flex: 1 1 0; min-width: 0; padding-left: 12px; padding-right: 12px; }
+}
