@@ -3606,3 +3606,107 @@ emailChooser?.addEventListener('click', event => {
   }
 });
 
+
+/* ------------------------------------------------------------------
+   Videos section: one gentle confetti burst the first time the
+   "Celebrate with Live Music" heading scrolls into view (once per
+   browser session). Skipped for prefers-reduced-motion, hidden tabs,
+   and very small/low-power cases. Canvas is non-interactive.
+------------------------------------------------------------------- */
+(() => {
+  const heading = document.getElementById('video-title');
+  if (!heading || !('IntersectionObserver' in window)) return;
+  const SESSION_KEY = 'rebyen-video-confetti';
+  try { if (sessionStorage.getItem(SESSION_KEY)) return; } catch (_) { /* storage blocked */ }
+
+  const COLORS = ['#df733f', '#ee8a57', '#f7eedf', '#e3d2b8', '#f2c14e', '#862d0e', '#246460'];
+
+  function burst() {
+    if (prefersReducedMotion || document.hidden) return;
+    try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (_) { /* ignore */ }
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'confetti-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    if (!ctx) { canvas.remove(); return; }
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.scale(dpr, dpr);
+
+    const rect = heading.getBoundingClientRect();
+    const originY = Math.min(H * 0.6, Math.max(rect.top + rect.height / 2, H * 0.25));
+    const count = W < 700 ? 70 : 130;
+    const pieces = [];
+    const launch = (x, dir) => {
+      for (let i = 0; i < count / 2; i++) {
+        const angle = (-Math.PI / 2) + dir * (0.25 + Math.random() * 0.7);
+        const speed = (W < 700 ? 9 : 12) + Math.random() * 7;
+        pieces.push({
+          x, y: originY,
+          vx: Math.cos(angle) * speed * (0.6 + Math.random() * 0.6),
+          vy: Math.sin(angle) * speed,
+          w: 6 + Math.random() * 6,
+          h: 4 + Math.random() * 5,
+          rot: Math.random() * Math.PI,
+          vr: (Math.random() - 0.5) * 0.35,
+          tilt: Math.random() * Math.PI * 2,
+          color: COLORS[(Math.random() * COLORS.length) | 0],
+          round: Math.random() < 0.28
+        });
+      }
+    };
+    launch(W * 0.08, 1);
+    launch(W * 0.92, -1);
+
+    const DURATION = 2600;
+    const start = performance.now();
+    let rafId = 0;
+    const stop = () => { cancelAnimationFrame(rafId); canvas.remove(); };
+    reducedMotionCleanups.push(stop);
+
+    const frame = now => {
+      const t = now - start;
+      ctx.clearRect(0, 0, W, H);
+      const fade = t > DURATION - 700 ? Math.max(0, (DURATION - t) / 700) : 1;
+      ctx.globalAlpha = fade;
+      for (const p of pieces) {
+        p.vy += 0.32;            // gravity
+        p.vx *= 0.985;           // air drag
+        p.vy *= 0.985;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vr;
+        p.tilt += 0.12;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        if (p.round) {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.h / 2, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillRect(-p.w / 2, -p.h / 2 * Math.abs(Math.cos(p.tilt)), p.w, p.h * Math.abs(Math.cos(p.tilt)) + 0.5);
+        }
+        ctx.restore();
+      }
+      if (t < DURATION) rafId = requestAnimationFrame(frame);
+      else stop();
+    };
+    rafId = requestAnimationFrame(frame);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      observer.disconnect();
+      burst();
+    }
+  }, { threshold: 1, rootMargin: '0px 0px -25% 0px' });
+  observer.observe(heading);
+})();

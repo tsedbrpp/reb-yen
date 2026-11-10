@@ -6666,3 +6666,17 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
   .dialog-top h2 { font-size: 16px; }
   .dialog-controls { margin-left: auto; }
 }
+
+/* Videos section confetti burst (see site.js) */
+.confetti-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 60;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti-canvas { display: none; }
+}
