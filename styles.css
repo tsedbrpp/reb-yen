@@ -3930,12 +3930,13 @@ body.has-player {
 
 html.js-motion .reveal-ready {
   opacity: 0;
-  transform: translate3d(0, 22px, 0);
+  transform: translate3d(0, 10px, 0);
   transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--stagger, 0ms),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--stagger, 0ms);
+    opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1) var(--stagger, 0ms),
+    transform 0.38s cubic-bezier(0.22, 1, 0.36, 1) var(--stagger, 0ms);
 }
 
+html.js-motion .reveal-ready:focus-within,
 html.js-motion .reveal-ready.is-revealed,
 html.js-motion .player-slot.reveal-ready:has(.player.is-docked) {
   opacity: 1;
@@ -6636,4 +6637,22 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
   .music.section { padding-top: 20px; }
   .music .section-head { display: flex; flex-direction: column; align-items: flex-start; }
   .music .section-head > .actions { margin-top: 0; }
+}
+
+
+/* A selected iframe is not a playback signal. Keep visual indicators still. */
+.eq-bars i { animation: none; }
+.player.is-cued .frame-wrap { animation: none; }
+.player.is-cued .player-cue { display: none; }
+.lightbox { max-height: calc(100dvh - 32px); overflow-y: auto; }
+.lightbox-figure { touch-action: pan-y pinch-zoom; }
+.lightbox img { user-select: none; -webkit-user-select: none; }
+.lightbox-help { margin: 8px 0 0; font-size: 0.82rem; color: var(--plum); text-align: center; }
+.dialog-controls { flex-shrink: 0; }
+.dialog-controls .icon-button { min-width: 44px; min-height: 44px; }
+@media (max-width: 420px) {
+  .lightbox { padding: 12px; max-width: calc(100% - 20px); }
+  .dialog-top { flex-wrap: wrap; gap: 8px; }
+  .dialog-top h2 { font-size: 16px; }
+  .dialog-controls { margin-left: auto; }
 }

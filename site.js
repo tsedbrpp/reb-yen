@@ -718,14 +718,8 @@ const catalogRows = Array.from(document.querySelectorAll('.song-row[data-song]')
 let selectedTrack = null;
 let sleeveSwapTimer = 0;
 
-// iOS WebKit blocks cross-origin iframe autoplay even with allow="autoplay", so
-// on iPhone/iPad a freshly loaded track stays "cued" until the visitor taps ▶
-// inside the ReverbNation widget. Desktop & Android start playing automatically.
-// Both iOS Safari and Android Chrome (as well as ReverbNation's own mobile widget code: !l.mobile && f.autoplay)
-// require a direct tap on the ▶ button inside the ReverbNation widget before audio playback begins on mobile devices.
-const requiresWidgetTap =
-  /Android|iPad|iPhone|iPod|Mobile/i.test(navigator.userAgent || '') ||
-  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+// This cross-origin player exposes no verified playback state. Selection and
+// iframe focus are not evidence that audio is playing.
 let isCued = false;
 let albumMotionOff = false;
 try {
@@ -919,89 +913,15 @@ function reverbnationEmbedUrl(trackId) {
   return `https://www.reverbnation.com/widget_code/html_widget/artist_6720947?widget_id=55&pwc[included_songs]=0&pwc[song_ids]=${encodeURIComponent(trackId)}&context_type=song&pwc[size]=small&pwc[autoplay]=1&_t=${Date.now()}`;
 }
 
-let autoAdvanceTimer = 0;
-
-function clearAutoAdvanceTimer() {
-  if (autoAdvanceTimer) {
-    clearTimeout(autoAdvanceTimer);
-    autoAdvanceTimer = 0;
-  }
-}
-
-function getTrackDurationMs(trackId) {
-  const raw = TRACK_META[trackId]?.duration || '';
-  const parts = raw.split(':').map(Number);
-  if (parts.length === 2 && Number.isFinite(parts[0]) && Number.isFinite(parts[1])) {
-    return (parts[0] * 60 + parts[1]) * 1000;
-  }
-  return 180000;
-}
-
-function scheduleAutoAdvance(trackId, extraBufferMs = 900) {
-  clearAutoAdvanceTimer();
-  if (!trackId || isCued) return;
-  const durationMs = getTrackDurationMs(trackId);
-  autoAdvanceTimer = window.setTimeout(() => {
-    autoAdvanceTimer = 0;
-    if (!selectedTrack || selectedTrack !== trackId || isCued) return;
-    advanceToNextTrackAutomatically(trackId);
-  }, durationMs + extraBufferMs);
-}
-
-function advanceToNextTrackAutomatically(currentTrackId) {
-  const orderIdx = TRACK_ORDER.indexOf(String(currentTrackId));
-  const hasActiveFilter = activeCatalogFilter !== 'all' || Boolean((catalogSearch?.value || '').trim());
-  const matching = getMatchingCatalogRows(activeCatalogFilter);
-  const pool = !requiresWidgetTap && hasActiveFilter && matching.length > 0
-    ? matching.map(r => r.dataset.song)
-    : TRACK_ORDER;
-  if (pool.length === 0) return;
-  const poolIdx = pool.indexOf(String(currentTrackId));
-  const nextPoolIdx = poolIdx === -1 ? 0 : (poolIdx + 1) % pool.length;
-  const nextTrackId = pool[nextPoolIdx];
-  if (!nextTrackId) return;
-
-  // The ReverbNation playlist widget natively auto-advances from orderIdx to orderIdx + 1
-  // inside the same audio element without interrupting playback (including on mobile).
-  const widgetNativeAdvance =
-    orderIdx >= 0 &&
-    orderIdx < TRACK_ORDER.length - 1 &&
-    nextTrackId === TRACK_ORDER[orderIdx + 1];
-
-  selectTrackById(nextTrackId, {
-    dock: Boolean(player?.classList.contains('is-docked')),
-    focusPlayer: false,
-    skipIframeReload: widgetNativeAdvance,
-    forceReload: !widgetNativeAdvance,
-    autoAdvanced: true
-  });
-}
-
-frame?.addEventListener('load', () => {
-  if (selectedTrack && !isCued && frame.src && frame.src !== 'about:blank') {
-    scheduleAutoAdvance(selectedTrack, 1200);
-  }
-});
-
+// Let the embedded playlist manage its own next-track behavior. A duration
+// timer cannot know about pauses, buffering, seeks, or blocked autoplay.
 function setCued(cued) {
   isCued = Boolean(cued && selectedTrack);
-  if (isCued) clearAutoAdvanceTimer();
   player?.classList.toggle('is-cued', isCued);
   heroRecord?.classList.toggle('is-cued', isCued);
   featureSleeve?.classList.toggle('is-cued', isCued);
   syncPlatters();
 }
-
-window.addEventListener('blur', () => {
-  setTimeout(() => {
-    if (isCued && frame && document.activeElement === frame) {
-      setCued(false);
-      setRecordStatus(selectedTrack);
-      if (playerStatus) playerStatus.textContent = `Now playing ${playerTitle?.textContent || 'the song'}.`;
-      scheduleAutoAdvance(selectedTrack, 900);
-    }
-  }, 0);
-});
 
 function updateJukeboxSleeve(trackId, isPlaying) {
   const isIdle = !trackId || !TRACK_META[trackId];
@@ -1086,7 +1006,7 @@ function updateJukeboxSleeve(trackId, isPlaying) {
     featuredImg.classList.toggle('is-brightened', Boolean(meta.bright));
   }
 
-  featureSleeve?.classList.toggle('is-playing', Boolean(isPlaying));
+  featureSleeve?.classList.remove('is-playing');
 }
 
 lpPlaySurface?.addEventListener('click', () => featuredListenBtn?.click());
@@ -1142,19 +1062,19 @@ function setRecordStatus(trackId) {
   heroRecord.classList.toggle('selected', isLoaded);
   heroRecord.setAttribute(
     'aria-label',
-    isLoaded ? `Change song — now playing ${name}` : 'Tap to pick a song'
+    isLoaded ? `Change song — ${name} selected` : 'Tap to pick a song'
   );
   if (recordLabelTitle) recordLabelTitle.textContent = isLoaded ? name : 'Tap to pick a song';
 
   if (recordNowLabel) {
     if (recordNowLabelText) {
-      recordNowLabelText.textContent = isCued ? 'Selected · Tap ▶ in player' : 'Now playing';
+      recordNowLabelText.textContent = 'Selected song';
     }
     recordNowLabel.hidden = !isLoaded;
   }
   if (playerEyebrow) {
     playerEyebrow.innerHTML = isLoaded
-      ? `<span class="eq-bars eq-bars-now" aria-hidden="true"><i></i><i></i><i></i><i></i></span> ${isCued ? 'Selected · Tap ▶ below' : 'Now playing'}`
+      ? 'Selected song'
       : 'Music player';
   }
   syncPlatters();
@@ -1170,9 +1090,7 @@ function setRecordStatus(trackId) {
 
   const statusMsg = !isLoaded
     ? ''
-    : isCued
-      ? `Almost there — tap the big ▶ in the music player to start “${name}”`
-      : `♫ Now playing “${name}” · tap to change songs`;
+    : `“${name}” selected · use the music player to play or pause`;
   if (recordCta) recordCta.hidden = !isLoaded;
   if (recordCtaText) recordCtaText.textContent = statusMsg;
   else if (recordCta) recordCta.textContent = statusMsg;
@@ -1262,11 +1180,11 @@ function renderSongPicker() {
     const title = TRACK_META[btn.dataset.pick]?.title || 'song';
     btn.toggleAttribute('aria-current', current);
     if (current) btn.setAttribute('aria-current', 'true');
-    btn.setAttribute('aria-label', current ? `${title} (now playing)` : `Play ${title}`);
+    btn.setAttribute('aria-label', current ? `${title} (selected in player)` : `Play ${title}`);
     const go = btn.querySelector('.picker-go');
     if (go) {
       go.innerHTML = current
-        ? '<span class="eq-bars"><i></i><i></i><i></i></span> Playing'
+        ? '<span aria-hidden="true">✓</span> Selected'
         : '▶';
     }
   });
@@ -1465,26 +1383,10 @@ function selectTrackById(trackId, options = { dock: true, focusPlayer: true }) {
   }
   setExpanded(true);
 
-  const prevSelectedTrack = selectedTrack;
-  if (options.skipIframeReload) {
-    selectedTrack = trackId;
-    setCued(false);
-    scheduleAutoAdvance(trackId, 800);
-  } else if (options.forceReload || trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
-    clearAutoAdvanceTimer();
+  if (options.forceReload || trackId !== selectedTrack || !frame.src || frame.src === 'about:blank') {
     frame.src = reverbnationEmbedUrl(trackId);
     selectedTrack = trackId;
-    setCued(requiresWidgetTap);
-    if (!requiresWidgetTap) {
-      scheduleAutoAdvance(trackId, 1600);
-    }
-  }
-  if (options.autoAdvanced && typeof songbookReader !== 'undefined' && songbookReader && !songbookReader.hidden) {
-    const prevHash = (TRACK_META[prevSelectedTrack]?.lyricsHref || '').split('#')[1];
-    const nextHash = (meta?.lyricsHref || '').split('#')[1];
-    if (nextHash && (!prevHash || currentModalSongHash === prevHash)) {
-      renderSongbookModalSong(nextHash);
-    }
+    setCued(true);
   }
 
   frame.title = `${title} by Reb Yen — ReverbNation audio player`;
@@ -1550,7 +1452,6 @@ document.getElementById('player-return')?.addEventListener('click', () => {
 });
 
 function stopPlayer({ returnFocus = true } = {}) {
-  clearAutoAdvanceTimer();
   if (frame) frame.src = 'about:blank';
   selectedTrack = null;
   setCued(false);
@@ -2319,7 +2220,7 @@ function renderSongbookModalSong(songHash) {
     const isPlayingThis = selectedTrack === trackId && frame && frame.src && frame.src !== 'about:blank';
     sbModalPlay.classList.toggle('is-playing', Boolean(isPlayingThis));
     sbModalPlay.innerHTML = isPlayingThis
-      ? `<span class="eq-bars" aria-hidden="true"><i></i><i></i><i></i></span> <span id="sb-modal-play-label">Playing ${meta.title}</span>`
+      ? `<span class="eq-bars" aria-hidden="true"><i></i><i></i><i></i></span> <span id="sb-modal-play-label">Selected: ${meta.title}</span>`
       : `<span aria-hidden="true">▶</span> <span id="sb-modal-play-label">Play ${meta.title}</span>`;
   }
 
@@ -2554,7 +2455,7 @@ document.querySelector('.site-header .logo')?.addEventListener('dblclick', event
 });
 
 // ============================================================================
-// Choreographed Scroll-Reveal Storytelling (Sections & Staggered Cards)
+// One-time Scroll Reveals (one animation layer per content block)
 // ============================================================================
 if (!prefersReducedMotion && 'IntersectionObserver' in window) {
   document.documentElement.classList.add('js-motion');
@@ -2562,37 +2463,51 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
   const staggerGroups = [
     { parent: '.moment-grid', children: '.moment-card', step: 45, mod: 5 },
     { parent: '.song-list', children: '.song-row', step: 35, mod: 5 },
-    { parent: '.video-grid', children: '.video', step: 80, mod: 2 },
-    { parent: '.format-cards', children: 'article', step: 75, mod: 3 },
-    { parent: '.venue-grid', children: ':scope > div', step: 75, mod: 3 },
-    { parent: '.about-chips', children: 'span', step: 55, mod: 4 },
-    { parent: '.journey-rail', children: '.journey-stop', step: 50, mod: 6 },
-    { parent: '.gallery-grid', children: '.gallery-item', step: 65, mod: 3 },
-    { parent: '.press-photos', children: '.press-photo', step: 80, mod: 2 }
+    { parent: '.video-grid', children: '.video', step: 40, mod: 2 },
+    { parent: '.format-cards', children: 'article', step: 40, mod: 3 },
+    { parent: '.venue-grid', children: ':scope > div', step: 40, mod: 3 },
+    { parent: '.about-chips', children: 'span', step: 35, mod: 4 },
+    { parent: '.journey-rail', children: '.journey-stop', step: 35, mod: 6 },
+    { parent: '.gallery-grid', children: '.gallery-item', step: 40, mod: 3 },
+    { parent: '.press-photos', children: '.press-photo', step: 40, mod: 2 }
   ];
 
   const revealTargets = new Set();
 
-  // Fade whole below-the-fold sections in as you scroll (for #music, fade its
-  // top-level blocks individually so #music-player can dock fixed at any time).
-  document.querySelectorAll('main > section:not(#home):not(#music)').forEach(sec => {
-    revealTargets.add(sec);
-  });
-
   document
     .querySelectorAll(
-      '#music .section-head, #music .feature-sleeve-wrap, #music .featured-copy > :not(.player-slot), #music .player-slot, #music .catalog-head, #music .song-list, [data-reveal], .recognition-inner, .section-head, .upcoming, .stage-spec-panel, .about-image, .about-copy, .contact-grid > div, .press-main h2, .press-main > p, .press-facts'
+      '#music .section-head, #music .feature-sleeve-wrap, #music .featured-copy > :not(.player-slot), #music .player-slot, #music .catalog-head, [data-reveal], .recognition-inner, .section-head, .upcoming, .stage-spec-panel, .about-image, .about-copy, .contact-grid > div, .press-main h2, .press-main > p, .press-facts'
     )
     .forEach(el => revealTargets.add(el));
 
   staggerGroups.forEach(({ parent, children, step, mod }) => {
     document.querySelectorAll(parent).forEach(group => {
       group.querySelectorAll(children).forEach((item, index) => {
-        item.style.setProperty('--stagger', `${(index % mod) * step}ms`);
+        item.style.setProperty('--stagger', `${Math.min((index % mod) * step, 120)}ms`);
         revealTargets.add(item);
       });
     });
   });
+
+  // Prefer the parent block when nested candidates exist (for example About
+  // copy and its chips). Never hide or move both a section and its children.
+  revealTargets.forEach(el => {
+    let ancestor = el.parentElement;
+    while (ancestor) {
+      if (revealTargets.has(ancestor)) {
+        revealTargets.delete(el);
+        el.style.removeProperty('--stagger');
+        break;
+      }
+      ancestor = ancestor.parentElement;
+    }
+  });
+
+  function revealElement(el) {
+    el.style.removeProperty('--stagger');
+    el.classList.add('is-revealed');
+    revealObserver.unobserve(el);
+  }
 
   const viewportCutoff = window.innerHeight * 0.94;
   const revealObserver = new IntersectionObserver(
@@ -2604,15 +2519,21 @@ if (!prefersReducedMotion && 'IntersectionObserver' in window) {
         }
       });
     },
-    { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
+    { threshold: 0, rootMargin: '0px 0px -16px 0px' }
   );
 
   revealTargets.forEach(el => {
     const rect = el.getBoundingClientRect();
-    if (rect.top > viewportCutoff) {
+    if (!el.hidden && rect.top > viewportCutoff) {
       el.classList.add('reveal-ready');
       revealObserver.observe(el);
     }
+  });
+
+  // Keyboard navigation and in-page anchors must never land on hidden content.
+  document.addEventListener('focusin', event => {
+    const target = event.target.closest?.('.reveal-ready');
+    if (target && !target.classList.contains('is-revealed')) revealElement(target);
   });
 
   reducedMotionCleanups.push(() => {
@@ -2989,7 +2910,7 @@ syncMomentListenState = () => {
       momentListenIcon.innerHTML =
         '<span class="eq-bars" aria-hidden="true"><i></i><i></i><i></i></span>';
     }
-    if (momentListenLabel) momentListenLabel.textContent = 'Playing';
+    if (momentListenLabel) momentListenLabel.textContent = 'Selected';
     momentListenBtn.setAttribute(
       'aria-label',
       `${pairing.songTitle} (currently loaded in music player)`
@@ -3309,6 +3230,7 @@ function updateLightboxShareTargets(photoSrc, photoTitle) {
 
 function renderLightboxPhoto(index, animate = false) {
   if (!lightbox || galleryButtons.length === 0) return;
+  clearTimeout(switchTimer);
   currentPhotoIndex = (index + galleryButtons.length) % galleryButtons.length;
   const button = galleryButtons[currentPhotoIndex];
   const img = document.getElementById('dialog-image');
@@ -3319,22 +3241,23 @@ function renderLightboxPhoto(index, animate = false) {
   const nextAlt = button.querySelector('img')?.alt || '';
   const nextTitle = button.querySelector('span')?.textContent || 'Performance photo';
   updateLightboxShareTargets(nextSrc, nextTitle);
+  const caption = `${nextTitle} · ${currentPhotoIndex + 1} of ${galleryButtons.length}`;
 
   if (animate && !prefersReducedMotion) {
     clearTimeout(switchTimer);
     img.classList.add('is-switching');
     switchTimer = window.setTimeout(() => {
-      img.onload = () => img.classList.remove('is-switching');
+      img.onload = img.onerror = () => img.classList.remove('is-switching');
       img.src = nextSrc;
       img.alt = nextAlt;
-      if (title) title.textContent = nextTitle;
+      if (title) title.textContent = caption;
       if (img.complete) img.classList.remove('is-switching');
-    }, 130);
+    }, 90);
   } else {
     img.classList.remove('is-switching');
     img.src = nextSrc;
     img.alt = nextAlt;
-    if (title) title.textContent = nextTitle;
+    if (title) title.textContent = caption;
   }
 }
 
@@ -3359,6 +3282,7 @@ galleryButtons.forEach((button, index) => {
     lastPhotoButton = button;
     renderLightboxPhoto(index, false);
     openDialog(lightbox);
+    document.getElementById('close-photo')?.focus({ preventScroll: true });
   });
 });
 
@@ -3389,6 +3313,20 @@ lightbox?.addEventListener('click', event => {
 });
 
 lightbox?.addEventListener('keydown', event => {
+  if (event.key === 'Tab') {
+    const controls = Array.from(lightbox.querySelectorAll('button:not([disabled]), a[href]'))
+      .filter(el => !el.hidden && el.getClientRects().length > 0);
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === lightbox)) {
+      event.preventDefault();
+      last?.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first?.focus();
+    }
+    return;
+  }
   if (event.key === 'ArrowLeft') {
     event.preventDefault();
     renderLightboxPhoto(currentPhotoIndex - 1, true);
@@ -3399,7 +3337,38 @@ lightbox?.addEventListener('keydown', event => {
 });
 
 lightbox?.addEventListener('close', () => {
-  lastPhotoButton?.focus();
+  clearTimeout(switchTimer);
+  document.getElementById('dialog-image')?.classList.remove('is-switching');
+  lastPhotoButton?.focus({ preventScroll: true });
+});
+
+// Horizontal, one-finger gestures only. Vertical scrolling and pinch zoom stay
+// native; buttons remain available so a gesture is never the only way to browse.
+const photoSurface = lightbox?.querySelector('.lightbox-figure');
+let photoSwipe = null;
+photoSurface?.addEventListener('touchstart', event => {
+  photoSwipe = event.touches.length === 1
+    ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
+    : null;
+}, { passive: true });
+photoSurface?.addEventListener('touchmove', event => {
+  if (event.touches.length !== 1) photoSwipe = null;
+}, { passive: true });
+photoSurface?.addEventListener('touchcancel', () => { photoSwipe = null; }, { passive: true });
+photoSurface?.addEventListener('touchend', event => {
+  const start = photoSwipe;
+  photoSwipe = null;
+  if (!start || event.touches.length || !event.changedTouches.length) return;
+  const touch = event.changedTouches[0];
+  const dx = touch.clientX - start.x;
+  const dy = touch.clientY - start.y;
+  if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+  renderLightboxPhoto(currentPhotoIndex + (dx < 0 ? 1 : -1), true);
+}, { passive: true });
+
+reducedMotionCleanups.push(() => {
+  clearTimeout(switchTimer);
+  if (lightbox?.open && currentPhotoIndex >= 0) renderLightboxPhoto(currentPhotoIndex, false);
 });
 
 // ============================================================================
@@ -3481,3 +3450,4 @@ emailChooser?.addEventListener('click', event => {
     }
   }
 });
+
