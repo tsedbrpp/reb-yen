@@ -71,8 +71,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&family=Karla:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20261110social">
-  <script defer src="site.js?v=20261110social"></script>
+  <link rel="stylesheet" href="styles.css?v=20261110focus">
+  <script defer src="site.js?v=20261110focus"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -297,23 +297,12 @@
           </div>
         </div>
       </div>
-      <div class="hero-explore">
-        <p>Select from the menu above or scroll down to explore</p>
-      </div>
     </section>
 
     <div class="hero-bottom">
       <div class="container">
         <span>Original music, written &amp; arranged by Reb</span>
-        <span class="hero-instruments" role="group" aria-label="Tap an instrument to hear a sample chord">
-          <button type="button" class="inst-easter-btn" data-instrument="guitar" title="Strum Reb’s acoustic guitar">Guitar</button>
-          <span aria-hidden="true">·</span>
-          <button type="button" class="inst-easter-btn" data-instrument="banjo" title="Pick 5-string banjo roll">Banjo</button>
-          <span aria-hidden="true">·</span>
-          <button type="button" class="inst-easter-btn" data-instrument="keyboard" title="Play warm keyboard chord">Keyboard</button>
-          <span aria-hidden="true">·</span>
-          <button type="button" class="inst-easter-btn" data-instrument="harmonica" title="Play folk harmonica chord">Harmonica</button>
-        </span>
+        <span class="hero-instruments">Guitar · Banjo · Keyboard · Harmonica</span>
         <span>From the studio to the stage</span>
       </div>
     </div>
@@ -337,9 +326,6 @@
               <a href="#music" class="recognition-song-link" data-track="33993499" data-title="Gotta Let It Go">Gotta Let It Go</a>
             </span>
           </p>
-          <div class="recognition-links">
-            <a href="songbook.html">Open Songbook &amp; Lyrics →</a>
-          </div>
         </div>
       </div>
     </section>
@@ -373,7 +359,7 @@
                 <figcaption class="lp-cover-overlay">
                   <span class="lp-cover-top">
                     <span class="lp-cat-no" id="featured-cat-no">RY-01 · ORIGINAL</span>
-                    <button type="button" class="lp-rpm" id="lp-rpm-btn" title="Easter egg: Switch turntable speed (33⅓ / 45 / 78 RPM)">STEREO · 33⅓</button>
+                    <span class="lp-rpm">STEREO · 33⅓</span>
                   </span>
                   <span class="lp-cover-bottom">
                     <span class="lp-artist-kicker">REB YEN</span>
@@ -424,12 +410,6 @@
                 </div>
               </figure>
             </div>
-            <div class="album-col-controls">
-              <button type="button" class="album-motion-btn album-flip-btn" id="sleeve-flip-btn" aria-pressed="false" aria-label="Flip album cover to read liner notes">
-                <span class="motion-toggle-icon" aria-hidden="true">↻</span>
-                <span id="sleeve-flip-label">Flip for liner notes</span>
-              </button>
-            </div>
           </div>
           <div class="featured-copy">
             <p class="eyebrow" id="featured-eyebrow">Featured original · ReverbNation Spotlight</p>
@@ -478,7 +458,7 @@
         <div class="catalog-head" id="explore-originals">
           <div>
             <h3>Explore the originals</h3>
-            <span class="catalog-note">22 ReverbNation tracks · 5 songs per page · Pluck any guitar string divider</span>
+            <span class="catalog-note">22 original songs · studio &amp; live recordings</span>
           </div>
           <div class="catalog-controls">
             <div class="catalog-search-wrap">
@@ -490,18 +470,9 @@
               <button type="button" class="filter-pill" data-filter="studio" aria-pressed="false">Studio <span>11</span></button>
               <button type="button" class="filter-pill" data-filter="live" aria-pressed="false">Live <span>11</span></button>
             </div>
-            <button type="button" class="string-sound-toggle" id="string-sound-toggle" aria-pressed="true" title="Toggle acoustic guitar string sound when plucking dividers">
-              <span aria-hidden="true" id="string-sound-icon">♪</span> <span id="string-sound-label">Strings: On</span>
-            </button>
           </div>
         </div>
 
-        <div class="guitar-string has-pluck-badge" data-guitar-string data-note="146.83" aria-hidden="true">
-          <svg viewBox="0 0 1000 32" preserveAspectRatio="none">
-            <path class="string-glow" d="M0,16 Q500,16 1000,16"></path>
-            <path class="string-wire" d="M0,16 Q500,16 1000,16"></path>
-          </svg>
-        </div>
 
         <div class="song-list" id="catalog-song-list">
           <article class="song-row" data-song="33863436" data-tags="featured studio">
@@ -794,7 +765,7 @@
         <nav class="catalog-pagination" id="catalog-pagination" aria-label="Explore the originals pages">
           <p class="catalog-page-info" id="catalog-page-info">Showing <strong>1–5</strong> of <strong>22</strong> songs · Page 1 of 5</p>
           <div class="catalog-page-controls" id="catalog-page-controls">
-            <button type="button" class="page-step-btn" id="catalog-page-prev" aria-label="Previous page of songs" disabled>‹ Prev</button>
+            <button type="button" class="page-step-btn" id="catalog-page-prev" aria-label="Previous page of songs" disabled>‹<span class="page-step-text"> Prev</span></button>
             <div class="catalog-page-nums" id="catalog-page-nums">
               <button type="button" class="page-num-btn is-active" data-catalog-page="1" aria-current="page" aria-label="Page 1">1</button>
               <button type="button" class="page-num-btn" data-catalog-page="2" aria-label="Page 2">2</button>
@@ -802,13 +773,10 @@
               <button type="button" class="page-num-btn" data-catalog-page="4" aria-label="Page 4">4</button>
               <button type="button" class="page-num-btn" data-catalog-page="5" aria-label="Page 5">5</button>
             </div>
-            <button type="button" class="page-step-btn" id="catalog-page-next" aria-label="Next page of songs">Next ›</button>
+            <button type="button" class="page-step-btn" id="catalog-page-next" aria-label="Next page of songs"><span class="page-step-text">Next </span>›</button>
           </div>
         </nav>
 
-        <div class="music-footer">
-          <a href="songbook.html" class="text-link">Open Songbook &amp; Lyrics →</a>
-        </div>
         <noscript><p class="noscript">Choose any Listen link to hear the song on ReverbNation.</p></noscript>
       </div>
     </section>
@@ -823,7 +791,7 @@
           </div>
         </div>
 
-        <div class="video-grid">
+        <div class="video-grid" id="video-grid">
           <article class="video">
             <button type="button" class="video-poster" data-video-id="bXxxfzs3QAw" aria-label="Play Counting Stars — acoustic cover">
               <img src="images/countingstars.jpg" alt="" loading="lazy" width="480" height="360">
@@ -890,6 +858,7 @@
             <p>Fiddlers Green, Orlando</p>
           </article>
         </div>
+        <button type="button" class="button video-more-toggle" id="video-more-toggle" aria-expanded="false" aria-controls="video-grid">Show 3 more videos</button>
         <p class="video-more">
           <a href="https://www.youtube.com/@RebYenMusic" target="_blank" rel="noopener noreferrer" class="text-link">More on YouTube ↗</a>
         </p>
@@ -905,9 +874,12 @@
           <p class="eyebrow">Meet Reb</p>
           <h2 id="about-title">Songwriter first.<br>Performer always.</h2>
           <p>Fans and critics describe Reb as a strong vocalist and accomplished musician, playing guitar, keyboard, and harmonica. She performs multiple genres, including Americana, Folk, Country, Pop, Rock, and Indie.</p>
-          <p>Reb’s performance credits include Walt Disney World, Universal Studios, and New York City’s Lincoln Center, where she performed as a featured artist with the Aman World Music and Dance Ensemble. She has also toured internationally, including two tours of Europe, and performed at the Commodore Grille in Nashville, a venue known for showcasing emerging and established songwriters.</p>
-          <p>Reb received formal training in singing and vocal technique and has experience as a vocal coach, including professional involvement with the National Association of Teachers of Singing (NATS). Reb Yen uses no AI-generated vocals or instrumentation in her productions. All her tracks feature live vocal performances—including layered vocal tracks—and live-recorded instrumentation, capturing the authenticity of her vocals and musicianship.</p>
-          <p>Based in Boulder, Colorado, singer-songwriter Reb Yen performs at local Boulder and Front Range venues including the St. Julien Hotel, the Roots Music Project, The Trident, and Bricks on Main. She continues to write and perform original music, sharing her songs and connecting with audiences through live performances.</p>
+          <div class="about-more" id="about-more">
+            <p>Reb’s performance credits include Walt Disney World, Universal Studios, and New York City’s Lincoln Center, where she performed as a featured artist with the Aman World Music and Dance Ensemble. She has also toured internationally, including two tours of Europe, and performed at the Commodore Grille in Nashville, a venue known for showcasing emerging and established songwriters.</p>
+            <p>Reb received formal training in singing and vocal technique and has experience as a vocal coach, including professional involvement with the National Association of Teachers of Singing (NATS). Reb Yen uses no AI-generated vocals or instrumentation in her productions. All her tracks feature live vocal performances—including layered vocal tracks—and live-recorded instrumentation, capturing the authenticity of her vocals and musicianship.</p>
+            <p>Based in Boulder, Colorado, singer-songwriter Reb Yen performs at local Boulder and Front Range venues including the St. Julien Hotel, the Roots Music Project, The Trident, and Bricks on Main. She continues to write and perform original music, sharing her songs and connecting with audiences through live performances.</p>
+          </div>
+          <button type="button" class="about-more-toggle" id="about-more-toggle" aria-expanded="false" aria-controls="about-more">Read more about Reb <span aria-hidden="true">↓</span></button>
           <div class="about-highlights" aria-label="Artistry highlights">
             <div class="about-highlight-card">
               <span class="about-highlight-kicker">100% Human Artistry</span>
@@ -994,35 +966,35 @@
           </div>
         </div>
         <div class="gallery-grid">
-          <button type="button" class="gallery-item" data-tilt data-photo="images/featured-reb-guitar.jpg" aria-label="Enlarge photo: Reb Yen - Singer-Songwriter">
+          <button type="button" class="gallery-item" data-photo="images/featured-reb-guitar.jpg" aria-label="Enlarge photo: Reb Yen - Singer-Songwriter">
             <img src="images/featured-reb-guitar.jpg" alt="Reb Yen — Singer-Songwriter in Boulder, Colorado playing acoustic guitar" width="480" height="360" loading="lazy" style="object-position: center 12%;">
             <span>Reb Yen - Singer-Songwriter</span>
           </button>
-          <button type="button" class="gallery-item" data-tilt data-photo="images/take_me_crazy.jpg" aria-label="Enlarge photo: Reb Yen Duo - Commodore Grille, Nashville">
+          <button type="button" class="gallery-item" data-photo="images/take_me_crazy.jpg" aria-label="Enlarge photo: Reb Yen Duo - Commodore Grille, Nashville">
             <img src="images/take_me_crazy.jpg" alt="Reb Yen playing guitar at the Commodore Grille" width="480" height="360" loading="lazy">
             <span>Reb Yen Duo - Commodore Grille, Nashville</span>
           </button>
-          <button type="button" class="gallery-item" data-tilt data-photo="images/reb-acoustic-brick.jpg" aria-label="Enlarge photo: Reb Yen - Solo Performance at The Trident, Boulder, Colorado">
+          <button type="button" class="gallery-item" data-photo="images/reb-acoustic-brick.jpg" aria-label="Enlarge photo: Reb Yen - Solo Performance at The Trident, Boulder, Colorado">
             <img src="images/reb-acoustic-brick-full.jpg?v=20261108i" alt="Boulder singer-songwriter Reb Yen performing solo acoustic guitar at The Trident in Boulder, Colorado" width="480" height="360" loading="lazy">
             <span>Reb Yen - Solo Performance at The Trident, Boulder, Colorado</span>
           </button>
-          <button type="button" class="gallery-item" data-tilt data-photo="images/crawled_edge.jpg" aria-label="Enlarge photo: Reb Yen - With Lenny Charles · Roots Music Project, Boulder, Colorado">
+          <button type="button" class="gallery-item" data-photo="images/crawled_edge.jpg" aria-label="Enlarge photo: Reb Yen - With Lenny Charles · Roots Music Project, Boulder, Colorado">
             <img src="images/crawled_edge.jpg" alt="Reb Yen and Lenny Charles performing live at Roots Music Project in Boulder, Colorado" width="480" height="360" loading="lazy">
             <span>Reb Yen - With Lenny Charles · Roots Music Project, Boulder, Colorado</span>
           </button>
-          <button type="button" class="gallery-item" data-tilt data-photo="images/reb-harmonica-sunburst.jpg" aria-label="Enlarge photo: Reb Yen - Acoustic &amp; Harmonica">
+          <button type="button" class="gallery-item" data-photo="images/reb-harmonica-sunburst.jpg" aria-label="Enlarge photo: Reb Yen - Acoustic &amp; Harmonica">
             <img src="images/reb-harmonica-sunburst.jpg" alt="Reb Yen singing with sunburst acoustic guitar and harmonica holder" width="480" height="360" loading="lazy" style="object-position: center 12%;">
             <span>Reb Yen - Acoustic &amp; Harmonica</span>
           </button>
-          <button type="button" class="gallery-item" data-tilt data-photo="images/are_you_listening.jpg" aria-label="Enlarge photo: Reb Yen - Trio, Orlando">
+          <button type="button" class="gallery-item" data-photo="images/are_you_listening.jpg" aria-label="Enlarge photo: Reb Yen - Trio, Orlando">
             <img src="images/are_you_listening.jpg" alt="Reb Yen performing with her trio in Orlando" width="480" height="360" loading="lazy">
             <span>Reb Yen - Trio, Orlando</span>
           </button>
-          <button type="button" class="gallery-item" data-tilt data-photo="images/reb-live-stage.jpg" aria-label="Enlarge photo: Reb Yen - Live on Stage · Guitar &amp; Vocals">
+          <button type="button" class="gallery-item" data-photo="images/reb-live-stage.jpg" aria-label="Enlarge photo: Reb Yen - Live on Stage · Guitar &amp; Vocals">
             <img src="images/reb-live-stage.jpg" alt="Reb Yen singing and playing acoustic guitar live on stage" width="480" height="360" loading="lazy" style="object-position: center 10%;">
             <span>Reb Yen - Live on Stage · Guitar &amp; Vocals</span>
           </button>
-          <button type="button" class="gallery-item" data-tilt data-photo="images/reb-music-connects-us.jpg" aria-label="Enlarge photo: Reb Yen - Music Connects Us">
+          <button type="button" class="gallery-item" data-photo="images/reb-music-connects-us.jpg" aria-label="Enlarge photo: Reb Yen - Music Connects Us">
             <img src="images/reb-music-connects-us.jpg" alt="Reb Yen smiling with her acoustic guitar" width="480" height="360" loading="lazy" style="object-position: center 12%;">
             <span>Reb Yen - Music Connects Us</span>
           </button>

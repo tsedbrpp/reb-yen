@@ -1726,7 +1726,7 @@ setRecordStatus(null);
 const stringSoundToggle = document.getElementById('string-sound-toggle');
 const stringSoundIcon = document.getElementById('string-sound-icon');
 const stringSoundLabel = document.getElementById('string-sound-label');
-let stringSoundEnabled = true;
+let stringSoundEnabled = false; // UI sound effects off: no unexpected audio
 let audioCtx = null;
 
 function ensureAudioUnlocked() {
@@ -2309,7 +2309,7 @@ function toggleLpCoverFlip(event) {
   if (flipped) {
     (lpActiveTab === 'songbook' ? lpTabSongbook : lpTabNotes)?.focus();
   } else {
-    sleeveFlipBtn?.focus();
+    (sleeveFlipBtn || lpCornerFlip)?.focus();
   }
   if (stringSoundEnabled) {
     ensureAudioUnlocked();
@@ -2833,6 +2833,31 @@ if (contactNextField && /^https?:$/.test(window.location.protocol)) {
       if (!Number.isNaN(d.getTime())) subject += ' — ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
     subjectField.value = subject;
+  });
+})();
+
+// ============================================================================
+// Mobile "show more" toggles (About copy & extra videos)
+// ============================================================================
+(() => {
+  const wire = (btnId, targetId, openClass, labels) => {
+    const btn = document.getElementById(btnId);
+    const target = document.getElementById(targetId);
+    if (!btn || !target) return;
+    btn.addEventListener('click', () => {
+      const open = target.classList.toggle(openClass);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.innerHTML = open ? labels.close : labels.open;
+      if (!open) btn.scrollIntoView({ block: 'nearest' });
+    });
+  };
+  wire('about-more-toggle', 'about-more', 'is-open', {
+    open: 'Read more about Reb <span aria-hidden="true">↓</span>',
+    close: 'Show less <span aria-hidden="true">↑</span>'
+  });
+  wire('video-more-toggle', 'video-grid', 'is-expanded', {
+    open: 'Show 3 more videos',
+    close: 'Show fewer videos'
   });
 })();
 
