@@ -6857,3 +6857,7 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
   /* Contact: skip the second large portrait */
   .contact-photo { display: none; }
 }
+
+/* Clicking the vinyl beside the album cover plays the featured song */
+.sleeve-vinyl { pointer-events: auto; cursor: pointer; }
+.feature-sleeve-wrap.is-flipped .sleeve-vinyl { pointer-events: none; }

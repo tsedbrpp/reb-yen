@@ -1082,6 +1082,11 @@ function updateJukeboxSleeve(trackId, isPlaying) {
 }
 
 lpPlaySurface?.addEventListener('click', () => featuredListenBtn?.click());
+// The vinyl peeking out of the sleeve plays the featured song too.
+sleeveDisc?.addEventListener('click', () => {
+  if (featureSleeve?.classList.contains('is-flipped')) return;
+  featuredListenBtn?.click();
+});
 
 function setExpanded(expanded) {
   if (!playerBody || !minimizeBtn) return;
