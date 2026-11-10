@@ -8,6 +8,8 @@ function onReducedMotionChange(event) {
   prefersReducedMotion = Boolean(event.matches);
   if (prefersReducedMotion) {
     reducedMotionCleanups.forEach(fn => fn());
+  } else {
+    syncPlatters();
   }
 }
 
@@ -907,18 +909,17 @@ function createVinylPlatterController(el, baseTransform = '', rpmMs = 2800) {
     const coastDelta = rem < 55 ? rem + 360 : rem;
     const duration = Math.round(720 + (coastDelta / 360) * 760);
 
-    coastAnim = el.animate(
+    const coast = el.animate(
       [
         { transform: `${baseTransform}rotate(${startDeg}deg)` },
         { transform: `${baseTransform}rotate(${startDeg + coastDelta}deg)` }
       ],
       { duration, easing: 'cubic-bezier(0.14, 0.74, 0.26, 1)' }
     );
-    coastAnim.onfinish = () => {
-      coastAnim = null;
-    };
-    coastAnim.oncancel = () => {
-      coastAnim = null;
+    coastAnim = coast;
+    coast.onfinish = coast.oncancel = () => {
+      // A cancelled, older coast must not clear a newer animation's handle.
+      if (coastAnim === coast) coastAnim = null;
     };
   }
 
@@ -938,12 +939,14 @@ const sleevePlatter = createVinylPlatterController(sleeveDisc, 'translateY(-50%)
 // Album motion toggle buttons removed
 
 function syncPlatters() {
-  if (isAlbumMotionDisabled()) {
+  if (isAlbumMotionDisabled() || document.hidden) {
     heroPlatter.stopImmediate();
     sleevePlatter.stopImmediate();
     return;
   }
-  const shouldSpin = Boolean(selectedTrack && !isCued);
+  // Decorative motion follows the visitor's song selection, not playback.
+  // The embedded player cannot reliably report play, pause, or track changes.
+  const shouldSpin = Boolean(selectedTrack);
   if (shouldSpin) {
     heroPlatter.start();
     sleevePlatter.start();
@@ -953,7 +956,7 @@ function syncPlatters() {
   }
 }
 
-
+document.addEventListener('visibilitychange', syncPlatters);
 
 reducedMotionCleanups.push(() => {
   heroPlatter.stopImmediate();
@@ -1075,7 +1078,7 @@ function updateJukeboxSleeve(trackId, isPlaying) {
     featuredImg.classList.toggle('is-brightened', Boolean(meta.bright));
   }
 
-  featureSleeve?.classList.remove('is-playing');
+  featureSleeve?.classList.toggle('has-selection', !isIdle);
 }
 
 lpPlaySurface?.addEventListener('click', () => featuredListenBtn?.click());

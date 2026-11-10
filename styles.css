@@ -1701,7 +1701,7 @@ html.js-motion .feature-sleeve-wrap.reveal-ready.is-revealed .sleeve-vinyl {
 }
 
 .feature-sleeve-wrap:hover .sleeve-vinyl,
-.feature-sleeve-wrap.is-playing .sleeve-vinyl {
+.feature-sleeve-wrap.has-selection .sleeve-vinyl {
   right: -1.6%;
   box-shadow:
     0 22px 42px rgba(24, 11, 24, 0.5),
@@ -2891,7 +2891,7 @@ html.album-motion-off .sleeve-vinyl,
 html.album-motion-off.js-motion .feature-sleeve-wrap.reveal-ready:not(.is-revealed) .sleeve-vinyl,
 html.album-motion-off.js-motion .feature-sleeve-wrap.reveal-ready.is-revealed .sleeve-vinyl,
 html.album-motion-off .feature-sleeve-wrap:hover .sleeve-vinyl,
-html.album-motion-off .feature-sleeve-wrap.is-playing .sleeve-vinyl,
+html.album-motion-off .feature-sleeve-wrap.has-selection .sleeve-vinyl,
 html.album-motion-off .feature-sleeve-wrap.is-swapping-disc .sleeve-vinyl {
   right: 0.5% !important;
   animation: none !important;
@@ -5910,7 +5910,7 @@ dialog.is-fallback-open {
     align-items: center;
   }
   .feature-sleeve-wrap:hover .sleeve-vinyl,
-  .feature-sleeve-wrap.is-playing .sleeve-vinyl {
+  .feature-sleeve-wrap.has-selection .sleeve-vinyl {
     right: -1.2%;
   }
   .feature-art.lp-jacket::after {
@@ -6220,7 +6220,7 @@ dialog.is-fallback-open {
     transform: none !important;
   }
   html.js-motion .feature-sleeve-wrap.reveal-ready:not(.is-revealed) .sleeve-vinyl,
-  .feature-sleeve-wrap:hover:not(.is-playing) .sleeve-vinyl {
+  .feature-sleeve-wrap:hover:not(.has-selection) .sleeve-vinyl {
     right: 0.5% !important;
   }
   .button.primary,
