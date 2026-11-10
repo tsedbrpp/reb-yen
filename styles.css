@@ -6667,7 +6667,7 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
   .dialog-controls { margin-left: auto; }
 }
 
-/* Videos section confetti burst (see site.js) */
+/* Thank-you page confetti burst (see confetti.js) */
 .confetti-canvas {
   position: fixed;
   inset: 0;
