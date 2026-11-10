@@ -6680,3 +6680,71 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
 @media (prefers-reduced-motion: reduce) {
   .confetti-canvas { display: none; }
 }
+
+/* Contact form: structured fields & social links */
+.form-field { display: grid; gap: 6px; align-content: start; }
+.contact-form .form-row { gap: 4px 14px; }
+.event-fields {
+  margin: 14px 0 4px;
+  padding: 6px 16px 16px;
+  border: 1px solid rgba(255, 250, 241, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 250, 241, 0.04);
+  display: grid;
+  gap: 2px;
+}
+.event-fields[hidden] { display: none; }
+.event-fields legend {
+  padding: 0 6px;
+  font-weight: 800;
+  font-size: 15px;
+  color: #ffd2b0;
+}
+.event-fields .legend-note { font-weight: 500; font-size: 13px; color: #dbc7d6; }
+.contact-form select { appearance: auto; cursor: pointer; }
+.contact-form input[type="date"] { cursor: pointer; }
+
+.social-links { margin-top: 22px; }
+.contact .social-links-title {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffbd91;
+}
+.social-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 250, 241, 0.32);
+  border-radius: 999px;
+  color: var(--ivory-bright);
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.social-links a:hover,
+.social-links a:focus-visible {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--plum);
+}
+.social-links a:focus-visible { outline: 3px solid #efa977; outline-offset: 3px; }
+.social-links svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+
+@media (max-width: 700px) {
+  .social-links ul { display: grid; grid-template-columns: 1fr 1fr; }
+  .social-links a { justify-content: center; width: 100%; }
+}
