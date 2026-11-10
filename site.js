@@ -94,6 +94,8 @@ function syncMenuUI(open) {
   if (navBackdrop) {
     navBackdrop.hidden = !open;
   }
+  hoveredNavLink = null;
+  requestNavUnderline();
 }
 
 function closeMenu() {
@@ -147,24 +149,90 @@ navigation?.querySelectorAll('a[href^="#"]').forEach(link => {
   if (section) sectionLinks.set(section, link);
 });
 
-if (sectionLinks.size > 0 && 'IntersectionObserver' in window) {
-  const homeSection = document.getElementById('home');
-  const navObserver = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          sectionLinks.forEach(navLink => navLink.removeAttribute('aria-current'));
-          if (entry.target !== homeSection) {
-            sectionLinks.get(entry.target)?.setAttribute('aria-current', 'location');
-          }
-        }
-      });
-    },
-    { rootMargin: '-25% 0px -60% 0px' }
-  );
-  if (homeSection) navObserver.observe(homeSection);
-  sectionLinks.forEach((_, section) => navObserver.observe(section));
+// One shared underline follows hover/keyboard focus, then returns to the current
+// section. It is decorative; aria-current remains the source of accessible state.
+const navUnderline = navigation ? document.createElement('span') : null;
+let hoveredNavLink = null;
+let navFrame = 0;
+if (navUnderline) {
+  navUnderline.className = 'nav-underline';
+  navUnderline.setAttribute('aria-hidden', 'true');
+  navigation.append(navUnderline);
 }
+
+function positionNavUnderline() {
+  navFrame = 0;
+  if (!navigation || !navUnderline) return;
+  const focused = navigation.contains(document.activeElement) && document.activeElement.matches(':focus-visible')
+    ? document.activeElement.closest('a') : null;
+  const link = hoveredNavLink || focused || navigation.querySelector('a[aria-current]');
+  const navRect = navigation.getBoundingClientRect();
+  if (!link || !navRect.width || !navRect.height) {
+    navUnderline.classList.remove('is-visible', 'is-ready');
+    return;
+  }
+  const range = document.createRange();
+  range.selectNodeContents(link);
+  const labelRect = range.getBoundingClientRect();
+  const linkRect = link.getBoundingClientRect();
+  // Underline the label, including in the full-width mobile menu.
+  const width = Math.min(labelRect.width, linkRect.width - 24);
+  const x = labelRect.left - navRect.left - navigation.clientLeft + navigation.scrollLeft;
+  const y = linkRect.bottom - navRect.top - navigation.clientTop + navigation.scrollTop - 6;
+  navUnderline.style.width = `${Math.max(0, width)}px`;
+  navUnderline.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  navUnderline.classList.add('is-visible');
+  // First placement and reopening a hidden mobile menu never fly in from (0,0).
+  if (!navUnderline.classList.contains('is-ready')) {
+    void navUnderline.offsetWidth;
+    navUnderline.classList.add('is-ready');
+  }
+}
+
+function requestNavUnderline() {
+  if (!navFrame) navFrame = requestAnimationFrame(positionNavUnderline);
+}
+
+function updateActiveNavSection() {
+  if (!sectionLinks.size) return;
+  const threshold = Math.max((siteHeader?.offsetHeight || 0) + 24, window.innerHeight * 0.28);
+  let active = null;
+  sectionLinks.forEach((link, section) => {
+    if (section.getBoundingClientRect().top <= threshold) active = link;
+  });
+  // The final section can be too short to reach the upper viewport marker.
+  if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+    active = Array.from(sectionLinks.values()).at(-1);
+  }
+  sectionLinks.forEach(link => {
+    if (link === active) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+  requestNavUnderline();
+}
+
+navigation?.addEventListener('pointerover', event => {
+  if (event.pointerType === 'touch') return;
+  hoveredNavLink = event.target.closest('a');
+  requestNavUnderline();
+});
+navigation?.addEventListener('pointerleave', () => {
+  hoveredNavLink = null;
+  requestNavUnderline();
+});
+navigation?.addEventListener('focusin', requestNavUnderline);
+navigation?.addEventListener('focusout', requestNavUnderline);
+window.addEventListener('resize', updateActiveNavSection, { passive: true });
+window.addEventListener('pageshow', updateActiveNavSection);
+window.addEventListener('hashchange', updateActiveNavSection);
+document.fonts?.ready.then(requestNavUnderline);
+if ('ResizeObserver' in window && navigation) {
+  new ResizeObserver(requestNavUnderline).observe(navigation);
+}
+reducedMotionCleanups.push(() => {
+  navUnderline?.getAnimations().forEach(animation => animation.cancel());
+  requestNavUnderline();
+});
 
 // ============================================================================
 // Header Scroll-Progress Bar & Subtle Hero Parallax
@@ -175,6 +243,7 @@ let scrollTicking = false;
 
 function updateScrollEffects() {
   scrollTicking = false;
+  updateActiveNavSection();
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
 
@@ -1262,7 +1331,9 @@ function getMatchingCatalogRows(filter = activeCatalogFilter) {
   });
 }
 
-function renderCatalogPage({ animate = false, announce = false, scrollCatalogIntoView = false } = {}) {
+function commitCatalogPage({ announce = false, scrollCatalogIntoView = false } = {}) {
+  const focusedPage = catalogPageNums?.contains(document.activeElement)
+    ? document.activeElement.dataset.catalogPage : null;
   const matching = getMatchingCatalogRows(activeCatalogFilter);
   const total = matching.length;
   const totalPages = Math.max(1, Math.ceil(total / CATALOG_PAGE_SIZE));
@@ -1275,11 +1346,6 @@ function renderCatalogPage({ animate = false, announce = false, scrollCatalogInt
   catalogRows.forEach(row => {
     const visible = pageSet.has(row);
     row.hidden = !visible;
-    row.classList.remove('is-filtered-in');
-    if (visible && animate && !prefersReducedMotion) {
-      void row.offsetWidth;
-      row.classList.add('is-filtered-in');
-    }
   });
 
   if (catalogPageInfo) {
@@ -1318,9 +1384,19 @@ function renderCatalogPage({ animate = false, announce = false, scrollCatalogInt
     catalogPageNext.disabled = currentCatalogPage >= totalPages;
   }
 
-  if (announce && playerStatus && total > 0) {
-    playerStatus.textContent = `Page ${currentCatalogPage} of ${totalPages}: showing songs ${startIdx + 1} to ${endIdx} of ${total}.`;
+  if (focusedPage) {
+    const replacement = catalogPageNums?.querySelector(`[data-catalog-page="${focusedPage}"]`)
+      || catalogPageNums?.querySelector('[aria-current="page"]');
+    if (totalPages > 1) replacement?.focus({ preventScroll: true });
+    else filterPills.find(pill => pill.classList.contains('is-active'))?.focus({ preventScroll: true });
   }
+
+  if (announce && playerStatus) {
+    playerStatus.textContent = total > 0
+      ? `Page ${currentCatalogPage} of ${totalPages}: showing songs ${startIdx + 1} to ${endIdx} of ${total}.`
+      : 'No songs match this filter.';
+  }
+  updateActiveNavSection();
 
   if (scrollCatalogIntoView) {
     const head = document.getElementById('explore-originals');
@@ -1332,6 +1408,82 @@ function renderCatalogPage({ animate = false, announce = false, scrollCatalogInt
     }
   }
 }
+
+const catalogSongList = document.getElementById('catalog-song-list');
+let catalogAnimations = [];
+let catalogTransitionToken = 0;
+let pendingCatalogRender = null;
+
+function cancelCatalogTransition() {
+  catalogTransitionToken++;
+  catalogAnimations.forEach(animation => animation.cancel());
+  catalogAnimations = [];
+  pendingCatalogRender = null;
+  catalogSongList?.classList.remove('is-transitioning');
+  catalogSongList?.removeAttribute('aria-busy');
+}
+
+function renderCatalogPage(options = {}) {
+  // A newer filter, search, page, or selected song always wins. No stale timers.
+  cancelCatalogTransition();
+  if (!catalogSongList || !options.animate || prefersReducedMotion || !catalogSongList.animate) {
+    commitCatalogPage(options);
+    return;
+  }
+  const token = catalogTransitionToken;
+  pendingCatalogRender = options;
+  catalogSongList.setAttribute('aria-busy', 'true');
+  const outgoing = catalogSongList.animate([{ opacity: 1 }, { opacity: 0.35 }], {
+    duration: 90, easing: 'ease-out', fill: 'forwards'
+  });
+  catalogAnimations.push(outgoing);
+  outgoing.finished.then(() => {
+    if (token !== catalogTransitionToken) return;
+    const oldHeight = catalogSongList.getBoundingClientRect().height;
+    outgoing.cancel();
+    catalogAnimations = [];
+    pendingCatalogRender = null;
+    commitCatalogPage(options);
+    const newHeight = catalogSongList.getBoundingClientRect().height;
+    if (Math.abs(oldHeight - newHeight) > 1) {
+      catalogSongList.classList.add('is-transitioning');
+      catalogAnimations.push(catalogSongList.animate([
+        { height: `${oldHeight}px` }, { height: `${newHeight}px` }
+      ], { duration: 220, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }));
+    }
+    catalogRows.filter(row => !row.hidden).forEach((row, index) => {
+      catalogAnimations.push(row.animate([
+        { opacity: 0.35, transform: 'translateY(4px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ], { duration: 190, delay: index * 18, fill: 'backwards', easing: 'ease-out' }));
+    });
+    Promise.all(catalogAnimations.map(animation => animation.finished)).then(() => {
+      if (token !== catalogTransitionToken) return;
+      cancelCatalogTransition();
+      updateActiveNavSection();
+    }).catch(() => {}); // Cancellation is expected when the next action arrives.
+  }).catch(() => {});
+}
+
+reducedMotionCleanups.push(() => {
+  const pending = pendingCatalogRender;
+  cancelCatalogTransition();
+  if (pending) commitCatalogPage(pending);
+});
+// A keyboard user who moves into the results should never meet a faded row.
+catalogSongList?.addEventListener('focusin', () => {
+  const pending = pendingCatalogRender;
+  cancelCatalogTransition();
+  if (pending) {
+    const focusedRow = document.activeElement.closest('.song-row');
+    commitCatalogPage(pending);
+    if (focusedRow?.hidden) {
+      const fallback = catalogSongList.querySelector('.song-row:not([hidden]) a')
+        || filterPills.find(pill => pill.classList.contains('is-active'));
+      fallback?.focus({ preventScroll: true });
+    }
+  }
+});
 
 function syncCatalogPageForTrack(trackId) {
   if (!trackId || catalogRows.length === 0) return;
