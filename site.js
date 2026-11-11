@@ -2804,26 +2804,21 @@ if (contactNextField && /^https?:$/.test(window.location.protocol)) {
 }
 
 // ============================================================================
-// Contact Form: show event details only for booking inquiries
+// Contact Form: tailored placeholder + descriptive email subject
 // ============================================================================
 (() => {
   const form = document.querySelector('.contact-form');
   const typeSelect = document.getElementById('cf-type');
-  const eventFields = document.getElementById('cf-event-fields');
-  if (!form || !typeSelect || !eventFields) return;
+  if (!form || !typeSelect) return;
   const subjectField = form.querySelector('input[name="_subject"]');
   const message = document.getElementById('cf-msg');
 
   const isBooking = () => Boolean(typeSelect.selectedOptions[0]?.hasAttribute('data-booking'));
   const sync = () => {
-    const booking = isBooking();
-    eventFields.hidden = !booking;
-    eventFields.disabled = !booking;   // disabled fieldsets are not submitted
-    if (message) {
-      message.placeholder = booking
-        ? 'Share anything that helps: the occasion, timing, indoor/outdoor, song requests, or questions for Reb.'
-        : 'Tell Reb a little about your plans, or ask about her music, songwriting, or recordings.';
-    }
+    if (!message) return;
+    message.placeholder = isBooking()
+      ? 'Share your event date, location, and plans, plus any song requests or questions for Reb.'
+      : 'Tell Reb a little about your plans, or ask about her music, songwriting, or recordings.';
   };
   typeSelect.addEventListener('change', sync);
   sync();
@@ -2831,13 +2826,7 @@ if (contactNextField && /^https?:$/.test(window.location.protocol)) {
   form.addEventListener('submit', () => {
     if (!subjectField) return;
     const type = typeSelect.value || 'General message';
-    const date = document.getElementById('cf-date')?.value;
-    let subject = (isBooking() ? 'Booking inquiry: ' : 'Website message: ') + type;
-    if (isBooking() && date) {
-      const d = new Date(date + 'T12:00:00');
-      if (!Number.isNaN(d.getTime())) subject += ' — ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    }
-    subjectField.value = subject;
+    subjectField.value = (isBooking() ? 'Booking inquiry: ' : 'Website message: ') + type;
   });
 })();
 
