@@ -6831,3 +6831,25 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
 /* Clicking the vinyl beside the album cover plays the featured song */
 .sleeve-vinyl { pointer-events: auto; cursor: pointer; }
 .feature-sleeve-wrap.is-flipped .sleeve-vinyl { pointer-events: none; }
+
+/* Hero record: idle "attract" spin. Only the light sheen rotates, so the
+   "Tap to pick a song" label stays readable; it pauses while the picker is open. */
+@keyframes disc-sheen-spin { to { transform: rotate(360deg); } }
+.hero-record.is-attract .spin-record .disc::before {
+  animation: disc-sheen-spin 3.2s linear infinite;
+  background: conic-gradient(
+    from 20deg,
+    transparent 0deg,
+    rgba(255, 232, 205, 0.28) 26deg,
+    transparent 58deg,
+    transparent 180deg,
+    rgba(255, 232, 205, 0.22) 206deg,
+    transparent 238deg,
+    transparent 360deg
+  );
+}
+.hero-record.is-attract.is-picking .spin-record .disc::before { animation-play-state: paused; }
+html.album-motion-off .hero-record.is-attract .spin-record .disc::before { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-record.is-attract .spin-record .disc::before { animation: none; }
+}

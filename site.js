@@ -947,11 +947,20 @@ function syncPlatters() {
   // Decorative motion follows the visitor's song selection, not playback.
   // The embedded player cannot reliably report play, pause, or track changes.
   const shouldSpin = Boolean(selectedTrack);
-  if (shouldSpin) {
+  // Hero record: idle "attract" spin draws attention to the control; every
+  // spin pauses while the song picker is open (the visitor is choosing).
+  const pickerEl = document.getElementById('song-picker');
+  const picking = Boolean(pickerEl && !pickerEl.hidden);
+  heroTurntable?.classList.toggle('is-attract', !shouldSpin);
+  heroTurntable?.classList.toggle('is-picking', picking);
+  if (shouldSpin && !picking) {
     heroPlatter.start();
-    sleevePlatter.start();
   } else {
     heroPlatter.easeToStop();
+  }
+  if (shouldSpin) {
+    sleevePlatter.start();
+  } else {
     sleevePlatter.easeToStop();
   }
 }
@@ -968,6 +977,7 @@ reducedMotionCleanups.push(() => {
 
 
 if (heroTurntable) {
+  heroTurntable.classList.add('is-attract');
   if (isAlbumMotionDisabled()) {
     heroTurntable.classList.add('has-entered');
   } else {
@@ -1281,6 +1291,7 @@ function openSongPicker(event) {
   renderSongPicker();
   songPicker.hidden = false;
   document.body.classList.add('dialog-open');
+  syncPlatters();
 
   // Gently center the currently playing track inside the 22-song list if one is selected
   if (selectedTrack && songPickerList) {
@@ -1303,6 +1314,7 @@ function closeSongPicker() {
   if (!songPicker || songPicker.hidden) return;
   songPicker.hidden = true;
   document.body.classList.remove('dialog-open');
+  syncPlatters();
 }
 
 // ----------------------------------------------------------------------------
