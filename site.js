@@ -3410,7 +3410,7 @@ const galleryShareUrl = `${siteShareOrigin}/#gallery`;
 if (emailGalleryBtn) {
   emailGalleryBtn.href = buildMailtoHref(
     'Reb Yen — On Stage & Original Music',
-    `Take a look at singer-songwriter Reb Yen on stage and hear her original songs:\n\n${galleryShareUrl}`
+    `Take a look at singer, songwriter Reb Yen on stage and hear her original songs:\n\n${galleryShareUrl}`
   );
 }
 
@@ -3418,7 +3418,7 @@ shareGalleryBtn?.addEventListener('click', () => {
   shareOrCopyLink(
     {
       title: 'Reb Yen — On Stage & Original Music',
-      text: 'Take a look at singer-songwriter Reb Yen on stage and hear her original songs:',
+      text: 'Take a look at singer, songwriter Reb Yen on stage and hear her original songs:',
       url: galleryShareUrl
     },
     shareGalleryLabel,
