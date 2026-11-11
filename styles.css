@@ -6667,19 +6667,6 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
   .dialog-controls { margin-left: auto; }
 }
 
-/* Thank-you page confetti burst (see confetti.js) */
-.confetti-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 60;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .confetti-canvas { display: none; }
-}
 
 /* Contact form: structured fields & social links */
 .form-field { display: grid; gap: 6px; align-content: start; }
