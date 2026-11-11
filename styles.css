@@ -6870,3 +6870,17 @@ html.album-motion-off .hero-record.is-attract .spin-record .disc::before { anima
 .fx-pending .fx-ch { opacity: 0; }
 #video-title .title-hot,
 #video-title .fx-ch.is-hot { color: var(--orange-hover); }
+
+/* Hero: Book Reb button (jumps to the contact form) */
+.hero-book-btn {
+  background: rgba(30, 14, 30, 0.45);
+  border-color: rgba(255, 250, 241, 0.72);
+  color: var(--ivory-bright);
+  text-shadow: none;
+}
+.hero-book-btn:hover,
+.hero-book-btn:focus-visible {
+  background: var(--ivory-bright);
+  border-color: var(--ivory-bright);
+  color: var(--plum);
+}
