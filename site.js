@@ -3698,11 +3698,12 @@ emailChooser?.addEventListener('click', event => {
     hot.className = 'title-hot';
     hot.textContent = HOT;
     heading.append(TEXT.slice(0, hotStart), hot, TEXT.slice(hotStart + HOT.length));
+    // After the show, "Live Music" eases from orange back to the cream heading color.
+    requestAnimationFrame(() => requestAnimationFrame(() => hot.classList.add('is-settled')));
   };
 
   if (prefersReducedMotion || !('IntersectionObserver' in window) || typeof heading.animate !== 'function') {
-    finalMarkup();
-    return;
+    return; // static, all-cream heading
   }
 
   // Split into words/letters; the real text stays available to assistive tech.
@@ -3917,7 +3918,7 @@ emailChooser?.addEventListener('click', event => {
     started = true;
     observer.disconnect();
     setTimeout(() => {
-      if (prefersReducedMotion) { finalMarkup(); return; }
+      if (prefersReducedMotion) { heading.textContent = TEXT; heading.removeAttribute('aria-label'); heading.classList.remove('fx-pending'); return; }
       run();
     }, 220);
   }, { threshold: 0.6, rootMargin: '0px 0px -18% 0px' });

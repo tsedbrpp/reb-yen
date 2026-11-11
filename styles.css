@@ -6870,6 +6870,8 @@ html.album-motion-off .hero-record.is-attract .spin-record .disc::before { anima
 .fx-pending .fx-ch { opacity: 0; }
 #video-title .title-hot,
 #video-title .fx-ch.is-hot { color: var(--orange-hover); }
+#video-title .title-hot { transition: color 1.4s ease 0.4s; }
+#video-title .title-hot.is-settled { color: inherit; }
 
 /* Hero: Book Reb button (jumps to the contact form) */
 .hero-book-btn {
