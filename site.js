@@ -2861,10 +2861,6 @@ if (contactNextField && /^https?:$/.test(window.location.protocol)) {
     open: 'Read more about Reb <span aria-hidden="true">↓</span>',
     close: 'Show less <span aria-hidden="true">↑</span>'
   });
-  wire('video-more-toggle', 'video-grid', 'is-expanded', {
-    open: 'Show 3 more videos',
-    close: 'Show fewer videos'
-  });
 })();
 
 // ============================================================================

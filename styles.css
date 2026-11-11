@@ -6725,8 +6725,7 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
 .hero-instruments { letter-spacing: 0.02em; }
 .lp-rpm { cursor: default; }
 .page-step-text { margin: 0 4px; }
-.about-more-toggle,
-.video-more-toggle { display: none; }
+.about-more-toggle { display: none; }
 .catalog-head { margin-bottom: 12px; }
 #catalog-song-list { border-top: 1px solid var(--line); }
 
@@ -6770,15 +6769,8 @@ body:has(#songbook-reader:not([hidden])) .player.is-docked {
   .page-num-btn { min-width: 40px; width: 40px; height: 40px; padding: 0; }
   .page-step-btn { font-size: 22px; line-height: 1; }
 
-  /* Videos: first 3, rest on request */
+  /* Videos: show all 6 videos on mobile too */
   .video-grid { gap: 22px; }
-  .video-grid:not(.is-expanded) > .video:nth-child(n+4) { display: none; }
-  .video-more-toggle {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    margin-top: 22px;
-  }
 
   /* About: first paragraph, rest on request */
   .about-more { display: none; }
