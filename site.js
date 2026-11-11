@@ -3690,16 +3690,9 @@ emailChooser?.addEventListener('click', event => {
 
   // Final, clean markup (restores natural kerning after the animation).
   const finalMarkup = () => {
-    heading.textContent = '';
+    heading.textContent = TEXT;
     heading.removeAttribute('aria-label');
     heading.classList.remove('fx-pending');
-    if (hotStart < 0) { heading.textContent = TEXT; return; }
-    const hot = document.createElement('span');
-    hot.className = 'title-hot';
-    hot.textContent = HOT;
-    heading.append(TEXT.slice(0, hotStart), hot, TEXT.slice(hotStart + HOT.length));
-    // After the show, "Live Music" eases from orange back to the cream heading color.
-    requestAnimationFrame(() => requestAnimationFrame(() => hot.classList.add('is-settled')));
   };
 
   if (prefersReducedMotion || !('IntersectionObserver' in window) || typeof heading.animate !== 'function') {
@@ -3814,9 +3807,9 @@ emailChooser?.addEventListener('click', event => {
 
     function pulseHot() {
       letters.filter(l => l.classList.contains('is-hot')).forEach((l, i) => l.animate([
-        { transform: 'scale(1)', textShadow: '0 0 0 rgba(238,138,87,0)' },
-        { transform: 'scale(1.16) translateY(-4px)', textShadow: '0 0 22px rgba(255,170,110,.95)' },
-        { transform: 'scale(1)', textShadow: '0 0 0 rgba(238,138,87,0)' }
+        { transform: 'scale(1)', textShadow: '0 0 0 rgba(255,246,224,0)' },
+        { transform: 'scale(1.16) translateY(-4px)', textShadow: '0 0 20px rgba(255,246,224,.85)' },
+        { transform: 'scale(1)', textShadow: '0 0 0 rgba(255,246,224,0)' }
       ], { duration: 420, delay: i * 26, easing: 'ease-out' }));
     }
 
