@@ -3674,3 +3674,257 @@ emailChooser?.addEventListener('click', event => {
     }
   }
 });
+
+// ============================================================================
+// "Celebrate with Live Music": firework-assemble heading (once per page load)
+// Rockets launch, burst around the heading, and the letters fly out of the
+// main explosion into place. Reduced-motion visitors get the static heading.
+// ============================================================================
+(() => {
+  const heading = document.getElementById('video-title');
+  const section = document.getElementById('videos');
+  if (!heading || !section) return;
+  const TEXT = heading.textContent.trim();
+  const HOT = 'Live Music';
+  const hotStart = TEXT.indexOf(HOT);
+
+  // Final, clean markup (restores natural kerning after the animation).
+  const finalMarkup = () => {
+    heading.textContent = '';
+    heading.removeAttribute('aria-label');
+    heading.classList.remove('fx-pending');
+    if (hotStart < 0) { heading.textContent = TEXT; return; }
+    const hot = document.createElement('span');
+    hot.className = 'title-hot';
+    hot.textContent = HOT;
+    heading.append(TEXT.slice(0, hotStart), hot, TEXT.slice(hotStart + HOT.length));
+  };
+
+  if (prefersReducedMotion || !('IntersectionObserver' in window) || typeof heading.animate !== 'function') {
+    finalMarkup();
+    return;
+  }
+
+  // Split into words/letters; the real text stays available to assistive tech.
+  heading.setAttribute('aria-label', TEXT);
+  heading.textContent = '';
+  const letters = [];
+  let idx = 0;
+  TEXT.split(' ').forEach((word, wi, arr) => {
+    const w = document.createElement('span');
+    w.className = 'fx-word';
+    w.setAttribute('aria-hidden', 'true');
+    for (const ch of word) {
+      const s = document.createElement('span');
+      s.className = 'fx-ch';
+      if (hotStart >= 0 && idx >= hotStart) s.classList.add('is-hot');
+      s.textContent = ch;
+      w.appendChild(s);
+      letters.push(s);
+      idx++;
+    }
+    heading.appendChild(w);
+    if (wi < arr.length - 1) { heading.appendChild(document.createTextNode(' ')); idx++; }
+  });
+  heading.classList.add('fx-pending');
+
+  const PALETTES = {
+    gold: ['#ffb347', '#ffd27a', '#fff3d6'],
+    ember: ['#df733f', '#ee8a57', '#ffc49b'],
+    rose: ['#ff6f91', '#ffb3c6', '#fff0f5'],
+    mint: ['#7fd6c2', '#c6fff1', '#ffffff'],
+    lilac: ['#c9a7ff', '#efe3ff', '#ffffff']
+  };
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const pick = arr => arr[(Math.random() * arr.length) | 0];
+
+  function run() {
+    const small = window.innerWidth < 700;
+    const k = small ? 0.6 : 1;
+    const sRect = section.getBoundingClientRect();
+    const head = heading.closest('.section-head') || heading;
+    const W = section.clientWidth;
+    const H = Math.round(head.getBoundingClientRect().bottom - sRect.top + (small ? 130 : 190));
+
+    // Text extent from the letters themselves (the h2 box is full width).
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    const centers = letters.map(l => {
+      const r = l.getBoundingClientRect();
+      minX = Math.min(minX, r.left); maxX = Math.max(maxX, r.right);
+      minY = Math.min(minY, r.top); maxY = Math.max(maxY, r.bottom);
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+    const ox = sRect.left, oy = sRect.top;
+    const tx0 = minX - ox, tx1 = maxX - ox, ty0 = minY - oy, ty1 = maxY - oy;
+    const tw = tx1 - tx0;
+    const cx = tx0 + tw / 2, cy = ty0 + (ty1 - ty0) / 2;
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'fireworks-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    canvas.style.height = H + 'px';
+    section.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    if (ctx) ctx.scale(dpr, dpr);
+
+    const sparks = [];
+    const rockets = [];
+    const t0 = performance.now();
+
+    function burst(x, y, count, palette, { speed = 5.2, gravity = 0.06, decay = 0.012, ring = false, glitter = false } = {}) {
+      const n = Math.round(count * k);
+      for (let i = 0; i < n; i++) {
+        const a = ring ? (i / n) * Math.PI * 2 : rand(0, Math.PI * 2);
+        const v = ring ? speed * k * rand(0.92, 1.05) : speed * k * Math.sqrt(Math.random()) * rand(0.5, 1.1);
+        sparks.push({
+          x, y, px: x, py: y,
+          vx: Math.cos(a) * v, vy: Math.sin(a) * v,
+          life: 1, decay: decay * rand(0.75, 1.3),
+          g: gravity, size: glitter ? rand(1, 1.8) : rand(1.4, 2.6),
+          color: pick(palette), twinkle: glitter || Math.random() < 0.25, seed: Math.random() * 10
+        });
+      }
+      // brief flash
+      sparks.push({ x, y, px: x, py: y, vx: 0, vy: 0, life: 1, decay: 0.08, g: 0, size: 26 * k, color: '#fff6e0', flash: true });
+    }
+
+    function launch(delay, x1, y1, palette, onBurst, dur = 520) {
+      setTimeout(() => {
+        rockets.push({ x0: x1 + rand(-40, 40) * k, y0: H + 12, x1, y1, start: performance.now(), dur, palette, onBurst, done: false });
+      }, delay);
+    }
+
+    function flyLetters() {
+      heading.classList.remove('fx-pending');
+      const hl = { x: cx + ox, y: cy + oy };
+      letters.forEach((l, i) => {
+        const c = centers[i];
+        const endColor = getComputedStyle(l).color;
+        l.animate([
+          { opacity: 0, transform: `translate(${hl.x - c.x}px, ${hl.y - c.y}px) scale(0.15) rotate(${rand(-200, 200)}deg)`, filter: 'blur(5px)', color: '#fff6e0', textShadow: '0 0 18px #ffd27a' },
+          { opacity: 1, offset: 0.22, filter: 'blur(1.5px)' },
+          { opacity: 1, transform: 'translate(0, 0) scale(1) rotate(0deg)', filter: 'blur(0)', color: endColor, textShadow: '0 0 0 rgba(0,0,0,0)' }
+        ], { duration: 1050, delay: rand(0, 260), easing: 'cubic-bezier(.2,.9,.25,1.12)', fill: 'both' });
+      });
+    }
+
+    function pulseHot() {
+      letters.filter(l => l.classList.contains('is-hot')).forEach((l, i) => l.animate([
+        { transform: 'scale(1)', textShadow: '0 0 0 rgba(238,138,87,0)' },
+        { transform: 'scale(1.16) translateY(-4px)', textShadow: '0 0 22px rgba(255,170,110,.95)' },
+        { transform: 'scale(1)', textShadow: '0 0 0 rgba(238,138,87,0)' }
+      ], { duration: 420, delay: i * 26, easing: 'ease-out' }));
+    }
+
+    // --- Show schedule -------------------------------------------------------
+    // Opening volley: three rockets; the center one releases the letters.
+    launch(0, cx, cy, PALETTES.gold, () => {
+      burst(cx, cy, 190, PALETTES.gold, { speed: 5.6 });
+      burst(cx, cy, 80, PALETTES.ember, { speed: 3.8, ring: true, decay: 0.015 });
+      burst(cx, cy, 60, ['#ffffff', '#fff3d6'], { speed: 2.6, glitter: true, decay: 0.011, gravity: 0.03 });
+      flyLetters();
+    }, 560);
+    launch(150, tx0 + tw * 0.08, ty0 - 34 * k, PALETTES.ember, (x, y) => burst(x, y, 100, PALETTES.ember, { speed: 5.4 }));
+    launch(300, tx1 - tw * 0.06, ty0 - 24 * k, PALETTES.rose, (x, y) => burst(x, y, 100, PALETTES.rose, { speed: 5.4 }));
+    // Second wave around the words.
+    [[950, 0.25, -46, 'mint'], [1150, 0.78, -52, 'lilac'], [1350, 0.5, -64, 'ember'], [1550, 0.05, 40, 'gold'], [1700, 0.96, 46, 'rose']]
+      .forEach(([d, fx, fy, pal]) => launch(d, tx0 + tw * fx, Math.max(70 * k, (fy < 0 ? ty0 : ty1) + fy * k), PALETTES[pal],
+        (x, y) => burst(x, y, 90, PALETTES[pal], { speed: 4.6, ring: Math.random() < 0.4 }), 460));
+    // Full-stage volley: light up the open space across the section.
+    const lane = (f) => Math.min(W - 40, Math.max(40, W * f));
+    [[450, 0.70, cy, 'lilac', 110], [650, 0.88, ty0 - 10 * k, 'mint', 110], [1000, 0.62, ty1 + 34 * k, 'rose', 90],
+     [1250, 0.94, cy + 20 * k, 'gold', 120], [1450, 0.78, ty0 - 30 * k, 'ember', 100], [1800, 0.56, cy - 10 * k, 'gold', 90],
+     [1950, 0.86, ty1 + 20 * k, 'lilac', 90]]
+      .forEach(([d, fx, y, pal, n]) => launch(d, small ? lane(rand(0.15, 0.85)) : lane(fx), Math.max(70 * k, y), PALETTES[pal],
+        (x, yy) => burst(x, yy, n, PALETTES[pal], { speed: 5, ring: Math.random() < 0.35 }), 480));
+    // Finale crackle over "Live Music" + glitter rain.
+    const hotIdx = letters.findIndex(l => l.classList.contains('is-hot'));
+    setTimeout(() => {
+      const hc = hotIdx >= 0 ? centers[hotIdx] : { x: cx + ox, y: cy + oy };
+      const hx = hc.x - ox + tw * 0.12, hy = ty0 - 18 * k;
+      burst(hx, hy, 70, PALETTES.gold, { speed: 3.6, glitter: true, decay: 0.009, gravity: 0.04 });
+      burst(hx + tw * 0.18, hy + 10, 70, ['#ffffff', '#fff3d6', '#ffd27a'], { speed: 3.2, glitter: true, decay: 0.009, gravity: 0.04 });
+      pulseHot();
+    }, 2050);
+    setTimeout(finalMarkup, 2700);
+
+    // --- Render loop ----------------------------------------------------------
+    let last = t0;
+    function frame(now) {
+      const dt = Math.min(3, (now - last) / 16.67);
+      last = now;
+      if (!ctx) return;
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.lineCap = 'round';
+
+      for (const r of rockets) {
+        if (r.done) continue;
+        const p = Math.min(1, (now - r.start) / r.dur);
+        const e = 1 - Math.pow(1 - p, 3);
+        const x = r.x0 + (r.x1 - r.x0) * e;
+        const y = r.y0 + (r.y1 - r.y0) * e;
+        sparks.push({ x, y, px: x, py: y, vx: rand(-0.4, 0.4), vy: rand(0.6, 1.6), life: 0.8, decay: 0.05, g: 0.02, size: rand(1, 2), color: pick(r.palette) });
+        ctx.fillStyle = '#fff6e0';
+        ctx.beginPath(); ctx.arc(x, y, 2.6, 0, Math.PI * 2); ctx.fill();
+        if (p >= 1) { r.done = true; r.onBurst(r.x1, r.y1); }
+      }
+
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i];
+        s.px = s.x; s.py = s.y;
+        const drag = Math.pow(0.975, dt);
+        s.vx *= drag; s.vy = s.vy * drag + s.g * dt;
+        s.x += s.vx * dt; s.y += s.vy * dt;
+        s.life -= s.decay * dt;
+        if (s.life <= 0) { sparks.splice(i, 1); continue; }
+        let a = s.life * Math.min(1, Math.max(0, s.y / 46));   // soft fade at the section's top edge
+        if (s.twinkle) a *= 0.55 + 0.45 * Math.sin(now / 45 + s.seed * 6);
+        if (s.flash) {
+          const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size);
+          g.addColorStop(0, `rgba(255,246,224,${0.55 * a})`);
+          g.addColorStop(1, 'rgba(255,246,224,0)');
+          ctx.fillStyle = g;
+          ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2); ctx.fill();
+          continue;
+        }
+        ctx.globalAlpha = Math.max(0, Math.min(1, a));
+        ctx.strokeStyle = s.color;
+        ctx.lineWidth = s.size;
+        ctx.beginPath();
+        ctx.moveTo(s.px - s.vx * 1.6, s.py - s.vy * 1.6);
+        ctx.lineTo(s.x, s.y);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+
+      if (now - t0 < 2600 || sparks.length || rockets.some(r => !r.done)) {
+        requestAnimationFrame(frame);
+      } else {
+        canvas.remove();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  let started = false;
+  const observer = new IntersectionObserver(entries => {
+    if (started || !entries.some(e => e.isIntersecting)) return;
+    started = true;
+    observer.disconnect();
+    setTimeout(() => {
+      if (prefersReducedMotion) { finalMarkup(); return; }
+      run();
+    }, 220);
+  }, { threshold: 0.6, rootMargin: '0px 0px -18% 0px' });
+  observer.observe(heading);
+  reducedMotionCleanups.push(() => {
+    observer.disconnect();
+    section.querySelectorAll('.fireworks-canvas').forEach(c => c.remove());
+    finalMarkup();
+  });
+})();

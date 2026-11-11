@@ -6853,3 +6853,20 @@ html.album-motion-off .hero-record.is-attract .spin-record .disc::before { anima
 @media (prefers-reduced-motion: reduce) {
   .hero-record.is-attract .spin-record .disc::before { animation: none; }
 }
+
+/* "Celebrate with Live Music" firework-assemble heading */
+.video-section { position: relative; }
+.video-section > .container { position: relative; z-index: 1; }
+.fireworks-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.fx-word { display: inline-block; white-space: nowrap; }
+.fx-ch { display: inline-block; will-change: transform, opacity; }
+.fx-pending .fx-ch { opacity: 0; }
+#video-title .title-hot,
+#video-title .fx-ch.is-hot { color: var(--orange-hover); }
